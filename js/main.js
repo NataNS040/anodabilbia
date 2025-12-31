@@ -204,13 +204,8 @@ function voltarHome() {
     document.getElementById('home-view').style.display = 'block';
     document.querySelector('.footer').style.display = 'block';
     
-    // Scroll to meses section
-    setTimeout(function() {
-        var mesesSection = document.getElementById('meses');
-        if (mesesSection) {
-            mesesSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    }, 100);
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     
     return false;
 }
