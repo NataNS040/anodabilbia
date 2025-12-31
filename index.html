@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ano da Bíblia - Plano de Leitura Bíblica Anual</title>
+    <meta name="description" content="Acompanhe a leitura da Palavra de Deus todos os dias com nosso Plano de Leitura Bíblica Anual.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#" class="logo" onclick="voltarHome(); return false;">
+                <i data-lucide="book-open"></i>
+                <span>Ano da Bíblia</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="voltarHome(); return false;">Início</a></li>
+                <li><a href="#meses" onclick="voltarHome(); return false;">Meses</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HOME VIEW -->
+    <div id="home-view">
+        <!-- HERO -->
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i data-lucide="book-open"></i>
+                    Plano de Leitura Bíblica 2026
+                </div>
+                <h1 class="hero-title">Ano da <span>Bíblia</span></h1>
+                <p class="hero-subtitle">Plano de Leitura Bíblica Anual - acompanhe a leitura da Palavra todos os dias.</p>
+                <div class="hero-buttons">
+                    <a href="#meses" class="btn btn-primary">
+                        <i data-lucide="book-open"></i>
+                        Começar a leitura agora
+                    </a>
+                    <button class="btn btn-secondary" onclick="irParaMesAtual()">
+                        <i data-lucide="calendar"></i>
+                        Ver leitura do mês atual
+                    </button>
+                </div>
+                <div class="hero-verse">
+                    <p>"Lâmpada para os meus pés é a tua palavra, e luz para os meus caminhos."</p>
+                    <span>- Salmos 119:105</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- MESES -->
+        <section class="meses-section" id="meses">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge">
+                        <i data-lucide="book-open"></i>
+                        Explorar
+                    </div>
+                    <h2 class="section-title">Navegue pelos Meses</h2>
+                    <p class="section-desc">Clique em um mês para ver a leitura completa dia a dia. Siga o plano e complete a Bíblia em um ano.</p>
+                </div>
+                <div class="meses-grid" id="meses-grid"></div>
+            </div>
+        </section>
+
+        <!-- SOBRE O PROJETO -->
+        <section class="sobre-section" id="sobre">
+            <div class="container">
+                <div class="sobre-content">
+                    <div class="sobre-icon">
+                        <i data-lucide="heart"></i>
+                    </div>
+                    <h2 class="sobre-title">Sobre o Projeto</h2>
+                    <p class="sobre-texto">
+                        O <strong>Ano da Bíblia</strong> nasceu do coração de <strong>Nara e Natã Silva</strong>, 
+                        um casal apaixonado pela Palavra de Deus e pela tecnologia. Eles acreditam que a fé pode 
+                        caminhar lado a lado com a inovação, e por isso decidiram unir esses dois mundos para 
+                        criar algo especial.
+                    </p>
+                    <p class="sobre-texto">
+                        Este projeto foi desenvolvido com muito amor e dedicação, com o propósito de <strong>facilitar 
+                        e abençoar a vida dos crentes</strong> que desejam se aprofundar na leitura da Bíblia. 
+                        Sabemos o quanto pode ser desafiador manter a constância na leitura diária, e por isso 
+                        criamos uma ferramenta simples, bonita e funcional para te ajudar nessa jornada.
+                    </p>
+                    <p class="sobre-texto">
+                        Nosso desejo é que esta página seja uma bênção na sua vida, te ajudando a conhecer mais 
+                        de Deus através da Sua Palavra. Que ao longo deste ano, você possa experimentar a 
+                        transformação que só a leitura da Bíblia pode trazer.
+                    </p>
+                    <div class="sobre-verse">
+                        <p>"Toda Escritura é inspirada por Deus e útil para o ensino, para a repreensão, para a correção e para a instrução na justiça."</p>
+                        <span>- 2 Timóteo 3:16</span>
+                    </div>
+                    <div class="sobre-assinatura">
+                        <i data-lucide="users"></i>
+                        <span>Com carinho, Nara e Natã Silva</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MES DETAIL VIEW -->
+    <div class="mes-detail" id="mes-detail">
+        <div class="container">
+            <div class="btn-voltar" onclick="voltarHome()">
+                <i data-lucide="arrow-left"></i>
+                Voltar para meses
+            </div>
+            <div class="mes-detail-header">
+                <div class="mes-detail-numero" id="detail-numero">01</div>
+                <div class="mes-detail-info">
+                    <h2 id="detail-nome">Janeiro</h2>
+                    <p><i data-lucide="calendar"></i> <span id="detail-dias">31 dias de leitura</span></p>
+                </div>
+            </div>
+            <div class="mes-detail-progress">
+                <div class="mes-detail-progress-bar">
+                    <div class="mes-detail-progress-fill" id="detail-progress-fill" style="width: 0%"></div>
+                </div>
+                <span class="mes-detail-progress-text" id="detail-progress-text">0%</span>
+            </div>
+            <div class="dias-lista" id="dias-lista"></div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <i data-lucide="book-open"></i>
+                Ano da Bíblia
+            </div>
+            <p class="footer-verse">"Lâmpada para os meus pés é a tua palavra, e luz para os meus caminhos." - Salmos 119:105</p>
+            <p class="footer-copy">© 2026 Ano da Bíblia - Plano de Leitura Bíblica Anual</p>
+        </div>
+    </footer>
+
+    <!-- SCROLL TOP -->
+    <button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i data-lucide="chevron-up"></i>
+    </button>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
