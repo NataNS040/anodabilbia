@@ -24,9 +24,30 @@
                 <li><a href="#" onclick="voltarHome(); return false;">Início</a></li>
                 <li><a href="#meses">Meses</a></li>
                 <li><a href="#sobre">Sobre</a></li>
+                <li class="nav-login"><a href="login.html"><i data-lucide="log-in"></i> Entrar</a></li>
             </ul>
         </nav>
     </header>
+
+    <!-- BANNER DE CONTA (aparece para usuários não logados) -->
+    <div class="banner-conta" id="banner-conta">
+        <div class="banner-conta-content">
+            <div class="banner-conta-icon">
+                <i data-lucide="cloud-off"></i>
+            </div>
+            <div class="banner-conta-texto">
+                <strong>Seu progresso está sendo salvo apenas neste dispositivo!</strong>
+                <p>Sem uma conta, suas leituras concluídas ficam guardadas no navegador. Se você limpar o histórico ou trocar de aparelho, perderá todo o progresso.</p>
+            </div>
+            <a href="login.html" class="banner-conta-btn">
+                <i data-lucide="user-plus"></i>
+                Criar conta grátis
+            </a>
+            <button class="banner-conta-fechar" onclick="fecharBannerConta()" title="Fechar">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+    </div>
 
     <!-- HOME VIEW -->
     <div id="home-view">
@@ -48,6 +69,10 @@
                         <i data-lucide="calendar"></i>
                         Ver leitura do mês atual
                     </button>
+                    <a href="login.html" class="btn btn-criar-conta" id="btn-criar-conta-hero">
+                        <i data-lucide="user-plus"></i>
+                        Crie sua conta grátis
+                    </a>
                 </div>
                 <div class="hero-verse">
                     <p>"Lâmpada para os meus pés é a tua palavra, e luz para os meus caminhos."</p>
@@ -193,7 +218,10 @@
         <i data-lucide="chevron-up"></i>
     </button>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
     <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Ano da Bíblia</title>
+    <meta name="description" content="Entre na sua conta do Ano da Bíblia">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <!-- Lado esquerdo - Decorativo -->
+        <div class="auth-banner">
+            <div class="auth-banner-content">
+                <a href="index.html" class="auth-logo">
+                    <i data-lucide="book-open"></i>
+                    <span>Ano da Bíblia</span>
+                </a>
+                <div class="auth-banner-text">
+                    <h1>Bem-vindo ao Ano da Bíblia</h1>
+                    <p>Acompanhe sua jornada de leitura bíblica, marque seu progresso e cresça na fé todos os dias.</p>
+                </div>
+                <div class="auth-verse">
+                    <p>"Lâmpada para os meus pés é a tua palavra, e luz para os meus caminhos."</p>
+                    <span>- Salmos 119:105</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lado direito - Formulários -->
+        <div class="auth-forms">
+            <div class="auth-forms-wrapper">
+                <!-- Formulário de Login -->
+                <div class="auth-form-container" id="login-form">
+                    <div class="auth-form-header">
+                        <h2>Entrar</h2>
+                        <p>Acesse sua conta para continuar sua leitura</p>
+                    </div>
+                    <form onsubmit="realizarLogin(event)">
+                        <div class="form-group">
+                            <label for="login-email">
+                                <i data-lucide="mail"></i>
+                                E-mail
+                            </label>
+                            <input type="email" id="login-email" placeholder="seu@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-senha">
+                                <i data-lucide="lock"></i>
+                                Senha
+                            </label>
+                            <div class="input-password">
+                                <input type="password" id="login-senha" placeholder="Sua senha" required>
+                                <button type="button" class="toggle-password" onclick="toggleSenha('login-senha', this)">
+                                    <i data-lucide="eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-message" id="login-message"></div>
+                        <button type="submit" class="btn-auth">
+                            <i data-lucide="log-in"></i>
+                            Entrar
+                        </button>
+                    </form>
+                    <div class="auth-switch">
+                        <p>Não tem uma conta? <a href="#" onclick="mostrarCadastro()">Cadastre-se</a></p>
+                    </div>
+                </div>
+
+                <!-- Formulário de Cadastro -->
+                <div class="auth-form-container hidden" id="cadastro-form">
+                    <div class="auth-form-header">
+                        <h2>Criar Conta</h2>
+                        <p>Junte-se a nós na leitura da Palavra</p>
+                    </div>
+                    <form onsubmit="realizarCadastro(event)">
+                        <div class="form-group">
+                            <label for="cadastro-nome">
+                                <i data-lucide="user"></i>
+                                Nome completo
+                            </label>
+                            <input type="text" id="cadastro-nome" placeholder="Seu nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cadastro-email">
+                                <i data-lucide="mail"></i>
+                                E-mail
+                            </label>
+                            <input type="email" id="cadastro-email" placeholder="seu@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cadastro-senha">
+                                <i data-lucide="lock"></i>
+                                Senha
+                            </label>
+                            <div class="input-password">
+                                <input type="password" id="cadastro-senha" placeholder="Mínimo 6 caracteres" required minlength="6">
+                                <button type="button" class="toggle-password" onclick="toggleSenha('cadastro-senha', this)">
+                                    <i data-lucide="eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cadastro-confirmar">
+                                <i data-lucide="lock"></i>
+                                Confirmar senha
+                            </label>
+                            <div class="input-password">
+                                <input type="password" id="cadastro-confirmar" placeholder="Repita a senha" required minlength="6">
+                                <button type="button" class="toggle-password" onclick="toggleSenha('cadastro-confirmar', this)">
+                                    <i data-lucide="eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-message" id="cadastro-message"></div>
+                        <button type="submit" class="btn-auth">
+                            <i data-lucide="user-plus"></i>
+                            Criar conta
+                        </button>
+                    </form>
+                    <div class="auth-switch">
+                        <p>Já tem uma conta? <a href="#" onclick="mostrarLogin()">Entrar</a></p>
+                    </div>
+                </div>
+
+                <!-- Link para voltar -->
+                <a href="index.html" class="auth-back">
+                    <i data-lucide="arrow-left"></i>
+                    Voltar para o início
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Inicializar Supabase e Lucide
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.SupabaseConfig) {
+                window.SupabaseConfig.init();
+            }
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

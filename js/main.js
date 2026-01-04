@@ -2,8 +2,11 @@
  * BibliaAgora - Main JavaScript
  */
 
-// Gerenciamento de progresso com localStorage
+// Gerenciamento de progresso com localStorage e Supabase
 var progresso = JSON.parse(localStorage.getItem('bibliaagora_progresso') || '{}');
+
+// Tornar progresso acessível globalmente para sincronização
+window.progresso = progresso;
 
 function salvarProgresso() {
     localStorage.setItem('bibliaagora_progresso', JSON.stringify(progresso));
@@ -13,20 +16,33 @@ function getLeiturasConcluidas(mes) {
     return progresso[mes] || [];
 }
 
-function toggleLeitura(mes, dia) {
+async function toggleLeitura(mes, dia) {
     if (!progresso[mes]) {
         progresso[mes] = [];
     }
     
     var index = progresso[mes].indexOf(dia);
+    var concluido = false;
+    
     if (index > -1) {
         progresso[mes].splice(index, 1);
+        concluido = false;
     } else {
         progresso[mes].push(dia);
+        concluido = true;
     }
     
     salvarProgresso();
     atualizarUIProgresso(mes);
+    
+    // Sincronizar com Supabase se usuário estiver logado
+    if (window.SupabaseConfig && window.SupabaseConfig.isReady()) {
+        try {
+            await window.SupabaseConfig.salvarLeitura(mes, dia, concluido);
+        } catch (error) {
+            console.warn('Erro ao sincronizar leitura:', error);
+        }
+    }
 }
 
 function atualizarUIProgresso(mes) {
@@ -150,12 +166,90 @@ function irParaLeituraHoje() {
     }, 300);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+// Controle do Banner de Conta
+function verificarBannerConta() {
+    var banner = document.getElementById('banner-conta');
+    var btnCriarContaHero = document.getElementById('btn-criar-conta-hero');
+    
+    if (!banner) return;
+    
+    // Verificar se usuário está logado
+    var usuarioLogado = false;
+    if (window.SupabaseConfig && window.SupabaseConfig.isReady()) {
+        var usuario = localStorage.getItem('bibliaagora_usuario');
+        usuarioLogado = !!usuario;
+    }
+    
+    // Verificar se usuário fechou o banner recentemente (24 horas)
+    var bannerFechado = localStorage.getItem('bibliaagora_banner_fechado');
+    var bannerExpirado = false;
+    if (bannerFechado) {
+        var fechadoEm = parseInt(bannerFechado);
+        var agora = Date.now();
+        var umDia = 24 * 60 * 60 * 1000;
+        bannerExpirado = (agora - fechadoEm) > umDia;
+    }
+    
+    // Mostrar banner apenas se não logado e não fechou recentemente
+    if (usuarioLogado) {
+        banner.classList.add('hidden');
+        // Esconder botão criar conta do hero também
+        if (btnCriarContaHero) {
+            btnCriarContaHero.style.display = 'none';
+        }
+    } else if (bannerFechado && !bannerExpirado) {
+        banner.classList.add('hidden');
+    } else {
+        banner.classList.remove('hidden');
+        // Mostrar botão criar conta no hero
+        if (btnCriarContaHero) {
+            btnCriarContaHero.style.display = 'inline-flex';
+        }
+    }
+}
+
+function fecharBannerConta() {
+    var banner = document.getElementById('banner-conta');
+    if (banner) {
+        banner.classList.add('hidden');
+        // Salvar que o usuário fechou o banner
+        localStorage.setItem('bibliaagora_banner_fechado', Date.now().toString());
+    }
+}
+
+// Tornar função global
+window.fecharBannerConta = fecharBannerConta;
+
+document.addEventListener('DOMContentLoaded', async function() {
+    // Inicializar Supabase
+    if (window.SupabaseConfig) {
+        window.SupabaseConfig.init();
+        
+        // Verificar se usuário está logado e carregar progresso do Supabase
+        var usuario = await window.SupabaseConfig.getUsuario();
+        if (usuario) {
+            console.log('👤 Usuário logado:', usuario.nome);
+            // O progresso será carregado automaticamente após sincronização
+            await window.SupabaseConfig.carregarProgresso(usuario.id);
+            // Atualizar variável local
+            progresso = JSON.parse(localStorage.getItem('bibliaagora_progresso') || '{}');
+            window.progresso = progresso;
+        }
+    }
+    
     lucide.createIcons();
     carregarLeituraDeHoje();
     renderMeses();
     setupScrollTop();
     atualizarCardsMeses();
+    
+    // Verificar se deve mostrar o banner de conta
+    verificarBannerConta();
+    
+    // Atualizar UI de login se a função existir
+    if (typeof atualizarUILogin === 'function') {
+        atualizarUILogin();
+    }
 });
 
 function renderMeses() {

@@ -72,6 +72,7 @@ body {
     display: flex;
     gap: 2rem;
     list-style: none;
+    align-items: center;
 }
 
 .nav-links a {
@@ -79,10 +80,57 @@ body {
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.nav-links a svg {
+    width: 18px;
+    height: 18px;
 }
 
 .nav-links a:hover {
     color: var(--primary);
+}
+
+/* Menu de usuário logado */
+.nav-login a,
+.nav-user .user-name {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-name {
+    color: var(--primary);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.user-name svg {
+    width: 18px;
+    height: 18px;
+    color: var(--accent);
+}
+
+.user-logout {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.user-logout:hover {
+    color: #dc2626;
 }
 
 /* HERO */
@@ -189,6 +237,193 @@ body {
 
 .btn-secondary:hover {
     background: rgba(255,255,255,0.25);
+}
+
+.btn-criar-conta {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.btn-criar-conta:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+/* Banner de Conta - Para usuários não logados */
+.banner-conta {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    max-width: 700px;
+    width: calc(100% - 40px);
+    animation: slideUpBanner 0.5s ease-out;
+}
+
+@keyframes slideUpBanner {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.banner-conta-content {
+    background: linear-gradient(135deg, #1e3a5f, #0f2744);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.banner-conta-icon {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    background: rgba(251, 191, 36, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fbbf24;
+}
+
+.banner-conta-icon svg {
+    width: 26px;
+    height: 26px;
+}
+
+.banner-conta-texto {
+    flex: 1;
+    color: white;
+}
+
+.banner-conta-texto strong {
+    display: block;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+    color: #fbbf24;
+}
+
+.banner-conta-texto p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.banner-conta-btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.banner-conta-btn:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-2px);
+}
+
+.banner-conta-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.banner-conta-fechar {
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.banner-conta-fechar:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.banner-conta-fechar svg {
+    width: 18px;
+    height: 18px;
+}
+
+.banner-conta.hidden {
+    display: none;
+}
+
+/* Responsivo para banner */
+@media (max-width: 768px) {
+    .banner-conta-content {
+        flex-wrap: wrap;
+        padding: 1rem;
+    }
+    
+    .banner-conta-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .banner-conta-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .banner-conta-texto {
+        flex: 1 1 calc(100% - 100px);
+    }
+    
+    .banner-conta-texto strong {
+        font-size: 0.9rem;
+    }
+    
+    .banner-conta-texto p {
+        font-size: 0.8rem;
+    }
+    
+    .banner-conta-btn {
+        flex: 1 1 100%;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+    
+    .banner-conta-fechar {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 28px;
+        height: 28px;
+    }
+    
+    .banner-conta-content {
+        position: relative;
+        padding-top: 1.5rem;
+    }
 }
 
 .hero-verse {
