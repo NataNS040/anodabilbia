@@ -173,12 +173,12 @@ function verificarBannerConta() {
     
     if (!banner) return;
     
-    // Verificar se usuário está logado
-    var usuarioLogado = false;
-    if (window.SupabaseConfig && window.SupabaseConfig.isReady()) {
-        var usuario = localStorage.getItem('bibliaagora_usuario');
-        usuarioLogado = !!usuario;
-    }
+    // Verificar se usuário está logado (verificar diretamente no localStorage)
+    // O auth.js usa 'bibliaagora_usuario_logado' para armazenar o usuário
+    var usuario = localStorage.getItem('bibliaagora_usuario_logado');
+    var usuarioLogado = !!usuario && usuario !== 'null';
+    
+    console.log('🔍 Verificando banner - Usuário logado:', usuarioLogado, usuario);
     
     // Verificar se usuário fechou o banner recentemente (24 horas)
     var bannerFechado = localStorage.getItem('bibliaagora_banner_fechado');
@@ -197,16 +197,22 @@ function verificarBannerConta() {
         if (btnCriarContaHero) {
             btnCriarContaHero.style.display = 'none';
         }
+        console.log('✅ Banner escondido - usuário logado');
     } else if (bannerFechado && !bannerExpirado) {
         banner.classList.add('hidden');
+        console.log('⏸️ Banner escondido - fechado recentemente');
     } else {
         banner.classList.remove('hidden');
         // Mostrar botão criar conta no hero
         if (btnCriarContaHero) {
             btnCriarContaHero.style.display = 'inline-flex';
         }
+        console.log('👀 Banner visível - usuário não logado');
     }
 }
+
+// Tornar função global para poder ser chamada após login
+window.verificarBannerConta = verificarBannerConta;
 
 function fecharBannerConta() {
     var banner = document.getElementById('banner-conta');
