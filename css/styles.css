@@ -514,6 +514,21 @@ body {
     color: white;
 }
 
+/* Destaque temporário para dia atual */
+.dia-item.destacado {
+    animation: pulsar 0.6s ease-in-out 3;
+    box-shadow: 0 0 0 3px var(--accent);
+}
+
+@keyframes pulsar {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
 /* PROGRESSO DO MES */
 .mes-progress {
     margin-top: 0.75rem;
@@ -807,4 +822,168 @@ body {
     .section-title {
         font-size: 2rem;
     }
+
+    .leitura-hoje-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .leitura-hoje-icon {
+        margin: 0 auto 1rem;
+    }
+
+    .como-funciona {
+        padding: 1.5rem;
+    }
+}
+
+/* ============================
+   LEITURA DE HOJE
+   ============================ */
+.leitura-hoje-section {
+    padding: 3rem 0 2rem;
+    background: linear-gradient(180deg, var(--primary-light) 0%, var(--bg) 100%);
+}
+
+.leitura-hoje-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 40px rgba(30, 58, 95, 0.15);
+    border: 1px solid rgba(30, 58, 95, 0.1);
+    margin-bottom: 2rem;
+}
+
+.leitura-hoje-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.leitura-hoje-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.leitura-hoje-icon svg {
+    width: 32px;
+    height: 32px;
+    color: white;
+}
+
+.leitura-hoje-titulo h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+}
+
+.leitura-hoje-data {
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
+.leitura-hoje-conteudo {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--accent);
+}
+
+.leitura-hoje-texto {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.leitura-hoje-texto svg {
+    width: 24px;
+    height: 24px;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.leitura-hoje-indisponivel {
+    color: var(--text-light);
+    font-style: italic;
+}
+
+.leitura-hoje-acao {
+    text-align: center;
+}
+
+.btn-leitura-hoje {
+    background: var(--primary);
+    color: white;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+}
+
+.btn-leitura-hoje:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(30, 58, 95, 0.25);
+}
+
+.btn-leitura-hoje svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* COMO FUNCIONA */
+.como-funciona {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(30, 58, 95, 0.08);
+    border: 1px solid rgba(30, 58, 95, 0.08);
+}
+
+.como-funciona-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.como-funciona-titulo svg {
+    width: 20px;
+    height: 20px;
+    color: var(--accent);
+}
+
+.como-funciona-texto {
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+}
+
+.como-funciona-texto:last-child {
+    margin-bottom: 0;
+}
+
+.como-funciona-texto strong {
+    color: var(--primary);
 }

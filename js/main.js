@@ -99,8 +99,60 @@ function atualizarCardsMeses() {
     }
 }
 
+// Nomes dos meses em português
+var NOMES_MESES = [
+    'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+    'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
+];
+
+function carregarLeituraDeHoje() {
+    var hoje = new Date();
+    var dia = hoje.getDate();
+    var mes = hoje.getMonth() + 1; // JavaScript usa 0-11, nosso plano usa 1-12
+    
+    var data = window.BibliaAgoraData;
+    var leituraDoMes = data.PLANO_LEITURA[mes];
+    var leitura = leituraDoMes ? leituraDoMes[dia] : null;
+    
+    // Formatar data
+    var dataFormatada = dia + ' de ' + NOMES_MESES[mes - 1];
+    document.getElementById('leitura-hoje-data').textContent = dataFormatada;
+    
+    // Preencher conteúdo
+    var conteudo = document.getElementById('leitura-hoje-conteudo');
+    
+    if (leitura) {
+        conteudo.innerHTML = '<p class="leitura-hoje-texto"><i data-lucide="book-open"></i>' + leitura + '</p>';
+    } else {
+        conteudo.innerHTML = '<p class="leitura-hoje-indisponivel">A leitura para este dia não está disponível no plano atual.</p>';
+    }
+    
+    // Recriar ícones do Lucide
+    lucide.createIcons();
+}
+
+function irParaLeituraHoje() {
+    var hoje = new Date();
+    var mes = hoje.getMonth() + 1;
+    abrirMes(mes);
+    
+    // Aguardar renderização e scroll até o dia atual
+    setTimeout(function() {
+        var dia = hoje.getDate();
+        var diaElement = document.getElementById('dia-item-' + dia);
+        if (diaElement) {
+            diaElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            diaElement.classList.add('destacado');
+            setTimeout(function() {
+                diaElement.classList.remove('destacado');
+            }, 2000);
+        }
+    }, 300);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     lucide.createIcons();
+    carregarLeituraDeHoje();
     renderMeses();
     setupScrollTop();
     atualizarCardsMeses();
