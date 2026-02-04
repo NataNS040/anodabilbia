@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programação Anual DENEC / EBD 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #d4b84a;
+            --bg-light: #f8fafc;
+            --bg-dark: #e2e8f0;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --text-muted: #718096;
+            --white: #ffffff;
+            --success: #38a169;
+            --info: #3182ce;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+        }
+        
+        .presentation {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        /* SLIDES BASE */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 80px;
+            background: var(--bg-light);
+        }
+        
+        .slide.active {
+            display: flex;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* NAVEGAÇÃO */
+        .nav-bar {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 18px;
+            background: rgba(255,255,255,0.95);
+            padding: 12px 30px;
+            border-radius: 50px;
+            box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-bar button {
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-bar button:hover { background: var(--primary-light); transform: scale(1.05); }
+        .nav-bar button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        
+        .nav-bar .counter {
+            padding: 0 22px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .fullscreen-btn:hover { background: var(--primary-light); }
+        
+        .shortcuts {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: rgba(0,0,0,0.75);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            opacity: 0.8;
+        }
+        
+        .shortcuts kbd {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 7px;
+            border-radius: 4px;
+            margin: 0 2px;
+        }
+        
+        /* ==================== SLIDE CAPA ==================== */
+        .slide-capa {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide-capa::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -15%;
+            width: 60%;
+            height: 180%;
+            background: radial-gradient(circle, rgba(201,162,39,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .slide-capa::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 40%;
+            height: 80%;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .capa-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+        }
+        
+        .capa-icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .capa-icon-item {
+            width: 80px;
+            height: 80px;
+            background: rgba(201,162,39,0.15);
+            border: 2px solid rgba(201,162,39,0.3);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .capa-icon-item svg { width: 40px; height: 40px; color: var(--accent); }
+        
+        .capa-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .capa-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.1;
+        }
+        .capa-title span { color: var(--accent); }
+        
+        .capa-subtitle {
+            font-size: 1.6rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+        
+        .capa-dept {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            margin-bottom: 40px;
+        }
+        
+        .capa-year {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 15px 50px;
+            border-radius: 50px;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+        }
+        
+        /* ==================== SLIDE CONTEÚDO ==================== */
+        .slide-content {
+            background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-dark) 100%);
+        }
+        
+        .slide-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .slide-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 30px rgba(30,58,95,0.25);
+        }
+        .slide-icon svg { width: 40px; height: 40px; color: var(--accent); }
+        
+        .slide-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+        
+        /* Layout em duas colunas */
+        .two-columns {
+            display: flex;
+            gap: 60px;
+            width: 100%;
+            max-width: 1300px;
+            align-items: flex-start;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        /* Lista de itens */
+        .item-list {
+            list-style: none;
+        }
+        
+        .item-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            font-size: 1.25rem;
+            color: var(--text-dark);
+        }
+        
+        .item-list li:last-child { border-bottom: none; }
+        
+        .item-list .icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(201,162,39,0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .item-list .icon svg { width: 24px; height: 24px; color: var(--accent); }
+        
+        .item-list .text strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 3px;
+        }
+        
+        .item-list .text small {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        
+        /* Cards grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .cards-grid.cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 900px;
+        }
+        
+        .cards-grid.cols-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover { transform: translateY(-5px); }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 15px;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-icon svg { width: 30px; height: 30px; color: var(--accent); }
+        
+        .card h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .card p {
+            font-size: 1rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+        
+        .card .date {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+        
+        /* ==================== ORGANOGRAMA ==================== */
+        .organogram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        .org-level {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            position: relative;
+        }
+        
+        .org-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px 30px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            min-width: 180px;
+            position: relative;
+        }
+        
+        .org-card.pastor {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+        }
+        
+        .org-card.pastor h4 { color: var(--accent); }
+        .org-card.pastor p { color: white; opacity: 0.9; }
+        
+        .org-card.diretor {
+            border-top: 4px solid var(--accent);
+        }
+        
+        .org-card.vice {
+            border-top: 4px solid var(--primary-light);
+        }
+        
+        .org-card.secretaria {
+            border-top: 4px solid var(--info);
+        }
+        
+        .org-card.supervisora {
+            border-top: 4px solid var(--success);
+        }
+        
+        .org-card h4 {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        
+        .org-card p {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .org-connector {
+            width: 3px;
+            height: 18px;
+            background: var(--primary);
+            opacity: 0.3;
+        }
+        
+        .org-connector-h {
+            height: 3px;
+            background: var(--primary);
+            opacity: 0.3;
+            width: 200px;
+        }
+        
+        /* ==================== EVENTO DESTAQUE ==================== */
+        .event-highlight {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 24px;
+            padding: 50px 60px;
+            color: white;
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+        }
+        
+        .event-highlight h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .event-highlight .theme {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+        
+        .event-highlight .dates {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .event-highlight .date-badge {
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        /* ==================== DATAS COMEMORATIVAS ==================== */
+        .dates-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        .date-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+        
+        .date-card .date-box {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 90px;
+        }
+        
+        .date-card .date-box .day {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+        
+        .date-card .date-box .month {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+        }
+        
+        .date-card .date-info h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .date-card .date-info p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+        
+        /* ==================== CLASSE SLIDE ==================== */
+        .classe-content {
+            display: flex;
+            gap: 60px;
+            width: 100%;
+            max-width: 1200px;
+            align-items: center;
+        }
+        
+        .classe-info {
+            flex: 1;
+        }
+        
+        .classe-header {
+            margin-bottom: 30px;
+        }
+        
+        .classe-icon-big {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 35px rgba(30,58,95,0.25);
+        }
+        .classe-icon-big svg { width: 50px; height: 50px; color: var(--accent); }
+        
+        .classe-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .classe-age {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .professores-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .professor-card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .professor-card h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .professor-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        /* ==================== SLIDE FINAL ==================== */
+        .slide-final {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide-final::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -15%;
+            width: 60%;
+            height: 180%;
+            background: radial-gradient(circle, rgba(201,162,39,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .final-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .final-icons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .final-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(201,162,39,0.15);
+            border: 2px solid rgba(201,162,39,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .final-icon svg { width: 35px; height: 35px; color: var(--accent); }
+        
+        .final-phrase {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            line-height: 1.4;
+            margin-bottom: 30px;
+        }
+        
+        .final-phrase span {
+            color: var(--accent);
+        }
+        
+        .final-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        
+        /* ==================== PRINT STYLES ==================== */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            
+            html, body {
+                width: 100%;
+                height: auto;
+                overflow: visible;
+                background: white !important;
+            }
+            
+            .nav-bar, .fullscreen-btn, .shortcuts { display: none !important; }
+            
+            .slide {
+                position: relative !important;
+                display: flex !important;
+                width: 100% !important;
+                height: 100vh !important;
+                page-break-after: always;
+                page-break-inside: avoid;
+                break-after: page;
+            }
+            
+            .slide:last-child { page-break-after: avoid; }
+            
+            .slide-capa, .slide-final {
+                background: #1e3a5f !important;
+            }
+        }
+        
+        @page {
+            size: landscape;
+            margin: 0;
+        }
+        
+        :fullscreen .nav-bar { bottom: 35px; }
+        :fullscreen .fullscreen-btn { display: none; }
+    </style>
+</head>
+<body>
+
+<button class="fullscreen-btn" onclick="toggleFullscreen()">
+    <i data-lucide="maximize"></i> Tela Cheia
+</button>
+
+<div class="shortcuts">
+    <kbd>←</kbd> <kbd>→</kbd> navegar | <kbd>F</kbd> tela cheia
+</div>
+
+<div class="presentation">
+
+    <!-- ==================== SLIDE 1 - CAPA ==================== -->
+    <div class="slide slide-capa active" id="s1">
+        <div class="capa-content">
+            <div class="capa-icons">
+                <div class="capa-icon-item"><i data-lucide="book-open"></i></div>
+                <div class="capa-icon-item"><i data-lucide="church"></i></div>
+                <div class="capa-icon-item"><i data-lucide="users"></i></div>
+            </div>
+            <div class="capa-badge">Departamento de Ensino Cristão</div>
+            <h1 class="capa-title">Programação Anual<br><span>DENEC / EBD</span></h1>
+            <p class="capa-subtitle">Escola Bíblica Dominical</p>
+            <p class="capa-dept">Planejamento, Formação e Crescimento Espiritual</p>
+            <div class="capa-year">2026</div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 2 - ORGANOGRAMA ==================== -->
+    <div class="slide slide-content" id="s2">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="network"></i></div>
+            <h2 class="slide-title">Organograma da Liderança</h2>
+        </div>
+        <div class="organogram">
+            <div class="org-level">
+                <div class="org-card pastor">
+                    <h4>Pastor Presidente</h4>
+                    <p>Pastor Alison</p>
+                </div>
+            </div>
+            <div class="org-connector"></div>
+            <div class="org-level">
+                <div class="org-card diretor">
+                    <h4>Diretor DENEC</h4>
+                    <p>Maxwell</p>
+                </div>
+            </div>
+            <div class="org-connector"></div>
+            <div class="org-level">
+                <div class="org-card vice">
+                    <h4>Vice-Diretor</h4>
+                    <p>Natã</p>
+                </div>
+                <div class="org-card secretaria">
+                    <h4>Secretaria</h4>
+                    <p>Nara</p>
+                </div>
+            </div>
+            <div class="org-connector"></div>
+            <div class="org-level">
+                <div class="org-card supervisora">
+                    <h4>Supervisora Pedagógica</h4>
+                    <p>Yasmin</p>
+                </div>
+                <div class="org-card supervisora">
+                    <h4>Supervisora Pedagógica</h4>
+                    <p>Fernanda</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 3 - VISÃO GERAL ==================== -->
+    <div class="slide slide-content" id="s3">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="layout-grid"></i></div>
+            <div class="slide-badge">Visão Geral</div>
+            <h2 class="slide-title">Programação Anual EBD – 2026</h2>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon"><i data-lucide="graduation-cap"></i></div>
+                <h4>Formação</h4>
+                <p>Capacitação de professores e líderes</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="calendar-days"></i></div>
+                <h4>Eventos</h4>
+                <p>Seminários e encontros especiais</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="gift"></i></div>
+                <h4>Datas Comemorativas</h4>
+                <p>Celebrações importantes</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="repeat"></i></div>
+                <h4>Atividades Permanentes</h4>
+                <p>Ações contínuas da EBD</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="heart"></i></div>
+                <h4>Ações Espirituais</h4>
+                <p>Consagrações e comunhão</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="clipboard-list"></i></div>
+                <h4>Projetos Pedagógicos</h4>
+                <p>Estrutura e metodologia</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 4 - FORMAÇÃO ==================== -->
+    <div class="slide slide-content" id="s4">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="graduation-cap"></i></div>
+            <div class="slide-badge">Capacitação</div>
+            <h2 class="slide-title">Formação e Capacitação</h2>
+        </div>
+        <div class="cards-grid cols-2">
+            <div class="card">
+                <div class="card-icon"><i data-lucide="book-open"></i></div>
+                <h4>Formação de Professores</h4>
+                <p>Planejamento pedagógico da EBD com foco na excelência do ensino bíblico</p>
+                <span class="date">04 de fevereiro</span>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="mic"></i></div>
+                <h4>Curso de Pregadores</h4>
+                <p>Incentivo ao crescimento ministerial e aprofundamento no ensino bíblico</p>
+                <span class="date">Última semana de fevereiro</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 5 - EVENTOS ==================== -->
+    <div class="slide slide-content" id="s5">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="calendar-check"></i></div>
+            <div class="slide-badge">Evento Principal</div>
+            <h2 class="slide-title">Eventos do DENEC</h2>
+        </div>
+        <div class="event-highlight">
+            <h3>Seminário DENEC 2026</h3>
+            <p class="theme">Tema: Panorama Bíblico do Novo Testamento</p>
+            <div class="dates">
+                <span class="date-badge">14 de setembro</span>
+                <span class="date-badge">15 de setembro</span>
+                <span class="date-badge">16 de setembro</span>
+                <span class="date-badge">17 de setembro</span>
+            </div>
+            <p style="margin-top: 20px; opacity: 0.8; font-size: 1rem;">Segunda a quinta-feira</p>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 6 - DATAS COMEMORATIVAS ==================== -->
+    <div class="slide slide-content" id="s6">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="calendar-heart"></i></div>
+            <div class="slide-badge">Celebrações</div>
+            <h2 class="slide-title">Datas Importantes</h2>
+        </div>
+        <div class="dates-grid">
+            <div class="date-card">
+                <div class="date-box">
+                    <div class="day">19</div>
+                    <div class="month">Agosto</div>
+                </div>
+                <div class="date-info">
+                    <h4>Fundação da EBD no Brasil</h4>
+                    <p>Celebração histórica do ensino bíblico</p>
+                </div>
+            </div>
+            <div class="date-card">
+                <div class="date-box">
+                    <div class="day">20</div>
+                    <div class="month">Setembro</div>
+                </div>
+                <div class="date-info">
+                    <h4>Dia Internacional da EBD</h4>
+                    <p>Reconhecimento mundial</p>
+                </div>
+            </div>
+            <div class="date-card">
+                <div class="date-box">
+                    <div class="day">15</div>
+                    <div class="month">Outubro</div>
+                </div>
+                <div class="date-info">
+                    <h4>Dia do Professor</h4>
+                    <p>Homenagem aos educadores cristãos</p>
+                </div>
+            </div>
+            <div class="date-card">
+                <div class="date-box">
+                    <div class="day">18</div>
+                    <div class="month">Dezembro</div>
+                </div>
+                <div class="date-info">
+                    <h4>Dia da Bíblia</h4>
+                    <p>Celebração da Palavra de Deus</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 7 - ATIVIDADES PERMANENTES ==================== -->
+    <div class="slide slide-content" id="s7">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="repeat"></i></div>
+            <div class="slide-badge">Semanal</div>
+            <h2 class="slide-title">Atividades Fixas da EBD</h2>
+        </div>
+        <div class="two-columns">
+            <div class="column">
+                <ul class="item-list">
+                    <li>
+                        <span class="icon"><i data-lucide="help-circle"></i></span>
+                        <span class="text">
+                            <strong>Pergunta Premiada</strong>
+                            <small>Todos os domingos durante a EBD</small>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="moon"></i></span>
+                        <span class="text">
+                            <strong>Momento EBD</strong>
+                            <small>Resumo da aula no culto à noite</small>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="users"></i></span>
+                        <span class="text">
+                            <strong>Organização por Classe</strong>
+                            <small>Cada classe responsável pela organização</small>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="column">
+                <ul class="item-list">
+                    <li>
+                        <span class="icon"><i data-lucide="book-text"></i></span>
+                        <span class="text">
+                            <strong>EBD em Síntese</strong>
+                            <small>Incentivo permanente ao estudo</small>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="cake"></i></span>
+                        <span class="text">
+                            <strong>Arrecadação após EBD</strong>
+                            <small>Pudim, trufas e sobremesas</small>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 8 - VIDA ESPIRITUAL ==================== -->
+    <div class="slide slide-content" id="s8">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="heart"></i></div>
+            <div class="slide-badge">Comunhão</div>
+            <h2 class="slide-title">Vida Espiritual da EBD</h2>
+        </div>
+        <div class="cards-grid cols-2">
+            <div class="card">
+                <div class="card-icon"><i data-lucide="flame"></i></div>
+                <h4>Consagração Trimestral</h4>
+                <p>Momento de dedicação no início de cada trimestre para alinhamento espiritual</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="coffee"></i></div>
+                <h4>Café da Manhã Comunitário</h4>
+                <p>Fortalecimento da comunhão entre os membros da EBD</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="hand-heart"></i></div>
+                <h4>Fortalecimento Espiritual</h4>
+                <p>Momentos de oração e edificação mútua</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="target"></i></div>
+                <h4>Alinhamento Pedagógico</h4>
+                <p>Integração entre vida espiritual e ensino bíblico</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 9 - AÇÕES EXTERNAS ==================== -->
+    <div class="slide slide-content" id="s9">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="megaphone"></i></div>
+            <div class="slide-badge">Evangelismo</div>
+            <h2 class="slide-title">Ações Evangelísticas</h2>
+        </div>
+        <div class="event-highlight">
+            <h3>EBD na Rua</h3>
+            <p class="theme">Realizada na semana de encerramento de cada trimestre</p>
+            <div class="dates" style="margin-top: 30px;">
+                <span class="date-badge">Evangelismo</span>
+                <span class="date-badge">Ensino Bíblico Público</span>
+                <span class="date-badge">Ação Social Cristã</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 10 - ORGANIZAÇÃO PEDAGÓGICA ==================== -->
+    <div class="slide slide-content" id="s10">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="clipboard-list"></i></div>
+            <div class="slide-badge">Metodologia</div>
+            <h2 class="slide-title">Estrutura Pedagógica</h2>
+        </div>
+        <div class="two-columns">
+            <div class="column">
+                <ul class="item-list">
+                    <li>
+                        <span class="icon"><i data-lucide="eye"></i></span>
+                        <span class="text">
+                            <strong>Supervisão Pedagógica</strong>
+                            <small>Acompanhamento contínuo das aulas</small>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="layout-list"></i></span>
+                        <span class="text">
+                            <strong>Planejamento por Classe</strong>
+                            <small>Organização específica para cada faixa</small>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="users"></i></span>
+                        <span class="text">
+                            <strong>Organização por Faixa Etária</strong>
+                            <small>Ensino adequado para cada idade</small>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="column">
+                <ul class="item-list">
+                    <li>
+                        <span class="icon"><i data-lucide="book-open"></i></span>
+                        <span class="text">
+                            <strong>Metodologia Cristã</strong>
+                            <small>Ensino com base bíblica</small>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="lightbulb"></i></span>
+                        <span class="text">
+                            <strong>Didática Bíblica</strong>
+                            <small>Técnicas de ensino eficazes</small>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="trending-up"></i></span>
+                        <span class="text">
+                            <strong>Ensino Estruturado</strong>
+                            <small>Contínuo e progressivo</small>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 11 - CLASSE HOMENS ==================== -->
+    <div class="slide slide-content" id="s11">
+        <div class="classe-content">
+            <div class="classe-info">
+                <div class="classe-header">
+                    <div class="classe-icon-big"><i data-lucide="users"></i></div>
+                    <h2 class="classe-name">Classe de Homens</h2>
+                    <span class="classe-age">Adultos</span>
+                </div>
+            </div>
+            <div class="professores-grid">
+                <div class="professor-card">
+                    <h4>Françoar</h4>
+                    <p>Professor</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Pastor Alison</h4>
+                    <p>Professor</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 12 - CLASSE MULHERES ==================== -->
+    <div class="slide slide-content" id="s12">
+        <div class="classe-content">
+            <div class="classe-info">
+                <div class="classe-header">
+                    <div class="classe-icon-big"><i data-lucide="heart"></i></div>
+                    <h2 class="classe-name">Classe de Mulheres</h2>
+                    <span class="classe-age">Adultas</span>
+                </div>
+            </div>
+            <div class="professores-grid">
+                <div class="professor-card">
+                    <h4>Maxwell</h4>
+                    <p>Professor</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Nara</h4>
+                    <p>Professora</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Bruna</h4>
+                    <p>Professora</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 13 - CLASSE DISCIPULANDO ==================== -->
+    <div class="slide slide-content" id="s13">
+        <div class="classe-content">
+            <div class="classe-info">
+                <div class="classe-header">
+                    <div class="classe-icon-big"><i data-lucide="book-open"></i></div>
+                    <h2 class="classe-name">Discipulando</h2>
+                    <span class="classe-age">Novos Convertidos</span>
+                </div>
+            </div>
+            <div class="professores-grid">
+                <div class="professor-card">
+                    <h4>João</h4>
+                    <p>Professor</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Joaz</h4>
+                    <p>Professor</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Guilherme</h4>
+                    <p>Professor</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Paulo</h4>
+                    <p>Professor</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 14 - CLASSE JOVENS ==================== -->
+    <div class="slide slide-content" id="s14">
+        <div class="classe-content">
+            <div class="classe-info">
+                <div class="classe-header">
+                    <div class="classe-icon-big"><i data-lucide="flame"></i></div>
+                    <h2 class="classe-name">Jovens</h2>
+                    <span class="classe-age">18 a 35 anos</span>
+                </div>
+            </div>
+            <div class="professores-grid">
+                <div class="professor-card">
+                    <h4>Natã</h4>
+                    <p>Professor</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Henrique</h4>
+                    <p>Professor</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Nara</h4>
+                    <p>Professora</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 15 - CLASSE PRÉ-ADOLESCENTES ==================== -->
+    <div class="slide slide-content" id="s15">
+        <div class="classe-content">
+            <div class="classe-info">
+                <div class="classe-header">
+                    <div class="classe-icon-big"><i data-lucide="rocket"></i></div>
+                    <h2 class="classe-name">Pré-Adolescentes</h2>
+                    <span class="classe-age">11 a 14 anos</span>
+                </div>
+            </div>
+            <div class="professores-grid">
+                <div class="professor-card">
+                    <h4>Beatriz</h4>
+                    <p>Professora</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Miqueias</h4>
+                    <p>Professor</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Henrique</h4>
+                    <p>Professor</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 16 - CLASSE JUNIORES ==================== -->
+    <div class="slide slide-content" id="s16">
+        <div class="classe-content">
+            <div class="classe-info">
+                <div class="classe-header">
+                    <div class="classe-icon-big"><i data-lucide="star"></i></div>
+                    <h2 class="classe-name">Juniores</h2>
+                    <span class="classe-age">8 a 10 anos</span>
+                </div>
+            </div>
+            <div class="professores-grid">
+                <div class="professor-card">
+                    <h4>Lucas</h4>
+                    <p>Professor</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Talita</h4>
+                    <p>Professora</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Fernanda</h4>
+                    <p>Professora</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Ana Beatriz</h4>
+                    <p>Professora</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 17 - CLASSE JARDIM ==================== -->
+    <div class="slide slide-content" id="s17">
+        <div class="classe-content">
+            <div class="classe-info">
+                <div class="classe-header">
+                    <div class="classe-icon-big"><i data-lucide="flower-2"></i></div>
+                    <h2 class="classe-name">Jardim</h2>
+                    <span class="classe-age">4 a 7 anos</span>
+                </div>
+            </div>
+            <div class="professores-grid">
+                <div class="professor-card">
+                    <h4>Lívia</h4>
+                    <p>Professora</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Yasmin</h4>
+                    <p>Professora</p>
+                </div>
+                <div class="professor-card">
+                    <h4>Sofia</h4>
+                    <p>Professora</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 18 - ENCERRAMENTO ==================== -->
+    <div class="slide slide-final" id="s18">
+        <div class="final-content">
+            <div class="final-icons">
+                <div class="final-icon"><i data-lucide="book-open"></i></div>
+                <div class="final-icon"><i data-lucide="church"></i></div>
+                <div class="final-icon"><i data-lucide="users"></i></div>
+                <div class="final-icon"><i data-lucide="heart"></i></div>
+            </div>
+            <p class="final-phrase">"A Escola Bíblica Dominical é o <span>coração do ensino</span> da igreja."</p>
+            <p class="final-subtitle">Compromisso com o Ensino Cristão • DENEC 2026</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav-bar">
+    <button id="prev" onclick="prev()">◀</button>
+    <div class="counter"><span id="atual">1</span> / 18</div>
+    <button id="next" onclick="next()">▶</button>
+</nav>
+
+<script>
+    lucide.createIcons();
+    
+    let slide = 1;
+    const total = 18;
+    
+    function show(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        document.getElementById('atual').textContent = n;
+        document.getElementById('prev').disabled = (n === 1);
+        document.getElementById('next').disabled = (n === total);
+        slide = n;
+        lucide.createIcons();
+    }
+    
+    function next() { if (slide < total) show(slide + 1); }
+    function prev() { if (slide > 1) show(slide - 1); }
+    
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+    
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+            e.preventDefault();
+            next();
+        }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+            e.preventDefault();
+            prev();
+        }
+        if (e.key === 'f' || e.key === 'F') {
+            toggleFullscreen();
+        }
+        if (e.key === 'Home') show(1);
+        if (e.key === 'End') show(total);
+    });
+    
+    setTimeout(() => {
+        const shortcuts = document.querySelector('.shortcuts');
+        if (shortcuts) {
+            shortcuts.style.opacity = '0';
+            shortcuts.style.transition = 'opacity 1s';
+        }
+    }, 5000);
+</script>
+</body>
+</html>

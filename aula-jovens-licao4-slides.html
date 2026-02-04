@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Deus que Justifica | Lição 4 - Jovens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --primary-dark: #0f2744;
+            --accent: #d4a854;
+            --accent-light: #e6c07a;
+            --bg-light: #f7fafc;
+            --bg-dark: #edf2f7;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --text-muted: #718096;
+            --white: #ffffff;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+        }
+        
+        .presentation {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        /* SLIDES BASE - FORMATO PAISAGEM */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 100px;
+            background: var(--bg-light);
+        }
+        
+        .slide.active {
+            display: flex;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* NAVEGAÇÃO */
+        .nav-bar {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            background: rgba(255,255,255,0.95);
+            padding: 15px 35px;
+            border-radius: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-bar button {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-bar button:hover { background: var(--primary-light); transform: scale(1.05); }
+        .nav-bar button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        
+        .nav-bar .counter {
+            padding: 0 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .fullscreen-btn {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .fullscreen-btn:hover { background: var(--primary-light); }
+        
+        /* ==================== SLIDE CAPA ==================== */
+        .slide-capa {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide-capa::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 70%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212,168,84,0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .slide-capa::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .capa-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+        
+        .capa-icon {
+            width: 120px;
+            height: 120px;
+            background: rgba(212,168,84,0.15);
+            border: 3px solid rgba(212,168,84,0.4);
+            border-radius: 50%;
+            margin: 0 auto 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .capa-icon svg { width: 60px; height: 60px; color: var(--accent); }
+        
+        .capa-serie {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-size: 1rem;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .capa-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+        .capa-title span { color: var(--accent); }
+        
+        .capa-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 50px;
+            font-weight: 300;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .capa-verse {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .capa-date {
+            margin-top: 35px;
+            font-size: 1rem;
+            opacity: 0.6;
+        }
+        
+        /* ==================== SLIDES CONTEÚDO ==================== */
+        .slide-content {
+            background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-dark) 100%);
+        }
+        
+        .slide-layout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+            width: 100%;
+            max-width: 1400px;
+        }
+        
+        .slide-layout.centered {
+            flex-direction: column;
+            text-align: center;
+            gap: 40px;
+        }
+        
+        .slide-left {
+            flex: 1;
+            max-width: 500px;
+        }
+        
+        .slide-right {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        /* Header do slide */
+        .content-header {
+            margin-bottom: 40px;
+        }
+        
+        .content-header.centered {
+            text-align: center;
+        }
+        
+        .content-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 24px;
+            margin-bottom: 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 35px rgba(26,54,93,0.25);
+        }
+        .content-icon svg { width: 45px; height: 45px; color: var(--accent); }
+        
+        .content-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .content-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        
+        .content-subtitle {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+        
+        /* Lista de tópicos */
+        .topics-list {
+            list-style: none;
+        }
+        
+        .topics-list li {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            font-size: 1.4rem;
+            color: var(--text-dark);
+        }
+        
+        .topics-list li:last-child { border-bottom: none; }
+        
+        .topics-list .icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(212,168,84,0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .topics-list .icon svg { width: 26px; height: 26px; color: var(--accent); }
+        
+        /* Versículo destaque */
+        .verse-highlight {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 30px;
+            padding: 60px 50px;
+            color: white;
+            text-align: center;
+            max-width: 800px;
+        }
+        
+        .verse-highlight blockquote {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            line-height: 1.5;
+            font-style: italic;
+            margin-bottom: 25px;
+        }
+        
+        .verse-highlight cite {
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        /* Texto em destaque */
+        .highlight-text {
+            background: white;
+            border-radius: 24px;
+            padding: 45px 40px;
+            border-left: 6px solid var(--accent);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        
+        .highlight-text p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            line-height: 1.5;
+            font-style: italic;
+        }
+        
+        .highlight-text .ref {
+            display: block;
+            margin-top: 20px;
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: 1rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        /* Pergunta grande */
+        .big-question {
+            max-width: 900px;
+            text-align: center;
+        }
+        
+        .big-question p {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            line-height: 1.4;
+        }
+        
+        .big-question .note {
+            margin-top: 40px;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        
+        /* Cards de perguntas */
+        .questions-grid {
+            display: flex;
+            gap: 30px;
+            max-width: 1000px;
+        }
+        
+        .question-card {
+            flex: 1;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            border-left: 5px solid var(--accent);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        
+        .question-card p {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+        
+        /* Comparação lado a lado */
+        .comparison-grid {
+            display: flex;
+            gap: 40px;
+            max-width: 1100px;
+        }
+        
+        .comparison-card {
+            flex: 1;
+            background: white;
+            border-radius: 24px;
+            padding: 45px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        
+        .comparison-card.left { border-top: 5px solid var(--primary); }
+        .comparison-card.right { border-top: 5px solid var(--accent); }
+        
+        .comparison-card h4 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .comparison-card h4 svg { width: 32px; height: 32px; color: var(--accent); }
+        
+        .comparison-card ul {
+            list-style: none;
+        }
+        
+        .comparison-card ul li {
+            padding: 15px 0;
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .comparison-card ul li:last-child { border-bottom: none; }
+        
+        .comparison-card ul li::before {
+            content: '→';
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* Frase impacto */
+        .impact-phrase {
+            max-width: 1000px;
+            text-align: center;
+        }
+        
+        .impact-phrase p {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+        
+        .impact-phrase p span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        /* Rodapé discreto */
+        .slide-footer {
+            position: absolute;
+            bottom: 100px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+        
+        .slide-footer.light {
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* ==================== SLIDE FINAL ==================== */
+        .slide-final {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide-final::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 70%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212,168,84,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .final-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .final-phrase {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            line-height: 1.4;
+            margin-bottom: 40px;
+        }
+        
+        .final-phrase span {
+            color: var(--accent);
+        }
+        
+        /* ==================== ATALHOS ==================== */
+        .shortcuts {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+        
+        .shortcuts kbd {
+            background: rgba(255,255,255,0.2);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin: 0 3px;
+        }
+        
+        /* ==================== PRINT STYLES ==================== */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            
+            html, body {
+                width: 100%;
+                height: auto;
+                overflow: visible;
+                background: white !important;
+            }
+            
+            .nav-bar, .fullscreen-btn, .shortcuts { display: none !important; }
+            
+            .slide {
+                position: relative !important;
+                display: flex !important;
+                width: 100% !important;
+                height: 100vh !important;
+                page-break-after: always;
+                page-break-inside: avoid;
+                break-after: page;
+            }
+            
+            .slide:last-child { page-break-after: avoid; }
+            
+            .slide-capa, .slide-final {
+                background: #1a365d !important;
+            }
+        }
+        
+        @page {
+            size: landscape;
+            margin: 0;
+        }
+        
+        /* Fullscreen mode */
+        :fullscreen .nav-bar,
+        :-webkit-full-screen .nav-bar {
+            bottom: 40px;
+        }
+        
+        :fullscreen .fullscreen-btn,
+        :-webkit-full-screen .fullscreen-btn {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<button class="fullscreen-btn" onclick="toggleFullscreen()">
+    <i data-lucide="maximize"></i> Tela Cheia
+</button>
+
+<div class="shortcuts">
+    <kbd>←</kbd> <kbd>→</kbd> ou <kbd>Espaço</kbd> para navegar | <kbd>F</kbd> tela cheia
+</div>
+
+<div class="presentation">
+
+    <!-- ==================== SLIDE 1 - CAPA ==================== -->
+    <div class="slide slide-capa active" id="s1">
+        <div class="capa-content">
+            <div class="capa-icon"><i data-lucide="scale"></i></div>
+            <div class="capa-serie">Plano Perfeito</div>
+            <h1 class="capa-title">O Deus que <span>Justifica</span></h1>
+            <p class="capa-subtitle">A justificação pela fé e a nova identidade em Cristo</p>
+            <p class="capa-verse">"Sendo, pois, justificados pela fé, temos paz com Deus por nosso Senhor Jesus Cristo."<br>— Romanos 5.1</p>
+            <p class="capa-date">Lição 4 • 25 de janeiro de 2026</p>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 2 - OBJETIVO ==================== -->
+    <div class="slide slide-content" id="s2">
+        <div class="slide-layout">
+            <div class="slide-left">
+                <div class="content-header">
+                    <div class="content-icon"><i data-lucide="target"></i></div>
+                    <h2 class="content-title">O que vamos aprender hoje</h2>
+                </div>
+            </div>
+            <div class="slide-right">
+                <ul class="topics-list">
+                    <li>
+                        <span class="icon"><i data-lucide="book-open"></i></span>
+                        <span>O que é justificação pela fé</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="user"></i></span>
+                        <span>Como Deus justificou Abraão</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="git-branch"></i></span>
+                        <span>A diferença entre justificação e regeneração</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="heart"></i></span>
+                        <span>O livramento da culpa por meio da cruz</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 3 - DINÂMICA ==================== -->
+    <div class="slide slide-content" id="s3">
+        <div class="slide-layout centered">
+            <div class="content-header centered">
+                <div class="content-icon"><i data-lucide="message-circle"></i></div>
+                <div class="content-badge">Dinâmica Inicial</div>
+                <h2 class="content-title">Vamos pensar juntos</h2>
+            </div>
+            <div class="questions-grid">
+                <div class="question-card">
+                    <p>Uma pessoa pode ser salva por ser "boa"?</p>
+                </div>
+                <div class="question-card">
+                    <p>O que significa ser salvo pela fé?</p>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">Sem respostas prontas — apenas reflexão inicial</div>
+    </div>
+
+    <!-- ==================== SLIDE 4 - QUEBRA-GELO ==================== -->
+    <div class="slide slide-content" id="s4">
+        <div class="slide-layout centered">
+            <div class="content-header centered">
+                <div class="content-icon"><i data-lucide="help-circle"></i></div>
+                <div class="content-badge">Reflexão</div>
+                <h2 class="content-title">Pergunta que confronta</h2>
+            </div>
+            <div class="big-question">
+                <p>"Se você morresse hoje, por que Deus deveria te receber?"</p>
+            </div>
+        </div>
+        <div class="slide-footer">Romanos 5.1</div>
+    </div>
+
+    <!-- ==================== SLIDE 5 - TEXTO CENTRAL ==================== -->
+    <div class="slide slide-content" id="s5">
+        <div class="slide-layout centered">
+            <div class="content-header centered">
+                <div class="content-icon"><i data-lucide="book-open"></i></div>
+                <div class="content-badge">Texto-chave</div>
+            </div>
+            <div class="verse-highlight">
+                <blockquote>"Sendo, pois, justificados pela fé, temos paz com Deus por nosso Senhor Jesus Cristo."</blockquote>
+                <cite>Romanos 5.1</cite>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 6 - O QUE É JUSTIFICAÇÃO ==================== -->
+    <div class="slide slide-content" id="s6">
+        <div class="slide-layout">
+            <div class="slide-left">
+                <div class="content-header">
+                    <div class="content-icon"><i data-lucide="scale"></i></div>
+                    <h2 class="content-title">O que é Justificação pela fé?</h2>
+                </div>
+            </div>
+            <div class="slide-right">
+                <ul class="topics-list">
+                    <li>
+                        <span class="icon"><i data-lucide="gavel"></i></span>
+                        <span>Ato jurídico de Deus</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="arrow-right-left"></i></span>
+                        <span>Mudança de posição diante dEle</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="check-circle"></i></span>
+                        <span>De culpado → declarado justo</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="heart-handshake"></i></span>
+                        <span>Não depende de obras, mas da fé</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="slide-footer">Romanos 8.1</div>
+    </div>
+
+    <!-- ==================== SLIDE 7 - O QUE NÃO É ==================== -->
+    <div class="slide slide-content" id="s7">
+        <div class="slide-layout">
+            <div class="slide-left">
+                <div class="content-header">
+                    <div class="content-icon"><i data-lucide="x-circle"></i></div>
+                    <h2 class="content-title">O que a justificação não é</h2>
+                </div>
+                <ul class="topics-list">
+                    <li><span class="icon"><i data-lucide="x"></i></span><span>Não é sentimento</span></li>
+                    <li><span class="icon"><i data-lucide="x"></i></span><span>Não é merecimento</span></li>
+                    <li><span class="icon"><i data-lucide="x"></i></span><span>Não é esforço humano</span></li>
+                    <li><span class="icon"><i data-lucide="x"></i></span><span>Não é aparência religiosa</span></li>
+                </ul>
+            </div>
+            <div class="slide-right">
+                <div class="highlight-text">
+                    <p>Deus não nos aceita pelo que fazemos, mas pelo que Cristo fez.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 8 - ABRAÃO ==================== -->
+    <div class="slide slide-content" id="s8">
+        <div class="slide-layout centered">
+            <div class="content-header centered">
+                <div class="content-icon"><i data-lucide="footprints"></i></div>
+                <div class="content-badge">Exemplo Bíblico</div>
+                <h2 class="content-title">Abraão — o pai da fé</h2>
+            </div>
+            <div class="verse-highlight">
+                <blockquote>"Creu Abraão em Deus, e isso lhe foi imputado como justiça."</blockquote>
+                <cite>Romanos 4.3</cite>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 9 - ABRAÃO 1º MOMENTO ==================== -->
+    <div class="slide slide-content" id="s9">
+        <div class="slide-layout">
+            <div class="slide-left">
+                <div class="content-header">
+                    <div class="content-icon"><i data-lucide="map"></i></div>
+                    <div class="content-badge">1º Momento</div>
+                    <h2 class="content-title">Quando Abraão sai da sua terra</h2>
+                    <p class="content-subtitle">Gênesis 12.1–4</p>
+                </div>
+            </div>
+            <div class="slide-right">
+                <ul class="topics-list">
+                    <li><span class="icon"><i data-lucide="compass"></i></span><span>Sem mapa</span></li>
+                    <li><span class="icon"><i data-lucide="shield-question"></i></span><span>Sem garantias</span></li>
+                    <li><span class="icon"><i data-lucide="scroll"></i></span><span>Apenas uma promessa</span></li>
+                    <li><span class="icon"><i data-lucide="eye-off"></i></span><span>Fé antes da explicação</span></li>
+                </ul>
+                <div class="highlight-text" style="margin-top: 30px;">
+                    <p>Fé é obedecer sem ver.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 10 - ABRAÃO 2º MOMENTO ==================== -->
+    <div class="slide slide-content" id="s10">
+        <div class="slide-layout">
+            <div class="slide-left">
+                <div class="content-header">
+                    <div class="content-icon"><i data-lucide="baby"></i></div>
+                    <div class="content-badge">2º Momento</div>
+                    <h2 class="content-title">Quando nasce Isaque</h2>
+                    <p class="content-subtitle">Gênesis 15.6</p>
+                </div>
+            </div>
+            <div class="slide-right">
+                <ul class="topics-list">
+                    <li><span class="icon"><i data-lucide="infinity"></i></span><span>Promessa impossível</span></li>
+                    <li><span class="icon"><i data-lucide="hourglass"></i></span><span>Velhice e esterilidade</span></li>
+                    <li><span class="icon"><i data-lucide="check-check"></i></span><span>Deus cumpre o que promete</span></li>
+                </ul>
+                <div class="highlight-text" style="margin-top: 30px;">
+                    <p>Deus justifica quem crê, não quem merece.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 11 - ABRAÃO 3º MOMENTO ==================== -->
+    <div class="slide slide-content" id="s11">
+        <div class="slide-layout">
+            <div class="slide-left">
+                <div class="content-header">
+                    <div class="content-icon"><i data-lucide="mountain"></i></div>
+                    <div class="content-badge">3º Momento</div>
+                    <h2 class="content-title">Quando Abraão oferece Isaque</h2>
+                    <p class="content-subtitle">Gênesis 22 • Hebreus 11.17–19</p>
+                </div>
+            </div>
+            <div class="slide-right">
+                <ul class="topics-list">
+                    <li><span class="icon"><i data-lucide="gift"></i></span><span>Isaque era a promessa</span></li>
+                    <li><span class="icon"><i data-lucide="help-circle"></i></span><span>Deus pede o que prometeu</span></li>
+                    <li><span class="icon"><i data-lucide="sparkles"></i></span><span>Abraão creu que Deus podia ressuscitar</span></li>
+                </ul>
+                <div class="highlight-text" style="margin-top: 30px;">
+                    <p>A fé confia em Deus mesmo sem entender.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 12 - LIÇÃO DE ABRAÃO ==================== -->
+    <div class="slide slide-content" id="s12">
+        <div class="slide-layout">
+            <div class="slide-left">
+                <div class="content-header">
+                    <div class="content-icon"><i data-lucide="lightbulb"></i></div>
+                    <h2 class="content-title">O que aprendemos com Abraão</h2>
+                </div>
+                <ul class="topics-list">
+                    <li><span class="icon"><i data-lucide="arrow-up"></i></span><span>A fé vem antes das obras</span></li>
+                    <li><span class="icon"><i data-lucide="eye"></i></span><span>A obediência revela a fé</span></li>
+                    <li><span class="icon"><i data-lucide="award"></i></span><span>A justificação precede a prática</span></li>
+                </ul>
+            </div>
+            <div class="slide-right">
+                <div class="highlight-text">
+                    <p>Abraão não obedeceu para ser aceito — obedeceu porque confiou.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 13 - JUSTIFICAÇÃO X REGENERAÇÃO ==================== -->
+    <div class="slide slide-content" id="s13">
+        <div class="slide-layout centered">
+            <div class="content-header centered">
+                <div class="content-icon"><i data-lucide="git-compare"></i></div>
+                <h2 class="content-title">Duas obras diferentes, um mesmo Deus</h2>
+            </div>
+            <div class="comparison-grid">
+                <div class="comparison-card left">
+                    <h4><i data-lucide="scale"></i> Justificação</h4>
+                    <ul>
+                        <li>Muda a posição</li>
+                        <li>Remove a culpa</li>
+                        <li>Acontece diante de Deus</li>
+                    </ul>
+                </div>
+                <div class="comparison-card right">
+                    <h4><i data-lucide="heart"></i> Regeneração</h4>
+                    <ul>
+                        <li>Muda a natureza</li>
+                        <li>Gera nova vida</li>
+                        <li>Acontece no interior</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 14 - FRASE-CHAVE ==================== -->
+    <div class="slide slide-content" id="s14">
+        <div class="slide-layout centered">
+            <div class="impact-phrase">
+                <p>A justificação muda <span>como Deus me vê</span>.</p>
+                <p style="margin-top: 40px;">A regeneração muda <span>quem eu sou</span>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 15 - A CRUZ ==================== -->
+    <div class="slide slide-content" id="s15">
+        <div class="slide-layout">
+            <div class="slide-left">
+                <div class="content-header">
+                    <div class="content-icon"><i data-lucide="cross"></i></div>
+                    <h2 class="content-title">Onde tudo foi resolvido</h2>
+                </div>
+            </div>
+            <div class="slide-right">
+                <ul class="topics-list">
+                    <li><span class="icon"><i data-lucide="eraser"></i></span><span>Culpa anulada</span></li>
+                    <li><span class="icon"><i data-lucide="trophy"></i></span><span>Condenação vencida</span></li>
+                    <li><span class="icon"><i data-lucide="check-circle"></i></span><span>Justiça satisfeita</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="slide-footer">Romanos 8.31–34</div>
+    </div>
+
+    <!-- ==================== SLIDE 16 - LIVRES DA CULPA ==================== -->
+    <div class="slide slide-content" id="s16">
+        <div class="slide-layout">
+            <div class="slide-left">
+                <div class="content-header">
+                    <div class="content-icon"><i data-lucide="unlock"></i></div>
+                    <h2 class="content-title">Livres da condenação</h2>
+                </div>
+            </div>
+            <div class="slide-right">
+                <ul class="topics-list">
+                    <li><span class="icon"><i data-lucide="clock"></i></span><span>O passado não define mais</span></li>
+                    <li><span class="icon"><i data-lucide="shield-off"></i></span><span>A culpa não governa mais</span></li>
+                    <li><span class="icon"><i data-lucide="wind"></i></span><span>O Espírito confirma nossa identidade</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="slide-footer">Romanos 8.16–17</div>
+    </div>
+
+    <!-- ==================== SLIDE 17 - APLICAÇÃO ==================== -->
+    <div class="slide slide-content" id="s17">
+        <div class="slide-layout centered">
+            <div class="content-header centered">
+                <div class="content-icon"><i data-lucide="brain"></i></div>
+                <div class="content-badge">Aplicação</div>
+                <h2 class="content-title">Para refletir</h2>
+            </div>
+            <div class="big-question">
+                <p>"O que ainda tenta te acusar que Deus já perdoou?"</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 18 - CONCLUSÃO ==================== -->
+    <div class="slide slide-content" id="s18">
+        <div class="slide-layout">
+            <div class="slide-left">
+                <div class="content-header">
+                    <div class="content-icon"><i data-lucide="flag"></i></div>
+                    <h2 class="content-title">Vivendo como justificados</h2>
+                </div>
+                <ul class="topics-list">
+                    <li><span class="icon"><i data-lucide="heart"></i></span><span>Paz com Deus</span></li>
+                    <li><span class="icon"><i data-lucide="user-check"></i></span><span>Nova identidade</span></li>
+                    <li><span class="icon"><i data-lucide="flame"></i></span><span>Fé viva e transformadora</span></li>
+                </ul>
+            </div>
+            <div class="slide-right">
+                <div class="highlight-text">
+                    <p>A fé que justifica é a fé que transforma.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 19 - ENCERRAMENTO ==================== -->
+    <div class="slide slide-final" id="s19">
+        <div class="final-content">
+            <div class="capa-icon"><i data-lucide="sparkles"></i></div>
+            <p class="final-phrase">"Em Cristo, eu sou <span>perdoado</span>, <span>aceito</span> e <span>justificado</span>."</p>
+            <p class="capa-verse" style="border: none; padding-top: 0;">Romanos 5.1</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav-bar">
+    <button id="prev" onclick="prev()">◀</button>
+    <div class="counter"><span id="atual">1</span> / 19</div>
+    <button id="next" onclick="next()">▶</button>
+</nav>
+
+<script>
+    lucide.createIcons();
+    
+    let slide = 1;
+    const total = 19;
+    
+    function show(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        document.getElementById('atual').textContent = n;
+        document.getElementById('prev').disabled = (n === 1);
+        document.getElementById('next').disabled = (n === total);
+        slide = n;
+        lucide.createIcons();
+    }
+    
+    function next() { if (slide < total) show(slide + 1); }
+    function prev() { if (slide > 1) show(slide - 1); }
+    
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+    
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+            e.preventDefault();
+            next();
+        }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+            e.preventDefault();
+            prev();
+        }
+        if (e.key === 'f' || e.key === 'F') {
+            toggleFullscreen();
+        }
+        if (e.key === 'Home') {
+            show(1);
+        }
+        if (e.key === 'End') {
+            show(total);
+        }
+    });
+    
+    // Esconder atalhos após 5 segundos
+    setTimeout(() => {
+        document.querySelector('.shortcuts').style.opacity = '0';
+        document.querySelector('.shortcuts').style.transition = 'opacity 1s';
+    }, 5000);
+</script>
+</body>
+</html>
