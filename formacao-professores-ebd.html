@@ -79,6 +79,14 @@
             box-shadow: 0 8px 35px rgba(0,0,0,0.15);
             z-index: 1000;
             backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .nav-bar.visible {
+            opacity: 1;
+            pointer-events: auto;
         }
         
         .nav-bar button {
@@ -1407,17 +1415,57 @@
         if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
             e.preventDefault();
             next();
+            showNavBar();
         }
         if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
             e.preventDefault();
             prev();
+            showNavBar();
         }
         if (e.key === 'f' || e.key === 'F') {
             toggleFullscreen();
         }
-        if (e.key === 'Home') show(1);
-        if (e.key === 'End') show(total);
+        if (e.key === 'Home') {
+            show(1);
+            showNavBar();
+        }
+        if (e.key === 'End') {
+            show(total);
+            showNavBar();
+        }
     });
+    
+    // Auto-hide navigation bar
+    let navTimeout;
+    const navBar = document.querySelector('.nav-bar');
+    
+    function showNavBar() {
+        navBar.classList.add('visible');
+        clearTimeout(navTimeout);
+        navTimeout = setTimeout(() => {
+            navBar.classList.remove('visible');
+        }, 3000);
+    }
+    
+    // Show nav bar on mouse move
+    document.addEventListener('mousemove', showNavBar);
+    
+    // Show nav bar on touch
+    document.addEventListener('touchstart', showNavBar);
+    
+    // Keep nav bar visible when hovering over it
+    navBar.addEventListener('mouseenter', () => {
+        clearTimeout(navTimeout);
+    });
+    
+    navBar.addEventListener('mouseleave', () => {
+        navTimeout = setTimeout(() => {
+            navBar.classList.remove('visible');
+        }, 2000);
+    });
+    
+    // Show nav bar initially for 4 seconds
+    showNavBar();
     
     // Fade out shortcuts
     setTimeout(() => {
