@@ -200,6 +200,7 @@
         .cards-grid {
             display: grid; gap: 20px; width: 100%; max-width: 1200px;
         }
+        .cards-grid.cols-1 { grid-template-columns: 1fr; }
         .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); max-width: 950px; }
         .cards-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
         .cards-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
@@ -606,45 +607,43 @@
         </div>
     </div>
 
-    <!-- ═══════════ SLIDE 5 — LÍNGUAS: GLOSSO E DIALEKTOS ═══════════ -->
+    <!-- ═══════════ SLIDE 5 — LÍNGUAS NO PENTECOSTES ═══════════ -->
     <div class="slide slide-content" id="s5">
         <div class="slide-header">
             <div class="slide-icon spirit"><i data-lucide="languages"></i></div>
-            <div class="slide-badge spirit-badge">Estudo do Texto • Atos 2</div>
+            <div class="slide-badge spirit-badge">Panorama • Atos 2</div>
             <h2 class="slide-title">Línguas no Pentecostes</h2>
-            <p class="slide-subtitle">Dois termos gregos, dois significados distintos</p>
+            <p class="slide-subtitle">Sinal visível e mensagem compreensível para os povos</p>
         </div>
-        <div class="two-columns" style="max-width: 1050px;">
+        <div class="two-columns" style="max-width: 1020px;">
             <div class="column">
-                <div class="greek-box flame-greek" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
-                    <p class="greek-word">Glōssa</p>
-                    <p class="greek-original">γλῶσσα</p>
-                    <div class="greek-items" style="margin-top: 15px;">
-                        <div class="greek-item" style="min-width: 200px;">
-                            <h4>Significado</h4>
-                            <p>"Línguas" / "Línguas estranhas"</p>
-                        </div>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.15); padding: 15px 20px; border-radius: 12px; margin-top: 18px;">
-                        <p style="font-size: 1rem;"><strong>Línguas repartidas como de fogo</strong></p>
-                        <p style="font-size: 0.9rem; opacity: 0.85; margin-top: 5px;">Manifestação sobrenatural do Espírito</p>
-                    </div>
+                <div class="content-box" style="height: 100%; border-top: 5px solid var(--flame);">
+                    <h3><span class="icon"><i data-lucide="flame"></i></span> Sinal Sobrenatural</h3>
+                    <ul class="item-list" style="max-width: 100%;">
+                        <li>
+                            <span class="icon"><i data-lucide="sparkles"></i></span>
+                            <span class="text"><strong>Línguas repartidas como fogo</strong><small>Atos 2.3: manifestação visível da presença do Espírito.</small></span>
+                        </li>
+                        <li>
+                            <span class="icon"><i data-lucide="zap"></i></span>
+                            <span class="text"><strong>Iniciativa divina</strong><small>O fenômeno não nasce da emoção humana, mas da promessa cumprida.</small></span>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="column">
-                <div class="greek-box" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
-                    <p class="greek-word">Diálektos</p>
-                    <p class="greek-original">διάλεκτος</p>
-                    <div class="greek-items" style="margin-top: 15px;">
-                        <div class="greek-item" style="min-width: 200px;">
-                            <h4>Significado</h4>
-                            <p>"Língua materna" / "Dialeto"</p>
-                        </div>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.15); padding: 15px 20px; border-radius: 12px; margin-top: 18px;">
-                        <p style="font-size: 1rem;"><strong>"Cada um os ouvia na sua própria língua"</strong></p>
-                        <p style="font-size: 0.9rem; opacity: 0.85; margin-top: 5px;">Compreensão na língua nativa — Atos 2.6</p>
-                    </div>
+                <div class="content-box" style="height: 100%; border-top: 5px solid var(--spirit);">
+                    <h3><span class="icon" style="background: linear-gradient(135deg, var(--spirit), var(--spirit-light));"><i data-lucide="languages"></i></span> Mensagem Compreensível</h3>
+                    <ul class="item-list" style="max-width: 100%;">
+                        <li>
+                            <span class="icon" style="background: rgba(124,58,237,0.15);"><i data-lucide="ear" style="color: var(--spirit);"></i></span>
+                            <span class="text"><strong>Cada um ouvia na sua língua</strong><small>Atos 2.6: Deus fala de forma inteligível aos ouvintes.</small></span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background: rgba(124,58,237,0.15);"><i data-lucide="globe" style="color: var(--spirit);"></i></span>
+                            <span class="text"><strong>Alcance universal</strong><small>O Evangelho é anunciado para todos os povos, sem barreiras culturais.</small></span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -1044,44 +1043,43 @@
     <div class="slide slide-content" id="s17">
         <div class="slide-header">
             <div class="slide-icon flame"><i data-lucide="shirt"></i></div>
-            <div class="slide-badge flame-badge">Dinâmica • Revestimento</div>
+            <div class="slide-badge flame-badge">Dinâmica • Revestimento e Termos</div>
             <h2 class="slide-title">Revestidos de Poder do Alto</h2>
         </div>
         <div class="verse-highlight flame-hl" style="max-width: 950px; margin-bottom: 30px;">
             <p class="verse-text">"E eis que sobre vós envio a promessa de meu Pai; ficai, porém, na cidade de Jerusalém, até que do alto sejais revestidos de poder."</p>
             <span class="verse-ref">Lucas 24.49</span>
         </div>
-        <div class="two-columns" style="max-width: 1000px;">
+        <div class="two-columns" style="max-width: 1100px;">
             <div class="column">
-                <div class="greek-box flame-greek" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
-                    <p class="greek-word">Endýō</p>
-                    <p class="greek-original">ἐνδύω (grego)</p>
-                    <div class="greek-items" style="margin-top: 15px;">
-                        <div class="greek-item">
-                            <h4>Significado</h4>
-                            <p>"Vestir-se", "ser coberto"</p>
-                        </div>
+                <div class="cards-grid cols-1" style="max-width: 100%; gap: 14px;">
+                    <div class="greek-box flame-greek" style="padding: 18px 20px;">
+                        <p class="greek-word" style="font-size: 2rem;">Glōssa</p>
+                        <p class="greek-original">γλῶσσα</p>
+                        <p style="font-size: 0.95rem; margin-top: 8px;">"Línguas" / "Línguas estranhas"</p>
                     </div>
-                    <div style="background: rgba(255,255,255,0.15); padding: 12px 18px; border-radius: 10px; margin-top: 15px;">
-                        <p style="font-size: 0.95rem;">Como quem coloca uma <strong>roupa ou armadura</strong></p>
+                    <div class="greek-box" style="padding: 18px 20px;">
+                        <p class="greek-word" style="font-size: 2rem;">Diálektos</p>
+                        <p class="greek-original">διάλεκτος</p>
+                        <p style="font-size: 0.95rem; margin-top: 8px;">"Língua materna" / "Dialeto"</p>
                     </div>
                 </div>
             </div>
             <div class="column">
                 <div class="content-box" style="height: 100%;">
-                    <h3><span class="icon"><i data-lucide="shield-check"></i></span> O revestimento aponta para:</h3>
+                    <h3><span class="icon"><i data-lucide="shield-check"></i></span> Como esses termos se conectam ao revestimento:</h3>
                     <ul class="item-list" style="max-width: 100%;">
                         <li>
-                            <span class="icon"><i data-lucide="shield"></i></span>
-                            <span class="text"><strong>Cobertura espiritual</strong><small>Proteção sobrenatural</small></span>
+                            <span class="icon"><i data-lucide="flame"></i></span>
+                            <span class="text"><strong>Glōssa: sinal espiritual</strong><small>Mostra a ação sobrenatural do Espírito no Pentecostes.</small></span>
                         </li>
                         <li>
-                            <span class="icon"><i data-lucide="lock"></i></span>
-                            <span class="text"><strong>Proteção divina</strong><small>Armadura do alto</small></span>
+                            <span class="icon"><i data-lucide="languages"></i></span>
+                            <span class="text"><strong>Diálektos: comunicação clara</strong><small>A mensagem alcança cada pessoa em sua língua nativa.</small></span>
                         </li>
                         <li>
-                            <span class="icon"><i data-lucide="sparkles"></i></span>
-                            <span class="text"><strong>Nova condição espiritual</strong><small>Vestido da ação do Espírito</small></span>
+                            <span class="icon"><i data-lucide="shirt"></i></span>
+                            <span class="text"><strong>Revestimento para testemunhar</strong><small>Poder do alto para impactar vidas com verdade e ousadia.</small></span>
                         </li>
                     </ul>
                 </div>
