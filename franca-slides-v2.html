@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>França — Panorama Social, Cultural e Missionário</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bleu: #002654;
+            --bleu-light: #1a4a8a;
+            --bleu-dark: #001a3a;
+            --bleu-deep: #000d1f;
+            --blanc: #ffffff;
+            --rouge: #CE1126;
+            --rouge-light: #ff4d5e;
+            --rouge-dark: #9b0d1e;
+            --gris: #6b7280;
+            --gris-light: #e8ebf0;
+            --gris-dark: #374151;
+            --gold: #c9a84c;
+            --gold-light: #e0c675;
+            --gold-dark: #a68a2e;
+            --bg-light: #f5f6fa;
+            --bg-dark: #e4e7ee;
+            --text-dark: #111827;
+            --text-light: #4a5568;
+            --text-muted: #6b7280;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%; height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+        }
+
+        .presentation { width: 100%; height: 100%; position: relative; }
+
+        .slide {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 45px 70px;
+            background: var(--bg-light);
+        }
+
+        .slide.active { display: flex; animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes pulseBleu { 0%,100% { box-shadow: 0 0 30px rgba(0,38,84,0.3); } 50% { box-shadow: 0 0 60px rgba(0,38,84,0.6); } }
+        @keyframes pulseRouge { 0%,100% { box-shadow: 0 0 25px rgba(206,17,38,0.25); } 50% { box-shadow: 0 0 55px rgba(206,17,38,0.5); } }
+        @keyframes rotateBg { to { transform: rotate(360deg); } }
+        @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+
+        /* ══════ PROGRESS BAR ══════ */
+        .progress-bar {
+            position: fixed; top: 0; left: 0; height: 3px;
+            background: linear-gradient(90deg, var(--bleu), var(--rouge));
+            z-index: 1001; transition: width 0.4s ease;
+        }
+
+        /* ══════ NAV ══════ */
+        .nav-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 18px;
+            background: rgba(255,255,255,0.95); padding: 12px 30px;
+            border-radius: 50px; box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+            z-index: 1000; backdrop-filter: blur(10px);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .nav-bar.visible { opacity: 1; pointer-events: auto; }
+        .nav-bar button {
+            width: 48px; height: 48px; border: none; border-radius: 50%;
+            background: var(--bleu-dark); color: white; cursor: pointer;
+            font-size: 1.2rem; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-bar button:hover { background: var(--bleu); transform: scale(1.05); }
+        .nav-bar button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        .nav-bar .counter { padding: 0 22px; font-weight: 700; font-size: 1.05rem; color: var(--bleu-dark); display: flex; align-items: center; }
+
+        .fullscreen-btn {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--bleu-dark); color: white; border: none;
+            padding: 12px 20px; border-radius: 12px; cursor: pointer;
+            font-weight: 600; font-size: 0.95rem; z-index: 1000;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s;
+        }
+        .fullscreen-btn:hover { background: var(--bleu); }
+
+        .shortcuts {
+            position: fixed; bottom: 25px; left: 25px;
+            background: rgba(0,0,0,0.75); color: white;
+            padding: 12px 20px; border-radius: 10px;
+            font-size: 0.8rem; z-index: 1000; opacity: 0.8;
+        }
+        .shortcuts kbd { background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 4px; margin: 0 2px; }
+
+        /* ══════ CAPA ══════ */
+        .slide-capa {
+            background: linear-gradient(135deg, var(--bleu-deep) 0%, var(--bleu-dark) 40%, var(--bleu) 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-capa::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(201,168,76,0.07), transparent, rgba(206,17,38,0.05), transparent);
+            animation: rotateBg 30s linear infinite;
+        }
+        .slide-capa::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 120px;
+            background: linear-gradient(0deg, rgba(206,17,38,0.12) 0%, transparent 100%);
+        }
+        .capa-content { position: relative; z-index: 1; max-width: 1000px; }
+        .capa-flag-bar {
+            display: flex; gap: 6px; justify-content: center; margin-bottom: 30px;
+        }
+        .capa-flag-bar span {
+            width: 50px; height: 6px; border-radius: 3px;
+        }
+        .capa-flag-bar .f-bleu { background: rgba(26,74,138,0.8); }
+        .capa-flag-bar .f-blanc { background: rgba(255,255,255,0.9); }
+        .capa-flag-bar .f-rouge { background: var(--rouge); }
+
+        .capa-icon {
+            width: 120px; height: 120px;
+            background: rgba(201,168,76,0.15); border: 2px solid rgba(201,168,76,0.35);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: pulseBleu 3s ease-in-out infinite;
+        }
+        .capa-icon svg { width: 60px; height: 60px; color: var(--gold-light); }
+        .capa-badge {
+            display: inline-block; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 30px; border-radius: 50px;
+            font-size: 0.9rem; margin-bottom: 20px;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .capa-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem; font-weight: 800;
+            margin-bottom: 15px; line-height: 1.1;
+        }
+        .capa-title span { color: var(--gold-light); }
+        .capa-subtitle {
+            font-size: 1.3rem; opacity: 0.85;
+            margin-bottom: 30px; font-weight: 300;
+            max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;
+        }
+        .capa-tags {
+            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+        }
+        .capa-tag {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 18px; border-radius: 50px; font-size: 0.85rem;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+        .capa-tag.bleu { border-color: rgba(26,74,138,0.5); color: var(--bleu-light); }
+        .capa-tag.gold { border-color: rgba(201,168,76,0.5); color: var(--gold-light); }
+        .capa-tag.rouge { border-color: rgba(206,17,38,0.5); color: var(--rouge-light); }
+        .capa-tag.blanc { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); }
+
+        /* ══════ CONTENT SLIDES ══════ */
+        .slide-content { background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-dark) 100%); }
+
+        .slide-header { text-align: center; margin-bottom: 35px; }
+
+        .slide-icon {
+            width: 70px; height: 70px;
+            border-radius: 18px; margin: 0 auto 18px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .slide-icon svg { width: 35px; height: 35px; }
+        .slide-icon.bleu { background: linear-gradient(135deg, var(--bleu), var(--bleu-light)); }
+        .slide-icon.bleu svg { color: var(--gold-light); }
+        .slide-icon.rouge { background: linear-gradient(135deg, var(--rouge), var(--rouge-light)); }
+        .slide-icon.rouge svg { color: white; }
+        .slide-icon.gold { background: linear-gradient(135deg, var(--gold-dark), var(--gold)); }
+        .slide-icon.gold svg { color: white; }
+        .slide-icon.gris { background: linear-gradient(135deg, var(--gris-dark), var(--gris)); }
+        .slide-icon.gris svg { color: white; }
+        .slide-icon.deep { background: linear-gradient(135deg, var(--bleu-deep), var(--bleu-dark)); }
+        .slide-icon.deep svg { color: var(--gold); }
+
+        .slide-badge {
+            display: inline-block; padding: 7px 20px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 700; margin-bottom: 12px;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+        .slide-badge.bleu-badge { background: var(--bleu); color: white; }
+        .slide-badge.rouge-badge { background: var(--rouge); color: white; }
+        .slide-badge.gold-badge { background: var(--gold-dark); color: white; }
+        .slide-badge.challenge-badge { background: var(--rouge-dark); color: white; }
+        .slide-badge.mission-badge { background: var(--bleu); color: white; }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem; color: var(--bleu-deep); line-height: 1.2;
+        }
+        .slide-subtitle { font-size: 1.05rem; color: var(--text-muted); margin-top: 8px; }
+
+        /* Cards */
+        .cards-grid {
+            display: grid; gap: 20px; width: 100%; max-width: 1200px;
+        }
+        .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); max-width: 950px; }
+        .cards-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .cards-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+        .card {
+            background: white; border-radius: 16px; padding: 28px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.07); transition: transform 0.3s;
+            border-top: 4px solid transparent;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card.bleu-card { border-top-color: var(--bleu); }
+        .card.rouge-card { border-top-color: var(--rouge); }
+        .card.gold-card { border-top-color: var(--gold-dark); }
+        .card.gris-card { border-top-color: var(--gris-dark); }
+
+        .card-icon {
+            width: 52px; height: 52px;
+            border-radius: 14px; margin-bottom: 15px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card-icon svg { width: 26px; height: 26px; }
+        .card-icon.bleu { background: rgba(0,38,84,0.12); }
+        .card-icon.bleu svg { color: var(--bleu); }
+        .card-icon.rouge { background: rgba(206,17,38,0.12); }
+        .card-icon.rouge svg { color: var(--rouge); }
+        .card-icon.gold { background: rgba(166,138,46,0.12); }
+        .card-icon.gold svg { color: var(--gold-dark); }
+        .card-icon.gris { background: rgba(55,65,81,0.12); }
+        .card-icon.gris svg { color: var(--gris-dark); }
+
+        .card h4 { font-size: 1.1rem; color: var(--bleu-deep); margin-bottom: 8px; font-weight: 700; }
+        .card p { font-size: 0.95rem; color: var(--text-light); line-height: 1.6; }
+        .card .highlight {
+            display: inline-block; padding: 4px 14px; border-radius: 20px;
+            font-size: 0.8rem; font-weight: 700; margin-top: 10px;
+        }
+        .card .highlight.bleu-hl { background: rgba(0,38,84,0.1); color: var(--bleu-dark); }
+        .card .highlight.rouge-hl { background: rgba(206,17,38,0.1); color: var(--rouge-dark); }
+        .card .highlight.gold-hl { background: rgba(166,138,46,0.12); color: var(--gold-dark); }
+
+        /* Big stat */
+        .stat-grid {
+            display: grid; gap: 25px; width: 100%; max-width: 1000px;
+        }
+        .stat-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .stat-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+        .stat-card {
+            background: white; border-radius: 18px; padding: 35px 25px;
+            text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+            border-top: 5px solid; transition: transform 0.3s;
+        }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-card .stat-icon {
+            width: 65px; height: 65px; border-radius: 50%;
+            margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;
+        }
+        .stat-card .stat-icon svg { width: 32px; height: 32px; }
+        .stat-card .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem; font-weight: 800; line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-card .stat-label {
+            font-size: 0.95rem; color: var(--text-muted); font-weight: 500;
+        }
+
+        /* Impact box */
+        .impact-box {
+            border-radius: 18px; padding: 40px 50px; color: white;
+            text-align: center; max-width: 950px; width: 100%;
+        }
+        .impact-box.bleu-impact { background: linear-gradient(135deg, var(--bleu-dark), var(--bleu)); box-shadow: 0 12px 45px rgba(0,38,84,0.3); }
+        .impact-box.rouge-impact { background: linear-gradient(135deg, var(--rouge-dark), var(--rouge)); box-shadow: 0 12px 45px rgba(155,13,30,0.3); }
+        .impact-box.gold-impact { background: linear-gradient(135deg, var(--gold-dark), var(--gold)); box-shadow: 0 12px 45px rgba(166,138,46,0.3); }
+        .impact-box h3 {
+            font-size: 0.95rem; opacity: 0.9; margin-bottom: 15px;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .impact-box .impact-text {
+            font-family: 'Playfair Display', serif; font-size: 1.8rem;
+            line-height: 1.45; font-weight: 600;
+        }
+
+        /* Challenge card */
+        .challenge-grid {
+            display: grid; gap: 25px; width: 100%; max-width: 1050px;
+        }
+        .challenge-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+        .challenge-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .challenge-card {
+            background: white; border-radius: 18px; padding: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border-left: 5px solid; transition: transform 0.3s;
+        }
+        .challenge-card:hover { transform: translateY(-4px); }
+        .challenge-card .ch-icon {
+            width: 55px; height: 55px; border-radius: 50%;
+            margin-bottom: 15px; display: flex; align-items: center; justify-content: center;
+        }
+        .challenge-card .ch-icon svg { width: 28px; height: 28px; }
+        .challenge-card h4 {
+            font-family: 'Playfair Display', serif; font-size: 1.2rem;
+            color: var(--bleu-deep); margin-bottom: 10px;
+        }
+        .challenge-card p { font-size: 0.95rem; color: var(--text-light); line-height: 1.6; }
+
+        /* Check list */
+        .check-list {
+            list-style: none; max-width: 850px; width: 100%;
+        }
+        .check-list li {
+            display: flex; align-items: center; gap: 18px;
+            padding: 16px 22px; margin-bottom: 12px;
+            background: white; border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            font-size: 1.1rem; color: var(--text-dark); font-weight: 500;
+        }
+        .check-list li .check-icon {
+            width: 44px; height: 44px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .check-list li .check-icon svg { width: 22px; height: 22px; }
+
+        /* Conclusion slide */
+        .slide-conclusion {
+            background: linear-gradient(135deg, var(--bleu-deep) 0%, var(--bleu-dark) 50%, var(--bleu) 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-conclusion::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(201,168,76,0.1) 0%, transparent 60%);
+        }
+        .slide-conclusion::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100px;
+            background: linear-gradient(0deg, rgba(206,17,38,0.1) 0%, transparent 100%);
+        }
+        .conclusion-content { position: relative; z-index: 1; max-width: 900px; }
+        .conclusion-icon {
+            width: 100px; height: 100px;
+            background: rgba(201,168,76,0.2); border: 2px solid rgba(201,168,76,0.4);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: breathe 3s ease-in-out infinite;
+        }
+        .conclusion-icon svg { width: 50px; height: 50px; color: var(--gold-light); }
+        .conclusion-text {
+            font-family: 'Playfair Display', serif; font-size: 1.9rem;
+            line-height: 1.5; margin-bottom: 30px;
+        }
+        .conclusion-highlight {
+            background: linear-gradient(135deg, var(--rouge), var(--rouge-dark));
+            padding: 22px 45px; border-radius: 16px;
+            font-family: 'Playfair Display', serif; font-size: 1.7rem;
+            font-weight: 700; display: inline-block;
+            box-shadow: 0 15px 50px rgba(206,17,38,0.4);
+        }
+        .conclusion-tags {
+            display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .conclusion-tag {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25);
+            padding: 10px 24px; border-radius: 50px; font-size: 0.95rem;
+            font-weight: 600; letter-spacing: 1px;
+        }
+
+        /* Final slide */
+        .slide-final {
+            background: linear-gradient(135deg, #0a0a0a 0%, var(--bleu-deep) 50%, var(--bleu-dark) 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-final::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(201,168,76,0.05), transparent, rgba(206,17,38,0.04), transparent);
+            animation: rotateBg 25s linear infinite;
+        }
+        .final-content { position: relative; z-index: 1; max-width: 900px; }
+        .final-flag-bar {
+            display: flex; gap: 6px; justify-content: center; margin-bottom: 25px;
+        }
+        .final-flag-bar span { width: 40px; height: 5px; border-radius: 3px; }
+        .final-icon {
+            width: 110px; height: 110px;
+            background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(206,17,38,0.15));
+            border: 2px solid rgba(201,168,76,0.3);
+            border-radius: 50%; margin: 0 auto 30px;
+            display: flex; align-items: center; justify-content: center;
+            animation: pulseBleu 3s ease-in-out infinite;
+        }
+        .final-icon svg { width: 55px; height: 55px; color: var(--gold-light); }
+        .final-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem; font-weight: 700; margin-bottom: 20px;
+        }
+        .final-items {
+            display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+            margin-bottom: 35px;
+        }
+        .final-item {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 16px; padding: 20px 28px; min-width: 150px;
+            text-align: center;
+        }
+        .final-item .fi-icon {
+            width: 50px; height: 50px; border-radius: 50%;
+            margin: 0 auto 10px; display: flex; align-items: center; justify-content: center;
+        }
+        .final-item .fi-icon svg { width: 24px; height: 24px; }
+        .final-item h4 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+        .final-item p { font-size: 0.85rem; opacity: 0.7; }
+        .final-highlight {
+            background: linear-gradient(135deg, var(--rouge), var(--rouge-dark));
+            color: white;
+            padding: 20px 45px; border-radius: 16px;
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            font-weight: 700; display: inline-block;
+            box-shadow: 0 15px 50px rgba(206,17,38,0.3);
+        }
+        .final-flag-bottom {
+            display: flex; gap: 5px; justify-content: center; margin-top: 30px;
+        }
+        .final-flag-bottom span { width: 32px; height: 4px; border-radius: 2px; }
+
+        /* ══════ PRINT ══════ */
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+            html, body { width: 100%; height: auto; overflow: visible; background: white !important; margin: 0; padding: 0; }
+            .presentation { display: block; height: auto; }
+            .nav-bar, .fullscreen-btn, .shortcuts, .progress-bar { display: none !important; }
+            .slide {
+                position: relative !important; display: flex !important;
+                width: 100% !important; height: 100vh !important;
+                min-height: 100vh !important; max-height: 100vh !important;
+                padding: 30px 50px !important;
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            .slide:last-child { page-break-after: avoid !important; break-after: avoid !important; }
+            .slide-capa, .slide-conclusion, .slide-final { background: var(--bleu-deep) !important; }
+            .slide-header { margin-bottom: 20px !important; }
+            .slide-title { font-size: 2rem !important; }
+            .capa-title { font-size: 3rem !important; }
+            @keyframes float { 0%,50%,100% { transform: none; } }
+            @keyframes pulseBleu { 0%,50%,100% { box-shadow: none; } }
+            @keyframes pulseRouge { 0%,50%,100% { box-shadow: none; } }
+            @keyframes rotateBg { 0%,100% { transform: none; } }
+            @keyframes breathe { 0%,50%,100% { transform: none; } }
+        }
+        @page { size: landscape; margin: 0; }
+        :fullscreen .nav-bar { bottom: 35px; }
+        :fullscreen .fullscreen-btn { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<button class="fullscreen-btn" onclick="toggleFullscreen()">
+    <i data-lucide="maximize"></i> Tela Cheia
+</button>
+<div class="shortcuts">
+    <kbd>←</kbd> <kbd>→</kbd> navegar | <kbd>F</kbd> tela cheia
+</div>
+
+<div class="presentation">
+
+    <!-- ═══════════ SLIDE 1 — CAPA ═══════════ -->
+    <div class="slide slide-capa active" id="s1">
+        <div class="capa-content">
+            <div class="capa-flag-bar">
+                <span class="f-bleu"></span>
+                <span class="f-blanc"></span>
+                <span class="f-rouge"></span>
+            </div>
+            <div class="capa-icon"><i data-lucide="landmark"></i></div>
+            <div class="capa-badge">Panorama Missionário</div>
+            <h1 class="capa-title"><span>França</span></h1>
+            <p class="capa-subtitle">Panorama Social, Cultural e Missionário</p>
+            <div class="capa-tags">
+                <span class="capa-tag bleu">🏛️ Europa Ocidental</span>
+                <span class="capa-tag gold">🗼 Cultura Influente</span>
+                <span class="capa-tag rouge">⛪ 1,5% Evangélicos</span>
+                <span class="capa-tag blanc">👥 67 Milhões</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 2 — POPULAÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s2">
+        <div class="slide-header">
+            <div class="slide-icon bleu"><i data-lucide="users"></i></div>
+            <div class="slide-badge bleu-badge">Dados Populacionais</div>
+            <h2 class="slide-title">População</h2>
+            <p class="slide-subtitle">Uma das maiores nações da Europa</p>
+        </div>
+        <div class="stat-grid cols-3">
+            <div class="stat-card" style="border-top-color: var(--bleu);">
+                <div class="stat-icon" style="background: rgba(0,38,84,0.12);"><i data-lucide="users" style="color: var(--bleu);"></i></div>
+                <div class="stat-number" style="color: var(--bleu);">~67 mi</div>
+                <div class="stat-label">Habitantes</div>
+            </div>
+            <div class="stat-card" style="border-top-color: var(--rouge);">
+                <div class="stat-icon" style="background: rgba(206,17,38,0.12);"><i data-lucide="building-2" style="color: var(--rouge);"></i></div>
+                <div class="stat-number" style="color: var(--rouge);">81%</div>
+                <div class="stat-label">Urbanização</div>
+            </div>
+            <div class="stat-card" style="border-top-color: var(--gold-dark);">
+                <div class="stat-icon" style="background: rgba(166,138,46,0.12);"><i data-lucide="map-pin" style="color: var(--gold-dark);"></i></div>
+                <div class="stat-number" style="color: var(--gold-dark);">Paris</div>
+                <div class="stat-label">Centro de concentração urbana</div>
+            </div>
+        </div>
+        <div class="impact-box bleu-impact" style="margin-top: 30px;">
+            <p class="impact-text" style="font-size: 1.3rem;">País altamente <strong>desenvolvido</strong> — mas espiritualmente necessitado</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 3 — DEMOGRAFIA ═══════════ -->
+    <div class="slide slide-content" id="s3">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="hourglass"></i></div>
+            <div class="slide-badge gold-badge">Demografia</div>
+            <h2 class="slide-title">Uma população que envelhece</h2>
+        </div>
+        <div class="stat-grid cols-3">
+            <div class="stat-card" style="border-top-color: var(--rouge);">
+                <div class="stat-icon" style="background: rgba(206,17,38,0.12);"><i data-lucide="calendar" style="color: var(--rouge);"></i></div>
+                <div class="stat-number" style="color: var(--rouge);">42 anos</div>
+                <div class="stat-label">Idade média</div>
+            </div>
+            <div class="stat-card" style="border-top-color: var(--bleu);">
+                <div class="stat-icon" style="background: rgba(0,38,84,0.12);"><i data-lucide="heart-pulse" style="color: var(--bleu);"></i></div>
+                <div class="stat-number" style="color: var(--bleu);">82 anos</div>
+                <div class="stat-label">Expectativa de vida</div>
+            </div>
+            <div class="stat-card" style="border-top-color: var(--gold-dark);">
+                <div class="stat-icon" style="background: rgba(166,138,46,0.12);"><i data-lucide="baby" style="color: var(--gold-dark);"></i></div>
+                <div class="stat-number" style="color: var(--gold-dark);">1.8</div>
+                <div class="stat-label">Taxa de fertilidade</div>
+            </div>
+        </div>
+        <div class="impact-box rouge-impact" style="margin-top: 30px;">
+            <p class="impact-text" style="font-size: 1.3rem;">Sociedade que <strong>amadurece</strong> — e exige respostas para as questões mais profundas</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 4 — CARACTERÍSTICAS ═══════════ -->
+    <div class="slide slide-content" id="s4">
+        <div class="slide-header">
+            <div class="slide-icon gris"><i data-lucide="brain"></i></div>
+            <div class="slide-badge bleu-badge">Identidade</div>
+            <h2 class="slide-title">Características da População</h2>
+        </div>
+        <div class="cards-grid cols-3">
+            <div class="card bleu-card">
+                <div class="card-icon bleu"><i data-lucide="building-2"></i></div>
+                <h4>Sociedade Desenvolvida</h4>
+                <p>Altamente desenvolvida com forte <strong>tradição acadêmica</strong> e cultural</p>
+                <span class="highlight bleu-hl">Intelectualidade</span>
+            </div>
+            <div class="card rouge-card">
+                <div class="card-icon rouge"><i data-lucide="globe"></i></div>
+                <h4>Multiculturalismo</h4>
+                <p>Forte presença de <strong>comunidades imigrantes</strong> e diversidade cultural</p>
+                <span class="highlight rouge-hl">Diversidade & Tensão</span>
+            </div>
+            <div class="card gold-card">
+                <div class="card-icon gold"><i data-lucide="user"></i></div>
+                <h4>Individualismo</h4>
+                <p>Cultura centrada na <strong>autonomia pessoal</strong> e pensamento crítico</p>
+                <span class="highlight gold-hl">Liberdade & Razão</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 5 — RELIGIÃO ═══════════ -->
+    <div class="slide slide-content" id="s5">
+        <div class="slide-header">
+            <div class="slide-icon deep"><i data-lucide="church"></i></div>
+            <div class="slide-badge rouge-badge">Cenário Religioso</div>
+            <h2 class="slide-title">O declínio da fé na terra das catedrais</h2>
+        </div>
+        <div class="stat-grid cols-4">
+            <div class="stat-card" style="border-top-color: var(--gris);">
+                <div class="stat-icon" style="background: rgba(107,114,128,0.12);"><i data-lucide="circle-off" style="color: var(--gris);"></i></div>
+                <div class="stat-number" style="color: var(--gris);">40%</div>
+                <div class="stat-label">Sem religião</div>
+            </div>
+            <div class="stat-card" style="border-top-color: var(--gold-dark);">
+                <div class="stat-icon" style="background: rgba(166,138,46,0.12);"><i data-lucide="cross" style="color: var(--gold-dark);"></i></div>
+                <div class="stat-number" style="color: var(--gold-dark);">32%</div>
+                <div class="stat-label">Católicos nominais</div>
+            </div>
+            <div class="stat-card" style="border-top-color: var(--bleu);">
+                <div class="stat-icon" style="background: rgba(0,38,84,0.12);"><i data-lucide="moon" style="color: var(--bleu);"></i></div>
+                <div class="stat-number" style="color: var(--bleu);">8%</div>
+                <div class="stat-label">Muçulmanos</div>
+            </div>
+            <div class="stat-card" style="border-top-color: var(--rouge);">
+                <div class="stat-icon" style="background: rgba(206,17,38,0.12);"><i data-lucide="flame" style="color: var(--rouge);"></i></div>
+                <div class="stat-number" style="color: var(--rouge);">1,5%</div>
+                <div class="stat-label">Evangélicos</div>
+            </div>
+        </div>
+        <div class="impact-box rouge-impact" style="margin-top: 30px;">
+            <h3>Realidade</h3>
+            <p class="impact-text">A secularização transformou catedrais em <strong>museus</strong></p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 6 — DESAFIO 1 ═══════════ -->
+    <div class="slide slide-content" id="s6">
+        <div class="slide-header">
+            <div class="slide-icon rouge"><i data-lucide="shield-alert"></i></div>
+            <div class="slide-badge challenge-badge">Desafio 1</div>
+            <h2 class="slide-title">Secularismo</h2>
+        </div>
+        <div class="challenge-grid cols-2">
+            <div class="challenge-card" style="border-left-color: var(--rouge);">
+                <div class="ch-icon" style="background: rgba(206,17,38,0.1);"><i data-lucide="eye-off" style="color: var(--rouge);"></i></div>
+                <h4>Indiferença Religiosa</h4>
+                <p>A religião é vista como algo <strong>irrelevante, ultrapassado</strong> ou até prejudicial para a vida moderna.</p>
+            </div>
+            <div class="challenge-card" style="border-left-color: var(--bleu);">
+                <div class="ch-icon" style="background: rgba(0,38,84,0.12);"><i data-lucide="ban" style="color: var(--bleu);"></i></div>
+                <h4>Laicidade Radical</h4>
+                <p>O princípio de <strong>laïcité</strong> limita a expressão religiosa no espaço público e institucional.</p>
+            </div>
+        </div>
+        <div class="impact-box rouge-impact" style="margin-top: 30px;">
+            <h3>Realidade</h3>
+            <p class="impact-text">O secularismo é a <strong>maior barreira espiritual</strong> da França atual</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 7 — DESAFIO 2 ═══════════ -->
+    <div class="slide slide-content" id="s7">
+        <div class="slide-header">
+            <div class="slide-icon rouge"><i data-lucide="lightbulb"></i></div>
+            <div class="slide-badge challenge-badge">Desafio 2</div>
+            <h2 class="slide-title">Intelectualidade</h2>
+        </div>
+        <div class="challenge-grid cols-2">
+            <div class="challenge-card" style="border-left-color: var(--bleu);">
+                <div class="ch-icon" style="background: rgba(0,38,84,0.12);"><i data-lucide="brain" style="color: var(--bleu);"></i></div>
+                <h4>Herança Iluminista</h4>
+                <p>O pensamento crítico francês cria <strong>forte resistência</strong> a mensagens religiosas tradicionais.</p>
+            </div>
+            <div class="challenge-card" style="border-left-color: var(--rouge);">
+                <div class="ch-icon" style="background: rgba(206,17,38,0.1);"><i data-lucide="scale"></i></div>
+                <h4>Razão vs. Fé</h4>
+                <p>A fé é frequentemente <strong>desafiada pela razão</strong>. A mensagem precisa dialogar com a mente.</p>
+            </div>
+        </div>
+        <div class="impact-box bleu-impact" style="margin-top: 30px;">
+            <h3>O desafio</h3>
+            <p class="impact-text">É necessário dialogar com a <strong>mente</strong> — e não apenas com o coração</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 8 — DESAFIO 3 ═══════════ -->
+    <div class="slide slide-content" id="s8">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="user"></i></div>
+            <div class="slide-badge challenge-badge">Desafio 3</div>
+            <h2 class="slide-title">Individualismo</h2>
+        </div>
+        <div class="challenge-grid cols-2">
+            <div class="challenge-card" style="border-left-color: var(--gold-dark);">
+                <div class="ch-icon" style="background: rgba(166,138,46,0.12);"><i data-lucide="user-x" style="color: var(--gold-dark);"></i></div>
+                <h4>Autonomia Extrema</h4>
+                <p>Vida centrada no <strong>indivíduo</strong>, autonomia pessoal e autossuficiência. O compromisso comunitário é visto como limitação.</p>
+            </div>
+            <div class="challenge-card" style="border-left-color: var(--rouge);">
+                <div class="ch-icon" style="background: rgba(206,17,38,0.1);"><i data-lucide="unlink" style="color: var(--rouge);"></i></div>
+                <h4>Resistência ao Compromisso</h4>
+                <p><strong>Pouca abertura</strong> para comunidade e compromisso espiritual duradouro.</p>
+            </div>
+        </div>
+        <div class="impact-box gold-impact" style="margin-top: 30px;">
+            <h3>Consequência</h3>
+            <p class="impact-text">Liberdade sem <strong>pertencimento</strong> gera vazio existencial</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 9 — DESAFIO 4 ═══════════ -->
+    <div class="slide slide-content" id="s9">
+        <div class="slide-header">
+            <div class="slide-icon bleu"><i data-lucide="layers"></i></div>
+            <div class="slide-badge challenge-badge">Desafio 4</div>
+            <h2 class="slide-title">Multiculturalismo</h2>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1050px;">
+            <div class="card rouge-card" style="text-align: center;">
+                <div class="card-icon rouge" style="margin: 0 auto 15px;"><i data-lucide="globe"></i></div>
+                <h4>Diversidade Religiosa</h4>
+                <p>Grande diversidade religiosa e cultural <strong>convivendo</strong></p>
+            </div>
+            <div class="card bleu-card" style="text-align: center;">
+                <div class="card-icon bleu" style="margin: 0 auto 15px;"><i data-lucide="trending-up"></i></div>
+                <h4>Crescimento do Islã</h4>
+                <p>Expansão <strong>expressiva</strong> do islamismo na França</p>
+            </div>
+            <div class="card gold-card" style="text-align: center;">
+                <div class="card-icon gold" style="margin: 0 auto 15px;"><i data-lucide="shield-alert"></i></div>
+                <h4>Tensões Sociais</h4>
+                <p>Tensões culturais e sociais <strong>frequentes</strong></p>
+            </div>
+        </div>
+        <div class="impact-box bleu-impact" style="margin-top: 30px;">
+            <p class="impact-text" style="font-size: 1.3rem;">A diversidade é uma <strong>porta aberta</strong> — mas também um campo de complexidade</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 10 — DESAFIO 5 ═══════════ -->
+    <div class="slide slide-content" id="s10">
+        <div class="slide-header">
+            <div class="slide-icon rouge"><i data-lucide="thermometer-snowflake"></i></div>
+            <div class="slide-badge challenge-badge">Desafio 5</div>
+            <h2 class="slide-title">Frieza Espiritual</h2>
+        </div>
+        <div class="challenge-grid cols-2">
+            <div class="challenge-card" style="border-left-color: var(--rouge);">
+                <div class="ch-icon" style="background: rgba(206,17,38,0.1);"><i data-lucide="church" style="color: var(--rouge);"></i></div>
+                <h4>Igrejas Vazias</h4>
+                <p>Igrejas históricas funcionam mais como <strong>museus</strong> do que como comunidades de fé viva.</p>
+            </div>
+            <div class="challenge-card" style="border-left-color: var(--bleu);">
+                <div class="ch-icon" style="background: rgba(0,38,84,0.12);"><i data-lucide="book-x" style="color: var(--bleu);"></i></div>
+                <h4>Desconhecimento Bíblico</h4>
+                <p><strong>70% nunca leu a Bíblia</strong>. O desinteresse por temas espirituais é generalizado.</p>
+            </div>
+        </div>
+        <div class="impact-box rouge-impact" style="margin-top: 30px;">
+            <h3>Dados</h3>
+            <p class="impact-text">Apenas <strong>5%</strong> frequenta alguma igreja regularmente</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 11 — DESAFIO 6 ═══════════ -->
+    <div class="slide slide-content" id="s11">
+        <div class="slide-header">
+            <div class="slide-icon gris"><i data-lucide="anchor"></i></div>
+            <div class="slide-badge challenge-badge">Desafio 6</div>
+            <h2 class="slide-title">Vazio Existencial</h2>
+        </div>
+        <div class="challenge-grid cols-3">
+            <div class="challenge-card" style="border-left-color: var(--gris-dark);">
+                <div class="ch-icon" style="background: rgba(55,65,81,0.12);"><i data-lucide="help-circle" style="color: var(--gris-dark);"></i></div>
+                <h4>Busca por Sentido</h4>
+                <p>Muitos vivem em <strong>crise de propósito</strong>, especialmente jovens e adultos urbanos</p>
+            </div>
+            <div class="challenge-card" style="border-left-color: var(--gold-dark);">
+                <div class="ch-icon" style="background: rgba(166,138,46,0.12);"><i data-lucide="heart-crack" style="color: var(--gold-dark);"></i></div>
+                <h4>Solidão Moderna</h4>
+                <p>Apesar da conectividade, a <strong>solidão</strong> é uma epidemia silenciosa nas grandes cidades</p>
+            </div>
+            <div class="challenge-card" style="border-left-color: var(--rouge);">
+                <div class="ch-icon" style="background: rgba(206,17,38,0.1);"><i data-lucide="shield-off" style="color: var(--rouge);"></i></div>
+                <h4>Pós-Cristianismo</h4>
+                <p>A sociedade <strong>já conheceu</strong> o cristianismo e o rejeitou — reconstruir é mais difícil</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 12 — OPORTUNIDADES ═══════════ -->
+    <div class="slide slide-content" id="s12">
+        <div class="slide-header">
+            <div class="slide-icon bleu"><i data-lucide="door-open"></i></div>
+            <div class="slide-badge mission-badge">Oportunidades</div>
+            <h2 class="slide-title">Oportunidades Missionárias</h2>
+        </div>
+        <div class="check-list">
+            <li>
+                <div class="check-icon" style="background: rgba(0,38,84,0.15);"><i data-lucide="shield-check" style="color: var(--bleu);"></i></div>
+                <span><strong>Liberdade religiosa</strong> — garantia legal para pregação e prática da fé</span>
+            </li>
+            <li>
+                <div class="check-icon" style="background: rgba(206,17,38,0.1);"><i data-lucide="lock" style="color: var(--rouge);"></i></div>
+                <span>País <strong>estável e seguro</strong> com infraestrutura para trabalho missionário</span>
+            </li>
+            <li>
+                <div class="check-icon" style="background: rgba(166,138,46,0.12);"><i data-lucide="lightbulb" style="color: var(--gold-dark);"></i></div>
+                <span>Espaço para <strong>novas abordagens</strong> — diálogo, relacionamento e relevância cultural</span>
+            </li>
+            <li>
+                <div class="check-icon" style="background: rgba(0,38,84,0.15);"><i data-lucide="graduation-cap" style="color: var(--bleu);"></i></div>
+                <span><strong>Universidades</strong> — milhares de jovens questionando propósito e sentido</span>
+            </li>
+            <li>
+                <div class="check-icon" style="background: rgba(206,17,38,0.1);"><i data-lucide="globe" style="color: var(--rouge);"></i></div>
+                <span><strong>Comunidades internacionais</strong> — imigrantes e expatriados abertos ao Evangelho</span>
+            </li>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 13 — ESTRATÉGIAS ═══════════ -->
+    <div class="slide slide-content" id="s13">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="target"></i></div>
+            <div class="slide-badge mission-badge">Estratégia</div>
+            <h2 class="slide-title">Estratégias de Atuação</h2>
+        </div>
+        <div class="cards-grid cols-4" style="max-width: 1150px;">
+            <div class="card bleu-card" style="text-align: center;">
+                <div class="card-icon bleu" style="margin: 0 auto 15px; width: 60px; height: 60px; border-radius: 50%;"><i data-lucide="message-circle" style="width: 28px; height: 28px;"></i></div>
+                <h4>Evangelismo Inteligente</h4>
+                <p>Contextualizado à <strong>cultura e mentalidade</strong> francesa</p>
+            </div>
+            <div class="card rouge-card" style="text-align: center;">
+                <div class="card-icon rouge" style="margin: 0 auto 15px; width: 60px; height: 60px; border-radius: 50%;"><i data-lucide="heart-handshake" style="width: 28px; height: 28px;"></i></div>
+                <h4>Relacionamentos</h4>
+                <p>Conexões <strong>genuínas</strong> antes de qualquer discurso</p>
+            </div>
+            <div class="card gold-card" style="text-align: center;">
+                <div class="card-icon gold" style="margin: 0 auto 15px; width: 60px; height: 60px; border-radius: 50%;"><i data-lucide="palette" style="width: 28px; height: 28px;"></i></div>
+                <h4>Cultura e Arte</h4>
+                <p>Usar a <strong>linguagem cultural</strong> como ponte para o Evangelho</p>
+            </div>
+            <div class="card gris-card" style="text-align: center;">
+                <div class="card-icon gris" style="margin: 0 auto 15px; width: 60px; height: 60px; border-radius: 50%;"><i data-lucide="users" style="width: 28px; height: 28px;"></i></div>
+                <h4>Imigrantes e Jovens</h4>
+                <p>Focar nos grupos <strong>mais receptivos</strong> à mensagem</p>
+            </div>
+        </div>
+        <div class="impact-box bleu-impact" style="margin-top: 30px;">
+            <p class="impact-text" style="font-size: 1.3rem;">Primeiro <strong>servir</strong>, depois <strong>compartilhar</strong></p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 14 — CONCLUSÃO ═══════════ -->
+    <div class="slide slide-conclusion" id="s14">
+        <div class="conclusion-content">
+            <div class="conclusion-icon"><i data-lucide="compass"></i></div>
+            <div class="conclusion-text">
+                <p style="margin-bottom: 15px;">A França é <strong>desenvolvida</strong></p>
+                <p style="margin-bottom: 15px;">É profundamente <strong>secular</strong></p>
+                <p style="margin-bottom: 15px;">É culturalmente <strong>influente</strong></p>
+            </div>
+            <p style="opacity: 0.7; font-size: 1.1rem; margin-bottom: 25px;">Mas o maior desafio é…</p>
+            <div class="conclusion-highlight">
+                A Indiferença Espiritual
+            </div>
+            <div class="conclusion-tags">
+                <span class="conclusion-tag">Desenvolvida</span>
+                <span class="conclusion-tag">Secular</span>
+                <span class="conclusion-tag">Influente</span>
+                <span class="conclusion-tag" style="border-color: var(--gold-light); color: var(--gold-light);">Precisa do Evangelho</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 15 — DIRECIONAMENTO FINAL ═══════════ -->
+    <div class="slide slide-final" id="s15">
+        <div class="final-content">
+            <div class="final-flag-bar">
+                <span class="f-bleu"></span>
+                <span class="f-blanc"></span>
+                <span class="f-rouge"></span>
+            </div>
+            <div class="final-icon"><i data-lucide="send"></i></div>
+            <h2 class="final-title">A missão na França exige</h2>
+            <div class="final-items">
+                <div class="final-item">
+                    <div class="fi-icon" style="background: rgba(26,74,138,0.2);"><i data-lucide="compass" style="color: var(--bleu-light);"></i></div>
+                    <h4>Relevância Cultural</h4>
+                    <p>Falar a linguagem da sociedade</p>
+                </div>
+                <div class="final-item">
+                    <div class="fi-icon" style="background: rgba(206,17,38,0.15);"><i data-lucide="link" style="color: var(--rouge-light);"></i></div>
+                    <h4>Conexões Reais</h4>
+                    <p>Relacionamentos autênticos</p>
+                </div>
+                <div class="final-item">
+                    <div class="fi-icon" style="background: rgba(201,168,76,0.2);"><i data-lucide="flame" style="color: var(--gold-light);"></i></div>
+                    <h4>Fé Vivida</h4>
+                    <p>Demonstrar antes de anunciar</p>
+                </div>
+            </div>
+            <div class="final-highlight">
+                "Ide e fazei discípulos de todas as nações"
+            </div>
+            <div class="final-flag-bottom">
+                <span class="f-bleu"></span>
+                <span class="f-blanc"></span>
+                <span class="f-rouge"></span>
+            </div>
+            <p style="margin-top: 25px; opacity: 0.5; font-size: 0.9rem;">França — Panorama Social, Cultural e Missionário</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav-bar">
+    <button id="prev" onclick="prev()">◀</button>
+    <div class="counter"><span id="atual">1</span> / 15</div>
+    <button id="next" onclick="next()">▶</button>
+</nav>
+
+<script>
+    lucide.createIcons();
+
+    let slide = 1;
+    const total = 15;
+
+    function show(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        document.getElementById('atual').textContent = n;
+        document.getElementById('prev').disabled = (n === 1);
+        document.getElementById('next').disabled = (n === total);
+        document.getElementById('progress').style.width = ((n / total) * 100) + '%';
+        slide = n;
+        lucide.createIcons();
+    }
+
+    function next() { if (slide < total) show(slide + 1); }
+    function prev() { if (slide > 1) show(slide - 1); }
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); showNavBar(); }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); showNavBar(); }
+        if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); }
+        if (e.key === 'Home') { show(1); showNavBar(); }
+        if (e.key === 'End') { show(total); showNavBar(); }
+    });
+
+    let navTimeout;
+    const navBar = document.querySelector('.nav-bar');
+
+    function showNavBar() {
+        navBar.classList.add('visible');
+        clearTimeout(navTimeout);
+        navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 3000);
+    }
+
+    document.addEventListener('mousemove', showNavBar);
+    document.addEventListener('touchstart', showNavBar);
+    navBar.addEventListener('mouseenter', () => { clearTimeout(navTimeout); });
+    navBar.addEventListener('mouseleave', () => { navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 2000); });
+
+    // Touch/swipe
+    let tx = 0;
+    document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
+    document.addEventListener('touchend', e => {
+        const diff = tx - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); showNavBar(); }
+    });
+
+    showNavBar();
+
+    // Init progress
+    document.getElementById('progress').style.width = ((1 / total) * 100) + '%';
+
+    setTimeout(() => {
+        const shortcuts = document.querySelector('.shortcuts');
+        if (shortcuts) { shortcuts.style.opacity = '0'; shortcuts.style.transition = 'opacity 1s'; }
+    }, 5000);
+</script>
+</body>
+</html>
