@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lição 4 - A Falácia da Ideologia de Gênero | EBD Jovens CPAD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #d4b84a;
+            --bg-light: #f8fafc;
+            --bg-dark: #e2e8f0;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --text-muted: #718096;
+            --white: #ffffff;
+            --success: #38a169;
+            --info: #3182ce;
+            --warning: #e67e22;
+            --danger: #c0392b;
+            --truth: #6366f1;
+            --truth-light: #818cf8;
+            --truth-dark: #4338ca;
+            --alert: #ef4444;
+            --alert-light: #f87171;
+            --alert-dark: #dc2626;
+            --gender: #8b5cf6;
+            --gender-light: #a78bfa;
+            --gender-dark: #6d28d9;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%; height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+        }
+
+        .presentation { width: 100%; height: 100%; position: relative; }
+
+        .slide {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 45px 70px;
+            background: var(--bg-light);
+        }
+
+        .slide.active { display: flex; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        @keyframes pulse { 0%,100% { box-shadow: 0 0 30px rgba(139,92,246,0.3); } 50% { box-shadow: 0 0 60px rgba(139,92,246,0.6); } }
+
+        /* ══════ NAV ══════ */
+        .nav-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 18px;
+            background: rgba(255,255,255,0.95); padding: 12px 30px;
+            border-radius: 50px; box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+            z-index: 1000; backdrop-filter: blur(10px);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .nav-bar.visible { opacity: 1; pointer-events: auto; }
+        .nav-bar button {
+            width: 48px; height: 48px; border: none; border-radius: 50%;
+            background: var(--primary); color: white; cursor: pointer;
+            font-size: 1.2rem; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-bar button:hover { background: var(--primary-light); transform: scale(1.05); }
+        .nav-bar button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        .nav-bar .counter { padding: 0 22px; font-weight: 700; font-size: 1.05rem; color: var(--primary); display: flex; align-items: center; }
+
+        .fullscreen-btn {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--primary); color: white; border: none;
+            padding: 12px 20px; border-radius: 12px; cursor: pointer;
+            font-weight: 600; font-size: 0.95rem; z-index: 1000;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s;
+        }
+        .fullscreen-btn:hover { background: var(--primary-light); }
+
+        .shortcuts {
+            position: fixed; bottom: 25px; left: 25px;
+            background: rgba(0,0,0,0.75); color: white;
+            padding: 12px 20px; border-radius: 10px;
+            font-size: 0.8rem; z-index: 1000; opacity: 0.8;
+        }
+        .shortcuts kbd { background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 4px; margin: 0 2px; }
+
+        /* ══════ CAPA ══════ */
+        .slide-capa {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-capa::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 60% 40%, rgba(139,92,246,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .capa-content { position: relative; z-index: 1; max-width: 1000px; }
+        .capa-icon {
+            width: 120px; height: 120px;
+            background: rgba(139,92,246,0.15); border: 3px solid rgba(139,92,246,0.4);
+            border-radius: 30px; margin: 0 auto 30px;
+            display: flex; align-items: center; justify-content: center;
+            animation: float 4s ease-in-out infinite;
+        }
+        .capa-icon svg { width: 60px; height: 60px; color: var(--gender-light); }
+        .capa-badge {
+            display: inline-block; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 30px; border-radius: 50px;
+            font-size: 0.95rem; margin-bottom: 20px;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .capa-lesson {
+            font-size: 1.2rem; color: var(--accent);
+            margin-bottom: 15px; font-weight: 600;
+        }
+        .capa-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem; font-weight: 700;
+            margin-bottom: 20px; line-height: 1.15;
+        }
+        .capa-title span { color: var(--gender-light); }
+        .capa-subtitle {
+            font-size: 1.2rem; opacity: 0.85;
+            margin-bottom: 25px; font-weight: 300;
+            max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;
+        }
+        .capa-ref {
+            display: inline-block; background: var(--gender);
+            color: white; padding: 12px 35px; border-radius: 50px;
+            font-size: 1.1rem; font-weight: 700;
+        }
+
+        /* ══════ SECTION DIVIDER ══════ */
+        .slide-section {
+            background: linear-gradient(135deg, #1a0533 0%, #2d1b69 50%, #1e3a5f 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-section::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(139,92,246,0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .section-content { position: relative; z-index: 1; max-width: 900px; }
+        .section-num {
+            font-size: 5rem; font-weight: 900; color: rgba(139,92,246,0.3);
+            line-height: 1; margin-bottom: 10px;
+        }
+        .section-label {
+            display: inline-block; background: var(--gender);
+            padding: 8px 28px; border-radius: 50px;
+            font-size: 0.9rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 20px;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem; line-height: 1.2; font-weight: 700;
+        }
+        .section-title em { color: var(--gender-light); font-style: normal; }
+
+        /* ══════ CONTENT SLIDES ══════ */
+        .slide-content { background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-dark) 100%); }
+
+        .slide-header { text-align: center; margin-bottom: 35px; }
+
+        .slide-icon {
+            width: 70px; height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 18px; margin: 0 auto 18px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(30,58,95,0.25);
+        }
+        .slide-icon svg { width: 35px; height: 35px; color: var(--accent); }
+        .slide-icon.truth { background: linear-gradient(135deg, var(--truth), var(--truth-light)); }
+        .slide-icon.truth svg { color: white; }
+        .slide-icon.alert { background: linear-gradient(135deg, var(--alert), var(--alert-light)); }
+        .slide-icon.alert svg { color: white; }
+        .slide-icon.green { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .slide-icon.green svg { color: white; }
+        .slide-icon.gold { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+        .slide-icon.gold svg { color: var(--primary-dark); }
+        .slide-icon.gender { background: linear-gradient(135deg, var(--gender), var(--gender-light)); }
+        .slide-icon.gender svg { color: white; }
+        .slide-icon.warn { background: linear-gradient(135deg, var(--warning), #f39c12); }
+        .slide-icon.warn svg { color: white; }
+
+        .slide-badge {
+            display: inline-block; padding: 7px 20px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 700; margin-bottom: 12px;
+            letter-spacing: 1px; text-transform: uppercase;
+            background: var(--accent); color: var(--primary-dark);
+        }
+        .slide-badge.truth-badge { background: var(--truth); color: white; }
+        .slide-badge.alert-badge { background: var(--alert); color: white; }
+        .slide-badge.green-badge { background: var(--success); color: white; }
+        .slide-badge.gender-badge { background: var(--gender); color: white; }
+        .slide-badge.warn-badge { background: var(--warning); color: white; }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem; color: var(--primary); line-height: 1.2;
+        }
+        .slide-subtitle { font-size: 1.05rem; color: var(--text-muted); margin-top: 8px; }
+
+        /* Cards */
+        .cards-grid {
+            display: grid; gap: 20px; width: 100%; max-width: 1200px;
+        }
+        .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); max-width: 950px; }
+        .cards-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .cards-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+        .card {
+            background: white; border-radius: 14px; padding: 25px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.07); transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-4px); }
+
+        .card-icon {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 12px; margin-bottom: 15px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card-icon svg { width: 25px; height: 25px; color: var(--accent); }
+        .card-icon.truth { background: linear-gradient(135deg, var(--truth), var(--truth-light)); }
+        .card-icon.truth svg { color: white; }
+        .card-icon.alert { background: linear-gradient(135deg, var(--alert), var(--alert-light)); }
+        .card-icon.alert svg { color: white; }
+        .card-icon.green { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .card-icon.green svg { color: white; }
+        .card-icon.gold { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+        .card-icon.gold svg { color: var(--primary-dark); }
+        .card-icon.danger { background: linear-gradient(135deg, var(--danger), #e74c3c); }
+        .card-icon.danger svg { color: white; }
+        .card-icon.gender { background: linear-gradient(135deg, var(--gender), var(--gender-light)); }
+        .card-icon.gender svg { color: white; }
+        .card-icon.warn { background: linear-gradient(135deg, var(--warning), #f39c12); }
+        .card-icon.warn svg { color: white; }
+
+        .card h4 { font-size: 1.05rem; color: var(--primary); margin-bottom: 8px; }
+        .card p { font-size: 0.95rem; color: var(--text-light); line-height: 1.55; }
+        .card .verse {
+            display: inline-block; background: rgba(99,102,241,0.1);
+            color: var(--truth-dark); padding: 5px 12px;
+            border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-top: 10px;
+        }
+
+        /* Versículo destaque */
+        .verse-highlight {
+            background: linear-gradient(135deg, var(--truth), var(--truth-dark));
+            border-radius: 20px; padding: 40px 50px;
+            color: white; text-align: center;
+            max-width: 900px; width: 100%;
+        }
+        .verse-highlight .verse-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem; line-height: 1.5;
+            margin-bottom: 20px; font-style: italic;
+        }
+        .verse-highlight .verse-ref {
+            background: var(--accent); color: var(--primary-dark);
+            padding: 8px 25px; border-radius: 50px;
+            font-weight: 700; font-size: 1rem; display: inline-block;
+        }
+        .verse-highlight.primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+        }
+        .verse-highlight.alert-bg {
+            background: linear-gradient(135deg, var(--alert), var(--alert-dark));
+        }
+        .verse-highlight.gender-bg {
+            background: linear-gradient(135deg, var(--gender), var(--gender-dark));
+        }
+        .verse-highlight.success-bg {
+            background: linear-gradient(135deg, var(--success), #276749);
+        }
+
+        /* Pergunta Impacto */
+        .question-impact {
+            background: linear-gradient(135deg, var(--gender), var(--gender-dark));
+            border-radius: 20px; padding: 50px;
+            color: white; text-align: center;
+            max-width: 1000px; width: 100%;
+            box-shadow: 0 15px 50px rgba(139,92,246,0.35);
+        }
+        .question-impact h3 {
+            font-size: 1.1rem; opacity: 0.9;
+            margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;
+        }
+        .question-impact .question-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem; line-height: 1.4;
+            font-weight: 600; margin-bottom: 20px;
+        }
+        .question-impact.alert-bg {
+            background: linear-gradient(135deg, var(--alert), var(--alert-dark));
+            box-shadow: 0 15px 50px rgba(239,68,68,0.3);
+        }
+        .question-impact.truth-bg {
+            background: linear-gradient(135deg, var(--truth), var(--truth-dark));
+            box-shadow: 0 15px 50px rgba(99,102,241,0.3);
+        }
+        .question-impact.warm {
+            background: linear-gradient(135deg, var(--warning), #f39c12);
+            box-shadow: 0 15px 50px rgba(230,126,34,0.3);
+        }
+        .question-impact.primary-bg {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            box-shadow: 0 15px 50px rgba(30,58,95,0.4);
+        }
+
+        /* Content box */
+        .content-box {
+            background: white; border-radius: 20px; padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            max-width: 1100px; width: 100%;
+        }
+        .content-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem; color: var(--primary);
+            margin-bottom: 25px; display: flex;
+            align-items: center; gap: 15px;
+        }
+        .content-box p {
+            font-size: 1.15rem; color: var(--text-dark);
+            line-height: 1.7; margin-bottom: 15px;
+        }
+
+        /* Contrast box */
+        .contrast-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 20px; padding: 40px;
+            color: white; max-width: 1100px; width: 100%;
+        }
+        .contrast-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem; color: var(--gender-light);
+            margin-bottom: 25px; text-align: center;
+        }
+        .contrast-items {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+        }
+        .contrast-item {
+            background: rgba(255,255,255,0.06); border-radius: 14px;
+            padding: 22px 28px; border-left: 4px solid;
+            display: flex; align-items: center; gap: 15px;
+        }
+        .contrast-item.dark-item { border-color: var(--danger); }
+        .contrast-item.light-item { border-color: var(--truth-light); }
+        .contrast-item.gender-item { border-color: var(--gender-light); }
+        .contrast-item .ci-icon {
+            width: 45px; height: 45px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .contrast-item.dark-item .ci-icon { background: rgba(192,57,43,0.2); }
+        .contrast-item.dark-item .ci-icon svg { color: #e74c3c; }
+        .contrast-item.light-item .ci-icon { background: rgba(99,102,241,0.2); }
+        .contrast-item.light-item .ci-icon svg { color: var(--truth-light); }
+        .contrast-item.gender-item .ci-icon { background: rgba(139,92,246,0.2); }
+        .contrast-item.gender-item .ci-icon svg { color: var(--gender-light); }
+        .contrast-item p { font-size: 1.05rem; line-height: 1.5; }
+        .contrast-item p strong { display: block; margin-bottom: 3px; }
+
+        /* Application box */
+        .application-box {
+            background: white; border-radius: 20px;
+            padding: 35px 45px; box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            max-width: 900px; width: 100%;
+            border-left: 6px solid var(--truth);
+        }
+        .application-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem; color: var(--primary); margin-bottom: 20px;
+        }
+        .application-box ul { list-style: none; }
+        .application-box ul li {
+            padding: 12px 0; font-size: 1.1rem;
+            color: var(--text-dark); display: flex;
+            align-items: center; gap: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .application-box ul li:last-child { border-bottom: none; }
+        .application-box ul li::before {
+            content: '→'; color: var(--truth);
+            font-weight: 700; font-size: 1.4rem; flex-shrink: 0;
+        }
+
+        /* Implications grid */
+        .implications-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 25px; width: 100%; max-width: 1100px;
+        }
+        .implication-card {
+            background: white; border-radius: 18px;
+            padding: 30px 25px; text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--gender);
+            transition: transform 0.3s;
+        }
+        .implication-card:hover { transform: translateY(-5px); }
+        .implication-card.truth-border { border-top-color: var(--truth); }
+        .implication-card.alert-border { border-top-color: var(--alert); }
+        .implication-card.green-border { border-top-color: var(--success); }
+        .implication-card .ic-icon {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, var(--gender), var(--gender-light));
+            border-radius: 18px; margin: 0 auto 18px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .implication-card .ic-icon svg { width: 30px; height: 30px; color: white; }
+        .implication-card .ic-icon.truth-icon { background: linear-gradient(135deg, var(--truth), var(--truth-light)); }
+        .implication-card .ic-icon.green-icon { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .implication-card .ic-icon.alert-icon { background: linear-gradient(135deg, var(--alert), var(--alert-light)); }
+        .implication-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; color: var(--primary); margin-bottom: 10px;
+        }
+        .implication-card p {
+            font-size: 0.95rem; color: var(--text-light); line-height: 1.55;
+        }
+
+        /* Bible passage box */
+        .bible-passage {
+            background: linear-gradient(135deg, #f8f5ff 0%, #ede9fe 100%);
+            border: 2px solid rgba(139,92,246,0.25);
+            border-radius: 20px; padding: 35px 45px;
+            max-width: 1000px; width: 100%;
+        }
+        .bible-passage .bp-ref {
+            font-size: 0.85rem; font-weight: 700; color: var(--gender);
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .bible-passage p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.45rem; color: var(--primary); line-height: 1.65;
+            font-style: italic;
+        }
+
+        /* Slide conclusão */
+        .slide-conclusion {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-conclusion::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(99,102,241,0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .conclusion-content { position: relative; z-index: 1; max-width: 900px; }
+        .conclusion-icon {
+            width: 100px; height: 100px;
+            background: rgba(99,102,241,0.15); border: 2px solid rgba(99,102,241,0.3);
+            border-radius: 50%; margin: 0 auto 30px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .conclusion-icon svg { width: 50px; height: 50px; color: var(--truth-light); }
+        .conclusion-items {
+            display: flex; gap: 25px; margin-bottom: 35px;
+        }
+        .conclusion-item {
+            flex: 1; background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px; padding: 25px;
+        }
+        .conclusion-item h4 { font-size: 1.1rem; color: var(--truth-light); margin-bottom: 10px; }
+        .conclusion-item p { font-size: 0.95rem; opacity: 0.85; line-height: 1.5; }
+
+        /* ══════ PRINT ══════ */
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+            html, body { width: 100%; height: auto; overflow: visible; background: white !important; margin: 0; padding: 0; }
+            .presentation { display: block; height: auto; }
+            .nav-bar, .fullscreen-btn, .shortcuts { display: none !important; }
+            .slide {
+                position: relative !important; display: flex !important;
+                width: 100% !important; height: 100vh !important;
+                min-height: 100vh !important; max-height: 100vh !important;
+                padding: 35px 60px !important;
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            .slide:last-child { page-break-after: avoid !important; break-after: avoid !important; }
+            .slide-capa { background: #0f0f1a !important; }
+            .slide-section { background: #1a0533 !important; }
+            .slide-conclusion { background: #0f0f1a !important; }
+            .slide-header { margin-bottom: 25px !important; }
+            .slide-title { font-size: 2.2rem !important; }
+            .slide-icon { width: 60px !important; height: 60px !important; }
+            .content-box { padding: 25px 30px !important; }
+            .cards-grid { gap: 15px !important; }
+            .card { padding: 18px !important; }
+            .card h4 { font-size: 1rem !important; }
+            .card p { font-size: 0.9rem !important; }
+            .capa-title { font-size: 3rem !important; }
+            .section-title { font-size: 2.5rem !important; }
+            .verse-highlight { padding: 25px 30px !important; }
+            .verse-highlight .verse-text { font-size: 1.3rem !important; }
+            .question-impact { padding: 30px 40px !important; }
+            .question-impact .question-text { font-size: 1.6rem !important; }
+            .implication-card { padding: 20px !important; }
+            .contrast-box { padding: 25px !important; }
+            .application-box { padding: 25px 30px !important; }
+            @keyframes float { 0%, 50%, 100% { transform: none; } }
+        }
+
+        @page { size: landscape; margin: 0; }
+
+        :fullscreen .nav-bar { bottom: 35px; }
+        :fullscreen .fullscreen-btn { display: none; }
+    </style>
+</head>
+<body>
+
+<button class="fullscreen-btn" onclick="toggleFullscreen()">
+    <i data-lucide="maximize"></i> Tela Cheia
+</button>
+
+<div class="shortcuts">
+    <kbd>←</kbd> <kbd>→</kbd> navegar | <kbd>F</kbd> tela cheia
+</div>
+
+<div class="presentation">
+
+    <!-- ═══════════ SLIDE 1 — CAPA ═══════════ -->
+    <div class="slide slide-capa active" id="s1">
+        <div class="capa-content">
+            <div class="capa-icon"><i data-lucide="shield-alert"></i></div>
+            <div class="capa-badge">2º Trimestre 2026 • EBD Jovens</div>
+            <p class="capa-lesson">LIÇÃO 4</p>
+            <h1 class="capa-title">A <span>Falácia</span> da<br>Ideologia de Gênero</h1>
+            <p class="capa-subtitle">Quem tem autoridade para definir quem eu sou?</p>
+            <div class="capa-ref">📖 Salmo 139.13-14</div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 2 — TEXTO CHAVE ═══════════ -->
+    <div class="slide slide-content" id="s2">
+        <div class="slide-header">
+            <div class="slide-icon truth"><i data-lucide="book-open"></i></div>
+            <div class="slide-badge truth-badge">Texto-Chave</div>
+            <h2 class="slide-title">Salmo 139.13-14</h2>
+        </div>
+        <div class="verse-highlight gender-bg" style="max-width: 1000px; padding: 50px 60px;">
+            <p class="verse-text" style="font-size: 2rem; line-height: 1.6;">"Porque tu formaste os meus rins, tu me teceste no ventre de minha mãe. Graças te darei, porque de um modo <strong>assombroso e maravilhoso</strong> fui formado."</p>
+            <span class="verse-ref">Salmo 139.13-14</span>
+        </div>
+        <div class="content-box" style="margin-top: 25px; max-width: 800px; text-align: center;">
+            <p style="font-size: 1.25rem;">🔑 Nossa identidade começa em <strong>Deus</strong>, não em nós</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 3 — PERGUNTA DE ABERTURA ═══════════ -->
+    <div class="slide slide-content" id="s3">
+        <div class="slide-header">
+            <div class="slide-icon gender"><i data-lucide="help-circle"></i></div>
+            <div class="slide-badge gender-badge">Abertura</div>
+            <h2 class="slide-title">Quem define quem nós somos?</h2>
+            <p class="slide-subtitle">Vivemos em uma geração que busca identidade em muitas fontes</p>
+        </div>
+        <div class="cards-grid cols-4">
+            <div class="card" style="text-align: center; border-top: 4px solid var(--warning);">
+                <div class="card-icon warn" style="margin: 0 auto 15px;"><i data-lucide="heart"></i></div>
+                <h4>Sentimentos</h4>
+                <p>O que eu sinto define quem eu sou</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--warning);">
+                <div class="card-icon warn" style="margin: 0 auto 15px;"><i data-lucide="user"></i></div>
+                <h4>Opiniões pessoais</h4>
+                <p>Cada um cria sua própria identidade</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--warning);">
+                <div class="card-icon warn" style="margin: 0 auto 15px;"><i data-lucide="globe"></i></div>
+                <h4>Cultura</h4>
+                <p>A sociedade molda quem você é</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--warning);">
+                <div class="card-icon warn" style="margin: 0 auto 15px;"><i data-lucide="smartphone"></i></div>
+                <h4>Redes sociais</h4>
+                <p>Influências digitais e tendências</p>
+            </div>
+        </div>
+        <div class="content-box" style="margin-top: 20px; max-width: 750px; text-align: center; border-left: 5px solid var(--gender);">
+            <p style="font-size: 1.3rem;">👉 A pergunta central é: <strong>Quem tem autoridade para definir quem eu sou?</strong></p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 4 — O QUE É FALÁCIA? ═══════════ -->
+    <div class="slide slide-content" id="s4">
+        <div class="slide-header">
+            <div class="slide-icon gender"><i data-lucide="triangle-alert"></i></div>
+            <div class="slide-badge gender-badge">Base Conceitual</div>
+            <h2 class="slide-title">O que é Falácia?</h2>
+            <p class="slide-subtitle">Um erro de raciocínio que parece verdade, mas não é</p>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 950px; margin-bottom: 25px;">
+            <div class="card" style="border-left: 4px solid var(--gender);">
+                <div class="card-icon gender"><i data-lucide="brain"></i></div>
+                <h4>Definição</h4>
+                <p>Falácia é um argumento que parece lógico, mas contém um erro escondido que engana o raciocínio</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--alert);">
+                <div class="card-icon alert"><i data-lucide="message-square-x"></i></div>
+                <h4>Exemplos de falácias</h4>
+                <p>"Se você discorda, é intolerante"<br>"Todo mundo pensa assim"<br>"A ciência prova isso"</p>
+            </div>
+        </div>
+        <div class="verse-highlight" style="max-width: 850px;">
+            <p class="verse-text" style="font-size: 1.6rem;">"Examinai tudo. Retende o bem."</p>
+            <span class="verse-ref">1 Tessalonicenses 5.21</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 5 — O QUE É IDEOLOGIA? ═══════════ -->
+    <div class="slide slide-content" id="s5">
+        <div class="slide-header">
+            <div class="slide-icon gender"><i data-lucide="layers"></i></div>
+            <div class="slide-badge gender-badge">Base Conceitual</div>
+            <h2 class="slide-title">O que é Ideologia?</h2>
+            <p class="slide-subtitle">Um conjunto de ideias que molda a forma como vemos o mundo</p>
+        </div>
+        <div class="cards-grid cols-3" style="margin-bottom: 25px;">
+            <div class="card" style="text-align: center; border-top: 4px solid var(--gender);">
+                <div class="card-icon gender" style="margin: 0 auto 15px;"><i data-lucide="vote"></i></div>
+                <h4>Visões políticas</h4>
+                <p>Moldam como você entende poder e sociedade</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--gender);">
+                <div class="card-icon gender" style="margin: 0 auto 15px;"><i data-lucide="users"></i></div>
+                <h4>Visões sociais</h4>
+                <p>Definem como você se relaciona com os outros</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--gender);">
+                <div class="card-icon gender" style="margin: 0 auto 15px;"><i data-lucide="palette"></i></div>
+                <h4>Visões culturais</h4>
+                <p>Influenciam valores, costumes e comportamentos</p>
+            </div>
+        </div>
+        <div class="content-box" style="max-width: 800px; text-align: center; border-left: 5px solid var(--truth);">
+            <p style="font-size: 1.2rem;">🧭 A questão é: a visão de mundo que você adota está <strong>alinhada com a verdade de Deus?</strong></p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 6 — CONCEITOS FUNDAMENTAIS ═══════════ -->
+    <div class="slide slide-content" id="s6">
+        <div class="slide-header">
+            <div class="slide-icon gender"><i data-lucide="book-marked"></i></div>
+            <div class="slide-badge gender-badge">Conceitos</div>
+            <h2 class="slide-title">Três Conceitos Centrais</h2>
+            <p class="slide-subtitle">Usados no debate sobre identidade e gênero</p>
+        </div>
+        <div class="cards-grid cols-3">
+            <div class="card" style="text-align: center; border-top: 5px solid var(--primary);">
+                <div style="font-size: 3rem; margin-bottom: 15px;">🧬</div>
+                <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Sexo</h4>
+                <p>Biológico — definido pelo corpo físico desde a concepção</p>
+                <span class="verse" style="margin-top: 12px;">Criado por Deus</span>
+            </div>
+            <div class="card" style="text-align: center; border-top: 5px solid var(--gender);">
+                <div style="font-size: 3rem; margin-bottom: 15px;">⚧️</div>
+                <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Gênero</h4>
+                <p>Papéis e expressões sociais associados ao masculino e feminino</p>
+                <span class="verse" style="margin-top: 12px; background: rgba(139,92,246,0.1); color: var(--gender-dark);">Em debate</span>
+            </div>
+            <div class="card" style="text-align: center; border-top: 5px solid var(--truth);">
+                <div style="font-size: 3rem; margin-bottom: 15px;">🧠</div>
+                <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Identidade</h4>
+                <p>Como a pessoa se percebe — psicológica e espiritualmente</p>
+                <span class="verse" style="margin-top: 12px;">Fundada em Cristo</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 7 — SEÇÃO I ═══════════ -->
+    <div class="slide slide-section" id="s7">
+        <div class="section-content">
+            <div class="section-num">I</div>
+            <div class="section-label">Parte 1</div>
+            <h2 class="section-title">Conceitos da<br><em>Ideologia de Gênero</em></h2>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 8 — ORIGEM DO TERMO ═══════════ -->
+    <div class="slide slide-content" id="s8">
+        <div class="slide-header">
+            <div class="slide-icon gender"><i data-lucide="history"></i></div>
+            <div class="slide-badge gender-badge">Origem do Termo</div>
+            <h2 class="slide-title">Como tudo começou</h2>
+            <p class="slide-subtitle">A raiz histórica da ideologia de gênero</p>
+        </div>
+        <div class="contrast-box">
+            <h3>Linha do tempo</h3>
+            <div class="contrast-items">
+                <div class="contrast-item gender-item">
+                    <div class="ci-icon"><i data-lucide="calendar"></i></div>
+                    <p><strong>1950 — John Money</strong>Psicólogo americano propôs que não há relação natural entre sexo anatômico e identidade de gênero</p>
+                </div>
+                <div class="contrast-item gender-item">
+                    <div class="ci-icon"><i data-lucide="university"></i></div>
+                    <p><strong>Expansão acadêmica</strong>As ideias se espalharam para filosofia, sociologia, psicanálise e ciências humanas</p>
+                </div>
+                <div class="contrast-item dark-item">
+                    <div class="ci-icon"><i data-lucide="flag"></i></div>
+                    <p><strong>Anos 90 — O termo surge</strong>"Ideologia de gênero" nasce entre grupos conservadores que percebem a ideologização do debate</p>
+                </div>
+                <div class="contrast-item dark-item">
+                    <div class="ci-icon"><i data-lucide="alert-triangle"></i></div>
+                    <p><strong>A afirmação central</strong>Identidade sexual é determinada socialmente e pode diferir do sexo biológico — negando a criação de Deus</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 9 — SEPARAÇÃO SEXO E GÊNERO ═══════════ -->
+    <div class="slide slide-content" id="s9">
+        <div class="slide-header">
+            <div class="slide-icon alert"><i data-lucide="scissors"></i></div>
+            <div class="slide-badge alert-badge">Fundamento</div>
+            <h2 class="slide-title">Separação entre Sexo e Gênero</h2>
+            <p class="slide-subtitle">O pilar central da ideologia de gênero</p>
+        </div>
+        <div class="cards-grid cols-2">
+            <div class="card" style="border-left: 4px solid var(--primary);">
+                <div class="card-icon"><i data-lucide="dna"></i></div>
+                <h4>O que dizem sobre sexo</h4>
+                <p>Atribuído ao nascer com base em órgãos genitais — apenas uma característica física</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--gender);">
+                <div class="card-icon gender"><i data-lucide="brain-circuit"></i></div>
+                <h4>O que dizem sobre gênero</h4>
+                <p>Uma identidade interna que pode ou não coincidir com o sexo biológico — fluida e mutável</p>
+            </div>
+        </div>
+        <div class="question-impact alert-bg" style="margin-top: 25px; padding: 30px 40px;">
+            <p class="question-text" style="font-size: 1.7rem;">Resultado: uma pessoa pode nascer biologicamente homem e se identificar como mulher — ou vice-versa — ou nenhum dos dois</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 10 — IMPACTO DA SEPARAÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s10">
+        <div class="slide-header">
+            <div class="slide-icon alert"><i data-lucide="alert-octagon"></i></div>
+            <div class="slide-badge alert-badge">Impacto</div>
+            <h2 class="slide-title">O Que Isso Causa nas Pessoas</h2>
+            <p class="slide-subtitle">Especialmente em crianças e adolescentes</p>
+        </div>
+        <div class="implications-grid">
+            <div class="implication-card alert-border">
+                <div class="ic-icon alert-icon"><i data-lucide="puzzle"></i></div>
+                <h4>Confusão de identidade</h4>
+                <p>Ensinadas que gênero é fluido, crianças são afastadas do plano criador de Deus</p>
+            </div>
+            <div class="implication-card alert-border">
+                <div class="ic-icon alert-icon"><i data-lucide="heart-crack"></i></div>
+                <h4>Insegurança emocional</h4>
+                <p>Conflitos psicológicos e sofrimento real para quem enfrenta essa confusão</p>
+            </div>
+            <div class="implication-card alert-border">
+                <div class="ic-icon alert-icon"><i data-lucide="x-octagon"></i></div>
+                <h4>Decisões irreversíveis</h4>
+                <p>Cirurgias e tratamentos que podem trazer arrependimento futuro e danos permanentes</p>
+            </div>
+        </div>
+        <div class="verse-highlight" style="margin-top: 25px; max-width: 850px;">
+            <p class="verse-text" style="font-size: 1.5rem;">"Formidáveis e maravilhosamente fui feito… e a minha alma o sabe muito bem."</p>
+            <span class="verse-ref">Salmo 139.14</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 11 — MOVIMENTOS E ATIVISMO ═══════════ -->
+    <div class="slide slide-content" id="s11">
+        <div class="slide-header">
+            <div class="slide-icon alert"><i data-lucide="megaphone"></i></div>
+            <div class="slide-badge alert-badge">Movimentos e Ativismo</div>
+            <h2 class="slide-title">Pressão Política e Cultural</h2>
+        </div>
+        <div class="contrast-box">
+            <h3>O que esses movimentos buscam</h3>
+            <div class="contrast-items">
+                <div class="contrast-item dark-item">
+                    <div class="ci-icon"><i data-lucide="landmark"></i></div>
+                    <p><strong>Mudanças nas leis</strong>Reconhecimento legal da autodeterminação de gênero</p>
+                </div>
+                <div class="contrast-item dark-item">
+                    <div class="ci-icon"><i data-lucide="graduation-cap"></i></div>
+                    <p><strong>Reformulação da educação</strong>Inclusão obrigatória de pautas de identidade nas escolas</p>
+                </div>
+                <div class="contrast-item dark-item">
+                    <div class="ci-icon"><i data-lucide="ban"></i></div>
+                    <p><strong>Silenciamento</strong>Em muitos lugares já se penaliza legalmente quem expressa opinião contrária, mesmo que baseada na fé</p>
+                </div>
+                <div class="contrast-item light-item">
+                    <div class="ci-icon"><i data-lucide="cross"></i></div>
+                    <p><strong>Mas nossa luta é espiritual</strong>"A luta não é contra pessoas, mas contra ideias que se levantam contra Deus" (2Co 10.5)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 12 — ATIVISMO NAS UNIVERSIDADES ═══════════ -->
+    <div class="slide slide-content" id="s12">
+        <div class="slide-header">
+            <div class="slide-icon gender"><i data-lucide="graduation-cap"></i></div>
+            <div class="slide-badge gender-badge">Ativismo</div>
+            <h2 class="slide-title">Nas Universidades</h2>
+            <p class="slide-subtitle">Um dos principais espaços de atuação</p>
+        </div>
+        <div class="cards-grid cols-3" style="margin-bottom: 25px;">
+            <div class="card" style="text-align: center; border-top: 4px solid var(--gender);">
+                <div class="card-icon gender" style="margin: 0 auto 15px;"><i data-lucide="book-copy"></i></div>
+                <h4>Pautas institucionalizadas</h4>
+                <p>Inclusão de temas de identidade de gênero como políticas internas obrigatórias</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--gender);">
+                <div class="card-icon gender" style="margin: 0 auto 15px;"><i data-lucide="users-round"></i></div>
+                <h4>Movimentos estudantis</h4>
+                <p>Grupos de pressão que influenciam regulamentos e normas das instituições</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--alert);">
+                <div class="card-icon alert" style="margin: 0 auto 15px;"><i data-lucide="door-open"></i></div>
+                <h4>Exemplo prático</h4>
+                <p>UFRN implementou banheiros sem distinção de gênero a partir de demandas de grupos estudantis</p>
+            </div>
+        </div>
+        <div class="content-box" style="max-width: 850px; text-align: center; border-left: 5px solid var(--warning);">
+            <p style="font-size: 1.15rem;">💡 Ideias sociais entram nas instituições → se tornam normas → <strong>influenciam toda a sociedade</strong></p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 13 — ATIVISMO NA EDUCAÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s13">
+        <div class="slide-header">
+            <div class="slide-icon gender"><i data-lucide="school"></i></div>
+            <div class="slide-badge gender-badge">Ativismo</div>
+            <h2 class="slide-title">Na Educação e com Crianças</h2>
+            <p class="slide-subtitle">A área educacional também tem sido impactada</p>
+        </div>
+        <div class="cards-grid cols-2" style="margin-bottom: 25px;">
+            <div class="card" style="border-left: 4px solid var(--gender);">
+                <div class="card-icon gender"><i data-lucide="target"></i></div>
+                <h4>O que tem sido promovido</h4>
+                <p>• Campanhas de conscientização<br>• Conteúdos de diversidade de gênero<br>• Uso de nome social para estudantes</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--alert);">
+                <div class="card-icon alert"><i data-lucide="shield-question"></i></div>
+                <h4>O debate levanta</h4>
+                <p>• Qual é o papel da escola?<br>• Quem tem responsabilidade sobre a formação?<br>• Qual é a idade adequada para esses temas?</p>
+            </div>
+        </div>
+        <div class="content-box" style="max-width: 850px; text-align: center; border-left: 5px solid var(--truth);">
+            <p style="font-size: 1.2rem;">🏠 A família tem o papel primário na formação moral da criança — <strong>não a escola</strong></p>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 5px;">Deuteronômio 6.6-7</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 14 — ATIVISMO NO ESPORTE ═══════════ -->
+    <div class="slide slide-content" id="s14">
+        <div class="slide-header">
+            <div class="slide-icon gender"><i data-lucide="dumbbell"></i></div>
+            <div class="slide-badge gender-badge">Ativismo</div>
+            <h2 class="slide-title">No Esporte</h2>
+            <p class="slide-subtitle">Debates práticos e éticos que chegaram às competições</p>
+        </div>
+        <div class="cards-grid cols-2" style="margin-bottom: 25px;">
+            <div class="card" style="border-left: 4px solid var(--alert); text-align: center;">
+                <div class="card-icon alert" style="margin: 0 auto 15px;"><i data-lucide="trophy"></i></div>
+                <h4>Caso real: Fallon Fox</h4>
+                <p>Atleta que competiu na categoria feminina de MMA após transição de gênero, gerando polêmica sobre vantagens biológicas</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--primary);">
+                <div class="card-icon" style="margin: 0 auto 15px;"><i data-lucide="scale"></i></div>
+                <h4>Questões levantadas</h4>
+                <p>• Diferenças biológicas reais entre sexos<br>• Justiça nas competições<br>• Critérios de participação e segurança</p>
+            </div>
+        </div>
+        <div class="content-box" style="max-width: 850px; text-align: center; border-left: 5px solid var(--gender);">
+            <p style="font-size: 1.2rem;">⚠️ A biologia importa — diferenças entre homem e mulher são reais, <strong>criadas por Deus com propósito</strong></p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 15 — SEÇÃO II ═══════════ -->
+    <div class="slide slide-section" id="s15">
+        <div class="section-content">
+            <div class="section-num">II</div>
+            <div class="section-label">Parte 2</div>
+            <h2 class="section-title">O que a <em>Bíblia Ensina</em><br>sobre Gênero e Identidade</h2>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 16 — DEUS CRIOU HOMEM E MULHER ═══════════ -->
+    <div class="slide slide-content" id="s16">
+        <div class="slide-header">
+            <div class="slide-icon truth"><i data-lucide="book-open"></i></div>
+            <div class="slide-badge truth-badge">A Criação</div>
+            <h2 class="slide-title">Deus Criou Homem e Mulher</h2>
+        </div>
+        <div class="bible-passage" style="margin-bottom: 25px;">
+            <div class="bp-ref"><i data-lucide="book-open" style="width:16px; height:16px;"></i> Gênesis 1.27</div>
+            <p>"E criou Deus o homem à sua imagem; à imagem de Deus o criou; <strong>macho e fêmea os criou</strong>."</p>
+        </div>
+        <div class="cards-grid cols-3">
+            <div class="card" style="text-align: center; border-top: 4px solid var(--truth);">
+                <div class="card-icon truth" style="margin: 0 auto 15px;"><i data-lucide="crown"></i></div>
+                <h4>Origem divina</h4>
+                <p>Gênero não é construção social — é criação de Deus</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--truth);">
+                <div class="card-icon truth" style="margin: 0 auto 15px;"><i data-lucide="hand-heart"></i></div>
+                <h4>Complementaridade</h4>
+                <p>Homem e mulher não competem — se completam no plano divino</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--truth);">
+                <div class="card-icon truth" style="margin: 0 auto 15px;"><i data-lucide="gift"></i></div>
+                <h4>Dom de Deus</h4>
+                <p>Sexualidade é dom para o casamento, família e perpetuação da vida</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 17 — COMPLEMENTARIDADE ═══════════ -->
+    <div class="slide slide-content" id="s17">
+        <div class="slide-header">
+            <div class="slide-icon truth"><i data-lucide="link"></i></div>
+            <div class="slide-badge truth-badge">Complementaridade</div>
+            <h2 class="slide-title">Homem e Mulher: Unidos por Propósito</h2>
+        </div>
+        <div class="bible-passage" style="margin-bottom: 25px;">
+            <div class="bp-ref"><i data-lucide="book-open" style="width:16px; height:16px;"></i> Efésios 5.31-33</div>
+            <p>O casamento entre homem e mulher <strong>simboliza a relação entre Cristo e a Igreja</strong> — beleza e propósito espiritual profundo.</p>
+        </div>
+        <div class="cards-grid cols-2">
+            <div class="card" style="border-left: 4px solid var(--truth);">
+                <div class="card-icon truth"><i data-lucide="heart"></i></div>
+                <h4>O que a Bíblia afirma</h4>
+                <p>A diferença entre masculino e feminino foi estabelecida para benefício mútuo e realização do plano divino</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--alert);">
+                <div class="card-icon alert"><i data-lucide="x-circle"></i></div>
+                <h4>O que a ideologia rejeita</h4>
+                <p>A ideologia de gênero vê a complementaridade como opressão — destruindo o modelo de família de Deus</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 18 — TEXTOS DO ANTIGO TESTAMENTO ═══════════ -->
+    <div class="slide slide-content" id="s18">
+        <div class="slide-header">
+            <div class="slide-icon truth"><i data-lucide="scroll"></i></div>
+            <div class="slide-badge truth-badge">Antigo Testamento</div>
+            <h2 class="slide-title">O que a Lei de Deus Estabelece</h2>
+        </div>
+        <div class="cards-grid cols-3">
+            <div class="card" style="border-left: 4px solid var(--primary);">
+                <div class="card-icon"><i data-lucide="shirt"></i></div>
+                <h4>Deuteronômio 22.5</h4>
+                <p>"A mulher não usará roupa de homem, nem o homem vestirá roupa de mulher…"</p>
+                <p style="margin-top: 10px; color: var(--text-muted); font-size: 0.9rem;">Aponta para a preservação da distinção entre os sexos</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--alert);">
+                <div class="card-icon alert"><i data-lucide="flame"></i></div>
+                <h4>Gênesis 19 — Sodoma</h4>
+                <p>Envolve práticas que incluem relações entre pessoas do mesmo sexo, violência e corrupção moral</p>
+                <p style="margin-top: 8px; color: var(--text-muted); font-size: 0.9rem;">Ver também Ezequiel 16.49 — orgulho e injustiça</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--alert);">
+                <div class="card-icon alert"><i data-lucide="scroll-text"></i></div>
+                <h4>Levítico 18.22 / 20.13</h4>
+                <p>Estabelece padrão moral para Israel — leis que refletem o design original de Deus</p>
+                <p style="margin-top: 8px; color: var(--text-muted); font-size: 0.9rem;">Padrão da santidade divina para o povo</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 19 — TEXTOS DO NOVO TESTAMENTO ═══════════ -->
+    <div class="slide slide-content" id="s19">
+        <div class="slide-header">
+            <div class="slide-icon truth"><i data-lucide="mail-open"></i></div>
+            <div class="slide-badge truth-badge">Novo Testamento</div>
+            <h2 class="slide-title">A Palavra é Clara — e Também Redentora</h2>
+        </div>
+        <div class="cards-grid cols-3">
+            <div class="card" style="border-left: 4px solid var(--alert);">
+                <div class="card-icon alert"><i data-lucide="alert-triangle"></i></div>
+                <h4>Romanos 1.26-27</h4>
+                <p>Relações do mesmo sexo descritas como parte da desordem que vem da rejeição de Deus</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--success); position: relative;">
+                <div class="card-icon green"><i data-lucide="sparkles"></i></div>
+                <h4>1 Coríntios 6.9-11</h4>
+                <p>Lista pecados — <em>mas acrescenta:</em></p>
+                <p style="margin-top: 10px; font-weight: 600; color: var(--success);">"E é o que <strong>alguns de vós fostes</strong>… mas fostes lavados, santificados e justificados"</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--primary);">
+                <div class="card-icon"><i data-lucide="book-open"></i></div>
+                <h4>1 Timóteo 1.9-10</h4>
+                <p>Menciona práticas sexuais fora do padrão bíblico como opostas à sã doutrina</p>
+            </div>
+        </div>
+        <div class="content-box" style="margin-top: 20px; max-width: 850px; text-align: center; border-left: 5px solid var(--success);">
+            <p style="font-size: 1.25rem;">✨ A Bíblia não só condena — ela <strong>redime e transforma</strong>. Ninguém está além do alcance da graça!</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 20 — IDENTIDADE RESTAURADA ═══════════ -->
+    <div class="slide slide-content" id="s20">
+        <div class="slide-header">
+            <div class="slide-icon green"><i data-lucide="refresh-cw"></i></div>
+            <div class="slide-badge green-badge">Restauração</div>
+            <h2 class="slide-title">Identidade Restaurada em Cristo</h2>
+        </div>
+        <div class="cards-grid cols-2" style="margin-bottom: 25px;">
+            <div class="card" style="border-left: 4px solid var(--alert);">
+                <div class="card-icon alert"><i data-lucide="cloud-rain"></i></div>
+                <h4>O problema: a Queda</h4>
+                <p>Gênesis 3 — o pecado corrompeu a natureza humana, trazendo desordem em todas as áreas da vida, inclusive a sexualidade</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--success);">
+                <div class="card-icon green"><i data-lucide="sun"></i></div>
+                <h4>A solução: Cristo</h4>
+                <p>"Se alguém está em Cristo, é nova criatura; as coisas velhas já passaram; eis que tudo se fez novo." (2Co 5.17)</p>
+            </div>
+        </div>
+        <div class="verse-highlight success-bg" style="max-width: 900px;">
+            <p class="verse-text" style="font-size: 1.6rem;">"Não há judeu nem grego… porque todos vós sois um em Cristo Jesus."</p>
+            <span class="verse-ref">Gálatas 3.28</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 21 — SEÇÃO III ═══════════ -->
+    <div class="slide slide-section" id="s21">
+        <div class="section-content">
+            <div class="section-num">III</div>
+            <div class="section-label">Parte 3</div>
+            <h2 class="section-title">A Resposta da<br><em>Igreja</em></h2>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 22 — PROCLAMAR COM AMOR ═══════════ -->
+    <div class="slide slide-content" id="s22">
+        <div class="slide-header">
+            <div class="slide-icon truth"><i data-lucide="megaphone"></i></div>
+            <div class="slide-badge truth-badge">Resposta 1</div>
+            <h2 class="slide-title">Proclamar a Verdade com Amor</h2>
+        </div>
+        <div class="cards-grid cols-3" style="margin-bottom: 25px;">
+            <div class="card" style="text-align: center; border-top: 4px solid var(--alert);">
+                <div class="card-icon alert" style="margin: 0 auto 15px;"><i data-lucide="volume-x"></i></div>
+                <h4>❌ Omissão</h4>
+                <p>Silenciar por medo da rejeição é traição à verdade</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--success);">
+                <div class="card-icon green" style="margin: 0 auto 15px;"><i data-lucide="heart-handshake"></i></div>
+                <h4>✅ Verdade com amor</h4>
+                <p>Confrontar o erro sem hostilidade, acolhendo o pecador com graça (Ef 4.15)</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--alert);">
+                <div class="card-icon alert" style="margin: 0 auto 15px;"><i data-lucide="gavel"></i></div>
+                <h4>❌ Legalismo</h4>
+                <p>Condenar sem misericórdia afasta quem precisa do Evangelho</p>
+            </div>
+        </div>
+        <div class="verse-highlight" style="max-width: 850px;">
+            <p class="verse-text" style="font-size: 1.5rem;">"Prudentes como as serpentes e simples como as pombas"</p>
+            <span class="verse-ref">Mateus 10.16</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 23 — ENSINO NAS FAMÍLIAS ═══════════ -->
+    <div class="slide slide-content" id="s23">
+        <div class="slide-header">
+            <div class="slide-icon green"><i data-lucide="home"></i></div>
+            <div class="slide-badge green-badge">Resposta 2</div>
+            <h2 class="slide-title">Ensino Bíblico nas Famílias e Igrejas</h2>
+        </div>
+        <div class="cards-grid cols-2" style="margin-bottom: 25px;">
+            <div class="card" style="border-left: 4px solid var(--success);">
+                <div class="card-icon green"><i data-lucide="home"></i></div>
+                <h4>O lar é o primeiro campo</h4>
+                <p>Pais chamados por Deus a ensinar seus filhos nos caminhos do Senhor — não terceirizar à escola ou à cultura (Dt 6.6-7)</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--truth);">
+                <div class="card-icon truth"><i data-lucide="landmark"></i></div>
+                <h4>A Igreja deve ensinar</h4>
+                <p>EBD, discipulado, cultos de jovens — oportunidades para fortalecer a nova geração na verdade de Deus</p>
+            </div>
+        </div>
+        <div class="content-box" style="max-width: 850px; text-align: center; border-left: 5px solid var(--alert);">
+            <p style="font-size: 1.2rem;">⚠️ Ignorar esses temas é deixar espaço para que <strong>o mundo molde a mente e o coração dos jovens</strong></p>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 5px;">Provérbios 22.6</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 24 — ACOLHIMENTO E RESTAURAÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s24">
+        <div class="slide-header">
+            <div class="slide-icon green"><i data-lucide="heart-handshake"></i></div>
+            <div class="slide-badge green-badge">Resposta 3</div>
+            <h2 class="slide-title">Acolhimento e Restauração</h2>
+            <p class="slide-subtitle">A Igreja não pode ser tribunal — deve ser hospital espiritual</p>
+        </div>
+        <div class="cards-grid cols-2" style="margin-bottom: 25px;">
+            <div class="card" style="border-left: 4px solid var(--success);">
+                <div class="card-icon green"><i data-lucide="hospital"></i></div>
+                <h4>A Igreja como hospital</h4>
+                <p>Lugar onde quem luta com confusão de identidade encontra graça, verdade e restauração — não condenação</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--truth);">
+                <div class="card-icon truth"><i data-lucide="infinity"></i></div>
+                <h4>O poder do Evangelho</h4>
+                <p>Nenhuma luta humana é maior que o poder de Cristo. Só Ele pode restaurar o que foi distorcido pelo pecado</p>
+            </div>
+        </div>
+        <div class="verse-highlight success-bg" style="max-width: 900px;">
+            <p class="verse-text" style="font-size: 1.5rem;">"Não necessitam de médico os que estão sãos, mas sim os que estão enfermos."</p>
+            <span class="verse-ref">Lucas 5.31</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 25 — PERGUNTA FINAL ═══════════ -->
+    <div class="slide slide-content" id="s25">
+        <div class="slide-header">
+            <div class="slide-icon truth"><i data-lucide="circle-help"></i></div>
+            <div class="slide-badge truth-badge">Reflexão Final</div>
+            <h2 class="slide-title">Decisão</h2>
+        </div>
+        <div class="question-impact truth-bg">
+            <h3>A escolha é sua</h3>
+            <p class="question-text">Você busca sua identidade na <strong>cultura</strong>…<br>ou no <strong>Criador que te formou</strong>?</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 26 — FECHAMENTO ═══════════ -->
+    <div class="slide slide-conclusion" id="s26">
+        <div class="conclusion-content">
+            <div class="conclusion-icon"><i data-lucide="anchor"></i></div>
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.8rem; margin-bottom: 15px;">Quem nos define?</h2>
+            <p style="font-size: 1.35rem; opacity: 0.85; margin-bottom: 35px; max-width: 700px; margin-left: auto; margin-right: auto;">Não é a sociedade, nem nossos sentimentos — é <strong>Deus</strong>, que nos criou com amor, propósito e identidade.</p>
+            <div class="conclusion-items">
+                <div class="conclusion-item">
+                    <h4>A Falácia diz:</h4>
+                    <p>"Você define quem você é"</p>
+                </div>
+                <div class="conclusion-item">
+                    <h4>A Bíblia diz:</h4>
+                    <p>"Deus te formou com propósito"</p>
+                </div>
+                <div class="conclusion-item">
+                    <h4>Nossa missão:</h4>
+                    <p>Viver e anunciar essa verdade com amor e sabedoria</p>
+                </div>
+            </div>
+            <div style="margin-top: 30px; padding: 25px 40px; background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.35); border-radius: 16px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <p style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-style: italic; margin-bottom: 10px;">"Formidáveis e maravilhosamente fui feito; maravilhosas são as tuas obras."</p>
+                <span style="background: var(--accent); color: var(--primary-dark); padding: 6px 20px; border-radius: 50px; font-weight: 700; font-size: 0.9rem;">Salmo 139.14</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav-bar">
+    <button id="prev" onclick="prev()">◀</button>
+    <div class="counter"><span id="atual">1</span> / 26</div>
+    <button id="next" onclick="next()">▶</button>
+</nav>
+
+<script>
+    lucide.createIcons();
+
+    let slide = 1;
+    const total = 26;
+
+    function show(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        document.getElementById('atual').textContent = n;
+        document.getElementById('prev').disabled = (n === 1);
+        document.getElementById('next').disabled = (n === total);
+        slide = n;
+        lucide.createIcons();
+    }
+
+    function next() { if (slide < total) show(slide + 1); }
+    function prev() { if (slide > 1) show(slide - 1); }
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); showNavBar(); }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); showNavBar(); }
+        if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); }
+        if (e.key === 'Home') { show(1); showNavBar(); }
+        if (e.key === 'End') { show(total); showNavBar(); }
+    });
+
+    let navTimeout;
+    const navBar = document.querySelector('.nav-bar');
+
+    function showNavBar() {
+        navBar.classList.add('visible');
+        clearTimeout(navTimeout);
+        navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 3000);
+    }
+
+    document.addEventListener('mousemove', showNavBar);
+    document.addEventListener('touchstart', showNavBar);
+    navBar.addEventListener('mouseenter', () => { clearTimeout(navTimeout); });
+    navBar.addEventListener('mouseleave', () => { navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 2000); });
+
+    showNavBar();
+
+    setTimeout(() => {
+        const shortcuts = document.querySelector('.shortcuts');
+        if (shortcuts) { shortcuts.style.opacity = '0'; shortcuts.style.transition = 'opacity 1s'; }
+    }, 5000);
+</script>
+</body>
+</html>

@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Pregadores — Métodos de Interpretação Bíblica | PDF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #e8c84a;
+            --accent-dark: #a68520;
+            --bg: #ffffff;
+            --bg-chapter: #f7f5f0;
+            --text: #2d2a26;
+            --text-light: #5a564f;
+            --text-muted: #8a857d;
+            --border: #e0dcd4;
+            --border-light: #f0ece4;
+            --success: #2d7d46;
+            --info: #2563eb;
+            --warning: #d97706;
+            --danger: #c0392b;
+            --purple: #6d28d9;
+            --teal: #0d9488;
+            --cover-from: #0a2218;
+            --cover-mid: #14432e;
+            --cover-to: #1a5c40;
+        }
+
+        @page {
+            size: A5 portrait;
+            margin: 12mm 10mm 14mm 10mm;
+        }
+
+        @page :first {
+            margin: 0;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+
+        html { font-size: 11px; }
+
+        body {
+            font-family: 'Source Serif 4', 'Georgia', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            max-width: 100%;
+            padding: 0;
+            orphans: 3;
+            widows: 3;
+        }
+
+        /* ══════════════════════════════════════
+           CAPA
+           ══════════════════════════════════════ */
+        .cover {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(160deg, #0a2218 0%, #14432e 40%, #1a5c40 100%);
+            color: #fff;
+            padding: 50px 24px;
+            min-height: 100vh;
+            page-break-after: always;
+            break-after: page;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(201,162,39,0.1) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(255,255,255,0.03) 0%, transparent 50%);
+        }
+
+        .cover-content { position: relative; z-index: 2; max-width: 100%; }
+
+        .cover-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(201,162,39,0.15);
+            border: 2px solid rgba(201,162,39,0.3);
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cover-icon svg { width: 40px; height: 40px; color: var(--accent-light); }
+
+        .cover-badge {
+            display: inline-block;
+            background: rgba(201,162,39,0.2);
+            border: 1px solid rgba(201,162,39,0.4);
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            margin-bottom: 20px;
+        }
+
+        .cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 8px;
+        }
+
+        .cover h1 span {
+            display: block;
+            color: var(--accent-light);
+            font-size: 1.6rem;
+        }
+
+        .cover-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 28px;
+        }
+
+        .cover-divider {
+            width: 60px;
+            height: 2px;
+            background: var(--accent);
+            margin: 0 auto 18px;
+            border-radius: 2px;
+        }
+
+        .cover-author {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .cover-author strong { color: var(--accent-light); }
+
+        .cover-tags {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .cover-tag {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .cover-tag.herm  { border-color: rgba(13,148,136,0.5); color: #5eead4; }
+        .cover-tag.exeg  { border-color: rgba(37,99,235,0.5); color: #93c5fd; }
+        .cover-tag.oica  { border-color: rgba(201,162,39,0.5); color: var(--accent-light); }
+
+        /* ══════════════════════════════════════
+           SUMÁRIO
+           ══════════════════════════════════════ */
+        .toc {
+            page-break-after: always;
+            break-after: page;
+            padding: 24px 12px;
+        }
+
+        .toc-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            text-align: center;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px dotted var(--border);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .toc-list li .toc-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .toc-list li .toc-num.dot {
+            background: var(--teal);
+            font-size: 0.8rem;
+        }
+
+        /* ══════════════════════════════════════
+           CAPÍTULOS
+           ══════════════════════════════════════ */
+        .chapter {
+            padding: 16px 12px 24px;
+            page-break-before: always;
+            break-before: page;
+        }
+
+        .chapter:first-of-type {
+            page-break-before: auto;
+            break-before: auto;
+        }
+
+        .chapter-header {
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border);
+            page-break-inside: avoid;
+            break-inside: avoid;
+            page-break-after: avoid;
+            break-after: avoid;
+        }
+
+        .chapter-num {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-dark);
+            margin-bottom: 4px;
+        }
+
+        .chapter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            line-height: 1.2;
+        }
+
+        .intro-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 4px;
+        }
+
+        /* Parágrafos */
+        .chapter p {
+            margin-bottom: 0.9em;
+            text-align: justify;
+            hyphens: auto;
+            font-size: 0.95rem;
+        }
+
+        .chapter p.lead {
+            font-size: 1rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Seções */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 24px 0 12px;
+            padding-left: 12px;
+            border-left: 3px solid var(--accent);
+            page-break-after: avoid;
+            break-after: avoid;
+        }
+
+        /* ══════════════════════════════════════
+           COMPONENTES
+           ══════════════════════════════════════ */
+
+        /* Versículo */
+        .verse-card {
+            background: var(--primary-dark);
+            color: #fff;
+            padding: 16px 18px;
+            border-radius: 10px;
+            margin: 16px 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .verse-card p {
+            font-style: italic;
+            font-size: 0.9rem;
+            line-height: 1.65;
+            margin-bottom: 8px !important;
+            text-align: left !important;
+            color: #fff;
+        }
+
+        .verse-card .ref {
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent-light);
+        }
+
+        .verse-card.purple-card { background: #3b1f6e; }
+        .verse-card.teal-card   { background: #065f50; }
+        .verse-card.blue-card   { background: #1a3e6e; }
+        .verse-card.green-card  { background: #0d3d24; }
+
+        /* Info box */
+        .info-box {
+            background: #f9f8f5;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--info);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 16px 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .info-box.accent  { border-left-color: var(--accent); }
+        .info-box.success { border-left-color: var(--success); }
+        .info-box.warning { border-left-color: var(--warning); }
+        .info-box.danger  { border-left-color: var(--danger); }
+        .info-box.purple  { border-left-color: var(--purple); }
+        .info-box.teal    { border-left-color: var(--teal); }
+
+        .info-box-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .info-box.accent  .info-box-title { color: var(--accent-dark); }
+        .info-box.success .info-box-title { color: var(--success); }
+        .info-box.warning .info-box-title { color: var(--warning); }
+        .info-box.danger  .info-box-title { color: var(--danger); }
+        .info-box.purple  .info-box-title { color: var(--purple); }
+        .info-box.teal    .info-box-title { color: var(--teal); }
+        .info-box         .info-box-title { color: var(--info); }
+
+        .info-box p, .info-box ul { font-size: 0.85rem; }
+
+        /* Definição */
+        .definition {
+            background: #fffef5;
+            border: 1px solid #fde68a;
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin: 16px 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .definition-word {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 2px;
+        }
+
+        .definition-origin {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .definition p { font-size: 0.88rem; }
+
+        /* Tabela */
+        .styled-table-wrap {
+            overflow-x: auto;
+            margin: 16px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+        }
+
+        .styled-table thead th {
+            background: var(--primary);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        .styled-table thead th.good    { background: var(--success); }
+        .styled-table thead th.bad     { background: var(--danger); }
+        .styled-table thead th.neutral { background: var(--teal); }
+
+        .styled-table tbody td {
+            padding: 7px 10px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .styled-table tbody tr:nth-child(even) { background: #faf9f6; }
+
+        /* Cards (coluna única no PDF) */
+        .card-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .mini-card {
+            background: #f9f8f5;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .mini-card-icon { display: none; }
+
+        .mini-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+
+        .mini-card p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            line-height: 1.55;
+            margin-bottom: 0 !important;
+        }
+
+        /* OICA grid — 2 colunas no PDF */
+        .oica-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 16px 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .oica-card {
+            border-radius: 10px;
+            padding: 16px 14px;
+            text-align: center;
+            color: #fff;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .oica-card.o-card { background: #1a3e6e; }
+        .oica-card.i-card { background: #0d3d24; }
+        .oica-card.c-card { background: #3b1f6e; }
+        .oica-card.a-card { background: #7c2d12; }
+
+        .oica-card .oica-letter {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 6px;
+            color: var(--accent-light);
+        }
+
+        .oica-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: rgba(255,255,255,0.95);
+        }
+
+        .oica-card p {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.45;
+            margin-bottom: 0 !important;
+            text-align: center !important;
+        }
+
+        /* Context cards — 2 colunas no PDF */
+        .context-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 16px 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .context-card {
+            background: #f9f8f5;
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--accent);
+            border-radius: 8px;
+            padding: 12px;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .context-card.imediato  { border-top-color: var(--info); }
+        .context-card.remoto    { border-top-color: var(--success); }
+        .context-card.literario { border-top-color: var(--purple); }
+        .context-card.cultural  { border-top-color: var(--teal); }
+
+        .context-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+
+        .context-card p {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-bottom: 0 !important;
+        }
+
+        /* Pergunta cards — 3 colunas no PDF */
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 16px 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .question-card {
+            background: var(--primary-dark);
+            border-radius: 8px;
+            padding: 14px 10px;
+            text-align: center;
+            color: #fff;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .question-card .q-word {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--accent-light);
+            margin-bottom: 4px;
+        }
+
+        .question-card p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.4;
+            margin-bottom: 0 !important;
+            text-align: center !important;
+        }
+
+        /* Lista */
+        .styled-list {
+            list-style: none;
+            margin: 14px 0;
+        }
+
+        .styled-list li {
+            padding: 5px 0 5px 20px;
+            position: relative;
+            font-size: 0.88rem;
+        }
+
+        .styled-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .styled-list.numbered { counter-reset: item; }
+        .styled-list.numbered li::before {
+            content: counter(item);
+            counter-increment: item;
+            width: 18px;
+            height: 18px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.55rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 7px;
+        }
+
+        /* Destaque inline */
+        .highlight {
+            background: linear-gradient(to bottom, transparent 55%, rgba(201,162,39,0.25) 55%);
+            font-weight: 600;
+        }
+
+        strong { color: var(--primary-dark); }
+        .author-card strong { color: rgba(255,255,255,0.95); }
+
+        /* Card do autor */
+        .author-card {
+            background: #0d3d24;
+            color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 16px 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .author-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--accent-light);
+            margin-bottom: 2px;
+        }
+
+        .author-card .author-role {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 12px;
+        }
+
+        .author-card p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.65;
+            margin-bottom: 0.7em;
+            text-align: left !important;
+        }
+
+        .author-card a {
+            color: var(--accent-light);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+        }
+
+        /* ══════════════════════════════════════
+           BOTÃO GERAR PDF
+           ══════════════════════════════════════ */
+        .print-btn {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            z-index: 999;
+            padding: 12px 20px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+
+        .print-btn:hover { background: var(--accent-dark); }
+
+        @media print {
+            .print-btn { display: none !important; }
+
+            html { font-size: 11px !important; }
+
+            body {
+                background: #fff !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                orphans: 3 !important;
+                widows: 3 !important;
+            }
+
+            .cover {
+                padding: 40px 20px !important;
+                height: 210mm !important;
+                min-height: 210mm !important;
+                margin: 0 !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                background: linear-gradient(160deg, #0a2218 0%, #14432e 40%, #1a5c40 100%) !important;
+            }
+
+            .toc {
+                page-break-after: always !important;
+                break-after: page !important;
+            }
+
+            .chapter {
+                page-break-before: always !important;
+                break-before: page !important;
+            }
+
+            .chapter-header {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            .section-title,
+            .intro-label,
+            .chapter-num {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            .verse-card,
+            .info-box,
+            .definition,
+            .mini-card,
+            .card-grid,
+            .oica-grid,
+            .oica-card,
+            .context-grid,
+            .context-card,
+            .question-grid,
+            .question-card,
+            .author-card,
+            .styled-table-wrap,
+            .styled-table {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            p {
+                orphans: 3 !important;
+                widows: 3 !important;
+            }
+
+            .styled-list {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .toc-list {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .verse-card       { background: var(--primary-dark) !important; color: #fff !important; }
+            .verse-card p     { color: #fff !important; }
+            .verse-card.purple-card { background: #3b1f6e !important; }
+            .verse-card.teal-card   { background: #065f50 !important; }
+            .verse-card.blue-card   { background: #1a3e6e !important; }
+            .verse-card.green-card  { background: #0d3d24 !important; }
+            .info-box               { background: #f0f7ff !important; }
+            .definition             { background: #fef9e7 !important; }
+            .mini-card              { background: var(--bg-chapter) !important; }
+            .context-card           { background: var(--bg-chapter) !important; }
+            .oica-card.o-card       { background: #1a3e6e !important; color: #fff !important; }
+            .oica-card.i-card       { background: #0d3d24 !important; color: #fff !important; }
+            .oica-card.c-card       { background: #3b1f6e !important; color: #fff !important; }
+            .oica-card.a-card       { background: #7c2d12 !important; color: #fff !important; }
+            .oica-card p            { color: rgba(255,255,255,0.85) !important; }
+            .question-card          { background: var(--primary-dark) !important; color: #fff !important; }
+            .question-card p        { color: rgba(255,255,255,0.8) !important; }
+            .author-card            { background: #0d3d24 !important; color: #fff !important; }
+            .author-card p          { color: rgba(255,255,255,0.85) !important; }
+            .toc-num                { background: var(--primary) !important; color: #fff !important; }
+            .toc-num.dot            { background: var(--teal) !important; }
+            .styled-table thead th  { background: var(--primary) !important; color: #fff !important; }
+            .styled-table thead th.good    { background: var(--success) !important; }
+            .styled-table thead th.bad     { background: var(--danger) !important; }
+            .styled-table thead th.neutral { background: var(--teal) !important; }
+            .styled-table tbody tr:nth-child(even) td { background: #f5f5f0 !important; }
+        }
+
+        /* Tela: preview mobile */
+        @media screen {
+            body {
+                max-width: 420px;
+                margin: 0 auto;
+                background: #eee;
+            }
+            .cover, .toc, .chapter { background: #fff; }
+            .cover { background: linear-gradient(160deg, #0a2218 0%, #14432e 40%, #1a5c40 100%); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Botão de gerar PDF -->
+<button class="print-btn" onclick="window.print()">📄 Gerar PDF</button>
+
+<!-- ═══════════════════════════════════════
+     CAPA
+     ═══════════════════════════════════════ -->
+<section class="cover">
+    <div class="cover-content">
+        <div class="cover-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+        <div class="cover-badge">Curso de Pregadores • Aula 3</div>
+        <h1>Métodos de <span>Interpretação Bíblica</span></h1>
+        <p class="cover-subtitle">Como manejar bem a Palavra da verdade</p>
+        <div class="cover-divider"></div>
+        <p class="cover-author">Ministrado por <strong>Prof. Gerson Willy</strong></p>
+        <div class="cover-tags">
+            <span class="cover-tag herm">Hermenêutica</span>
+            <span class="cover-tag exeg">Exegese</span>
+            <span class="cover-tag oica">Método OICA</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SUMÁRIO
+     ═══════════════════════════════════════ -->
+<div class="toc">
+    <h2 class="toc-title">Sumário</h2>
+    <ul class="toc-list">
+        <li><span class="toc-num dot">•</span> Introdução — Fundamentação e Importância</li>
+        <li><span class="toc-num">1</span> O Risco da Falta de Entendimento</li>
+        <li><span class="toc-num">2</span> Hermenêutica, Exegese e Eisegese</li>
+        <li><span class="toc-num">3</span> Desafios e Erros Comuns</li>
+        <li><span class="toc-num">4</span> O Método de Estudo OICA</li>
+        <li><span class="toc-num">5</span> Passo 1 — Observação</li>
+        <li><span class="toc-num">6</span> Passo 2 — Interpretação e Contexto</li>
+        <li><span class="toc-num">7</span> Fazendo Perguntas ao Texto</li>
+        <li><span class="toc-num">8</span> Sobre o Professor</li>
+    </ul>
+</div>
+
+<!-- ═══════════════════════════════════════
+     INTRODUÇÃO
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="intro-label">Introdução</div>
+        <h2 class="chapter-title">Fundamentação e Importância</h2>
+    </div>
+
+    <p class="lead">A interpretação da Bíblia não é uma atividade de cunho particular. Ela exige método, reverência e responsabilidade diante do texto sagrado.</p>
+
+    <p>Conforme <strong>2 Pedro 1:20-21</strong>, nenhuma profecia da Escritura provém de interpretação pessoal, pois foi inspirada pelo Espírito Santo. A interpretação incorreta não é apenas um erro acadêmico — é uma questão de fidelidade a Deus.</p>
+
+    <div class="verse-card green-card">
+        <p>"Sabendo primeiramente isto: que nenhuma profecia da Escritura é de particular interpretação; porque a profecia nunca foi produzida por vontade de homem algum, mas os homens santos de Deus falaram inspirados pelo Espírito Santo."</p>
+        <span class="ref">— 2 Pedro 1:20-21</span>
+    </div>
+
+    <p>O compromisso do expositor deve ser apresentar-se <span class="highlight">aprovado diante de Deus</span>, manejando bem a palavra da verdade, sem acrescentar nada às Suas palavras.</p>
+
+    <div class="card-grid">
+        <div class="mini-card">
+            <h4>Aprovado diante de Deus</h4>
+            <p>O expositor deve estudar para apresentar-se aprovado, manejando corretamente a Palavra (2 Timóteo 2:15).</p>
+        </div>
+        <div class="mini-card">
+            <h4>Não acrescentar à Palavra</h4>
+            <p>Provérbios 30:5-6 adverte contra acrescentar às palavras de Deus, sob pena de ser repreendido e encontrado mentiroso.</p>
+        </div>
+        <div class="mini-card">
+            <h4>Inspiração do Espírito</h4>
+            <p>A Escritura foi produzida pelo Espírito Santo; portanto, é o mesmo Espírito que ilumina a sua correta interpretação.</p>
+        </div>
+    </div>
+
+    <div class="info-box accent">
+        <div class="info-box-title">Propósito desta aula</div>
+        <p>Apresentar os principais métodos de interpretação bíblica — Hermenêutica, Exegese e Eisegese — e ensinar o método prático <strong>OICA</strong>, para que o pregador seja fiel ao texto sagrado e possa comunicar a verdade com clareza e autoridade.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAPÍTULO 1 — O RISCO DA FALTA DE ENTENDIMENTO
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Capítulo 1</div>
+        <h2 class="chapter-title">O Risco da Falta de Entendimento</h2>
+    </div>
+
+    <p class="lead">A falta de entendimento das Escrituras não é inócua — ela abre espaço para que o maligno atue e para que almas sejam destruídas por interpretações tortas.</p>
+
+    <h3 class="section-title">Semente à beira do caminho</h3>
+
+    <div class="verse-card">
+        <p>"Quando alguém ouve a palavra do reino e não a compreende, vem o maligno e arrebata o que foi semeado no seu coração. Este é o que foi semeado à beira do caminho."</p>
+        <span class="ref">— Mateus 13:19</span>
+    </div>
+
+    <p>A parábola do semeador revela que a <span class="highlight">falta de compreensão</span> é uma vulnerabilidade espiritual grave. Aqueles que ouvem a Palavra sem entendê-la ficam expostos à ação do inimigo, que rouba o que foi semeado em seus corações.</p>
+
+    <div class="info-box warning">
+        <div class="info-box-title">Implicação prática</div>
+        <p>O pregador que não interpreta bem a Palavra não apenas erra — ele pode deixar o rebanho vulnerável e desprotegido espiritualmente.</p>
+    </div>
+
+    <h3 class="section-title">Dificuldades de compreensão nas Escrituras</h3>
+
+    <div class="verse-card blue-card">
+        <p>"... como também em todas as suas epístolas, onde trata destas cousas; nas quais há pontos difíceis de entender, que os ignorantes e inconstantes torcem, como também torcem as demais Escrituras, para a sua própria perdição."</p>
+        <span class="ref">— 2 Pedro 3:15-16</span>
+    </div>
+
+    <p>O próprio Pedro reconhece que há partes das Escrituras que são <strong>difíceis de entender</strong>. O problema não está no texto, mas em quem o torce — os "indoutos e inconstantes" que deturpam a Palavra para sua própria perdição.</p>
+
+    <div class="card-grid">
+        <div class="mini-card">
+            <h4>Consequência da má interpretação</h4>
+            <p>Desvios doutrinários, igrejas enganadas, almas perdidas. A interpretação errada não é apenas um equívoco teórico — tem peso eterno.</p>
+        </div>
+        <div class="mini-card">
+            <h4>A solução: estudo diligente</h4>
+            <p>A resposta bíblica não é ignorar as dificuldades, mas estudar com método, humildade e dependência do Espírito Santo.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAPÍTULO 2 — HERMENÊUTICA, EXEGESE E EISEGESE
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Capítulo 2</div>
+        <h2 class="chapter-title">Hermenêutica, Exegese e Eisegese</h2>
+    </div>
+
+    <p class="lead">Três conceitos fundamentais formam a base do estudo bíblico sério. Entendê-los é o primeiro passo para interpretar as Escrituras com fidelidade.</p>
+
+    <div class="definition">
+        <div class="definition-word">Hermenêutica</div>
+        <div class="definition-origin">Do grego hermeneutikḗ — arte de interpretar</div>
+        <p>É a ciência que busca entender o <strong>significado do texto em sua época</strong> e sua aplicação para os dias atuais. Fornece os princípios e regras que guiam o intérprete, levando em conta contexto histórico, literário, cultural e teológico.</p>
+    </div>
+
+    <div class="definition">
+        <div class="definition-word">Exegese</div>
+        <div class="definition-origin">Do grego exēgeisthai — guiar para fora, explicar</div>
+        <p>É o ato de <strong>"trazer o texto para fora"</strong> — permitir que as Escrituras digam o que o Espírito Santo pretendeu, entendendo o significado real das palavras em seu contexto original. O texto fala; o intérprete ouve e comunica fielmente.</p>
+    </div>
+
+    <div class="definition">
+        <div class="definition-word">Eisegese</div>
+        <div class="definition-origin">Do grego eisēgeisthai — conduzir para dentro</div>
+        <p>É o <strong>erro oposto</strong>: ler o texto com conclusões pessoais pré-concebidas, impondo ao texto o que ele não diz. É a causa raiz de muitas heresias e desvios doutrinários.</p>
+    </div>
+
+    <h3 class="section-title">Comparação: Exegese vs. Eisegese</h3>
+
+    <div class="styled-table-wrap">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Aspecto</th>
+                    <th class="good">Exegese ✓</th>
+                    <th class="bad">Eisegese ✗</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Ponto de partida</strong></td>
+                    <td>O texto sagrado</td>
+                    <td>A opinião do intérprete</td>
+                </tr>
+                <tr>
+                    <td><strong>Pergunta central</strong></td>
+                    <td>"O que o texto diz?"</td>
+                    <td>"Como encaixo minha ideia aqui?"</td>
+                </tr>
+                <tr>
+                    <td><strong>Atitude</strong></td>
+                    <td>Humildade e submissão</td>
+                    <td>Imposição e manipulação</td>
+                </tr>
+                <tr>
+                    <td><strong>Resultado</strong></td>
+                    <td>Doutrina saudável</td>
+                    <td>Heresia e desvio</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="info-box teal">
+        <div class="info-box-title">Resumo prático</div>
+        <p>
+            • <strong>Hermenêutica</strong> é a ciência (os princípios e regras gerais).<br>
+            • <strong>Exegese</strong> é a prática correta (deixar o texto falar).<br>
+            • <strong>Eisegese</strong> é o erro a evitar (impor ideias ao texto).
+        </p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAPÍTULO 3 — DESAFIOS E ERROS COMUNS
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Capítulo 3</div>
+        <h2 class="chapter-title">Desafios e Erros Comuns</h2>
+    </div>
+
+    <p class="lead">Nem toda interpretação errada vem de má-fé. Há erros que surgem da ignorância e outros da intenção deliberada de manipular o texto. O pregador precisa conhecê-los para evitá-los.</p>
+
+    <h3 class="section-title">Má Interpretação vs. Falsa Interpretação</h3>
+
+    <div class="card-grid">
+        <div class="mini-card">
+            <h4>Má Interpretação</h4>
+            <p>Ocorre por <strong>falta de orientação correta</strong>, gerando uma interpretação precipitada. O intérprete não tem intenção de enganar, mas peca por descuido, imaturidade ou falta de estudo. É corrigível com ensino.</p>
+        </div>
+        <div class="mini-card">
+            <h4>Falsa Interpretação</h4>
+            <p>É a <strong>distorção proposital</strong> do texto para afirmar ideias que não condizem com a verdade bíblica. O falso intérprete sabe o que está fazendo e usa a Bíblia como ferramenta para seus próprios fins.</p>
+        </div>
+    </div>
+
+    <h3 class="section-title">Outros Desvios Interpretativos</h3>
+
+    <div class="card-grid">
+        <div class="mini-card">
+            <h4>Teologia Caricaturada</h4>
+            <p>Criar uma imagem distorcida ou "caricaturada" de Deus através de interpretações incorretas. O Deus apresentado não corresponde ao Deus das Escrituras — é uma caricatura construída por ideias humanas.</p>
+        </div>
+        <div class="mini-card">
+            <h4>Teologia "Rabo de Lagartixa"</h4>
+            <p>Focar excessivamente em especulações e assuntos secundários, ignorando os temas cruciais e principais das Escrituras. É como cuidar do rabo enquanto o corpo perece.</p>
+        </div>
+        <div class="mini-card">
+            <h4>Alegorização Indevida</h4>
+            <p>Buscar sentidos ocultos onde não existem, manipulando o texto sem responsabilidade com o contexto. Exemplo: alegorizar 2 Reis 4:1-7 (o milagre do azeite) como se cada detalhe representasse uma verdade espiritual escondida.</p>
+        </div>
+    </div>
+
+    <div class="info-box danger">
+        <div class="info-box-title">Atenção</div>
+        <p>A alegorização indevida é especialmente perigosa porque parece espiritual e profunda. O intérprete aparenta ter revelações especiais do texto, mas na verdade está importando seus próprios pensamentos ao texto sagrado.</p>
+    </div>
+
+    <div class="verse-card">
+        <p>"Procura apresentar-te aprovado diante de Deus, como obreiro que não tem de que se envergonhar, que maneja bem a palavra da verdade."</p>
+        <span class="ref">— 2 Timóteo 2:15</span>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAPÍTULO 4 — O MÉTODO OICA
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Capítulo 4</div>
+        <h2 class="chapter-title">O Método de Estudo OICA</h2>
+    </div>
+
+    <p class="lead">O método OICA é uma ferramenta prática e sistemática para o estudo sério da Bíblia. Ele divide o processo em quatro etapas progressivas, garantindo que o intérprete seja fiel ao texto antes de fazer qualquer aplicação.</p>
+
+    <div class="oica-grid">
+        <div class="oica-card o-card">
+            <div class="oica-letter">O</div>
+            <h4>Observação</h4>
+            <p>O que o texto diz?</p>
+        </div>
+        <div class="oica-card i-card">
+            <div class="oica-letter">I</div>
+            <h4>Interpretação</h4>
+            <p>O que o texto significa?</p>
+        </div>
+        <div class="oica-card c-card">
+            <div class="oica-letter">C</div>
+            <h4>Correlação</h4>
+            <p>Como o texto se relaciona com o restante da Bíblia?</p>
+        </div>
+        <div class="oica-card a-card">
+            <div class="oica-letter">A</div>
+            <h4>Aplicação</h4>
+            <p>O que o texto significa para mim hoje?</p>
+        </div>
+    </div>
+
+    <div class="info-box accent">
+        <div class="info-box-title">Por que seguir a ordem?</div>
+        <p>A sequência OICA é intencional. Muitos erros acontecem porque o intérprete pula direto para a <strong>Aplicação</strong> sem passar pela Observação e Interpretação rigorosas. O texto deve ser compreendido antes de ser aplicado.</p>
+    </div>
+
+    <div class="styled-table-wrap">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Etapa</th>
+                    <th>Pergunta central</th>
+                    <th>Foco do estudo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>O — Observação</strong></td>
+                    <td>O que o texto diz?</td>
+                    <td>Leitura atenta, palavras, estrutura</td>
+                </tr>
+                <tr>
+                    <td><strong>I — Interpretação</strong></td>
+                    <td>O que o texto significa?</td>
+                    <td>Contexto, língua original, intenção do autor</td>
+                </tr>
+                <tr>
+                    <td><strong>C — Correlação</strong></td>
+                    <td>Como se relaciona com a Bíblia?</td>
+                    <td>Passagens paralelas, teologia bíblica</td>
+                </tr>
+                <tr>
+                    <td><strong>A — Aplicação</strong></td>
+                    <td>O que significa para mim hoje?</td>
+                    <td>Vida prática, transformação pessoal</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAPÍTULO 5 — OBSERVAÇÃO
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Capítulo 5</div>
+        <h2 class="chapter-title">Passo 1 — Observação</h2>
+    </div>
+
+    <p class="lead">A observação não é uma leitura superficial e rápida. É uma leitura intencional, repetida e profunda, na qual o intérprete aprende a enxergar o que o texto realmente diz.</p>
+
+    <div class="verse-card teal-card">
+        <p>"Bem-aventurado o homem que não anda no conselho dos ímpios... antes tem o seu prazer na lei do SENHOR, e na sua lei medita de dia e de noite."</p>
+        <span class="ref">— Salmo 1:1-2</span>
+    </div>
+
+    <h3 class="section-title">O que fazer na etapa de Observação?</h3>
+
+    <ul class="styled-list numbered">
+        <li><strong>Ler o texto repetidamente</strong> — em diferentes traduções e, quando possível, na língua original.</li>
+        <li><strong>Identificar dificuldades textuais</strong> — versículos que parecem contraditórios ou obscuros merecem atenção especial.</li>
+        <li><strong>Notar palavras desconhecidas ou incomuns</strong> — elas frequentemente carregam peso teológico significativo.</li>
+        <li><strong>Observar a estrutura gramatical</strong> — verbos, sujeitos, conjunções e pronomes são pistas importantes.</li>
+        <li><strong>Usar diferentes versões da Bíblia</strong> — comparar traduções ajuda a captar nuances do texto original.</li>
+    </ul>
+
+    <div class="card-grid">
+        <div class="mini-card">
+            <h4>Leitura repetida</h4>
+            <p>Leia o texto pelo menos três vezes antes de tentar qualquer interpretação. Cada leitura revela detalhes que passaram despercebidos antes.</p>
+        </div>
+        <div class="mini-card">
+            <h4>Atenção às palavras</h4>
+            <p>Pergunte: por que o autor usou <em>esta</em> palavra e não outra? O vocabulário escolhido é sempre intencional.</p>
+        </div>
+        <div class="mini-card">
+            <h4>Múltiplas versões</h4>
+            <p>Compare ao menos duas ou três traduções de confiança. As diferenças entre versões frequentemente iluminam o sentido do original.</p>
+        </div>
+    </div>
+
+    <div class="info-box success">
+        <div class="info-box-title">Princípio fundamental</div>
+        <p>A Observação cuidadosa é a base de tudo. Um intérprete que não observou bem o texto produzirá interpretações e aplicações equivocadas. <strong>Invista tempo nesta etapa.</strong></p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAPÍTULO 6 — INTERPRETAÇÃO E CONTEXTO
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Capítulo 6</div>
+        <h2 class="chapter-title">Passo 2 — Interpretação e Contexto</h2>
+    </div>
+
+    <p class="lead">O contexto é o maior aliado do intérprete. Ele traz clareza, coesão e evita que o texto seja distorcido. "Um texto sem contexto é pretexto."</p>
+
+    <div class="info-box purple">
+        <div class="info-box-title">Princípio de ouro</div>
+        <p>Antes de perguntar "o que este versículo significa?", pergunte: "quem escreveu?", "para quem?", "em que época?", "em que situação?". O contexto responde à maioria das perguntas de interpretação.</p>
+    </div>
+
+    <h3 class="section-title">Os quatro tipos de contexto</h3>
+
+    <div class="context-grid">
+        <div class="context-card imediato">
+            <h4>Contexto Imediato</h4>
+            <p>Os versículos anteriores e posteriores ao trecho em estudo. Nunca interprete um versículo isolado.</p>
+        </div>
+        <div class="context-card remoto">
+            <h4>Contexto Remoto</h4>
+            <p>Outras passagens do mesmo autor ou de outros autores bíblicos que esclarecem o tema. Ex.: Hb 11:17-19 e Gn 22:5.</p>
+        </div>
+        <div class="context-card literario">
+            <h4>Contexto Literário e Histórico</h4>
+            <p>A época, o ambiente político e o estilo literário do livro. Cada gênero tem regras de interpretação próprias.</p>
+        </div>
+        <div class="context-card cultural">
+            <h4>Contexto Cultural e Geográfico</h4>
+            <p>Os costumes sociais, as práticas religiosas e as localizações geográficas. O que era óbvio ao leitor original precisa ser explicado ao moderno.</p>
+        </div>
+    </div>
+
+    <h3 class="section-title">Exemplo: Contexto Remoto em ação</h3>
+
+    <div class="styled-table-wrap">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Passagem</th>
+                    <th class="neutral">O que parece dizer</th>
+                    <th class="good">O que o contexto remoto esclarece</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Gênesis 22:5</strong></td>
+                    <td>Abraão disse "nós adoraremos e voltaremos" — parece uma mentira ou esperança vaga.</td>
+                    <td><strong>Hebreus 11:17-19</strong> revela que Abraão cria que Deus ressuscitaria Isaque. Era fé, não mentira.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="info-box accent">
+        <div class="info-box-title">A Bíblia interpreta a Bíblia</div>
+        <p>Um dos princípios mais importantes da hermenêutica evangélica é que <strong>a Bíblia é seu próprio melhor comentário</strong>. Passagens obscuras são frequentemente esclarecidas por passagens mais claras.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAPÍTULO 7 — FAZENDO PERGUNTAS AO TEXTO
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Capítulo 7</div>
+        <h2 class="chapter-title">Fazendo Perguntas ao Texto</h2>
+    </div>
+
+    <p class="lead">Para uma análise profunda, o intérprete deve aprender a interrogar o texto com perguntas objetivas. Cada pergunta abre uma janela para a compreensão mais rica da Palavra.</p>
+
+    <div class="question-grid">
+        <div class="question-card">
+            <div class="q-word">Quem?</div>
+            <p>Autor e pessoas envolvidas no texto</p>
+        </div>
+        <div class="question-card">
+            <div class="q-word">Como?</div>
+            <p>Circunstâncias da escrita e do relato</p>
+        </div>
+        <div class="question-card">
+            <div class="q-word">Por quê?</div>
+            <p>Objetivo e propósito do autor</p>
+        </div>
+        <div class="question-card">
+            <div class="q-word">Quando?</div>
+            <p>Data e pano de fundo histórico</p>
+        </div>
+        <div class="question-card">
+            <div class="q-word">Aonde?</div>
+            <p>Local referido ou onde foi escrito</p>
+        </div>
+    </div>
+
+    <div class="card-grid">
+        <div class="mini-card">
+            <h4>Quem?</h4>
+            <p>Identifique o autor humano e os personagens envolvidos. Quem está falando? Para quem? Quais são suas circunstâncias e posição?</p>
+        </div>
+        <div class="mini-card">
+            <h4>Como?</h4>
+            <p>De que forma o texto foi escrito? Qual o gênero literário? Como a mensagem é estruturada e transmitida?</p>
+        </div>
+        <div class="mini-card">
+            <h4>Por quê?</h4>
+            <p>Qual o objetivo e propósito do livro ou trecho? Por que o autor escreveu? Qual problema estava sendo abordado?</p>
+        </div>
+        <div class="mini-card">
+            <h4>Quando?</h4>
+            <p>Em que período histórico foi escrito? Quais eram os eventos políticos, sociais e religiosos da época?</p>
+        </div>
+        <div class="mini-card">
+            <h4>Aonde?</h4>
+            <p>Qual o local referido ou onde o livro foi escrito? A geografia do texto bíblico frequentemente carrega significado teológico.</p>
+        </div>
+    </div>
+
+    <div class="info-box success">
+        <div class="info-box-title">Aplicação prática</div>
+        <p>Ao estudar qualquer passagem, escreva em papel as respostas para estas cinco perguntas. Este exercício simples pode transformar radicalmente sua compreensão de qualquer texto bíblico.</p>
+    </div>
+
+    <h3 class="section-title">Da Observação à Aplicação — fluxo completo</h3>
+
+    <ul class="styled-list numbered">
+        <li><strong>Observe o que o texto diz</strong> — leitura repetida, palavras-chave, estrutura.</li>
+        <li><strong>Faça as cinco perguntas</strong> — quem, como, por quê, quando, aonde.</li>
+        <li><strong>Identifique o contexto</strong> — imediato, remoto, literário, cultural e geográfico.</li>
+        <li><strong>Correlacione com outros textos</strong> — deixe a Bíblia interpretar a Bíblia.</li>
+        <li><strong>Formule a aplicação</strong> — o que o Espírito Santo quer que eu faça com isto hoje?</li>
+    </ul>
+
+    <div class="verse-card green-card">
+        <p>"Toda a Escritura é divinamente inspirada, e proveitosa para ensinar, para repreender, para corrigir, para instruir em justiça; para que o homem de Deus seja perfeito, e perfeitamente instruído para toda boa obra."</p>
+        <span class="ref">— 2 Timóteo 3:16-17</span>
+    </div>
+
+    <div class="info-box teal">
+        <div class="info-box-title">Conclusão da aula</div>
+        <p>
+            • <strong>Hermenêutica</strong> é a ciência — aprenda seus princípios.<br>
+            • <strong>Exegese</strong> é a postura correta — deixe o texto falar.<br>
+            • <strong>Eisegese</strong> é o perigo — nunca imponha ao texto o que ele não diz.<br>
+            • <strong>Método OICA</strong> é a ferramenta — observe, interprete, correlacione e aplique.<br>
+            • <strong>Cinco perguntas</strong> são suas aliadas — quem, como, por quê, quando, aonde.
+        </p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAPÍTULO 8 — SOBRE O AUTOR
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Capítulo 8</div>
+        <h2 class="chapter-title">Sobre o Professor</h2>
+    </div>
+
+    <div class="author-card">
+        <h3>Prof. Gerson Willy</h3>
+        <div class="author-role">Professor de Hermenêutica</div>
+        <p>Graduado em <strong>Ciências da Religião</strong> pela Universidade do Estado do Rio Grande do Norte (UERN) e pós-graduado em <strong>Teologia Sistemática e Bíblica</strong>.</p>
+        <p>Especialista em Teologia pelo <strong>Mackenzie/SP</strong> e Coordenador de Ensino nas Assembleias de Deus em Extremoz-RN. É autor e professor de Hermenêutica.</p>
+        <p>Contato: <a href="mailto:prof.gerson-willy@gmail.com">prof.gerson-willy@gmail.com</a></p>
+    </div>
+
+    <div class="card-grid">
+        <div class="mini-card">
+            <h4>Formação Acadêmica</h4>
+            <p>Ciências da Religião (UERN) • Pós-graduação em Teologia Sistemática e Bíblica • Especialização em Teologia (Mackenzie/SP)</p>
+        </div>
+        <div class="mini-card">
+            <h4>Atuação</h4>
+            <p>Coordenador de Ensino nas Assembleias de Deus em Extremoz-RN. Professor e autor de Hermenêutica Bíblica.</p>
+        </div>
+    </div>
+
+    <div class="info-box accent">
+        <div class="info-box-title">Resumo dos conceitos da Aula 3</div>
+        <p>
+            <strong>1. Hermenêutica:</strong> A ciência da interpretação — princípios que guiam o entendimento do texto.<br>
+            <strong>2. Exegese:</strong> Extrair o significado do texto — deixar a Escritura falar por si mesma.<br>
+            <strong>3. Eisegese:</strong> O erro a evitar — impor ideias pessoais ao texto sagrado.<br>
+            <strong>4. Método OICA:</strong> Observe → Interprete → Correlacione → Aplique.<br>
+            <strong>5. Contexto:</strong> Imediato, remoto, literário/histórico, cultural/geográfico.<br>
+            <strong>6. Cinco perguntas:</strong> Quem? Como? Por quê? Quando? Aonde?
+        </p>
+    </div>
+</section>
+
+</body>
+</html>

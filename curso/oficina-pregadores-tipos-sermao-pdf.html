@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficina de Pregadores — Tipos de Sermão | PDF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #e8c84a;
+            --accent-dark: #a68520;
+            --bg: #ffffff;
+            --bg-chapter: #f7f5f0;
+            --text: #2d2a26;
+            --text-light: #5a564f;
+            --text-muted: #8a857d;
+            --border: #e0dcd4;
+            --border-light: #f0ece4;
+            --success: #2d7d46;
+            --info: #2563eb;
+            --warning: #d97706;
+            --danger: #c0392b;
+            --purple: #6d28d9;
+            --teal: #0d9488;
+            --wine: #7a1f40;
+            --teal-deep: #0d4f4f;
+            --teal-mid:  #136060;
+        }
+
+        @page {
+            size: A5 portrait;
+            margin: 12mm 10mm 14mm 10mm;
+        }
+
+        @page :first {
+            margin: 0;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+
+        html { font-size: 11px; }
+
+        body {
+            font-family: 'Source Serif 4', 'Georgia', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            max-width: 100%;
+            padding: 0;
+            orphans: 3;
+            widows: 3;
+        }
+
+        /* CAPA */
+        .cover {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(160deg, #1a0e2e 0%, #3a1f5e 40%, #6d28d9 100%);
+            color: #fff;
+            padding: 50px 24px;
+            min-height: 100vh;
+            page-break-after: always;
+            break-after: page;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(201,162,39,0.1) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(255,255,255,0.03) 0%, transparent 50%);
+        }
+
+        .cover-content { position: relative; z-index: 2; max-width: 100%; }
+
+        .cover-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(201,162,39,0.15);
+            border: 2px solid rgba(201,162,39,0.3);
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cover-icon svg { width: 40px; height: 40px; color: var(--accent-light); }
+
+        .cover-badge {
+            display: inline-block;
+            background: rgba(201,162,39,0.2);
+            border: 1px solid rgba(201,162,39,0.4);
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            margin-bottom: 20px;
+        }
+
+        .cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 8px;
+        }
+
+        .cover h1 span {
+            display: block;
+            color: var(--accent-light);
+            font-size: 1.5rem;
+        }
+
+        .cover-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 28px;
+        }
+
+        .cover-divider {
+            width: 60px;
+            height: 2px;
+            background: var(--accent);
+            margin: 0 auto 18px;
+            border-radius: 2px;
+        }
+
+        .cover-author {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .cover-author strong { color: var(--accent-light); }
+
+        .cover-tags {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .cover-tag {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .cover-tag.textual  { border-color: rgba(201,162,39,0.5); color: var(--accent-light); }
+        .cover-tag.tematico { border-color: rgba(13,148,136,0.7); color: #5eead4; }
+        .cover-tag.expos    { border-color: rgba(37,99,235,0.5);  color: #93c5fd; }
+
+        /* SUMÁRIO */
+        .toc {
+            page-break-after: always;
+            break-after: page;
+            padding: 24px 12px;
+        }
+
+        .toc-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            text-align: center;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .toc-list { list-style: none; padding: 0; }
+
+        .toc-list li {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px dotted var(--border);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .toc-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .toc-num.dot { background: var(--purple); }
+
+        /* CAPÍTULOS */
+        .chapter {
+            padding: 16px 12px 24px;
+            page-break-before: always;
+            break-before: page;
+        }
+
+        .chapter-header {
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border);
+            page-break-inside: avoid;
+            break-inside: avoid;
+            page-break-after: avoid;
+            break-after: avoid;
+        }
+
+        .chapter-num {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-dark);
+            margin-bottom: 4px;
+        }
+
+        .chapter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            line-height: 1.2;
+        }
+
+        .intro-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--purple);
+            margin-bottom: 4px;
+        }
+
+        .chapter p {
+            margin-bottom: 0.9em;
+            text-align: justify;
+            hyphens: auto;
+            font-size: 0.95rem;
+        }
+
+        .chapter p.lead {
+            font-size: 1rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 24px 0 12px;
+            padding-left: 12px;
+            border-left: 3px solid var(--accent);
+            page-break-after: avoid;
+            break-after: avoid;
+        }
+
+        .sub-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 14px 0 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            page-break-after: avoid;
+            break-after: avoid;
+        }
+
+        .chapter ul {
+            margin: 8px 0 14px 18px;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .chapter ul li {
+            margin-bottom: 4px;
+            line-height: 1.6;
+        }
+
+        /* COMPONENTES */
+        .verse-card {
+            background: var(--primary-dark);
+            color: #fff;
+            padding: 16px 18px;
+            border-radius: 10px;
+            margin: 16px 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .verse-card p {
+            font-style: italic;
+            font-size: 0.9rem;
+            line-height: 1.65;
+            margin-bottom: 8px !important;
+            text-align: left !important;
+            color: #fff;
+        }
+
+        .verse-card .ref {
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent-light);
+        }
+
+        .verse-card.purple-card { background: #2e1065; }
+        .verse-card.teal-card   { background: #064e3b; }
+        .verse-card.gold-card   { background: #3d2800; }
+        .verse-card.wine-card   { background: #4a0f1f; }
+
+        /* Info box */
+        .info-box {
+            background: #f9f8f5;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--info);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 16px 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .info-box.accent    { border-left-color: var(--accent); }
+        .info-box.success   { border-left-color: var(--success); }
+        .info-box.warning   { border-left-color: var(--warning); }
+        .info-box.danger    { border-left-color: var(--danger); }
+        .info-box.purple    { border-left-color: var(--purple); }
+        .info-box.teal      { border-left-color: var(--teal); }
+
+        .info-box-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .info-box.accent  .info-box-title { color: var(--accent-dark); }
+        .info-box.success .info-box-title { color: var(--success); }
+        .info-box.warning .info-box-title { color: var(--warning); }
+        .info-box.danger  .info-box-title { color: var(--danger); }
+        .info-box.purple  .info-box-title { color: var(--purple); }
+        .info-box.teal    .info-box-title { color: var(--teal); }
+        .info-box         .info-box-title { color: var(--info); }
+
+        .info-box p { font-size: 0.85rem; margin-bottom: 4px; }
+        .info-box ul { font-size: 0.85rem; margin-top: 4px; }
+
+        /* Tipos de sermão - 3 col */
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 16px 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .type-card {
+            border-radius: 8px;
+            padding: 12px 10px;
+            color: #fff;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .type-card.textual  { background: #3d2800; }
+        .type-card.tematico { background: #064e3b; }
+        .type-card.expos    { background: #0f2744; }
+
+        .type-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 4px;
+        }
+
+        .type-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--accent-light);
+            margin-bottom: 6px;
+        }
+
+        .type-card p {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.82);
+            line-height: 1.45;
+            margin-bottom: 0 !important;
+            text-align: left !important;
+        }
+
+        /* Structure list (passos da estrutura) */
+        .struct-list {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .struct-list li {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .struct-list li:last-child { border-bottom: none; }
+
+        .struct-num {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--purple);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .struct-body h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .struct-body p {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            line-height: 1.55;
+            margin-bottom: 0 !important;
+        }
+
+        /* mini-cards single column */
+        .card-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 14px 0;
+        }
+
+        .mini-card {
+            background: #f9f8f5;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+            padding: 12px 14px;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .mini-card.teal    { border-left-color: var(--teal-deep); }
+        .mini-card.purple  { border-left-color: var(--purple); }
+        .mini-card.success { border-left-color: var(--success); }
+
+        .mini-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+
+        .mini-card p {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            line-height: 1.55;
+            margin-bottom: 4px !important;
+        }
+
+        .mini-card ul {
+            font-size: 0.8rem;
+            margin: 4px 0 0 16px;
+        }
+
+        /* Practice box (exemplo de sermão) */
+        .practice-box {
+            background: #2e1065;
+            border-radius: 10px;
+            padding: 18px 16px;
+            margin: 16px 0;
+            color: #fff;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .practice-box.teal { background: #064e3b; }
+        .practice-box.dark { background: #0f2744; }
+
+        .practice-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            margin-bottom: 4px;
+        }
+
+        .practice-box .practice-ref {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.55);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+
+        .practice-step {
+            display: flex;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .practice-step:last-child { border-bottom: none; }
+
+        .practice-step-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36px;
+            height: 22px;
+            border-radius: 6px;
+            background: rgba(201,162,39,0.2);
+            border: 1px solid rgba(201,162,39,0.35);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+            padding: 0 4px;
+            margin-top: 2px;
+        }
+
+        .practice-step p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.86);
+            line-height: 1.55;
+            margin-bottom: 0 !important;
+            text-align: left !important;
+        }
+
+        .practice-step p strong { color: var(--accent-light); }
+
+        .practice-step ul {
+            margin: 4px 0 0 16px;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.78);
+        }
+
+        /* Tabela */
+        .styled-table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+        }
+
+        .styled-table thead th {
+            background: var(--primary);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 8px 8px;
+            text-align: left;
+        }
+
+        .styled-table thead th.gold-h   { background: #3d2800; }
+        .styled-table thead th.teal-h   { background: #064e3b; }
+        .styled-table thead th.blue-h   { background: #0f2744; }
+        .styled-table thead th.purple-h { background: var(--purple); }
+
+        .styled-table tbody td {
+            padding: 6px 8px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .styled-table tbody tr:nth-child(even) { background: #faf9f6; }
+
+        strong { color: var(--primary-dark); }
+
+        /* BOTÃO */
+        .print-btn {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            z-index: 999;
+            padding: 12px 20px;
+            background: var(--purple);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+
+        .print-btn:hover { background: var(--accent-dark); }
+
+        @media print {
+            .print-btn { display: none !important; }
+
+            html { font-size: 11px !important; }
+
+            body {
+                background: #fff !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                orphans: 3 !important;
+                widows: 3 !important;
+            }
+
+            .cover {
+                padding: 40px 20px !important;
+                height: 210mm !important;
+                min-height: 210mm !important;
+                margin: 0 !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                background: linear-gradient(160deg, #1a0e2e 0%, #3a1f5e 40%, #6d28d9 100%) !important;
+            }
+
+            .toc { page-break-after: always !important; break-after: page !important; }
+            .chapter { page-break-before: always !important; break-before: page !important; }
+
+            .chapter-header,
+            .section-title, .intro-label, .chapter-num,
+            .verse-card, .info-box, .types-grid, .type-card,
+            .mini-card, .struct-list li, .practice-box, .styled-table-wrap {
+                page-break-inside: avoid !important; break-inside: avoid !important;
+            }
+
+            p { orphans: 3 !important; widows: 3 !important; }
+
+            .verse-card             { background: var(--primary-dark) !important; color: #fff !important; }
+            .verse-card p           { color: #fff !important; }
+            .verse-card.purple-card { background: #2e1065 !important; }
+            .verse-card.teal-card   { background: #064e3b !important; }
+            .verse-card.gold-card   { background: #3d2800 !important; }
+            .verse-card.wine-card   { background: #4a0f1f !important; }
+
+            .info-box  { background: #f9f8f5 !important; }
+            .mini-card { background: var(--bg-chapter) !important; }
+
+            .type-card.textual  { background: #3d2800 !important; color: #fff !important; }
+            .type-card.tematico { background: #064e3b !important; color: #fff !important; }
+            .type-card.expos    { background: #0f2744 !important; color: #fff !important; }
+            .type-card p        { color: rgba(255,255,255,0.82) !important; }
+
+            .practice-box      { background: #2e1065 !important; color: #fff !important; }
+            .practice-box.teal { background: #064e3b !important; }
+            .practice-box.dark { background: #0f2744 !important; }
+            .practice-step p   { color: rgba(255,255,255,0.86) !important; }
+
+            .toc-num     { background: var(--primary) !important; color: #fff !important; }
+            .toc-num.dot { background: var(--purple) !important; }
+
+            .struct-num { background: var(--purple) !important; color: #fff !important; }
+
+            .styled-table thead th          { background: var(--primary) !important; color: #fff !important; }
+            .styled-table thead th.gold-h   { background: #3d2800 !important; }
+            .styled-table thead th.teal-h   { background: #064e3b !important; }
+            .styled-table thead th.blue-h   { background: #0f2744 !important; }
+            .styled-table thead th.purple-h { background: var(--purple) !important; }
+            .styled-table tbody tr:nth-child(even) td { background: #f5f5f0 !important; }
+        }
+
+        @media screen {
+            body {
+                max-width: 420px;
+                margin: 0 auto;
+                background: #eee;
+            }
+            .cover, .toc, .chapter { background: #fff; }
+            .cover { background: linear-gradient(160deg, #1a0e2e 0%, #3a1f5e 40%, #6d28d9 100%); }
+        }
+    </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">📄 Gerar PDF</button>
+
+<!-- ═══════════════════════════════════════
+     CAPA
+     ═══════════════════════════════════════ -->
+<section class="cover">
+    <div class="cover-content">
+        <div class="cover-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+        </div>
+        <div class="cover-badge">Curso de Pregadores • Aula Extra Prática</div>
+        <h1>Oficina de Pregadores <span>Tipos de Sermão</span></h1>
+        <p class="cover-subtitle">Sermão Textual, Temático e Expositivo na prática</p>
+        <div class="cover-divider"></div>
+        <p class="cover-author">Texto-base: <strong>2 Timóteo 4.2</strong></p>
+        <div class="cover-tags">
+            <span class="cover-tag textual">Textual</span>
+            <span class="cover-tag tematico">Temático</span>
+            <span class="cover-tag expos">Expositivo</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SUMÁRIO
+     ═══════════════════════════════════════ -->
+<div class="toc">
+    <h2 class="toc-title">Sumário</h2>
+    <ul class="toc-list">
+        <li><span class="toc-num dot">•</span> Introdução — Por que estudar os tipos de sermão</li>
+        <li><span class="toc-num">1</span> O Sermão Textual</li>
+        <li><span class="toc-num">2</span> O Sermão Temático</li>
+        <li><span class="toc-num">3</span> O Sermão Expositivo</li>
+        <li><span class="toc-num">4</span> Quadro Comparativo</li>
+        <li><span class="toc-num">5</span> Oficina Prática — Esboce seu sermão</li>
+        <li><span class="toc-num">6</span> Conclusão</li>
+    </ul>
+</div>
+
+<!-- ═══════════════════════════════════════
+     INTRODUÇÃO
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="intro-label">Introdução</div>
+        <h2 class="chapter-title">Por que estudar os Tipos de Sermão</h2>
+    </div>
+
+    <div class="verse-card purple-card">
+        <p>"Que pregues a palavra, instes a tempo e fora de tempo, redarguas, repreendas, exortes, com toda a longanimidade e doutrina."</p>
+        <span class="ref">— 2 Timóteo 4.2</span>
+    </div>
+
+    <p class="lead">Pregar a Palavra é o chamado mais sério que recai sobre quem sobe ao púlpito. Mas pregar bem exige <strong>método</strong>: saber escolher a forma certa para comunicar a mensagem certa, ao povo certo, no momento certo.</p>
+
+    <p>Esta oficina apresenta os três principais tipos de sermão usados pela igreja ao longo dos séculos: o <strong>sermão textual</strong>, o <strong>sermão temático</strong> e o <strong>sermão expositivo</strong>. Cada um tem sua estrutura, suas vantagens e seus cuidados — e o pregador maduro aprende a usar os três.</p>
+
+    <div class="types-grid">
+        <div class="type-card textual">
+            <div class="type-label">Tipo 1</div>
+            <h4>Textual</h4>
+            <p>Os tópicos nascem de um único texto bíblico curto. O texto governa a mensagem.</p>
+        </div>
+        <div class="type-card tematico">
+            <div class="type-label">Tipo 2</div>
+            <h4>Temático</h4>
+            <p>Um tema central é desenvolvido por meio de vários textos das Escrituras.</p>
+        </div>
+        <div class="type-card expos">
+            <div class="type-label">Tipo 3</div>
+            <h4>Expositivo</h4>
+            <p>Explica detalhadamente uma passagem maior, versículo por versículo, no contexto.</p>
+        </div>
+    </div>
+
+    <div class="info-box purple">
+        <div class="info-box-title">O objetivo desta oficina</div>
+        <p>Mais do que classificar sermões, queremos formar o <strong>hábito de pensar biblicamente</strong> ao preparar uma mensagem — para que o povo receba sempre a Palavra, e não opiniões humanas vestidas de espiritualidade.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAPÍTULO 1 — SERMÃO TEXTUAL
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Capítulo 1</div>
+        <h2 class="chapter-title">O Sermão Textual</h2>
+    </div>
+
+    <p class="lead">O sermão textual é a forma de pregação em que toda a mensagem é construída a partir de um texto bíblico específico, geralmente curto — um versículo ou poucos versículos. As divisões principais surgem diretamente das palavras, expressões ou ideias do próprio texto.</p>
+
+    <div class="info-box accent">
+        <div class="info-box-title">Definição simples</div>
+        <p>"Uma mensagem bíblica cujos pontos principais são extraídos diretamente do texto escolhido."</p>
+        <ul>
+            <li>O texto governa o sermão</li>
+            <li>As divisões nascem do texto</li>
+            <li>O pregador não força ideias externas</li>
+            <li>A mensagem permanece ligada ao contexto bíblico</li>
+        </ul>
+    </div>
+
+    <h3 class="section-title">Estrutura do Sermão Textual</h3>
+
+    <ol class="struct-list">
+        <li>
+            <div class="struct-num">1</div>
+            <div class="struct-body">
+                <h4>Tema</h4>
+                <p>O assunto principal da mensagem. Ex.: Sl 23.1 → "As bênçãos do cuidado do Senhor".</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">2</div>
+            <div class="struct-body">
+                <h4>Introdução</h4>
+                <p>Desperta interesse, apresenta o assunto e conduz ao texto. Não deve ser longa nem revelar tudo antes.</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">3</div>
+            <div class="struct-body">
+                <h4>Leitura do texto</h4>
+                <p>O texto-base é fundamental, pois tudo será desenvolvido a partir dele.</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">4</div>
+            <div class="struct-body">
+                <h4>Desenvolvimento</h4>
+                <p>Tópicos extraídos do próprio texto; palavras-chave do versículo podem virar divisões.</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">5</div>
+            <div class="struct-body">
+                <h4>Aplicação</h4>
+                <p>Mostra como a verdade se aplica hoje e o que Deus espera do ouvinte.</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">6</div>
+            <div class="struct-body">
+                <h4>Conclusão</h4>
+                <p>Resume a mensagem, reforça a verdade central e conduz a uma decisão.</p>
+            </div>
+        </li>
+    </ol>
+
+    <h3 class="section-title">Tipos de Divisões</h3>
+
+    <div class="card-grid">
+        <div class="mini-card">
+            <h4>A) Por palavras do texto — João 3.16</h4>
+            <ul>
+                <li>O amor de Deus</li>
+                <li>A dádiva de Deus</li>
+                <li>A condição do homem</li>
+                <li>A promessa da vida eterna</li>
+            </ul>
+        </div>
+        <div class="mini-card teal">
+            <h4>B) Por ideias do texto — Pv 3.5-6</h4>
+            <ul>
+                <li>Confiar no Senhor</li>
+                <li>Não depender da própria sabedoria</li>
+                <li>Reconhecer Deus em tudo</li>
+                <li>Receber direção divina</li>
+            </ul>
+        </div>
+        <div class="mini-card purple">
+            <h4>C) Por contrastes — Salmo 1</h4>
+            <ul>
+                <li>O caminho do justo</li>
+                <li>O caminho do ímpio</li>
+                <li>O destino de ambos</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3 class="section-title">Exemplo Completo</h3>
+
+    <div class="practice-box">
+        <h3>Salmo 46.1</h3>
+        <div class="practice-ref">"Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia"</div>
+
+        <div class="practice-step">
+            <div class="practice-step-badge">Tema</div>
+            <p><strong>O que Deus é para o seu povo</strong></p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">Intro</div>
+            <p>Vivemos dias de medo e aflição. Muitos buscam abrigo em recursos humanos, mas o verdadeiro socorro está em Deus.</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 1</div>
+            <p><strong>Deus é nosso refúgio</strong> — lugar de proteção espiritual. <em>Sl 91.2</em>.</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 2</div>
+            <p><strong>Deus é nossa fortaleza</strong> — Ele fortalece o cansado. <em>Is 40.29</em>.</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 3</div>
+            <p><strong>Deus é socorro presente</strong> — Ele não chega atrasado. <em>Hb 13.5-6</em>.</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">Concl</div>
+            <p>Quando tudo falha, Deus permanece abrigo, força e auxílio para os que confiam nele.</p>
+        </div>
+    </div>
+
+    <h3 class="section-title">Vantagens e Cuidados</h3>
+
+    <div class="info-box success">
+        <div class="info-box-title">Vantagens</div>
+        <ul>
+            <li>Mantém a mensagem bíblica — o texto controla o conteúdo</li>
+            <li>Facilita a compreensão dos ouvintes</li>
+            <li>Produz mensagens organizadas e naturais</li>
+            <li>Excelente modelo para novos pregadores</li>
+            <li>Evita exageros — o pregador fica preso ao texto</li>
+        </ul>
+    </div>
+
+    <div class="info-box danger">
+        <div class="info-box-title">Cuidados necessários</div>
+        <ul>
+            <li><strong>Não tirar o texto do contexto:</strong> observe quem escreveu, para quem, e os versículos anteriores e posteriores</li>
+            <li><strong>Não forçar divisões artificiais:</strong> as divisões devem nascer naturalmente do texto</li>
+            <li><strong>Não usar apenas criatividade:</strong> o sermão precisa de fundamento bíblico sólido</li>
+        </ul>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAPÍTULO 2 — SERMÃO TEMÁTICO
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Capítulo 2</div>
+        <h2 class="chapter-title">O Sermão Temático</h2>
+    </div>
+
+    <p class="lead">No sermão temático, toda a mensagem é desenvolvida em torno de um <strong>tema central</strong>. Diferente do textual, que nasce de um único texto, o temático reúne <strong>vários textos da Bíblia</strong> para ensinar uma verdade específica: fé, oração, salvação, santidade, graça, família, perseverança…</p>
+
+    <div class="info-box teal">
+        <div class="info-box-title">Definição simples</div>
+        <p>"Uma mensagem organizada em torno de um assunto bíblico específico, desenvolvida por meio de diversos textos das Escrituras."</p>
+        <p>O <strong>tema governa</strong> o sermão. Os textos bíblicos servem para sustentar, explicar, provar e ampliar a verdade ensinada.</p>
+    </div>
+
+    <h3 class="section-title">Como funciona</h3>
+
+    <ol class="struct-list">
+        <li>
+            <div class="struct-num">1</div>
+            <div class="struct-body">
+                <h4>Escolher o tema</h4>
+                <p>Deve ser bíblico, claro, específico e relevante. Ex.: "A paz de Deus".</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">2</div>
+            <div class="struct-body">
+                <h4>Definir o objetivo</h4>
+                <p>"O que quero ensinar sobre esse tema?" Ex.: Mostrar que a verdadeira paz vem de Deus.</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">3</div>
+            <div class="struct-body">
+                <h4>Reunir textos bíblicos</h4>
+                <p>Versículos relacionados ao tema. Ex.: Jo 14.27; Fp 4.6-7; Is 26.3.</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">4</div>
+            <div class="struct-body">
+                <h4>Organizar tópicos</h4>
+                <p>Devem ser claros, equilibrados e progressivos.</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">5</div>
+            <div class="struct-body">
+                <h4>Aplicar a verdade</h4>
+                <p>Mostrar como viver praticamente o que foi ensinado.</p>
+            </div>
+        </li>
+    </ol>
+
+    <h3 class="section-title">Tipos de Sermão Temático</h3>
+
+    <div class="card-grid">
+        <div class="mini-card">
+            <h4>A) Doutrinário</h4>
+            <p>Ensina doutrinas bíblicas: salvação, graça, justificação, Espírito Santo.</p>
+        </div>
+        <div class="mini-card teal">
+            <h4>B) Devocional</h4>
+            <p>Visa edificação espiritual: oração, fé, adoração, comunhão.</p>
+        </div>
+        <div class="mini-card purple">
+            <h4>C) Moral ou Ético</h4>
+            <p>Trata do comportamento cristão: perdão, honestidade, santidade, humildade.</p>
+        </div>
+        <div class="mini-card success">
+            <h4>D) Evangelístico</h4>
+            <p>Voltado para a salvação: arrependimento, cruz, novo nascimento.</p>
+        </div>
+    </div>
+
+    <h3 class="section-title">Exemplo Completo</h3>
+
+    <div class="practice-box teal">
+        <h3>A importância da fé</h3>
+        <div class="practice-ref">Sermão temático devocional</div>
+
+        <div class="practice-step">
+            <div class="practice-step-badge">Intro</div>
+            <p>Vivemos cercados por medo, dúvidas e inseguranças. A Bíblia mostra que a fé é essencial para a vida cristã e para agradar a Deus.</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 1</div>
+            <p><strong>A fé é necessária para agradar a Deus</strong> — <em>Hb 11.6</em>: sem fé é impossível agradar a Deus.</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 2</div>
+            <p><strong>A fé nos sustenta nas dificuldades</strong> — <em>Mc 4.35-41</em>: Jesus acalma a tempestade e ensina os discípulos a confiar.</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 3</div>
+            <p><strong>A fé produz vitória espiritual</strong> — <em>1 Jo 5.4</em>: a fé vence o mundo.</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">Concl</div>
+            <p>A vida cristã começa, continua e termina pela fé. Deus procura homens e mulheres que confiem plenamente nEle.</p>
+        </div>
+    </div>
+
+    <h3 class="section-title">Vantagens e Cuidados</h3>
+
+    <div class="info-box success">
+        <div class="info-box-title">Vantagens</div>
+        <ul>
+            <li>Facilita o ensino de assuntos completos da Bíblia</li>
+            <li>Muito útil para ensino doutrinário</li>
+            <li>Excelente para necessidades específicas da igreja</li>
+            <li>É fácil de acompanhar — o tema fica claro</li>
+        </ul>
+    </div>
+
+    <div class="info-box danger">
+        <div class="info-box-title">Cuidados necessários</div>
+        <ul>
+            <li><strong>Não tirar textos do contexto</strong> — o grande perigo do temático é usar versículos isolados incorretamente</li>
+            <li><strong>Não usar apenas opiniões pessoais</strong> — o fundamento é a Bíblia, não ideias humanas</li>
+            <li><strong>Evitar excesso de textos</strong> — muitos versículos deixam a mensagem confusa</li>
+            <li><strong>Manter unidade</strong> — todos os tópicos devem estar ligados ao mesmo tema</li>
+        </ul>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAPÍTULO 3 — SERMÃO EXPOSITIVO
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Capítulo 3</div>
+        <h2 class="chapter-title">O Sermão Expositivo</h2>
+    </div>
+
+    <p class="lead">A palavra "expositivo" vem de <em>expor</em>: revelar, explicar, tornar claro. O sermão expositivo é a <strong>exposição fiel das Escrituras</strong> — o pregador explica detalhadamente uma passagem bíblica, mostrando seu significado original e aplicando sua mensagem à vida dos ouvintes.</p>
+
+    <div class="info-box">
+        <div class="info-box-title">Definição simples</div>
+        <p>"Uma mensagem que explica o significado de um texto bíblico em seu contexto, aplicando sua verdade à vida das pessoas."</p>
+        <p>No expositivo, o pregador <strong>não inventa o assunto</strong> — o texto determina o tema, a estrutura nasce da passagem, e a explicação segue o fluxo do texto.</p>
+    </div>
+
+    <h3 class="section-title">As três perguntas centrais</h3>
+
+    <div class="card-grid">
+        <div class="mini-card">
+            <h4>A) Observação</h4>
+            <p>O que o texto <strong>diz</strong>? Identificar fatos, palavras-chave, personagens e estrutura.</p>
+        </div>
+        <div class="mini-card teal">
+            <h4>B) Interpretação</h4>
+            <p>O que o texto <strong>significa</strong>? Considerar contexto histórico, cultural, literário e teológico.</p>
+        </div>
+        <div class="mini-card purple">
+            <h4>C) Aplicação</h4>
+            <p>O que o texto <strong>exige</strong> de nós? Como obedecer e viver essa verdade hoje.</p>
+        </div>
+    </div>
+
+    <h3 class="section-title">Características essenciais</h3>
+
+    <ul>
+        <li><strong>Centralidade da Bíblia</strong> — não é "pretexto", o texto é o centro absoluto</li>
+        <li><strong>Fidelidade ao contexto</strong> — capítulo, livro, história e teologia bíblica</li>
+        <li><strong>Explicação detalhada</strong> — palavras, expressões, personagens, doutrinas</li>
+        <li><strong>Desenvolvimento natural</strong> — tópicos seguem o movimento do texto</li>
+        <li><strong>Aplicação prática</strong> — visa transformação, não apenas informação</li>
+    </ul>
+
+    <h3 class="section-title">Como preparar passo a passo</h3>
+
+    <ol class="struct-list">
+        <li>
+            <div class="struct-num">1</div>
+            <div class="struct-body">
+                <h4>Escolher o texto</h4>
+                <p>Uma passagem com unidade de pensamento. Ex.: Ef 2.1-10; Sl 23; Jo 15.1-11.</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">2</div>
+            <div class="struct-body">
+                <h4>Ler repetidamente</h4>
+                <p>Observar detalhes, identificar palavras-chave, perceber a estrutura.</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">3</div>
+            <div class="struct-body">
+                <h4>Estudar o contexto</h4>
+                <p>Quem escreveu, para quem, situação histórica, propósito do livro.</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">4</div>
+            <div class="struct-body">
+                <h4>Descobrir a ideia central</h4>
+                <p>Qual é a mensagem principal do texto?</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">5</div>
+            <div class="struct-body">
+                <h4>Organizar as divisões</h4>
+                <p>Devem surgir naturalmente da passagem, sem forçar.</p>
+            </div>
+        </li>
+        <li>
+            <div class="struct-num">6</div>
+            <div class="struct-body">
+                <h4>Fazer aplicações</h4>
+                <p>Conectar o texto à vida atual de forma concreta.</p>
+            </div>
+        </li>
+    </ol>
+
+    <h3 class="section-title">Exemplo Completo — Efésios 2.1-10</h3>
+
+    <div class="practice-box dark">
+        <h3>A salvação é obra da graça</h3>
+        <div class="practice-ref">Efésios 2.1-10 — Sermão expositivo</div>
+
+        <div class="practice-step">
+            <div class="practice-step-badge">Intro</div>
+            <p>Paulo mostra o contraste entre a antiga condição do homem perdido e a nova vida em Cristo.</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 1</div>
+            <p><strong>A condição do homem sem Cristo</strong> — <em>Ef 2.1-3</em>: morto em delitos e pecados, escravo do mundo, debaixo da ira.</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 2</div>
+            <p><strong>A intervenção da graça divina</strong> — <em>Ef 2.4-7</em>: "Mas Deus…" rico em misericórdia nos deu vida com Cristo.</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 3</div>
+            <p><strong>A salvação não vem das obras</strong> — <em>Ef 2.8-10</em>: salvos pela graça, mediante a fé, criados para boas obras.</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">Concl</div>
+            <p>A salvação é totalmente fruto da graça de Deus — e essa graça transforma nossa maneira de viver.</p>
+        </div>
+    </div>
+
+    <h3 class="section-title">Vantagens, Dificuldades e Erros</h3>
+
+    <div class="info-box success">
+        <div class="info-box-title">Vantagens</div>
+        <ul>
+            <li>Ensina profundamente a Bíblia</li>
+            <li>Evita interpretações erradas — o contexto protege contra distorções</li>
+            <li>Produz crescimento espiritual saudável</li>
+            <li>Desenvolve pregadores mais bíblicos</li>
+            <li>Alimenta a igreja com "todo o conselho de Deus"</li>
+        </ul>
+    </div>
+
+    <div class="info-box warning">
+        <div class="info-box-title">Dificuldades</div>
+        <ul>
+            <li>Exige mais estudo e preparação profunda</li>
+            <li>Requer disciplina bíblica — não depende só de emoção</li>
+            <li>Pode ficar técnico demais sem aplicação prática</li>
+        </ul>
+    </div>
+
+    <div class="info-box danger">
+        <div class="info-box-title">Erros comuns</div>
+        <ul>
+            <li>Transformar exposição em <strong>palestra fria</strong></li>
+            <li>Ignorar a aplicação — conhecimento sem prática</li>
+            <li>Forçar interpretações em vez de deixar o texto falar</li>
+            <li>Ficar preso a detalhes irrelevantes</li>
+        </ul>
+    </div>
+
+    <div class="verse-card wine-card">
+        <p>"Toda a Escritura é divinamente inspirada e proveitosa para ensinar, para redarguir, para corrigir, para instruir em justiça."</p>
+        <span class="ref">— 2 Timóteo 3.16</span>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAPÍTULO 4 — COMPARATIVO
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Capítulo 4</div>
+        <h2 class="chapter-title">Quadro Comparativo dos Três Tipos</h2>
+    </div>
+
+    <p class="lead">Os três tipos não são concorrentes — são <strong>ferramentas complementares</strong>. O pregador maduro aprende a usar cada um no momento certo.</p>
+
+    <div class="styled-table-wrap">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th class="gold-h">Critério</th>
+                    <th class="gold-h">Textual</th>
+                    <th class="teal-h">Temático</th>
+                    <th class="blue-h">Expositivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Base bíblica</strong></td>
+                    <td>1 versículo ou poucos</td>
+                    <td>Muitos textos diferentes</td>
+                    <td>Parágrafo ou seção</td>
+                </tr>
+                <tr>
+                    <td><strong>Governa</strong></td>
+                    <td>O texto</td>
+                    <td>O tema</td>
+                    <td>O texto e seu contexto</td>
+                </tr>
+                <tr>
+                    <td><strong>Origem dos tópicos</strong></td>
+                    <td>Palavras/ideias do texto</td>
+                    <td>Aspectos do assunto</td>
+                    <td>Movimento natural do texto</td>
+                </tr>
+                <tr>
+                    <td><strong>Profundidade</strong></td>
+                    <td>Média</td>
+                    <td>Ampla, transversal</td>
+                    <td>Profunda, detalhada</td>
+                </tr>
+                <tr>
+                    <td><strong>Indicado para</strong></td>
+                    <td>Iniciantes; cultos curtos</td>
+                    <td>Doutrina; necessidades atuais</td>
+                    <td>Ensino sólido da igreja</td>
+                </tr>
+                <tr>
+                    <td><strong>Maior risco</strong></td>
+                    <td>Divisões artificiais</td>
+                    <td>Tirar versículo do contexto</td>
+                    <td>Virar aula sem aplicação</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 class="section-title">Quando usar cada um</h3>
+
+    <div class="card-grid">
+        <div class="mini-card">
+            <h4>Use Textual quando…</h4>
+            <p>Um único versículo já carrega a mensagem necessária; ou ao iniciar na pregação e precisar de uma estrutura clara que mantenha você "preso" ao texto.</p>
+        </div>
+        <div class="mini-card teal">
+            <h4>Use Temático quando…</h4>
+            <p>A igreja precisa ouvir sobre um <strong>assunto específico</strong> (perdão, oração, família, dízimos) e a visão completa da Bíblia sobre o tema edificará o povo.</p>
+        </div>
+        <div class="mini-card purple">
+            <h4>Use Expositivo quando…</h4>
+            <p>Você quer <strong>alimentar a igreja sistematicamente</strong> com a Palavra — pregando um livro bíblico ou uma seção, deixando o próprio texto pautar a mensagem.</p>
+        </div>
+    </div>
+
+    <div class="info-box accent">
+        <div class="info-box-title">A regra de ouro</div>
+        <p>Não importa qual tipo você escolha — <strong>todos exigem fidelidade ao texto e dependência do Espírito Santo</strong>. O método é servo da Palavra, nunca seu senhor.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAPÍTULO 5 — OFICINA PRÁTICA
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Capítulo 5</div>
+        <h2 class="chapter-title">Oficina Prática — Esboce seu Sermão</h2>
+    </div>
+
+    <p class="lead">Agora é a sua vez. Escolha um dos três caminhos abaixo, leia o texto/tema sugerido e preencha o esboço seguindo a estrutura. Esta é a parte mais importante da oficina: <strong>colocar a mão na massa</strong>.</p>
+
+    <h3 class="section-title">Atividade 1 — Esboço Textual</h3>
+
+    <div class="practice-box">
+        <h3>Filipenses 4.13</h3>
+        <div class="practice-ref">"Posso todas as coisas naquele que me fortalece"</div>
+
+        <div class="practice-step">
+            <div class="practice-step-badge">Tema</div>
+            <p>____________________________________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">Intro</div>
+            <p>____________________________________________<br>____________________________________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 1</div>
+            <p><strong>"Posso todas as coisas"</strong> — ___________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 2</div>
+            <p><strong>"Naquele"</strong> — _____________________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 3</div>
+            <p><strong>"Que me fortalece"</strong> — ___________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">Aplic</div>
+            <p>____________________________________________</p>
+        </div>
+    </div>
+
+    <h3 class="section-title">Atividade 2 — Esboço Temático</h3>
+
+    <div class="practice-box teal">
+        <h3>Tema: O poder da oração</h3>
+        <div class="practice-ref">Textos sugeridos: Tg 5.16; Mt 6.5-13; Lc 18.1-8; Fp 4.6-7</div>
+
+        <div class="practice-step">
+            <div class="practice-step-badge">Obj.</div>
+            <p>O que quero ensinar sobre oração? __________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 1</div>
+            <p><strong>A necessidade da oração</strong> — texto: ________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 2</div>
+            <p><strong>O modo correto de orar</strong> — texto: ________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 3</div>
+            <p><strong>Os resultados da oração perseverante</strong> — texto: ________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">Aplic</div>
+            <p>Que compromisso prático farei hoje sobre minha vida de oração?</p>
+        </div>
+    </div>
+
+    <h3 class="section-title">Atividade 3 — Esboço Expositivo</h3>
+
+    <div class="practice-box dark">
+        <h3>Salmo 23</h3>
+        <div class="practice-ref">Leia toda a passagem; deixe o texto guiar as divisões</div>
+
+        <div class="practice-step">
+            <div class="practice-step-badge">Obs</div>
+            <p>Quais palavras-chave aparecem? Quem fala? Qual o pano de fundo? ______________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">Ideia</div>
+            <p>Qual é a ideia central do Salmo? ______________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 1</div>
+            <p><strong>O Pastor que provê</strong> (v. 1-3) — _________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 2</div>
+            <p><strong>O Pastor que acompanha no vale</strong> (v. 4) — _________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">P. 3</div>
+            <p><strong>O Pastor que conduz à casa eterna</strong> (v. 5-6) — _________________</p>
+        </div>
+        <div class="practice-step">
+            <div class="practice-step-badge">Aplic</div>
+            <p>Como esta verdade muda minha forma de enfrentar a semana?</p>
+        </div>
+    </div>
+
+    <div class="info-box purple">
+        <div class="info-box-title">Dica do oficineiro</div>
+        <p>Depois de preencher o esboço, pregue em voz alta — mesmo que seja só para o espelho — em <strong>10 minutos no máximo</strong>. Você vai descobrir rapidamente quais pontos ainda precisam de mais Palavra e menos enchimento.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CONCLUSÃO
+     ═══════════════════════════════════════ -->
+<section class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-num">Conclusão</div>
+        <h2 class="chapter-title">Servos da Palavra, não donos dela</h2>
+    </div>
+
+    <div class="verse-card gold-card">
+        <p>"Procura apresentar-te a Deus aprovado, como obreiro que não tem de que se envergonhar, que maneja bem a palavra da verdade."</p>
+        <span class="ref">— 2 Timóteo 2.15</span>
+    </div>
+
+    <p class="lead">O verdadeiro objetivo dos três tipos de sermão é o mesmo: <strong>glorificar a Deus, revelar a verdade bíblica, edificar a igreja e levar pessoas à transformação espiritual</strong>. O método muda; a missão, não.</p>
+
+    <p>O pregador é apenas um <strong>servo da Palavra</strong>: expositor fiel, intérprete cuidadoso, mensageiro de Deus. Não está no púlpito para impressionar, criar novidades ou entreter — está ali para fazer o ouvinte entender <em>"o que Deus disse no texto e como devemos viver diante dessa verdade"</em>.</p>
+
+    <div class="info-box purple">
+        <div class="info-box-title">Resumo da Oficina</div>
+        <p>
+            <strong>Sermão Textual:</strong> os tópicos nascem de um texto curto; o texto governa.<br>
+            <strong>Sermão Temático:</strong> um tema central desenvolvido por vários textos.<br>
+            <strong>Sermão Expositivo:</strong> exposição detalhada de uma passagem em seu contexto.<br>
+            <strong>Regra comum:</strong> fidelidade ao texto, dependência do Espírito, aplicação prática.<br>
+            <strong>Próximo passo:</strong> preparar e pregar um esboço usando cada um dos três tipos.
+        </p>
+    </div>
+
+    <p>Que o Senhor levante uma geração de pregadores que tremam diante da Palavra, dominem os métodos, mas nunca esqueçam: <strong>quem prega não é o método — é o homem cheio do Espírito, fiel ao Livro</strong>.</p>
+</section>
+
+</body>
+</html>

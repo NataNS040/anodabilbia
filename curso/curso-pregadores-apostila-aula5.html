@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Pregadores — Oficina de Métodos de Estudo da Bíblia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #e8c84a;
+            --accent-dark: #a68520;
+            --bg: #fdfcf9;
+            --bg-chapter: #f7f5f0;
+            --bg-card: #ffffff;
+            --text: #2d2a26;
+            --text-light: #5a564f;
+            --text-muted: #8a857d;
+            --border: #e8e4dc;
+            --border-light: #f0ece4;
+            --success: #2d7d46;
+            --info: #2563eb;
+            --warning: #d97706;
+            --danger: #c0392b;
+            --purple: #6d28d9;
+            --teal: #0d9488;
+            --wine: #7a1f40;
+            --wine-light: #b03060;
+            /* Aula 5 — Deep Teal */
+            --teal-deep: #0d4f4f;
+            --teal-mid:  #136060;
+            --teal-light2: #1a7070;
+            --sidebar-w: 300px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; font-size: 17px; }
+
+        body {
+            font-family: 'Source Serif 4', 'Georgia', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.85;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ══════════════════════════════════════
+           CAPA
+           ══════════════════════════════════════ */
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(160deg, #061a1a 0%, #0d3d3d 40%, #1a6060 100%);
+            color: #fff;
+            padding: 60px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(201,162,39,0.12) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(255,255,255,0.04) 0%, transparent 50%);
+            animation: rotateBg 60s linear infinite;
+        }
+
+        @keyframes rotateBg { to { transform: rotate(360deg); } }
+
+        .cover-content { position: relative; z-index: 2; max-width: 700px; }
+
+        .cover-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(201,162,39,0.15);
+            border: 2px solid rgba(201,162,39,0.3);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        .cover-icon svg { width: 50px; height: 50px; color: var(--accent-light); }
+
+        @keyframes pulseGlow {
+            0%,100% { box-shadow: 0 0 30px rgba(201,162,39,0.2); }
+            50% { box-shadow: 0 0 60px rgba(201,162,39,0.5); }
+        }
+
+        .cover-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(201,162,39,0.2);
+            border: 1px solid rgba(201,162,39,0.4);
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            margin-bottom: 30px;
+        }
+
+        .cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
+
+        .cover h1 span {
+            display: block;
+            color: var(--accent-light);
+        }
+
+        .cover-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 40px;
+        }
+
+        .cover-divider {
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+            margin: 0 auto 30px;
+            border-radius: 2px;
+        }
+
+        .cover-author {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .cover-author strong { color: var(--accent-light); }
+
+        .cover-tags {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .cover-tag {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .cover-tag.estudo  { border-color: rgba(201,162,39,0.5); color: var(--accent-light); }
+        .cover-tag.herm   { border-color: rgba(13,148,136,0.7);  color: #5eead4; }
+        .cover-tag.disc   { border-color: rgba(37,99,235,0.5);   color: #93c5fd; }
+
+        .cover-scroll {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.4);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: bounce 2s infinite;
+            z-index: 2;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+        }
+
+        /* ══════════════════════════════════════
+           LAYOUT
+           ══════════════════════════════════════ */
+        .page-wrapper { display: flex; min-height: 100vh; }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-w);
+            height: 100vh;
+            background: var(--primary-dark);
+            color: #fff;
+            overflow-y: auto;
+            padding: 30px 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            padding: 0 25px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 25px;
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+
+        .sidebar-nav a.active {
+            background: rgba(201,162,39,0.1);
+            color: var(--accent-light);
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-nav a .ch-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .sidebar-nav a.active .ch-num { background: var(--accent); color: var(--primary-dark); }
+
+        .main-content {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            max-width: 840px;
+            padding: 0 60px 100px;
+            margin-right: auto;
+        }
+
+        /* ══════════════════════════════════════
+           CAPÍTULOS
+           ══════════════════════════════════════ */
+        .chapter {
+            padding-top: 70px;
+            margin-bottom: 60px;
+        }
+
+        .chapter-header {
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .chapter-num {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-dark);
+            margin-bottom: 8px;
+        }
+
+        .chapter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 800;
+            color: var(--primary-dark);
+            line-height: 1.25;
+        }
+
+        .intro-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--teal-deep);
+            margin-bottom: 8px;
+        }
+
+        .chapter p {
+            margin-bottom: 1.2em;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .chapter p.lead {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.9;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 45px 0 18px;
+            padding-left: 18px;
+            border-left: 4px solid var(--accent);
+        }
+
+        /* ══════════════════════════════════════
+           COMPONENTES
+           ══════════════════════════════════════ */
+        .verse-card {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: #fff;
+            padding: 30px 35px;
+            border-radius: 14px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verse-card::before {
+            content: '\201C';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            font-size: 8rem;
+            font-family: 'Playfair Display', serif;
+            color: rgba(201,162,39,0.15);
+            line-height: 1;
+        }
+
+        .verse-card p {
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 12px !important;
+            text-align: left !important;
+        }
+
+        .verse-card .ref {
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-light);
+        }
+
+        .verse-card.teal-card   { background: linear-gradient(135deg, #061a1a 0%, #0d4f4f 100%); }
+        .verse-card.teal2-card  { background: linear-gradient(135deg, #064e3b 0%, #0d9488 100%); }
+        .verse-card.purple-card { background: linear-gradient(135deg, #2d1b4e 0%, #6d28d9 100%); }
+        .verse-card.gold-card   { background: linear-gradient(135deg, #3d2800 0%, #a68520 100%); }
+
+        .info-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--info);
+            border-radius: 10px;
+            padding: 22px 28px;
+            margin: 28px 0;
+        }
+
+        .info-box.accent  { border-left-color: var(--accent); }
+        .info-box.success { border-left-color: var(--success); }
+        .info-box.warning { border-left-color: var(--warning); }
+        .info-box.danger  { border-left-color: var(--danger); }
+        .info-box.purple  { border-left-color: var(--purple); }
+        .info-box.teal    { border-left-color: var(--teal); }
+        .info-box.teal-deep { border-left-color: var(--teal-deep); }
+        .info-box.wine    { border-left-color: var(--wine); }
+
+        .info-box-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box.accent    .info-box-title { color: var(--accent-dark); }
+        .info-box.success   .info-box-title { color: var(--success); }
+        .info-box.warning   .info-box-title { color: var(--warning); }
+        .info-box.danger    .info-box-title { color: var(--danger); }
+        .info-box.purple    .info-box-title { color: var(--purple); }
+        .info-box.teal      .info-box-title { color: var(--teal); }
+        .info-box.teal-deep .info-box-title { color: var(--teal-deep); }
+        .info-box.wine      .info-box-title { color: var(--wine-light); }
+        .info-box            .info-box-title { color: var(--info); }
+
+        .info-box p, .info-box ul { font-size: 0.92rem; }
+        .info-box ul { padding-left: 18px; }
+        .info-box ul li { margin-bottom: 4px; }
+
+        .definition {
+            background: linear-gradient(135deg, #fefce8 0%, #fff7ed 100%);
+            border: 1px solid #fde68a;
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin: 28px 0;
+        }
+
+        .definition-word {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+
+        .definition-origin {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .definition p { font-size: 0.95rem; }
+
+        /* Three dimensions cards */
+        .dimensions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin: 28px 0;
+        }
+
+        .dimension-card {
+            border-radius: 14px;
+            padding: 28px 22px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dimension-card::after {
+            content: attr(data-letter);
+            position: absolute;
+            bottom: -10px;
+            right: -4px;
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            opacity: 0.1;
+            line-height: 1;
+        }
+
+        .dimension-card.intel { background: linear-gradient(135deg, #0f2744, #1e3a5f); }
+        .dimension-card.spirit { background: linear-gradient(135deg, #061a1a, #0d4f4f); }
+        .dimension-card.praxis { background: linear-gradient(135deg, #3d2800, #a68520); }
+
+        .dimension-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 8px;
+        }
+
+        .dimension-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent-light);
+            margin-bottom: 10px;
+        }
+
+        .dimension-card p {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+            margin-bottom: 0 !important;
+            text-align: left !important;
+        }
+
+        /* Method cards */
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin: 28px 0;
+        }
+
+        .method-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px 22px;
+            border-top: 3px solid var(--teal-deep);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .method-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .method-card-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            color: #fff;
+        }
+
+        .method-card-icon.teal-ic  { background: var(--teal-deep); }
+        .method-card-icon.blue-ic  { background: var(--info); }
+        .method-card-icon.gold-ic  { background: var(--accent); }
+        .method-card-icon.green-ic { background: var(--success); }
+        .method-card-icon.purple-ic{ background: var(--purple); }
+
+        .method-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+        }
+
+        .method-card p {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 0 !important;
+        }
+
+        /* Inductive steps */
+        .steps-list {
+            list-style: none;
+            margin: 28px 0;
+        }
+
+        .steps-list li {
+            display: flex;
+            gap: 20px;
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .steps-list li:last-child { border-bottom: none; }
+
+        .step-num {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--teal-deep);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .step-body h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .step-body p {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            line-height: 1.65;
+            margin-bottom: 0 !important;
+        }
+
+        /* Tool cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin: 28px 0;
+        }
+
+        .mini-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .mini-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .mini-card-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            color: #fff;
+        }
+
+        .mini-card-icon.blue   { background: var(--info); }
+        .mini-card-icon.gold   { background: var(--accent); }
+        .mini-card-icon.green  { background: var(--success); }
+        .mini-card-icon.purple { background: var(--purple); }
+        .mini-card-icon.teal   { background: var(--teal-deep); }
+        .mini-card-icon.red    { background: var(--danger); }
+        .mini-card-icon.orange { background: var(--warning); }
+        .mini-card-icon.dark   { background: var(--primary-dark); }
+
+        .mini-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+        }
+
+        .mini-card p {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 0 !important;
+        }
+
+        /* Results cards */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 28px 0;
+        }
+
+        .result-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px 20px;
+            border-bottom: 3px solid var(--teal-deep);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .result-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .result-card-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: rgba(13,79,79,0.15);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .result-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--teal-deep);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 8px;
+        }
+
+        .result-card p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 0 !important;
+        }
+
+        /* Practice box */
+        .practice-box {
+            background: linear-gradient(135deg, #061a1a 0%, #0d3d3d 100%);
+            border-radius: 14px;
+            padding: 32px 36px;
+            margin: 28px 0;
+            color: #fff;
+        }
+
+        .practice-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            margin-bottom: 6px;
+        }
+
+        .practice-box .practice-ref {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .practice-step {
+            display: flex;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .practice-step:last-child { border-bottom: none; }
+
+        .practice-step-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: rgba(201,162,39,0.25);
+            border: 1px solid rgba(201,162,39,0.4);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+            padding: 0 6px;
+        }
+
+        .practice-step p {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.65;
+            margin-bottom: 0 !important;
+            text-align: left !important;
+        }
+
+        .practice-step p strong { color: var(--accent-light); }
+
+        .reflection-box {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin-top: 20px;
+        }
+
+        .reflection-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 12px;
+        }
+
+        .reflection-box p {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 6px !important;
+            text-align: left !important;
+        }
+
+        .reflection-box p::before {
+            content: '→ ';
+            color: var(--accent-light);
+        }
+
+        /* Styled table */
+        .styled-table-wrap {
+            overflow-x: auto;
+            margin: 28px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .styled-table thead th {
+            background: var(--primary);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 14px 18px;
+            text-align: left;
+        }
+
+        .styled-table thead th.teal-h  { background: var(--teal-deep); }
+        .styled-table thead th.good    { background: var(--success); }
+        .styled-table thead th.purple  { background: var(--purple); }
+        .styled-table thead th.gold    { background: var(--accent-dark); }
+        .styled-table thead th.neutral { background: var(--teal); }
+
+        .styled-table tbody td {
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .styled-table tbody tr:nth-child(even) { background: #faf9f6; }
+        .styled-table tbody tr:hover { background: #f5f0e8; }
+
+        /* Styled list */
+        .styled-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .styled-list li {
+            padding: 8px 0 8px 30px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .styled-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 16px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        strong { color: var(--primary-dark); }
+        .author-card strong { color: rgba(255,255,255,0.95); }
+
+        .highlight {
+            background: linear-gradient(to bottom, transparent 60%, rgba(201,162,39,0.25) 60%);
+            font-weight: 600;
+        }
+
+        /* Back to top */
+        .back-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--teal-deep);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .back-top.visible { opacity: 1; transform: translateY(0); }
+        .back-top:hover { background: var(--accent); }
+
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--teal-deep), var(--accent-light));
+            z-index: 200;
+            transition: width 0.15s;
+        }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE
+           ══════════════════════════════════════ */
+        @media (max-width: 1100px) {
+            .main-content { padding: 0 40px 80px; }
+        }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-toggle { display: flex; }
+            .main-content { margin-left: 0; padding: 0 24px 80px; }
+            .chapter { padding-top: 50px; }
+            .card-grid, .method-grid, .results-grid { grid-template-columns: 1fr; }
+            .dimensions-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            html { font-size: 15px; }
+            .cover { padding: 40px 20px; }
+            .verse-card { padding: 22px; }
+            .practice-box { padding: 24px 20px; }
+        }
+
+        @media print {
+            .sidebar, .back-top, .sidebar-toggle, .progress-bar, .cover-scroll { display: none !important; }
+            .main-content { margin-left: 0; max-width: 100%; }
+            .chapter { page-break-before: always; }
+            .chapter:first-child { page-break-before: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ═══════════════════════════════════════
+     CAPA
+     ═══════════════════════════════════════ -->
+<section class="cover" id="capa">
+    <div class="cover-content">
+        <div class="cover-icon">
+            <i data-lucide="book-open" style="width: 50px; height: 50px;"></i>
+        </div>
+        <div class="cover-badge">
+            <i data-lucide="graduation-cap" style="width: 16px; height: 16px;"></i>
+            Curso de Pregadores • Aula 5
+        </div>
+        <h1>Oficina de <span>Métodos de Estudo da Bíblia</span></h1>
+        <p class="cover-subtitle">Ferramentas e práticas para uma vida profunda na Palavra</p>
+        <div class="cover-divider"></div>
+        <p class="cover-author">Texto-base: <strong>2 Timóteo 3.16</strong></p>
+        <div class="cover-tags">
+            <span class="cover-tag estudo">Estudo Bíblico</span>
+            <span class="cover-tag herm">Hermenêutica</span>
+            <span class="cover-tag disc">Discipulado</span>
+        </div>
+    </div>
+    <div class="cover-scroll">
+        Role para baixo
+        <i data-lucide="chevrons-down" style="width: 20px; height: 20px;"></i>
+    </div>
+</section>
+
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Abrir menu">
+    <i data-lucide="menu" style="width: 22px; height: 22px;"></i>
+</button>
+
+<div class="page-wrapper">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-title">Sumário</div>
+        <nav class="sidebar-nav" id="sidebarNav">
+            <a href="#intro"><span class="ch-num">•</span> Introdução</a>
+            <a href="#cap1"><span class="ch-num">1</span> Ler, Estudar e Meditar</a>
+            <a href="#cap2"><span class="ch-num">2</span> Métodos de Estudo</a>
+            <a href="#cap3"><span class="ch-num">3</span> Ferramentas</a>
+            <a href="#cap4"><span class="ch-num">4</span> Resultados do Estudo</a>
+            <a href="#cap5"><span class="ch-num">5</span> Atividade Prática</a>
+            <a href="#cap6"><span class="ch-num">6</span> Conclusão</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <!-- ═══════════════════════════════════════
+             INTRODUÇÃO
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="intro">
+            <div class="chapter-header">
+                <div class="intro-label">Introdução</div>
+                <h2 class="chapter-title">O que é Estudar a Bíblia</h2>
+            </div>
+
+            <div class="verse-card teal-card">
+                <p>"Toda a Escritura é divinamente inspirada e proveitosa para ensinar, para redarguir, para corrigir, para instruir em justiça."</p>
+                <span class="ref">— 2 Timóteo 3.16</span>
+            </div>
+
+            <p class="lead">Estudar a Bíblia é dedicar tempo e esforço para compreender profundamente a mensagem de Deus revelada nas Escrituras, buscando não apenas conhecimento religioso, mas transformação interior e prática cristã. Trata-se de um processo espiritual contínuo que envolve mente, coração e atitudes.</p>
+
+            <h3 class="section-title">As Três Dimensões do Estudo Bíblico</h3>
+
+            <div class="dimensions-grid">
+                <div class="dimension-card intel" data-letter="I">
+                    <div class="dimension-label">Dimensão 1</div>
+                    <h4>Intelectual</h4>
+                    <p>Compreender o significado do texto — analisar contexto, personagens, gênero literário e propósito original do autor.</p>
+                </div>
+                <div class="dimension-card spirit" data-letter="E">
+                    <div class="dimension-label">Dimensão 2</div>
+                    <h4>Espiritual</h4>
+                    <p>Permitir que o Espírito Santo ilumine a mente e o coração, transformando o estudo em encontro vivo com Deus.</p>
+                </div>
+                <div class="dimension-card praxis" data-letter="P">
+                    <div class="dimension-label">Dimensão 3</div>
+                    <h4>Prática</h4>
+                    <p>Aplicar os ensinamentos no cotidiano — colocar a Palavra em ação, tomando decisões e formando caráter segundo as Escrituras.</p>
+                </div>
+            </div>
+
+            <p>A Bíblia não é apenas um livro histórico ou literário, mas a <span class="highlight">revelação viva da vontade de Deus</span>. Por isso, o estudo deve ser realizado com atenção, reverência, humildade e constância, desenvolvendo disciplina espiritual.</p>
+
+            <h3 class="section-title">Benefícios do Estudo das Escrituras</h3>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon teal"><i data-lucide="search" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Discernimento Espiritual</h4>
+                    <p>Desenvolver discernimento para distinguir verdade e erro, tomando decisões sábias segundo a mente de Deus.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon gold"><i data-lucide="scale" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Decisões Sábias</h4>
+                    <p>Tomar decisões mais sábias em todas as áreas da vida, baseadas nos princípios eternos das Escrituras.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon blue"><i data-lucide="shield" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Fortalece a Fé</h4>
+                    <p>Fortalecer a fé em momentos de crise, ancorando a alma na certeza das promessas de Deus.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon green"><i data-lucide="user-check" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Caráter Cristão</h4>
+                    <p>Construir caráter semelhante ao de Cristo, transformando progressivamente os valores, hábitos e atitudes.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon purple"><i data-lucide="compass" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Propósito de Vida</h4>
+                    <p>Compreender melhor o propósito da vida, descobrindo o chamado e a missão que Deus deposita em cada pessoa.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon orange"><i data-lucide="alert-triangle" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Proteção Doutrinária</h4>
+                    <p>Proteção contra enganos doutrinários e interpretações superficiais que desviam da verdade bíblica.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 1 — LER, ESTUDAR E MEDITAR
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap1">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 1</div>
+                <h2 class="chapter-title">Diferença entre Ler, Estudar e Meditar</h2>
+            </div>
+
+            <p class="lead">As três práticas são complementares e fundamentais para uma vida espiritual equilibrada. Negligenciar qualquer uma delas empobrece a caminhada com Deus.</p>
+
+            <h3 class="section-title">Ler a Bíblia</h3>
+
+            <p>É o <strong>primeiro contato com o texto sagrado</strong>. Desenvolve hábito espiritual, amplia o conhecimento das Escrituras e desperta a fé. Mesmo sem compreensão completa, a leitura já alimenta a alma.</p>
+
+            <div class="info-box teal-deep">
+                <div class="info-box-title"><i data-lucide="book" style="width: 16px; height: 16px;"></i> Leitura regular</div>
+                <p>Quem lê a Bíblia regularmente mantém o coração <strong>conectado com Deus</strong>. A leitura constante cria familiaridade com o pensamento divino, tornando natural reconhecer sua voz.</p>
+            </div>
+
+            <h3 class="section-title">Estudar a Bíblia</h3>
+
+            <p>É <strong>aprofundar-se no texto</strong>, analisando contexto, personagens e ensinamentos espirituais. O estudo envolve perguntas, comparações de versículos e registro de aprendizados.</p>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon teal"><i data-lucide="shield-check" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Evita Interpretações Erradas</h4>
+                    <p>Quem estuda com método e rigor não se torna presa fácil de falsas doutrinas ou leituras isoladas do contexto.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon blue"><i data-lucide="anchor" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Fortalece Convicções</h4>
+                    <p>Fortalece as convicções espirituais, pois a fé fundamentada no conhecimento é mais resiliente nos momentos de dúvida.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon gold"><i data-lucide="trending-up" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Maturidade Cristã</h4>
+                    <p>Quem estuda a Bíblia aprende a <strong>pensar segundo os princípios de Deus</strong>, desenvolvendo maturidade progressiva.</p>
+                </div>
+            </div>
+
+            <h3 class="section-title">Meditar na Bíblia</h3>
+
+            <p>É <strong>refletir continuamente na Palavra</strong> até que ela transforme pensamentos e atitudes. A meditação renova a mente, fortalece a comunhão com Deus e produz equilíbrio emocional.</p>
+
+            <div class="verse-card">
+                <p>"Antes tem o seu prazer na lei do Senhor, e na sua lei medita de dia e de noite."</p>
+                <span class="ref">— Salmos 1.2</span>
+            </div>
+
+            <h3 class="section-title">Síntese das Três Práticas</h3>
+
+            <div class="styled-table-wrap">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Prática</th>
+                            <th class="teal-h">Objetivo</th>
+                            <th class="good">Resultado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Ler</strong></td>
+                            <td>Conhecer a Palavra</td>
+                            <td>Despertamento espiritual</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Estudar</strong></td>
+                            <td>Compreender a Palavra</td>
+                            <td>Maturidade cristã</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Meditar</strong></td>
+                            <td>Viver a Palavra</td>
+                            <td>Transformação interior</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 2 — MÉTODOS DE ESTUDO
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap2">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 2</div>
+                <h2 class="chapter-title">Métodos Principais de Estudo Bíblico</h2>
+            </div>
+
+            <p class="lead">Cada método oferece uma perspectiva única sobre as Escrituras. O pregador e discípulo maduros não se limitam a um único método — eles dominam vários.</p>
+
+            <div class="method-grid">
+                <div class="method-card">
+                    <div class="method-card-icon teal-ic"><i data-lucide="heart" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Método Devocional</h4>
+                    <p>Voltado para <strong>comunhão pessoal com Deus</strong>. Inclui leitura, reflexão, oração e aplicação prática. Fortalece a disciplina espiritual e a intimidade com o Senhor.</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-card-icon blue-ic"><i data-lucide="search" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Método Indutivo</h4>
+                    <p>Estudo investigativo que <strong>observa, interpreta e aplica</strong> o texto bíblico. Ensina o cristão a ouvir o que a Bíblia realmente diz, sem projetar ideias externas.</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-card-icon gold-ic"><i data-lucide="layers" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Estudo por Temas</h4>
+                    <p>Reúne vários textos sobre um <strong>assunto específico</strong>, desenvolvendo visão ampla da doutrina e fortalecendo a fé. Ideal para aprofundamento teológico.</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-card-icon green-ic"><i data-lucide="user" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Estudo por Personagens</h4>
+                    <p>Aprende princípios espirituais por meio das <strong>experiências de pessoas bíblicas</strong>, mostrando que Deus transforma histórias humanas em testemunhos de fé.</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-card-icon purple-ic"><i data-lucide="book-open" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Estudo por Livros</h4>
+                    <p>Analisa um <strong>livro bíblico completo</strong> para compreender contexto, propósito e mensagem central. Produz visão panorâmica e entendimento profundo do autor.</p>
+                </div>
+            </div>
+
+            <h3 class="section-title">O Método Indutivo em Detalhe</h3>
+
+            <ol class="steps-list">
+                <li>
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <h4>Observação</h4>
+                        <p>Identificar <strong>fatos, personagens, ações e circunstâncias</strong> do texto. Responde à pergunta: <em>O que o texto diz?</em> Não interprete ainda — apenas observe com atenção.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <h4>Interpretação</h4>
+                        <p>Compreender o <strong>ensino espiritual do texto</strong> em seu contexto original. Responde à pergunta: <em>O que o texto significa?</em> Considere o contexto histórico, cultural e literário.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <h4>Correlação</h4>
+                        <p>O que o <strong>restante da Bíblia diz</strong> sobre o texto? Busque passagens paralelas e referências cruzadas que iluminem e confirmem o ensino encontrado.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <h4>Aplicação</h4>
+                        <p>Decidir <strong>mudanças práticas</strong> a partir do texto. Responde à pergunta: <em>O que devo fazer com o que aprendi?</em> Sem aplicação, o estudo fica incompleto.</p>
+                    </div>
+                </li>
+            </ol>
+
+            <h3 class="section-title">Síntese dos Métodos</h3>
+
+            <div class="styled-table-wrap">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th class="teal-h">Foco</th>
+                            <th class="good">Resultado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Devocional</strong></td><td>Comunhão</td><td>Intimidade com Deus</td></tr>
+                        <tr><td><strong>Indutivo</strong></td><td>Compreensão</td><td>Segurança doutrinária</td></tr>
+                        <tr><td><strong>Temático</strong></td><td>Doutrina</td><td>Visão ampla</td></tr>
+                        <tr><td><strong>Personagens</strong></td><td>Experiência</td><td>Perseverança</td></tr>
+                        <tr><td><strong>Livros</strong></td><td>Contexto</td><td>Maturidade bíblica</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 3 — FERRAMENTAS
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap3">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 3</div>
+                <h2 class="chapter-title">Ferramentas para o Estudo Bíblico</h2>
+            </div>
+
+            <p class="lead">Um bom carpinteiro não trabalha com as mãos vazias. Da mesma forma, o estudante das Escrituras precisa conhecer e utilizar as ferramentas disponíveis para aprofundar sua compreensão.</p>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon teal"><i data-lucide="book-open" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Bíblia de Estudo</h4>
+                    <p>Apresenta <strong>notas explicativas, mapas e referências cruzadas</strong>, ajudando na compreensão do contexto e significado dos textos. Ponto de partida para qualquer estudante.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon blue"><i data-lucide="search" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Concordância Bíblica</h4>
+                    <p>Permite localizar rapidamente versículos sobre determinado tema, facilitando <strong>estudos doutrinários</strong> e preparação de mensagens. Ferramenta indispensável para pregadores.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon gold"><i data-lucide="library" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Dicionário Bíblico</h4>
+                    <p>Explica termos <strong>culturais, históricos e geográficos</strong>, evitando interpretações equivocadas por falta de contexto ou de informação sobre o mundo bíblico.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon green"><i data-lucide="pencil-line" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Caderno Espiritual</h4>
+                    <p>Instrumento pessoal para registrar <strong>reflexões, aplicações e experiências com Deus</strong>, fortalecendo a memória espiritual e tornando visível o crescimento ao longo do tempo.</p>
+                </div>
+            </div>
+
+            <div class="styled-table-wrap">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Ferramenta</th>
+                            <th class="teal-h">Função</th>
+                            <th class="good">Resultado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Bíblia de estudo</strong></td><td>Explicar textos</td><td>Clareza</td></tr>
+                        <tr><td><strong>Concordância</strong></td><td>Localizar temas</td><td>Organização</td></tr>
+                        <tr><td><strong>Dicionário bíblico</strong></td><td>Entender contexto</td><td>Interpretação correta</td></tr>
+                        <tr><td><strong>Caderno espiritual</strong></td><td>Registrar aprendizados</td><td>Crescimento espiritual</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box teal-deep">
+                <div class="info-box-title"><i data-lucide="smartphone" style="width: 16px; height: 16px;"></i> Ferramentas digitais</div>
+                <p>Aplicativos como YouVersion, Blue Letter Bible, e-Sword e Logos colocam uma biblioteca bíblica completa na palma da mão. Use a tecnologia a favor do estudo, com discernimento e disciplina.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 4 — RESULTADOS DO ESTUDO
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap4">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 4</div>
+                <h2 class="chapter-title">Resultados do Estudo Bíblico</h2>
+            </div>
+
+            <p class="lead">O estudo constante das Escrituras não é exercício intelectual vazio — produz efeitos profundos e duradouros na vida de quem se dedica a ela com sinceridade.</p>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-card-num">01</div>
+                    <h4>Crescimento Espiritual</h4>
+                    <p>Desenvolvimento da fé, caráter e disciplina na caminhada com Deus — amadurecimento progressivo e perceptível.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-card-num">02</div>
+                    <h4>Discernimento Espiritual</h4>
+                    <p>Capacidade de distinguir verdade e erro, tomando decisões sábias com fundamento nas Escrituras.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-card-num">03</div>
+                    <h4>Segurança Doutrinária</h4>
+                    <p>Firmeza nas convicções cristãs baseada no conhecimento bíblico, resistindo a modismos e heresias.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-card-num">04</div>
+                    <h4>Vida Transformada</h4>
+                    <p>Mudança de hábitos, reconciliação de relacionamentos e desenvolvimento do domínio próprio e da santidade.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-card-num">05</div>
+                    <h4>Intimidade com Deus</h4>
+                    <p>Conhecimento do caráter divino e maior confiança na oração — o estudo aprofunda a comunhão com o Pai.</p>
+                </div>
+            </div>
+
+            <div class="verse-card teal2-card">
+                <p>"Lâmpada para os meus pés é tua palavra e luz para o meu caminho."</p>
+                <span class="ref">— Salmos 119.105</span>
+            </div>
+
+            <div class="info-box accent">
+                <div class="info-box-title"><i data-lucide="zap" style="width: 16px; height: 16px;"></i> A Palavra que transforma</div>
+                <p>A Palavra de Deus não age como informação neutra — ela é <strong>viva e eficaz</strong> (Hb 4.12). O estudo bíblico sério não apenas informa: ele transforma o interior, molda o caráter e redireciona a vida inteira.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 5 — ATIVIDADE PRÁTICA
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap5">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 5</div>
+                <h2 class="chapter-title">Atividade Prática — Método Indutivo</h2>
+            </div>
+
+            <p class="lead">A teoria se consolida na prática. A seguir, aplicamos o Método Indutivo ao texto de Marcos 4.35–41, passando pelas quatro etapas fundamentais.</p>
+
+            <div class="practice-box">
+                <h3>Marcos 4.35–41</h3>
+                <div class="practice-ref">A Tempestade Acalmada</div>
+
+                <div class="practice-step">
+                    <div class="practice-step-badge">Obs.</div>
+                    <p><strong>Observação:</strong> Tempestade no mar, medo dos discípulos, intervenção de Jesus e grande bonança. Jesus dormia enquanto a tempestade furiosa ameaçava afundar o barco.</p>
+                </div>
+
+                <div class="practice-step">
+                    <div class="practice-step-badge">Corr.</div>
+                    <p><strong>Correlação Bíblica:</strong> Outros textos confirmam que Deus domina as tempestades e fortalece a fé: <strong>Sl 107.29</strong> (Deus acalma a tormenta), <strong>Is 43.2</strong> (Deus está presente nas águas), <strong>Jo 16.33</strong> (Jesus venceu as aflições) e <strong>Fp 4.6–7</strong> (a oração produz paz em meio às crises).</p>
+                </div>
+
+                <div class="practice-step">
+                    <div class="practice-step-badge">Interp.</div>
+                    <p><strong>Interpretação:</strong> Cristo tem <strong>autoridade sobre crises</strong> e deseja desenvolver fé em seus seguidores. As tempestades da vida são convites para conhecer mais profundamente quem é Jesus.</p>
+                </div>
+
+                <div class="practice-step">
+                    <div class="practice-step-badge">Aplic.</div>
+                    <p><strong>Aplicação:</strong> Confiar em Jesus nas dificuldades, vencer o medo pela fé e <strong>priorizar a oração</strong> no centro das crises — antes de buscar soluções humanas.</p>
+                </div>
+
+                <div class="reflection-box">
+                    <div class="reflection-title">Reflexão pessoal</div>
+                    <p>Que tempestades enfrento hoje?</p>
+                    <p>Que atitude prática devo tomar?</p>
+                </div>
+            </div>
+
+            <div class="info-box success">
+                <div class="info-box-title"><i data-lucide="check-circle" style="width: 16px; height: 16px;"></i> O poder do método indutivo</div>
+                <p>Ao seguir as quatro etapas (Observação → Interpretação → Correlação → Aplicação), o estudante evita a armadilha de <strong>impor ao texto o que quer encontrar</strong> — em vez disso, deixa que a Bíblia fale por si mesma, com toda a sua autoridade e poder.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 6 — CONCLUSÃO
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap6">
+            <div class="chapter-header">
+                <div class="chapter-num">Conclusão</div>
+                <h2 class="chapter-title">Prosseguindo em Conhecer ao Senhor</h2>
+            </div>
+
+            <div class="verse-card gold-card">
+                <p>"Conheçamos e prossigamos em conhecer ao Senhor."</p>
+                <span class="ref">— Oseias 6.3</span>
+            </div>
+
+            <p class="lead">Estudar a Bíblia é iniciar uma jornada de crescimento espiritual e amadurecimento cristão. A disciplina no estudo conduz a decisões mais sábias, equilíbrio emocional e firmeza na fé.</p>
+
+            <p>O conhecimento de Deus é <span class="highlight">progressivo e exige dedicação contínua</span>. Não existe ponto de chegada enquanto vivemos — sempre há mais a descobrir, mais profundidade a alcançar, mais graça a experienciar na Palavra viva.</p>
+
+            <div class="info-box teal-deep">
+                <div class="info-box-title"><i data-lucide="book-marked" style="width: 16px; height: 16px;"></i> Resumo da Aula 5</div>
+                <p>
+                    <strong>Estudar a Bíblia:</strong> Processo espiritual contínuo — intelectual, espiritual e prático.<br>
+                    <strong>Três práticas:</strong> Ler (conhecer) → Estudar (compreender) → Meditar (viver).<br>
+                    <strong>Métodos:</strong> Devocional, Indutivo (OICA), Temático, Personagens, Livros.<br>
+                    <strong>Ferramentas:</strong> Bíblia de estudo, concordância, dicionário, caderno espiritual.<br>
+                    <strong>Resultados:</strong> Crescimento, discernimento, segurança doutrinária, vida transformada, intimidade com Deus.<br>
+                    <strong>Prática:</strong> Método Indutivo aplicado a Marcos 4.35–41.
+                </p>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<button class="back-top" id="backTop" title="Voltar ao topo">
+    <i data-lucide="arrow-up" style="width: 20px; height: 20px;"></i>
+</button>
+
+<script>
+    lucide.createIcons();
+
+    // Progress bar
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        document.getElementById('progressBar').style.width = pct + '%';
+    });
+
+    // Back to top
+    const backTop = document.getElementById('backTop');
+    window.addEventListener('scroll', () => {
+        backTop.classList.toggle('visible', window.scrollY > 400);
+    });
+    backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Sidebar toggle
+    const sidebar  = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    sidebarToggle?.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+    // Active sidebar nav
+    const sections = document.querySelectorAll('.chapter');
+    const navLinks  = document.querySelectorAll('.sidebar-nav a');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(a => a.classList.remove('active'));
+                const id = entry.target.id;
+                const link = document.querySelector(`.sidebar-nav a[href="#${id}"]`);
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.3 });
+
+    sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

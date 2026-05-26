@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Pregadores — Antes do Púlpito: Caráter, Oração e Santificação | Pb. Alison Pereira</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #e8c84a;
+            --accent-dark: #a68520;
+            --bg: #fdfcf9;
+            --bg-chapter: #f7f5f0;
+            --bg-card: #ffffff;
+            --text: #2d2a26;
+            --text-light: #5a564f;
+            --text-muted: #8a857d;
+            --border: #e8e4dc;
+            --border-light: #f0ece4;
+            --success: #2d7d46;
+            --info: #2563eb;
+            --warning: #d97706;
+            --danger: #c0392b;
+            --purple: #6d28d9;
+            --teal: #0d9488;
+            --sidebar-w: 300px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; font-size: 17px; }
+
+        body {
+            font-family: 'Source Serif 4', 'Georgia', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.85;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ══════════════════════════════════════
+           CAPA / HERO
+           ══════════════════════════════════════ */
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(160deg, #1a0a2e 0%, #2d1b4e 40%, #1e3a5f 100%);
+            color: #fff;
+            padding: 60px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(201,162,39,0.12) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(255,255,255,0.04) 0%, transparent 50%);
+            animation: rotateBg 60s linear infinite;
+        }
+
+        @keyframes rotateBg { to { transform: rotate(360deg); } }
+
+        .cover-content { position: relative; z-index: 2; max-width: 700px; }
+
+        .cover-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(201,162,39,0.15);
+            border: 2px solid rgba(201,162,39,0.3);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        .cover-icon svg { width: 50px; height: 50px; color: var(--accent-light); }
+
+        @keyframes pulseGlow {
+            0%,100% { box-shadow: 0 0 30px rgba(201,162,39,0.2); }
+            50% { box-shadow: 0 0 60px rgba(201,162,39,0.5); }
+        }
+
+        .cover-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(201,162,39,0.2);
+            border: 1px solid rgba(201,162,39,0.4);
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            margin-bottom: 30px;
+        }
+
+        .cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
+
+        .cover h1 span {
+            display: block;
+            color: var(--accent-light);
+        }
+
+        .cover-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 40px;
+        }
+
+        .cover-divider {
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+            margin: 0 auto 30px;
+            border-radius: 2px;
+        }
+
+        .cover-author {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .cover-author strong { color: var(--accent-light); }
+
+        .cover-tags {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .cover-tag {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .cover-tag.character { border-color: rgba(217,119,6,0.4); color: #f6ad55; }
+        .cover-tag.prayer { border-color: rgba(49,130,206,0.4); color: #63b3ed; }
+        .cover-tag.sanctify { border-color: rgba(5,150,105,0.4); color: #34d399; }
+
+        .cover-scroll {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.4);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: bounce 2s infinite;
+            z-index: 2;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+        }
+
+        /* ══════════════════════════════════════
+           LAYOUT
+           ══════════════════════════════════════ */
+        .page-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar / Sumário */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-w);
+            height: 100vh;
+            background: var(--primary-dark);
+            color: #fff;
+            overflow-y: auto;
+            padding: 30px 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            padding: 0 25px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 25px;
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+        }
+
+        .sidebar-nav a.active {
+            background: rgba(201,162,39,0.1);
+            color: var(--accent-light);
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-nav a .ch-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .sidebar-nav a.active .ch-num {
+            background: var(--accent);
+            color: var(--primary-dark);
+        }
+
+        /* Main content */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            max-width: 840px;
+            padding: 0 60px 100px;
+            margin-right: auto;
+        }
+
+        /* ══════════════════════════════════════
+           CAPÍTULOS
+           ══════════════════════════════════════ */
+        .chapter {
+            padding-top: 70px;
+            margin-bottom: 60px;
+        }
+
+        .chapter-header {
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .chapter-num {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-dark);
+            margin-bottom: 8px;
+        }
+
+        .chapter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 800;
+            color: var(--primary-dark);
+            line-height: 1.25;
+        }
+
+        /* Introdução especial */
+        .intro-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--purple);
+            margin-bottom: 8px;
+        }
+
+        /* Parágrafos */
+        .chapter p {
+            margin-bottom: 1.2em;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .chapter p.lead {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.9;
+        }
+
+        /* Seções dentro do capítulo */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 45px 0 18px;
+            padding-left: 18px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .subsection-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary-light);
+            margin: 30px 0 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ══════════════════════════════════════
+           COMPONENTES VISUAIS
+           ══════════════════════════════════════ */
+
+        /* Card de destaque / Versículo */
+        .verse-card {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: #fff;
+            padding: 30px 35px;
+            border-radius: 14px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verse-card::before {
+            content: '\201C';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            font-size: 8rem;
+            font-family: 'Playfair Display', serif;
+            color: rgba(201,162,39,0.15);
+            line-height: 1;
+        }
+
+        .verse-card p {
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 12px !important;
+            text-align: left !important;
+        }
+
+        .verse-card .ref {
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-light);
+        }
+
+        .verse-card.purple-card { background: linear-gradient(135deg, #2d1b4e 0%, #6d28d9 100%); }
+        .verse-card.teal-card { background: linear-gradient(135deg, #064e3b 0%, #0d9488 100%); }
+        .verse-card.blue-card { background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%); }
+
+        /* Info box */
+        .info-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--info);
+            border-radius: 10px;
+            padding: 22px 28px;
+            margin: 28px 0;
+        }
+
+        .info-box.accent { border-left-color: var(--accent); }
+        .info-box.success { border-left-color: var(--success); }
+        .info-box.warning { border-left-color: var(--warning); }
+        .info-box.danger { border-left-color: var(--danger); }
+        .info-box.purple { border-left-color: var(--purple); }
+        .info-box.teal { border-left-color: var(--teal); }
+
+        .info-box-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box.accent .info-box-title { color: var(--accent-dark); }
+        .info-box.success .info-box-title { color: var(--success); }
+        .info-box.warning .info-box-title { color: var(--warning); }
+        .info-box.danger .info-box-title { color: var(--danger); }
+        .info-box.purple .info-box-title { color: var(--purple); }
+        .info-box.teal .info-box-title { color: var(--teal); }
+        .info-box .info-box-title { color: var(--info); }
+
+        .info-box p, .info-box ul { font-size: 0.92rem; }
+
+        /* Definição / Etimologia */
+        .definition {
+            background: linear-gradient(135deg, #fefce8 0%, #fff7ed 100%);
+            border: 1px solid #fde68a;
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin: 28px 0;
+        }
+
+        .definition-word {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+
+        .definition-origin {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .definition p { font-size: 0.95rem; }
+
+        /* Tabela estilizada */
+        .styled-table-wrap {
+            overflow-x: auto;
+            margin: 28px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .styled-table thead th {
+            background: var(--primary);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 14px 18px;
+            text-align: left;
+        }
+
+        .styled-table thead th.good { background: var(--success); }
+        .styled-table thead th.bad { background: var(--danger); }
+
+        .styled-table tbody td {
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .styled-table tbody tr:nth-child(even) { background: #faf9f6; }
+        .styled-table tbody tr:hover { background: #f5f0e8; }
+
+        /* Grid de cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin: 28px 0;
+        }
+
+        .mini-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .mini-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .mini-card-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .mini-card-icon.blue { background: var(--info); }
+        .mini-card-icon.gold { background: var(--accent); }
+        .mini-card-icon.green { background: var(--success); }
+        .mini-card-icon.purple { background: var(--purple); }
+        .mini-card-icon.teal { background: var(--teal); }
+        .mini-card-icon.red { background: var(--danger); }
+        .mini-card-icon.orange { background: var(--warning); }
+
+        .mini-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+        }
+
+        .mini-card p {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 0 !important;
+        }
+
+        /* Número em destaque */
+        .stat-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 28px 0;
+        }
+
+        .stat {
+            flex: 1;
+            min-width: 140px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* Lista estilizada */
+        .styled-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .styled-list li {
+            padding: 8px 0 8px 30px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .styled-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 16px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .styled-list.numbered { counter-reset: item; }
+        .styled-list.numbered li::before {
+            content: counter(item);
+            counter-increment: item;
+            width: 22px;
+            height: 22px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 10px;
+        }
+
+        /* Destaque inline */
+        .highlight {
+            background: linear-gradient(to bottom, transparent 60%, rgba(201,162,39,0.25) 60%);
+            font-weight: 600;
+        }
+
+        strong { color: var(--primary-dark); }
+
+        /* Back to top */
+        .back-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .back-top.visible { opacity: 1; transform: translateY(0); }
+        .back-top:hover { background: var(--accent); }
+
+        /* Toggle sidebar button (mobile) */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            z-index: 200;
+            transition: width 0.15s;
+        }
+
+        /* Fruit grid */
+        .fruit-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 28px 0;
+        }
+
+        .fruit-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--success);
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .fruit-item h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+
+        .fruit-item p {
+            font-size: 0.78rem;
+            color: var(--text-light);
+            margin-bottom: 0 !important;
+        }
+
+        .fruit-item.bad { border-top-color: var(--danger); }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE
+           ══════════════════════════════════════ */
+        @media (max-width: 1100px) {
+            .main-content { padding: 0 40px 80px; }
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open { transform: translateX(0); }
+
+            .sidebar-toggle { display: flex; }
+
+            .main-content {
+                margin-left: 0;
+                padding: 0 24px 80px;
+            }
+
+            .chapter { padding-top: 50px; }
+            .card-grid { grid-template-columns: 1fr; }
+            .fruit-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            html { font-size: 15px; }
+            .cover { padding: 40px 20px; }
+            .verse-card { padding: 22px; }
+            .stat-row { flex-direction: column; }
+            .fruit-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Print */
+        @media print {
+            .sidebar, .back-top, .sidebar-toggle, .progress-bar, .cover-scroll { display: none !important; }
+            .main-content { margin-left: 0; max-width: 100%; }
+            .chapter { page-break-before: always; }
+            .chapter:first-child { page-break-before: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Barra de progresso -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ═══════════════════════════════════════
+     CAPA
+     ═══════════════════════════════════════ -->
+<section class="cover" id="capa">
+    <div class="cover-content">
+        <div class="cover-icon"><i data-lucide="mic" style="width: 50px; height: 50px;"></i></div>
+        <div class="cover-badge">
+            <i data-lucide="book-open" style="width: 16px; height: 16px;"></i>
+            Curso de Pregadores • Aula 2
+        </div>
+        <h1>Antes do Púlpito <span>Caráter, Oração e Santificação</span></h1>
+        <p class="cover-subtitle">Antes de falar aos homens, é preciso andar com Deus</p>
+        <div class="cover-divider"></div>
+        <p class="cover-author">Ministrado por <strong>Pb. Alison Pereira</strong></p>
+        <div class="cover-tags">
+            <span class="cover-tag character">Caráter</span>
+            <span class="cover-tag prayer">Oração</span>
+            <span class="cover-tag sanctify">Santificação</span>
+        </div>
+    </div>
+    <div class="cover-scroll">
+        Role para baixo
+        <i data-lucide="chevrons-down" style="width: 20px; height: 20px;"></i>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     SIDEBAR / SUMÁRIO
+     ═══════════════════════════════════════ -->
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Abrir menu">
+    <i data-lucide="menu" style="width: 22px; height: 22px;"></i>
+</button>
+
+<div class="page-wrapper">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-title">Sumário</div>
+        <nav class="sidebar-nav" id="sidebarNav">
+            <a href="#intro"><span class="ch-num">•</span> Introdução</a>
+            <a href="#cap1"><span class="ch-num">1</span> O Púlpito</a>
+            <a href="#cap2"><span class="ch-num">2</span> Caráter</a>
+            <a href="#cap3"><span class="ch-num">3</span> Bom x Mau Caráter</a>
+            <a href="#cap4"><span class="ch-num">4</span> Fruto do Espírito</a>
+            <a href="#cap5"><span class="ch-num">5</span> Obras da Carne</a>
+            <a href="#cap6"><span class="ch-num">6</span> O Pregador e a Oração</a>
+            <a href="#cap7"><span class="ch-num">7</span> Oração e a Mensagem</a>
+            <a href="#cap8"><span class="ch-num">8</span> O Pregador e a Santificação</a>
+            <a href="#cap9"><span class="ch-num">9</span> Santificação e o Púlpito</a>
+        </nav>
+    </aside>
+
+    <!-- ═══════════════════════════════════════
+         CONTEÚDO PRINCIPAL
+         ═══════════════════════════════════════ -->
+    <main class="main-content">
+
+        <!-- INTRODUÇÃO -->
+        <section class="chapter" id="intro">
+            <div class="chapter-header">
+                <div class="intro-label">Introdução</div>
+                <h2 class="chapter-title">Antes do Púlpito</h2>
+            </div>
+
+            <p class="lead">O púlpito, para o cristão, representa muito mais do que um lugar físico dentro da igreja. Ele simboliza autoridade espiritual, responsabilidade diante de Deus e serviço ao povo.</p>
+
+            <p>A Bíblia nos mostra que o ato de proclamar a Palavra exige reverência e santidade, pois não é apenas falar, mas ser <span class="highlight">porta-voz do Senhor</span>.</p>
+
+            <p>Subir ao púlpito exige caráter, vida de oração e santificação, pois dele deve fluir a Palavra que liberta e transforma. Nesta segunda aula do Curso de Pregadores, estudaremos os três pilares que sustentam o pregador <strong>antes</strong> de ele subir ao púlpito.</p>
+
+            <div class="info-box accent">
+                <div class="info-box-title"><i data-lucide="sparkles" style="width: 16px; height: 16px;"></i> Propósito desta aula</div>
+                <p>Entender que a vida do pregador é mais importante do que sua técnica. Antes de falar aos homens, o pregador precisa ter caráter moldado por Deus, vida de oração constante e busca contínua pela santificação.</p>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 1 — O PÚLPITO -->
+        <section class="chapter" id="cap1">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 1</div>
+                <h2 class="chapter-title">O que o púlpito representa</h2>
+            </div>
+
+            <p class="lead">O púlpito representa missão, santidade e responsabilidade. Não é apenas um local elevado dentro do templo, mas um símbolo de que o pregador está diante de Deus e do povo, como mensageiro da verdade.</p>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon purple"><i data-lucide="megaphone" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Proclamação da Palavra</h4>
+                    <p>O púlpito é o espaço onde a Palavra de Deus é anunciada com autoridade. Representa o compromisso de ensinar a verdade sem distorções.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon orange"><i data-lucide="shield-check" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Responsabilidade Espiritual</h4>
+                    <p>Quem sobe ao púlpito assume responsabilidade diante de Deus e da igreja. O púlpito não é palco de vaidade, mas altar de entrega e serviço.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon teal"><i data-lucide="sparkles" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Santidade e Reverência</h4>
+                    <p>O púlpito simboliza separação e consagração. O ministro deve estar purificado, pois o púlpito é lugar de manifestação da glória de Deus.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon blue"><i data-lucide="users" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Edificação da Igreja</h4>
+                    <p>Instrumento para fortalecer e edificar o corpo de Cristo. A mensagem que sai do púlpito deve gerar transformação e crescimento espiritual.</p>
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <p>"Pregues a palavra, instes a tempo e fora de tempo, redarguas, repreendas, exortes com toda longanimidade e doutrina."</p>
+                <span class="ref">— 2 Timóteo 4:2</span>
+            </div>
+
+            <div class="verse-card purple-card">
+                <p>"Santifica-os na verdade; a tua palavra é a verdade."</p>
+                <span class="ref">— João 17:17</span>
+            </div>
+
+            <div class="info-box warning">
+                <div class="info-box-title"><i data-lucide="alert-triangle" style="width: 16px; height: 16px;"></i> Atenção</div>
+                <p>"Se alguém fala, fale segundo as palavras de Deus" (1 Pedro 4:11). O púlpito não é palco de vaidade, mas <strong>altar de entrega e serviço</strong>.</p>
+            </div>
+
+            <div class="verse-card">
+                <p>"Querendo o aperfeiçoamento dos santos, para a obra do ministério, para edificação do corpo de Cristo; até que todos cheguemos à unidade da fé, e ao conhecimento do Filho de Deus, a homem perfeito, à medida da estatura completa de Cristo, para que não sejamos mais meninos inconstantes, levados em roda por todo o vento de doutrina, pelo engano dos homens que com astúcia enganam fraudulosamente."</p>
+                <span class="ref">— Efésios 4:12-14</span>
+            </div>
+
+            <div class="verse-card teal-card">
+                <p>"Toda a Escritura é divinamente inspirada, e proveitosa para ensinar, para repreender, para corrigir, para instruir em justiça."</p>
+                <span class="ref">— 2 Timóteo 3:16</span>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 2 — CARÁTER -->
+        <section class="chapter" id="cap2">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 2</div>
+                <h2 class="chapter-title">Caráter</h2>
+            </div>
+
+            <div class="definition">
+                <div class="definition-word">Caráter</div>
+                <div class="definition-origin">O alicerce invisível do pregador</div>
+                <p>O caráter pode ser definido como o conjunto de traços psicológicos, morais e comportamentais que distinguem uma pessoa e orientam a forma como ela age e reage diante das situações da vida. Em outras palavras, é aquilo que molda a <strong>identidade ética e emocional</strong> de alguém.</p>
+            </div>
+
+            <h3 class="section-title">Principais aspectos do caráter</h3>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon orange"><i data-lucide="scale" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Moralidade</h4>
+                    <p>Valores e princípios que guiam o que a pessoa considera certo ou errado.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon purple"><i data-lucide="brain" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Personalidade</h4>
+                    <p>Traços estáveis que influenciam o modo de pensar, sentir e agir.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon blue"><i data-lucide="footprints" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Conduta</h4>
+                    <p>Comportamento prático no dia a dia, que revela coerência (ou não) entre valores e ações.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon teal"><i data-lucide="mountain" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Resiliência e Firmeza</h4>
+                    <p>Capacidade de manter integridade mesmo diante de dificuldades ou pressões externas.</p>
+                </div>
+            </div>
+
+            <div class="info-box teal">
+                <div class="info-box-title"><i data-lucide="lightbulb" style="width: 16px; height: 16px;"></i> Exemplo prático</div>
+                <p>Alguém com caráter honesto tende a agir com transparência, <strong>mesmo quando poderia se beneficiar de uma mentira</strong>.</p>
+            </div>
+
+            <h3 class="section-title">Todo ser humano possui caráter</h3>
+
+            <p>Dizer que alguém "não tem caráter" é mais uma forma de julgamento moral do que uma realidade literal. Todo ser humano possui caráter — no sentido de ter traços psicológicos e comportamentais que o definem.</p>
+
+            <p>O que acontece é que, quando se afirma que alguém "não tem caráter", geralmente se quer dizer que essa pessoa demonstra <strong>falta de valores éticos</strong>, como honestidade, respeito ou responsabilidade.</p>
+
+            <div class="info-box purple">
+                <div class="info-box-title"><i data-lucide="bookmark" style="width: 16px; height: 16px;"></i> Pontos importantes</div>
+                <p>
+                    • <strong>Caráter existe em todos:</strong> é inevitável, pois todos têm uma maneira de agir e reagir.<br>
+                    • <strong>O julgamento "sem caráter":</strong> significa que a pessoa age de forma considerada negativa ou imoral pela sociedade.<br>
+                    • <strong>Diferença importante:</strong> não é ausência de caráter, mas sim um caráter visto como corrupto, fraco ou desonesto.<br>
+                    • <strong>Caráter é dinâmico:</strong> pode ser moldado por experiências, educação e escolhas ao longo da vida.
+                </p>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 3 — BOM X MAU CARÁTER -->
+        <section class="chapter" id="cap3">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 3</div>
+                <h2 class="chapter-title">Bom caráter vs. Mau caráter</h2>
+            </div>
+
+            <p class="lead">Ninguém literalmente "não tem caráter"; o que existe são diferentes formas de caráter, que podem ser julgadas como bons ou maus conforme valores éticos e culturais.</p>
+
+            <p>Em filosofia e nas tradições sociais, o "bom caráter" está associado à integridade e virtude, enquanto o "mau caráter" é ligado à desonestidade e à falta de princípios.</p>
+
+            <h3 class="section-title">Perspectivas filosóficas</h3>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon blue"><i data-lucide="landmark" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Aristóteles</h4>
+                    <p>Via o caráter como resultado da prática de virtudes. O "bom caráter" é formado pela repetição de ações justas e equilibradas, levando à <em>areté</em> (excelência moral).</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon purple"><i data-lucide="book-open" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Kant</h4>
+                    <p>Defendia que o caráter bom é agir por dever, seguindo princípios universais da razão, e não apenas por conveniência.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon orange"><i data-lucide="zap" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Nietzsche</h4>
+                    <p>Questionava a moral tradicional, sugerindo que o caráter não é "bom" ou "mau" em termos absolutos, mas sim fruto de forças criativas ou decadentes.</p>
+                </div>
+            </div>
+
+            <h3 class="section-title">Tabela comparativa</h3>
+
+            <div class="styled-table-wrap">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th class="good">Bom Caráter</th>
+                            <th class="bad">Mau Caráter</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Valores</strong></td>
+                            <td>Honestidade, justiça, respeito</td>
+                            <td>Egoísmo, desonestidade, manipulação</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Conduta</strong></td>
+                            <td>Coerência entre discurso e ação</td>
+                            <td>Hipocrisia, incoerência</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Impacto social</strong></td>
+                            <td>Inspira confiança, fortalece vínculos</td>
+                            <td>Gera desconfiança, rompe relações</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Exemplo prático</strong></td>
+                            <td>Cumprir promessas mesmo sem vantagem</td>
+                            <td>Quebrar acordos por interesse próprio</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">Diferenças culturais</h3>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon green"><i data-lucide="globe" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Sociedades ocidentais modernas</h4>
+                    <p>Associam bom caráter a honestidade, responsabilidade e respeito às regras sociais.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon gold"><i data-lucide="yin-yang" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Culturas orientais (Confucionismo)</h4>
+                    <p>Valorizam o caráter ligado à harmonia social, respeito à hierarquia e cumprimento dos deveres familiares.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon green"><i data-lucide="trees" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Tradições indígenas brasileiras</h4>
+                    <p>O caráter é visto em função da coletividade; ser de bom caráter significa contribuir para o bem-estar da comunidade.</p>
+                </div>
+            </div>
+
+            <div class="info-box teal">
+                <div class="info-box-title"><i data-lucide="key" style="width: 16px; height: 16px;"></i> Pontos importantes</div>
+                <p>
+                    • <strong>Não existe ausência de caráter:</strong> todos têm traços que definem sua essência.<br>
+                    • <strong>O julgamento "sem caráter"</strong> é uma forma de reprovação social, não uma condição real.<br>
+                    • <strong>Caráter é dinâmico:</strong> pode ser moldado por experiências, educação e escolhas ao longo da vida.
+                </p>
+            </div>
+
+            <p>Em resumo: o <span class="highlight">"bom caráter"</span> é reconhecido quando há integridade e respeito aos valores coletivos, enquanto o "mau caráter" é marcado pela falta de ética e pela busca de vantagem própria.</p>
+        </section>
+
+        <!-- CAPÍTULO 4 — FRUTO DO ESPÍRITO -->
+        <section class="chapter" id="cap4">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 4</div>
+                <h2 class="chapter-title">O fruto do Espírito ligado ao bom caráter</h2>
+            </div>
+
+            <p class="lead">O bom caráter está intimamente ligado ao que a Bíblia chama de fruto do Espírito. Em Gálatas 5:22-23, o apóstolo Paulo descreve esse fruto como: amor, alegria, paz, paciência, benignidade, bondade, fidelidade, mansidão e domínio próprio.</p>
+
+            <p>Essas virtudes são sinais de uma vida guiada pelo Espírito Santo e refletem diretamente o que chamamos de <span class="highlight">bom caráter cristão</span>.</p>
+
+            <div class="verse-card teal-card">
+                <p>"Mas o fruto do Espírito é: amor, alegria, paz, longanimidade, benignidade, bondade, fidelidade, mansidão, domínio próprio. Contra estas coisas não há lei."</p>
+                <span class="ref">— Gálatas 5:22-23</span>
+            </div>
+
+            <div class="fruit-grid">
+                <div class="fruit-item">
+                    <h4>❤️ Amor</h4>
+                    <p>Base de todas as virtudes</p>
+                </div>
+                <div class="fruit-item">
+                    <h4>😊 Alegria</h4>
+                    <p>Contentamento interior</p>
+                </div>
+                <div class="fruit-item">
+                    <h4>🕊️ Paz</h4>
+                    <p>Tranquilidade da alma</p>
+                </div>
+                <div class="fruit-item">
+                    <h4>⏳ Paciência</h4>
+                    <p>Longanimidade</p>
+                </div>
+                <div class="fruit-item">
+                    <h4>🤝 Benignidade</h4>
+                    <p>Bondade ativa</p>
+                </div>
+                <div class="fruit-item">
+                    <h4>✨ Bondade</h4>
+                    <p>Generosidade do ser</p>
+                </div>
+                <div class="fruit-item">
+                    <h4>💎 Fidelidade</h4>
+                    <p>Compromisso firme</p>
+                </div>
+                <div class="fruit-item">
+                    <h4>🙏 Mansidão</h4>
+                    <p>Humildade em ação</p>
+                </div>
+                <div class="fruit-item">
+                    <h4>🎯 Domínio Próprio</h4>
+                    <p>Controle das paixões</p>
+                </div>
+            </div>
+
+            <h3 class="section-title">Relação entre caráter e fruto do Espírito</h3>
+
+            <ul class="styled-list">
+                <li><strong>Caráter moldado pelo Espírito:</strong> o fruto não é apenas comportamento externo, mas transformação interior que gera integridade e coerência.</li>
+                <li><strong>Bom caráter como evidência:</strong> quando alguém vive em amor, bondade e domínio próprio, demonstra que seu caráter foi trabalhado pelo Espírito.</li>
+                <li><strong>Mau caráter como contraste:</strong> Paulo também fala das "obras da carne" (como inveja, ira, egoísmo), que são sinais de um caráter não moldado pelo Espírito.</li>
+            </ul>
+
+            <div class="info-box success">
+                <div class="info-box-title"><i data-lucide="check-circle" style="width: 16px; height: 16px;"></i> Conclusão</div>
+                <p>O bom caráter cristão é resultado da ação do Espírito Santo, e o <strong>fruto do Espírito é a expressão prática</strong> desse caráter na vida diária.</p>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 5 — OBRAS DA CARNE -->
+        <section class="chapter" id="cap5">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 5</div>
+                <h2 class="chapter-title">As obras da carne ligadas ao mau caráter</h2>
+            </div>
+
+            <p class="lead">O mau caráter tem relação direta com aquilo que a Bíblia chama de obras da carne.</p>
+
+            <div class="verse-card">
+                <p>"Porque as obras da carne são manifestas, as quais são: imoralidade sexual, impureza, idolatria, inimizades, ciúmes, ira, egoísmo, inveja, embriaguez, orgias e coisas semelhantes."</p>
+                <span class="ref">— Gálatas 5:19-21</span>
+            </div>
+
+            <p>Esses comportamentos refletem um caráter corrompido, voltado para os desejos egoístas e afastado dos princípios espirituais.</p>
+
+            <div class="fruit-grid">
+                <div class="fruit-item bad">
+                    <h4>Imoralidade</h4>
+                    <p>Impureza sexual</p>
+                </div>
+                <div class="fruit-item bad">
+                    <h4>Idolatria</h4>
+                    <p>Adoração a ídolos</p>
+                </div>
+                <div class="fruit-item bad">
+                    <h4>Inimizades</h4>
+                    <p>Conflitos e discórdias</p>
+                </div>
+                <div class="fruit-item bad">
+                    <h4>Ciúmes</h4>
+                    <p>Inveja do próximo</p>
+                </div>
+                <div class="fruit-item bad">
+                    <h4>Ira</h4>
+                    <p>Explosões de raiva</p>
+                </div>
+                <div class="fruit-item bad">
+                    <h4>Egoísmo</h4>
+                    <p>Interesse próprio acima de tudo</p>
+                </div>
+            </div>
+
+            <h3 class="section-title">Fruto do Espírito vs. Obras da Carne</h3>
+
+            <div class="styled-table-wrap">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th class="good">Fruto do Espírito</th>
+                            <th class="bad">Obras da Carne</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Amor, bondade, domínio próprio</td>
+                            <td>Egoísmo, inveja, ira</td>
+                        </tr>
+                        <tr>
+                            <td>Vida guiada pelo Espírito</td>
+                            <td>Vida guiada por impulsos</td>
+                        </tr>
+                        <tr>
+                            <td>Transformação interior</td>
+                            <td>Caráter corrompido</td>
+                        </tr>
+                        <tr>
+                            <td><strong>= BOM CARÁTER</strong></td>
+                            <td><strong>= MAU CARÁTER</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">Como se conecta</h3>
+
+            <ul class="styled-list">
+                <li><strong>Mau caráter:</strong> é marcado por atitudes como mentira, traição, desonestidade e falta de empatia.</li>
+                <li><strong>Obras da carne:</strong> são expressões desses mesmos traços, mostrando uma vida guiada por impulsos e não pelo Espírito.</li>
+                <li><strong>Contraste:</strong> enquanto o fruto do Espírito molda o bom caráter (amor, bondade, domínio próprio), as obras da carne revelam o mau caráter (egoísmo, inveja, ira).</li>
+            </ul>
+
+            <div class="info-box danger">
+                <div class="info-box-title"><i data-lucide="alert-circle" style="width: 16px; height: 16px;"></i> Em resumo</div>
+                <p>O mau caráter é a manifestação prática das obras da carne, assim como o bom caráter é a manifestação prática do fruto do Espírito. O pregador deve ser <strong>moldado pelo Espírito</strong>, não pela carne.</p>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 6 — O PREGADOR E A ORAÇÃO -->
+        <section class="chapter" id="cap6">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 6</div>
+                <h2 class="chapter-title">O Pregador e a Oração</h2>
+            </div>
+
+            <p class="lead">A oração é a respiração da vida espiritual do pregador. Antes de falar aos homens, o pregador precisa falar com Deus.</p>
+
+            <div class="verse-card blue-card">
+                <p>"Orai sem cessar."</p>
+                <span class="ref">— 1 Tessalonicenses 5:17</span>
+            </div>
+
+            <h3 class="section-title">A necessidade da oração no ministério</h3>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon blue"><i data-lucide="anchor" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Dependência de Deus</h4>
+                    <p>O pregador não confia em sua eloquência, mas no poder do Espírito Santo. "Não por força nem por poder, mas pelo meu Espírito" (Zacarias 4:6).</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon purple"><i data-lucide="heart" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Preparação espiritual</h4>
+                    <p>A oração prepara o coração para receber e transmitir a Palavra.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon red"><i data-lucide="shield" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Proteção espiritual</h4>
+                    <p>O púlpito é campo de batalha; a oração é arma contra ataques do inimigo. "Revesti-vos de toda a armadura de Deus" (Efésios 6:11).</p>
+                </div>
+            </div>
+
+            <div class="verse-card">
+                <p>"Orando em todo tempo com toda oração e súplica no Espírito e vigiando nisso com toda perseverança e súplica por todos os santos e por mim; para que me seja dada, no abrir da minha boca, a palavra com confiança, para fazer notório o mistério do evangelho."</p>
+                <span class="ref">— Efésios 6:18-20</span>
+            </div>
+
+            <h3 class="section-title">Exemplos bíblicos de pregadores que oravam</h3>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon gold"><i data-lucide="crown" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Jesus Cristo</h4>
+                    <p>Orava antes de grandes decisões e antes de ministrar. "De madrugada, ainda escuro, levantou-se e saiu, e foi a um lugar deserto, e ali orava" (Marcos 1:35).</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon blue"><i data-lucide="church" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Os Apóstolos</h4>
+                    <p>A igreja primitiva perseverava na oração. "Perseveravam na doutrina dos apóstolos, e na comunhão, e no partir do pão, e nas orações" (Atos 2:42).</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon purple"><i data-lucide="pen-tool" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Paulo</h4>
+                    <p>Intercedia constantemente pelas igrejas. "Não cessamos de orar por vós" (Colossenses 1:9).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 7 — ORAÇÃO E A MENSAGEM -->
+        <section class="chapter" id="cap7">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 7</div>
+                <h2 class="chapter-title">Oração, a mensagem e a vida do pregador</h2>
+            </div>
+
+            <h3 class="section-title">Oração e a preparação da mensagem</h3>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon blue"><i data-lucide="eye" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Discernimento</h4>
+                    <p>A oração ajuda o pregador a entender o que Deus quer falar ao povo.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon red"><i data-lucide="zap" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Unção</h4>
+                    <p>A mensagem sem oração é apenas discurso; com oração, torna-se palavra viva.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon gold"><i data-lucide="sun" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Clareza</h4>
+                    <p>O Espírito Santo ilumina a mente e dá sabedoria. "Se algum de vós tem falta de sabedoria, peça-a a Deus" (Tiago 1:5).</p>
+                </div>
+            </div>
+
+            <h3 class="section-title">Oração e a vida do pregador</h3>
+
+            <ul class="styled-list">
+                <li><strong>Santificação:</strong> a oração mantém o pregador separado do pecado.</li>
+                <li><strong>Humildade:</strong> reconhece que o poder vem de Deus, não de si mesmo.</li>
+                <li><strong>Intimidade com Deus:</strong> o púlpito é consequência da vida secreta de oração.</li>
+            </ul>
+
+            <div class="verse-card blue-card">
+                <p>"Mas tu, quando orares, entra no teu aposento, e fechando a tua porta, ora a teu Pai."</p>
+                <span class="ref">— Mateus 6:6</span>
+            </div>
+
+            <h3 class="section-title">Aplicações práticas</h3>
+
+            <ul class="styled-list numbered">
+                <li>Estabelecer <strong>rotina diária</strong> de oração.</li>
+                <li>Orar <strong>antes de preparar</strong> o sermão e antes de subir ao púlpito.</li>
+                <li><strong>Interceder</strong> pela igreja e pelas necessidades do povo.</li>
+                <li>Buscar momentos de <strong>oração silenciosa</strong> e profunda.</li>
+            </ul>
+
+            <div class="info-box accent">
+                <div class="info-box-title"><i data-lucide="sparkles" style="width: 16px; height: 16px;"></i> Conclusão</div>
+                <p>
+                    • O pregador que ora é instrumento eficaz nas mãos de Deus.<br>
+                    • O púlpito não é lugar de performance, mas de entrega.<br>
+                    • A oração é o <strong>segredo da autoridade espiritual</strong>.
+                </p>
+            </div>
+
+            <div class="verse-card">
+                <p>"Sem mim nada podeis fazer."</p>
+                <span class="ref">— João 15:5</span>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 8 — O PREGADOR E A SANTIFICAÇÃO -->
+        <section class="chapter" id="cap8">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 8</div>
+                <h2 class="chapter-title">O Pregador e a Santificação</h2>
+            </div>
+
+            <p class="lead">Santificação é o processo contínuo de separação do pecado e consagração a Deus. O pregador não é apenas transmissor de conhecimento, mas testemunha viva da Palavra.</p>
+
+            <div class="verse-card teal-card">
+                <p>"Segui a paz com todos, e a santificação, sem a qual ninguém verá o Senhor."</p>
+                <span class="ref">— Hebreus 12:14</span>
+            </div>
+
+            <h3 class="section-title">O significado da santificação</h3>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon teal"><i data-lucide="split" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Separação</h4>
+                    <p>Viver diferente do mundo, dedicado a Deus.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon purple"><i data-lucide="refresh-cw" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Transformação</h4>
+                    <p>Mudança de caráter e conduta pelo Espírito Santo.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon gold"><i data-lucide="gift" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Consagração</h4>
+                    <p>Vida entregue ao serviço do Senhor.</p>
+                </div>
+            </div>
+
+            <div class="verse-card purple-card">
+                <p>"Santifica-os na verdade; a tua palavra é a verdade."</p>
+                <span class="ref">— João 17:17</span>
+            </div>
+
+            <h3 class="section-title">A necessidade da santificação no ministério</h3>
+
+            <ul class="styled-list">
+                <li><strong>Autoridade espiritual:</strong> o pregador só fala com poder se vive em santidade.</li>
+                <li><strong>Credibilidade:</strong> a vida santa dá peso às palavras.</li>
+                <li><strong>Exemplo ao rebanho:</strong> o pregador é modelo para a igreja.</li>
+            </ul>
+
+            <div class="verse-card">
+                <p>"Sede meus imitadores, como também eu sou de Cristo."</p>
+                <span class="ref">— 1 Coríntios 11:1</span>
+            </div>
+
+            <h3 class="section-title">Exemplos bíblicos</h3>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon red"><i data-lucide="flame" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Isaías</h4>
+                    <p>Purificado por Deus antes de ser enviado. "Eis que isto tocou os teus lábios; a tua iniquidade foi tirada" (Isaías 6:6-8).</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon purple"><i data-lucide="pen-tool" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Paulo</h4>
+                    <p>Exortava à santidade como estilo de vida. "Esta é a vontade de Deus, a vossa santificação" (1 Tessalonicenses 4:3-4).</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon gold"><i data-lucide="crown" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Jesus</h4>
+                    <p>Santo e separado, exemplo máximo de santificação. "Santo, inocente, imaculado, separado dos pecadores" (Hebreus 7:26).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 9 — SANTIFICAÇÃO E O PÚLPITO -->
+        <section class="chapter" id="cap9">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 9</div>
+                <h2 class="chapter-title">Santificação e o Púlpito</h2>
+            </div>
+
+            <p class="lead">O púlpito não é palco de vaidade, mas altar de entrega. O pregador deve subir ao púlpito com vida limpa diante de Deus.</p>
+
+            <div class="verse-card teal-card">
+                <p>"Se alguém se purificar destas coisas, será vaso para honra, santificado e útil para o Senhor."</p>
+                <span class="ref">— 2 Timóteo 2:21</span>
+            </div>
+
+            <h3 class="section-title">Aplicações práticas</h3>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon blue"><i data-lucide="book-open" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Vida Devocional</h4>
+                    <p>Leitura bíblica e oração constantes.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon red"><i data-lucide="x-circle" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Renúncia</h4>
+                    <p>Abandonar práticas que desagradam a Deus.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon teal"><i data-lucide="target" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Disciplina Espiritual</h4>
+                    <p>Jejum, meditação e vigilância.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon orange"><i data-lucide="eye" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Testemunho</h4>
+                    <p>Santidade visível no lar, no trabalho e na sociedade.</p>
+                </div>
+            </div>
+
+            <div class="info-box success">
+                <div class="info-box-title"><i data-lucide="check-circle" style="width: 16px; height: 16px;"></i> Conclusão Final</div>
+                <p>
+                    • O pregador deve ser <strong>exemplo de santidade</strong>, não apenas pregador de santidade.<br>
+                    • A santificação é <strong>processo contínuo</strong>, não evento isolado.<br>
+                    • O púlpito exige vida consagrada, pois a <strong>mensagem só tem autoridade quando respaldada pela santidade do mensageiro</strong>.
+                </p>
+            </div>
+
+            <div class="verse-card purple-card">
+                <p>"Sede santos, porque eu sou santo."</p>
+                <span class="ref">— 1 Pedro 1:16</span>
+            </div>
+
+            <div class="info-box accent" style="margin-top: 40px;">
+                <div class="info-box-title"><i data-lucide="mic" style="width: 16px; height: 16px;"></i> Resumo dos três pilares</div>
+                <p>
+                    <strong>1. Caráter:</strong> O alicerce invisível — seja moldado pelo fruto do Espírito.<br>
+                    <strong>2. Oração:</strong> A respiração espiritual — fale com Deus antes de falar aos homens.<br>
+                    <strong>3. Santificação:</strong> A vida consagrada — seja exemplo, não apenas pregador.
+                </p>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- Back to top -->
+<button class="back-top" id="backTop" aria-label="Voltar ao topo">
+    <i data-lucide="chevron-up" style="width: 22px; height: 22px;"></i>
+</button>
+
+<script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Sidebar toggle (mobile)
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    sidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+    // Close sidebar on link click (mobile)
+    document.querySelectorAll('.sidebar-nav a').forEach(a => {
+        a.addEventListener('click', () => {
+            if (window.innerWidth <= 900) sidebar.classList.remove('open');
+        });
+    });
+
+    // Active sidebar link on scroll
+    const chapters = document.querySelectorAll('.chapter');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+    function updateActiveLink() {
+        let current = '';
+        chapters.forEach(ch => {
+            const top = ch.offsetTop - 120;
+            if (window.scrollY >= top) current = ch.id;
+        });
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+        });
+    }
+
+    // Progress bar
+    const progressBar = document.getElementById('progressBar');
+    function updateProgress() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressBar.style.width = progress + '%';
+    }
+
+    // Back to top
+    const backTop = document.getElementById('backTop');
+    function updateBackTop() {
+        backTop.classList.toggle('visible', window.scrollY > 600);
+    }
+
+    backTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Scroll events
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                updateActiveLink();
+                updateProgress();
+                updateBackTop();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    updateActiveLink();
+</script>
+
+</body>
+</html>

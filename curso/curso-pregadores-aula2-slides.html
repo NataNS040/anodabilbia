@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Pregadores — Aula 2: Antes do Púlpito — Caráter, Oração e Santificação</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #d4b84a;
+            --bg-light: #f8fafc;
+            --bg-dark: #e2e8f0;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --text-muted: #718096;
+            --white: #ffffff;
+            --success: #38a169;
+            --info: #3182ce;
+            --warning: #e67e22;
+            --danger: #c0392b;
+            --flame: #e85d04;
+            --flame-light: #f48c06;
+            --flame-dark: #dc2f02;
+            --word: #7c3aed;
+            --word-light: #a78bfa;
+            --word-dark: #5b21b6;
+            --canon: #059669;
+            --canon-light: #34d399;
+            --canon-dark: #047857;
+            --bible: #b45309;
+            --bible-light: #d97706;
+            --bible-dark: #92400e;
+            --holy: #7c3aed;
+            --holy-light: #a78bfa;
+            --holy-dark: #5b21b6;
+            --prayer: #3182ce;
+            --prayer-light: #63b3ed;
+            --prayer-dark: #2c5282;
+            --character: #d97706;
+            --character-light: #f6ad55;
+            --character-dark: #b7791f;
+            --sanctify: #059669;
+            --sanctify-light: #34d399;
+            --sanctify-dark: #047857;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%; height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+        }
+
+        .presentation { width: 100%; height: 100%; position: relative; }
+
+        .slide {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 45px 70px;
+            background: var(--bg-light);
+        }
+
+        .slide.active { display: flex; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulseGlow { 0%,100% { box-shadow: 0 0 30px rgba(124,58,237,0.3); } 50% { box-shadow: 0 0 60px rgba(124,58,237,0.6); } }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes rotateBg { to { transform: rotate(360deg); } }
+        @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+
+        /* ══════ NAV ══════ */
+        .nav-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 18px;
+            background: rgba(255,255,255,0.95); padding: 12px 30px;
+            border-radius: 50px; box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+            z-index: 1000; backdrop-filter: blur(10px);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .nav-bar.visible { opacity: 1; pointer-events: auto; }
+        .nav-bar button {
+            width: 48px; height: 48px; border: none; border-radius: 50%;
+            background: var(--primary); color: white; cursor: pointer;
+            font-size: 1.2rem; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-bar button:hover { background: var(--primary-light); transform: scale(1.05); }
+        .nav-bar button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        .nav-bar .counter { padding: 0 22px; font-weight: 700; font-size: 1.05rem; color: var(--primary); display: flex; align-items: center; }
+
+        .fullscreen-btn {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--primary); color: white; border: none;
+            padding: 12px 20px; border-radius: 12px; cursor: pointer;
+            font-weight: 600; font-size: 0.95rem; z-index: 1000;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s;
+        }
+        .fullscreen-btn:hover { background: var(--primary-light); }
+
+        .shortcuts {
+            position: fixed; bottom: 25px; left: 25px;
+            background: rgba(0,0,0,0.75); color: white;
+            padding: 12px 20px; border-radius: 10px;
+            font-size: 0.8rem; z-index: 1000; opacity: 0.8;
+        }
+        .shortcuts kbd { background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 4px; margin: 0 2px; }
+
+        /* ══════ CAPA ══════ */
+        .slide-capa {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-capa::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(124,58,237,0.06), transparent, rgba(201,162,39,0.06), transparent);
+            animation: rotateBg 25s linear infinite;
+        }
+        .capa-content { position: relative; z-index: 1; max-width: 1000px; }
+        .capa-icon {
+            width: 110px; height: 110px;
+            background: rgba(124,58,237,0.15); border: 2px solid rgba(124,58,237,0.3);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+        .capa-icon svg { width: 55px; height: 55px; color: var(--accent-light); }
+        .capa-badge {
+            display: inline-block; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 30px; border-radius: 50px;
+            font-size: 0.9rem; margin-bottom: 20px;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .capa-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem; font-weight: 700;
+            margin-bottom: 20px; line-height: 1.15;
+        }
+        .capa-title span { color: var(--accent-light); }
+        .capa-subtitle {
+            font-size: 1.2rem; opacity: 0.85;
+            margin-bottom: 30px; font-weight: 300;
+            max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;
+        }
+        .capa-tags {
+            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+        }
+        .capa-tag {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 18px; border-radius: 50px; font-size: 0.85rem;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+        .capa-tag.character { border-color: rgba(217,119,6,0.4); color: var(--character-light); }
+        .capa-tag.prayer { border-color: rgba(49,130,206,0.4); color: var(--prayer-light); }
+        .capa-tag.sanctify { border-color: rgba(5,150,105,0.4); color: var(--sanctify-light); }
+        .capa-tag.flame-tag { border-color: rgba(232,93,4,0.4); color: var(--flame-light); }
+        .capa-date { margin-top: 25px; font-size: 1rem; opacity: 0.7; }
+
+        /* ══════ CONTENT SLIDES ══════ */
+        .slide-content { background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-dark) 100%); }
+
+        .slide-header { text-align: center; margin-bottom: 35px; }
+
+        .slide-icon {
+            width: 70px; height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 18px; margin: 0 auto 18px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(30,58,95,0.25);
+        }
+        .slide-icon svg { width: 35px; height: 35px; color: var(--accent); }
+        .slide-icon.word { background: linear-gradient(135deg, var(--word), var(--word-light)); }
+        .slide-icon.word svg { color: white; }
+        .slide-icon.bible { background: linear-gradient(135deg, var(--bible), var(--bible-light)); }
+        .slide-icon.bible svg { color: white; }
+        .slide-icon.flame { background: linear-gradient(135deg, var(--flame), var(--flame-light)); }
+        .slide-icon.flame svg { color: white; }
+        .slide-icon.canon { background: linear-gradient(135deg, var(--canon), var(--canon-light)); }
+        .slide-icon.canon svg { color: white; }
+        .slide-icon.green { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .slide-icon.green svg { color: white; }
+        .slide-icon.blue { background: linear-gradient(135deg, var(--info), #3498db); }
+        .slide-icon.blue svg { color: white; }
+        .slide-icon.gold { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+        .slide-icon.gold svg { color: var(--primary-dark); }
+        .slide-icon.danger { background: linear-gradient(135deg, var(--danger), #e74c3c); }
+        .slide-icon.danger svg { color: white; }
+        .slide-icon.character { background: linear-gradient(135deg, var(--character), var(--character-light)); }
+        .slide-icon.character svg { color: white; }
+        .slide-icon.prayer { background: linear-gradient(135deg, var(--prayer), var(--prayer-light)); }
+        .slide-icon.prayer svg { color: white; }
+        .slide-icon.sanctify { background: linear-gradient(135deg, var(--sanctify), var(--sanctify-light)); }
+        .slide-icon.sanctify svg { color: white; }
+
+        .slide-badge {
+            display: inline-block; padding: 7px 20px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 700; margin-bottom: 12px;
+            letter-spacing: 1px; text-transform: uppercase;
+            background: var(--accent); color: var(--primary-dark);
+        }
+        .slide-badge.word-badge { background: var(--word); color: white; }
+        .slide-badge.bible-badge { background: var(--bible); color: white; }
+        .slide-badge.flame-badge { background: var(--flame); color: white; }
+        .slide-badge.canon-badge { background: var(--canon); color: white; }
+        .slide-badge.block-badge { background: #64748b; color: white; }
+        .slide-badge.danger-badge { background: var(--danger); color: white; }
+        .slide-badge.character-badge { background: var(--character); color: white; }
+        .slide-badge.prayer-badge { background: var(--prayer); color: white; }
+        .slide-badge.sanctify-badge { background: var(--sanctify); color: white; }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem; color: var(--primary); line-height: 1.2;
+        }
+        .slide-subtitle { font-size: 1.05rem; color: var(--text-muted); margin-top: 8px; }
+
+        /* Cards */
+        .cards-grid {
+            display: grid; gap: 20px; width: 100%; max-width: 1200px;
+        }
+        .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); max-width: 950px; }
+        .cards-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .cards-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+        .cards-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+
+        .card {
+            background: white; border-radius: 14px; padding: 25px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.07); transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-4px); }
+
+        .card-icon {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 12px; margin-bottom: 15px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card-icon svg { width: 25px; height: 25px; color: var(--accent); }
+        .card-icon.word { background: linear-gradient(135deg, var(--word), var(--word-light)); }
+        .card-icon.word svg { color: white; }
+        .card-icon.bible { background: linear-gradient(135deg, var(--bible), var(--bible-light)); }
+        .card-icon.bible svg { color: white; }
+        .card-icon.flame { background: linear-gradient(135deg, var(--flame), var(--flame-light)); }
+        .card-icon.flame svg { color: white; }
+        .card-icon.canon { background: linear-gradient(135deg, var(--canon), var(--canon-light)); }
+        .card-icon.canon svg { color: white; }
+        .card-icon.green { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .card-icon.green svg { color: white; }
+        .card-icon.blue { background: linear-gradient(135deg, var(--info), #3498db); }
+        .card-icon.blue svg { color: white; }
+        .card-icon.danger { background: linear-gradient(135deg, var(--danger), #e74c3c); }
+        .card-icon.danger svg { color: white; }
+        .card-icon.gold { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+        .card-icon.gold svg { color: var(--primary-dark); }
+        .card-icon.character { background: linear-gradient(135deg, var(--character), var(--character-light)); }
+        .card-icon.character svg { color: white; }
+        .card-icon.prayer { background: linear-gradient(135deg, var(--prayer), var(--prayer-light)); }
+        .card-icon.prayer svg { color: white; }
+        .card-icon.sanctify { background: linear-gradient(135deg, var(--sanctify), var(--sanctify-light)); }
+        .card-icon.sanctify svg { color: white; }
+
+        .card h4 { font-size: 1.05rem; color: var(--primary); margin-bottom: 8px; }
+        .card p { font-size: 0.95rem; color: var(--text-light); line-height: 1.55; }
+
+        /* Verse highlight */
+        .verse-highlight {
+            background: linear-gradient(135deg, var(--word), var(--word-dark));
+            border-radius: 18px; padding: 35px 45px; color: white;
+            text-align: center; max-width: 900px; width: 100%;
+        }
+        .verse-highlight.bible-hl { background: linear-gradient(135deg, var(--bible), var(--bible-dark)); }
+        .verse-highlight.flame-hl { background: linear-gradient(135deg, var(--flame), var(--flame-dark)); }
+        .verse-highlight.primary-hl { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
+        .verse-highlight.canon-hl { background: linear-gradient(135deg, var(--canon), var(--canon-dark)); }
+        .verse-highlight.prayer-hl { background: linear-gradient(135deg, var(--prayer), var(--prayer-dark)); }
+        .verse-highlight.character-hl { background: linear-gradient(135deg, var(--character), var(--character-dark)); }
+        .verse-highlight.sanctify-hl { background: linear-gradient(135deg, var(--sanctify), var(--sanctify-dark)); }
+        .verse-highlight .verse-text {
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            line-height: 1.5; margin-bottom: 18px; font-style: italic;
+        }
+        .verse-highlight .verse-ref {
+            background: var(--accent); color: var(--primary-dark);
+            padding: 7px 22px; border-radius: 50px; font-weight: 700;
+            font-size: 0.95rem; display: inline-block;
+        }
+
+        /* Content box */
+        .content-box {
+            background: white; border-radius: 18px; padding: 35px;
+            box-shadow: 0 8px 35px rgba(0,0,0,0.07); max-width: 1100px; width: 100%;
+        }
+        .content-box h3 {
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            color: var(--primary); margin-bottom: 20px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .content-box h3 .icon {
+            width: 45px; height: 45px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--word), var(--word-light));
+        }
+        .content-box h3 .icon svg { width: 22px; height: 22px; color: white; }
+        .content-box p { font-size: 1.05rem; color: var(--text-dark); line-height: 1.65; margin-bottom: 12px; }
+
+        /* Question impact */
+        .question-impact {
+            background: linear-gradient(135deg, var(--word), var(--word-dark));
+            border-radius: 18px; padding: 45px; color: white;
+            text-align: center; max-width: 1000px; width: 100%;
+            box-shadow: 0 12px 45px rgba(124,58,237,0.3);
+        }
+        .question-impact.bible-q { background: linear-gradient(135deg, var(--bible), var(--bible-dark)); box-shadow: 0 12px 45px rgba(180,83,9,0.3); }
+        .question-impact.flame-q { background: linear-gradient(135deg, var(--flame), var(--flame-dark)); box-shadow: 0 12px 45px rgba(232,93,4,0.3); }
+        .question-impact.canon-q { background: linear-gradient(135deg, var(--canon), var(--canon-dark)); box-shadow: 0 12px 45px rgba(5,150,105,0.3); }
+        .question-impact.warm-q { background: linear-gradient(135deg, var(--warning), #f39c12); box-shadow: 0 12px 45px rgba(230,126,34,0.3); }
+        .question-impact.danger-q { background: linear-gradient(135deg, var(--danger), #e74c3c); box-shadow: 0 12px 45px rgba(192,57,43,0.3); }
+        .question-impact.prayer-q { background: linear-gradient(135deg, var(--prayer), var(--prayer-dark)); box-shadow: 0 12px 45px rgba(49,130,206,0.3); }
+        .question-impact.character-q { background: linear-gradient(135deg, var(--character), var(--character-dark)); box-shadow: 0 12px 45px rgba(217,119,6,0.3); }
+        .question-impact.sanctify-q { background: linear-gradient(135deg, var(--sanctify), var(--sanctify-dark)); box-shadow: 0 12px 45px rgba(5,150,105,0.3); }
+        .question-impact h3 {
+            font-size: 1rem; opacity: 0.9; margin-bottom: 18px;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .question-impact .question-text {
+            font-family: 'Playfair Display', serif; font-size: 2rem;
+            line-height: 1.4; font-weight: 600;
+        }
+
+        /* Check list */
+        .check-list {
+            list-style: none; max-width: 800px; width: 100%;
+        }
+        .check-list li {
+            display: flex; align-items: center; gap: 15px;
+            padding: 15px 20px; margin-bottom: 12px;
+            background: white; border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            font-size: 1.1rem; color: var(--text-dark);
+        }
+        .check-list li .check-icon {
+            width: 38px; height: 38px; border-radius: 50%;
+            background: rgba(124,58,237,0.15);
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .check-list li .check-icon svg { width: 20px; height: 20px; color: var(--word); }
+        .check-list li .check-icon.green { background: rgba(5,150,105,0.15); }
+        .check-list li .check-icon.green svg { color: var(--canon); }
+        .check-list li .check-icon.bible-c { background: rgba(180,83,9,0.15); }
+        .check-list li .check-icon.bible-c svg { color: var(--bible); }
+        .check-list li .check-icon.danger { background: rgba(192,57,43,0.15); }
+        .check-list li .check-icon.danger svg { color: var(--danger); }
+        .check-list li .check-icon.gold { background: rgba(201,162,39,0.15); }
+        .check-list li .check-icon.gold svg { color: var(--accent); }
+        .check-list li .check-icon.blue { background: rgba(49,130,206,0.15); }
+        .check-list li .check-icon.blue svg { color: var(--prayer); }
+        .check-list li .check-icon.character-c { background: rgba(217,119,6,0.15); }
+        .check-list li .check-icon.character-c svg { color: var(--character); }
+        .check-list li .check-icon.sanctify-c { background: rgba(5,150,105,0.15); }
+        .check-list li .check-icon.sanctify-c svg { color: var(--sanctify); }
+
+        /* Item list */
+        .item-list { list-style: none; width: 100%; max-width: 900px; }
+        .item-list li {
+            display: flex; align-items: flex-start; gap: 15px;
+            padding: 13px 0; border-bottom: 1px solid rgba(0,0,0,0.06);
+            font-size: 1.05rem; color: var(--text-dark);
+        }
+        .item-list li:last-child { border-bottom: none; }
+        .item-list .icon {
+            width: 42px; height: 42px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            background: rgba(124,58,237,0.1);
+        }
+        .item-list .icon svg { width: 20px; height: 20px; color: var(--word); }
+        .item-list .text strong { color: var(--primary); display: block; margin-bottom: 3px; }
+        .item-list .text small { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Impact box */
+        .impact-box {
+            background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+            border-radius: 20px; padding: 50px; color: white;
+            text-align: center; max-width: 950px; width: 100%;
+            position: relative; overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+        }
+        .impact-box::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(124,58,237,0.15) 0%, transparent 60%);
+        }
+        .impact-box .impact-text {
+            font-family: 'Playfair Display', serif; font-size: 2.2rem;
+            line-height: 1.5; position: relative; font-weight: 600;
+        }
+        .impact-box .impact-text span { color: var(--accent-light); }
+
+        /* Conclusion slide */
+        .slide-conclusion {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-conclusion::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(124,58,237,0.1) 0%, transparent 60%);
+        }
+        .conclusion-content { position: relative; z-index: 1; max-width: 900px; }
+        .conclusion-icon {
+            width: 100px; height: 100px;
+            background: rgba(124,58,237,0.2); border: 2px solid rgba(124,58,237,0.4);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: breathe 3s ease-in-out infinite;
+        }
+        .conclusion-icon svg { width: 50px; height: 50px; color: var(--accent-light); }
+        .conclusion-text {
+            font-family: 'Playfair Display', serif; font-size: 2rem;
+            line-height: 1.5; margin-bottom: 30px;
+        }
+        .conclusion-highlight {
+            background: linear-gradient(135deg, var(--word), var(--word-dark));
+            padding: 25px 45px; border-radius: 16px;
+            font-family: 'Playfair Display', serif; font-size: 1.8rem;
+            font-weight: 600; display: inline-block;
+            box-shadow: 0 15px 50px rgba(124,58,237,0.4);
+        }
+
+        /* Table */
+        .compare-table {
+            width: 100%; max-width: 950px; border-collapse: separate;
+            border-spacing: 0; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 8px 35px rgba(0,0,0,0.07);
+        }
+        .compare-table th {
+            padding: 16px 20px; font-size: 1rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .compare-table th:first-child { background: var(--primary); color: white; text-align: left; }
+        .compare-table th.good { background: var(--sanctify); color: white; }
+        .compare-table th.bad { background: var(--danger); color: white; }
+        .compare-table td {
+            padding: 14px 20px; font-size: 0.95rem; color: var(--text-dark);
+            background: white; border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .compare-table td:first-child { font-weight: 600; color: var(--primary); background: rgba(30,58,95,0.03); }
+
+        /* ══════ PRINT ══════ */
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+            html, body { width: 100%; height: auto; overflow: visible; background: white !important; margin: 0; padding: 0; }
+            .presentation { display: block; height: auto; }
+            .nav-bar, .fullscreen-btn, .shortcuts { display: none !important; }
+            .slide {
+                position: relative !important; display: flex !important;
+                width: 100% !important; height: 100vh !important;
+                min-height: 100vh !important; max-height: 100vh !important;
+                padding: 30px 50px !important;
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            .slide:last-child { page-break-after: avoid !important; break-after: avoid !important; }
+            .slide-capa, .slide-conclusion { background: #0f0f1a !important; }
+            .slide-header { margin-bottom: 20px !important; }
+            .slide-title { font-size: 2rem !important; }
+            .slide-icon { width: 55px !important; height: 55px !important; }
+            .capa-title { font-size: 2.8rem !important; }
+            .cards-grid { gap: 12px !important; }
+            .card { padding: 16px !important; }
+            .card h4 { font-size: 0.95rem !important; }
+            .card p { font-size: 0.85rem !important; }
+            .verse-highlight { padding: 20px 25px !important; }
+            .verse-highlight .verse-text { font-size: 1.2rem !important; }
+            .question-impact { padding: 25px !important; }
+            .question-impact .question-text { font-size: 1.5rem !important; }
+            .content-box { padding: 20px 25px !important; }
+            .impact-box { padding: 30px !important; }
+            .impact-box .impact-text { font-size: 1.6rem !important; }
+            @keyframes float { 0%,50%,100% { transform: none; } }
+            @keyframes pulseGlow { 0%,50%,100% { box-shadow: none; } }
+            @keyframes rotateBg { 0%,100% { transform: none; } }
+            @keyframes breathe { 0%,50%,100% { transform: none; } }
+        }
+        @page { size: landscape; margin: 0; }
+        :fullscreen .nav-bar { bottom: 35px; }
+        :fullscreen .fullscreen-btn { display: none; }
+    </style>
+</head>
+<body>
+
+<button class="fullscreen-btn" onclick="toggleFullscreen()">
+    <i data-lucide="maximize"></i> Tela Cheia
+</button>
+<div class="shortcuts">
+    <kbd>←</kbd> <kbd>→</kbd> navegar | <kbd>F</kbd> tela cheia
+</div>
+
+<div class="presentation">
+
+    <!-- ═══════════ SLIDE 1 — CAPA ═══════════ -->
+    <div class="slide slide-capa active" id="s1">
+        <div class="capa-content">
+            <div class="capa-icon"><i data-lucide="mic"></i></div>
+            <div class="capa-badge">Curso de Pregadores • Aula 2</div>
+            <h1 class="capa-title">Antes do Púlpito:<br><span>Caráter, Oração e Santificação</span></h1>
+            <p class="capa-subtitle">Antes de falar aos homens, é preciso andar com Deus</p>
+            <div class="capa-tags">
+                <span class="capa-tag character">Caráter</span>
+                <span class="capa-tag prayer">Oração</span>
+                <span class="capa-tag sanctify">Santificação</span>
+                <span class="capa-tag flame-tag">Púlpito</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 2 — ABERTURA ═══════════ -->
+    <div class="slide slide-content" id="s2">
+        <div class="slide-header">
+            <div class="slide-icon flame"><i data-lucide="target"></i></div>
+            <div class="slide-badge flame-badge">Ponto de Partida</div>
+            <h2 class="slide-title">Antes de subir ao púlpito…</h2>
+        </div>
+        <ul class="check-list">
+            <li>
+                <div class="check-icon character-c"><i data-lucide="arrow-right"></i></div>
+                Antes da técnica, o <strong>caráter</strong>
+            </li>
+            <li>
+                <div class="check-icon blue"><i data-lucide="arrow-right"></i></div>
+                Antes do discurso, a <strong>oração</strong>
+            </li>
+            <li>
+                <div class="check-icon sanctify-c"><i data-lucide="arrow-right"></i></div>
+                Antes da mensagem, a <strong>santificação</strong>
+            </li>
+        </ul>
+        <div class="impact-box" style="margin-top: 30px; max-width: 800px;">
+            <p class="impact-text" style="font-size: 2rem;">
+                O púlpito exige <span>vida</span>, não apenas <span>palavras</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 3 — PERGUNTA DE IMPACTO ═══════════ -->
+    <div class="slide slide-content" id="s3">
+        <div class="slide-header">
+            <div class="slide-icon flame"><i data-lucide="help-circle"></i></div>
+            <div class="slide-badge flame-badge">Reflexão</div>
+        </div>
+        <div class="question-impact flame-q">
+            <h3>Pergunta de Impacto</h3>
+            <p class="question-text">O que sustenta o pregador<br>quando o púlpito se apaga?</p>
+            <p style="margin-top: 25px; font-size: 1.15rem; opacity: 0.9;">
+                Não é o microfone, é o caráter. Não é a plateia, é a oração.
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 4 — O QUE O PÚLPITO REPRESENTA ═══════════ -->
+    <div class="slide slide-content" id="s4">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="church"></i></div>
+            <div class="slide-badge">Fundamento</div>
+            <h2 class="slide-title">O que o púlpito representa</h2>
+            <p class="slide-subtitle">Mais do que um lugar físico dentro da igreja</p>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 950px;">
+            <div class="card" style="border-top: 5px solid var(--word); text-align: center;">
+                <div class="card-icon word" style="margin: 0 auto 15px;"><i data-lucide="megaphone"></i></div>
+                <h4>Proclamação da Palavra</h4>
+                <p>Espaço onde a Palavra de Deus é anunciada com autoridade</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--character); text-align: center;">
+                <div class="card-icon character" style="margin: 0 auto 15px;"><i data-lucide="shield-check"></i></div>
+                <h4>Responsabilidade Espiritual</h4>
+                <p>Quem sobe assume responsabilidade diante de Deus e da igreja</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--sanctify); text-align: center;">
+                <div class="card-icon sanctify" style="margin: 0 auto 15px;"><i data-lucide="sparkles"></i></div>
+                <h4>Santidade e Reverência</h4>
+                <p>Lugar de manifestação da glória de Deus, exige consagração</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--prayer); text-align: center;">
+                <div class="card-icon prayer" style="margin: 0 auto 15px;"><i data-lucide="users"></i></div>
+                <h4>Edificação da Igreja</h4>
+                <p>Instrumento para fortalecer e edificar o corpo de Cristo</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 5 — VERSÍCULO PÚLPITO ═══════════ -->
+    <div class="slide slide-content" id="s5">
+        <div class="slide-header">
+            <div class="slide-icon word"><i data-lucide="book-open"></i></div>
+            <div class="slide-badge word-badge">Base Bíblica</div>
+            <h2 class="slide-title">O púlpito na Palavra</h2>
+        </div>
+        <div class="verse-highlight" style="margin-bottom: 20px;">
+            <p class="verse-text">"Pregues a palavra, instes a tempo e fora de tempo, redarguas, repreendas, exortes com toda longanimidade e doutrina."</p>
+            <span class="verse-ref">2 Timóteo 4:2</span>
+        </div>
+        <div class="verse-highlight sanctify-hl">
+            <p class="verse-text">"Santifica-os na verdade; a tua palavra é a verdade."</p>
+            <span class="verse-ref">João 17:17</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 6 — O PÚLPITO NÃO É PALCO ═══════════ -->
+    <div class="slide slide-content" id="s6">
+        <div class="slide-header">
+            <div class="slide-icon danger"><i data-lucide="alert-triangle"></i></div>
+            <div class="slide-badge danger-badge">Alerta</div>
+        </div>
+        <div class="question-impact danger-q">
+            <h3>Atenção</h3>
+            <p class="question-text">O púlpito não é palco de vaidade,<br>mas altar de entrega e serviço.</p>
+            <p style="margin-top: 25px; font-size: 1.15rem; opacity: 0.9;">
+                "Se alguém fala, fale segundo as palavras de Deus" — 1 Pedro 4:11
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 7 — SEÇÃO CARÁTER (CAPA) ═══════════ -->
+    <div class="slide slide-content" id="s7">
+        <div class="slide-header">
+            <div class="slide-icon character"><i data-lucide="fingerprint"></i></div>
+            <div class="slide-badge character-badge">Parte 1</div>
+            <h2 class="slide-title">Caráter</h2>
+            <p class="slide-subtitle">O alicerce invisível do pregador</p>
+        </div>
+        <div class="impact-box" style="max-width: 850px;">
+            <p class="impact-text" style="font-size: 1.8rem;">
+                O caráter é aquilo que molda a <span>identidade ética e emocional</span> de alguém
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 8 — O QUE É CARÁTER ═══════════ -->
+    <div class="slide slide-content" id="s8">
+        <div class="slide-header">
+            <div class="slide-icon character"><i data-lucide="list-checks"></i></div>
+            <div class="slide-badge character-badge">Definição</div>
+            <h2 class="slide-title">Principais aspectos do caráter</h2>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 950px;">
+            <div class="card" style="border-left: 5px solid var(--character);">
+                <div class="card-icon character" style="margin-bottom: 10px;"><i data-lucide="scale"></i></div>
+                <h4>Moralidade</h4>
+                <p>Valores e princípios que guiam o que a pessoa considera certo ou errado</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--word);">
+                <div class="card-icon word" style="margin-bottom: 10px;"><i data-lucide="brain"></i></div>
+                <h4>Personalidade</h4>
+                <p>Traços estáveis que influenciam o modo de pensar, sentir e agir</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--prayer);">
+                <div class="card-icon prayer" style="margin-bottom: 10px;"><i data-lucide="footprints"></i></div>
+                <h4>Conduta</h4>
+                <p>Comportamento prático no dia a dia, coerência entre valores e ações</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--sanctify);">
+                <div class="card-icon sanctify" style="margin-bottom: 10px;"><i data-lucide="mountain"></i></div>
+                <h4>Resiliência e firmeza</h4>
+                <p>Capacidade de manter integridade mesmo diante de dificuldades</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 9 — BOM CARÁTER VS MAU CARÁTER ═══════════ -->
+    <div class="slide slide-content" id="s9">
+        <div class="slide-header">
+            <div class="slide-icon character"><i data-lucide="git-compare"></i></div>
+            <div class="slide-badge character-badge">Comparação</div>
+            <h2 class="slide-title">Bom caráter vs. Mau caráter</h2>
+        </div>
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th>Aspecto</th>
+                    <th class="good">Bom Caráter</th>
+                    <th class="bad">Mau Caráter</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Valores</td>
+                    <td>Honestidade, justiça, respeito</td>
+                    <td>Egoísmo, desonestidade, manipulação</td>
+                </tr>
+                <tr>
+                    <td>Conduta</td>
+                    <td>Coerência entre discurso e ação</td>
+                    <td>Hipocrisia, incoerência</td>
+                </tr>
+                <tr>
+                    <td>Impacto social</td>
+                    <td>Inspira confiança, fortalece vínculos</td>
+                    <td>Gera desconfiança, rompe relações</td>
+                </tr>
+                <tr>
+                    <td>Exemplo prático</td>
+                    <td>Cumprir promessas sem vantagem</td>
+                    <td>Quebrar acordos por interesse próprio</td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="margin-top: 20px; padding: 15px 30px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-size: 1rem; color: var(--primary); font-weight: 600; text-align: center; max-width: 700px;">
+            Todo ser humano possui caráter — o que difere é a qualidade dele
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 10 — FRUTO DO ESPÍRITO ═══════════ -->
+    <div class="slide slide-content" id="s10">
+        <div class="slide-header">
+            <div class="slide-icon sanctify"><i data-lucide="leaf"></i></div>
+            <div class="slide-badge sanctify-badge">Fruto do Espírito</div>
+            <h2 class="slide-title">O bom caráter cristão</h2>
+            <p class="slide-subtitle">Gálatas 5:22-23</p>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1000px;">
+            <div class="card" style="border-top: 5px solid var(--sanctify); text-align: center;">
+                <h4>❤️ Amor</h4>
+                <p>Base de todas as virtudes</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--sanctify); text-align: center;">
+                <h4>😊 Alegria</h4>
+                <p>Contentamento interior</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--sanctify); text-align: center;">
+                <h4>🕊️ Paz</h4>
+                <p>Tranquilidade da alma</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--sanctify); text-align: center;">
+                <h4>⏳ Paciência</h4>
+                <p>Longanimidade</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--sanctify); text-align: center;">
+                <h4>🤝 Benignidade</h4>
+                <p>Bondade ativa</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--sanctify); text-align: center;">
+                <h4>💎 Fidelidade</h4>
+                <p>Compromisso firme</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--sanctify); text-align: center;">
+                <h4>🙏 Mansidão</h4>
+                <p>Humildade em ação</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--sanctify); text-align: center;">
+                <h4>🎯 Domínio Próprio</h4>
+                <p>Controle das paixões</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--sanctify); text-align: center;">
+                <h4>✨ Bondade</h4>
+                <p>Generosidade do ser</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 11 — OBRAS DA CARNE ═══════════ -->
+    <div class="slide slide-content" id="s11">
+        <div class="slide-header">
+            <div class="slide-icon danger"><i data-lucide="flame"></i></div>
+            <div class="slide-badge danger-badge">Obras da Carne</div>
+            <h2 class="slide-title">O mau caráter revelado</h2>
+            <p class="slide-subtitle">Gálatas 5:19-21</p>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1000px;">
+            <div class="card" style="border-top: 5px solid var(--danger); text-align: center;">
+                <h4>Imoralidade Sexual</h4>
+                <p>Impureza e idolatria</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--danger); text-align: center;">
+                <h4>Inimizades</h4>
+                <p>Ciúmes e ira</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--danger); text-align: center;">
+                <h4>Egoísmo</h4>
+                <p>Inveja e manipulação</p>
+            </div>
+        </div>
+        <div class="verse-highlight flame-hl" style="margin-top: 25px; max-width: 850px;">
+            <p class="verse-text" style="font-size: 1.3rem;">"O mau caráter é a manifestação prática das obras da carne, assim como o bom caráter é a manifestação prática do fruto do Espírito."</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 12 — FRUTO VS OBRAS CONTRASTE ═══════════ -->
+    <div class="slide slide-content" id="s12">
+        <div class="slide-header">
+            <div class="slide-icon character"><i data-lucide="arrow-left-right"></i></div>
+            <div class="slide-badge character-badge">Contraste</div>
+            <h2 class="slide-title">Fruto do Espírito vs. Obras da Carne</h2>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 900px;">
+            <div class="card" style="border-top: 5px solid var(--sanctify); text-align: center;">
+                <div class="card-icon sanctify" style="margin: 0 auto 15px;"><i data-lucide="leaf"></i></div>
+                <h4>Fruto do Espírito</h4>
+                <p style="font-size: 1rem;">Amor, alegria, paz, paciência, benignidade, bondade, fidelidade, mansidão, domínio próprio</p>
+                <p style="margin-top: 12px; font-weight: 700; color: var(--sanctify);">= BOM CARÁTER</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--danger); text-align: center;">
+                <div class="card-icon danger" style="margin: 0 auto 15px;"><i data-lucide="flame"></i></div>
+                <h4>Obras da Carne</h4>
+                <p style="font-size: 1rem;">Imoralidade, impureza, inimizades, ciúmes, ira, egoísmo, inveja, embriaguez</p>
+                <p style="margin-top: 12px; font-weight: 700; color: var(--danger);">= MAU CARÁTER</p>
+            </div>
+        </div>
+        <div style="margin-top: 25px; padding: 15px 30px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-size: 1.05rem; color: var(--primary); font-weight: 600; text-align: center; max-width: 750px;">
+            O pregador deve ser moldado pelo Espírito, não pela carne
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 13 — SEÇÃO ORAÇÃO (CAPA) ═══════════ -->
+    <div class="slide slide-content" id="s13">
+        <div class="slide-header">
+            <div class="slide-icon prayer"><i data-lucide="hand"></i></div>
+            <div class="slide-badge prayer-badge">Parte 2</div>
+            <h2 class="slide-title">O Pregador e a Oração</h2>
+            <p class="slide-subtitle">A respiração da vida espiritual do pregador</p>
+        </div>
+        <div class="verse-highlight prayer-hl" style="max-width: 800px;">
+            <p class="verse-text">"Orai sem cessar."</p>
+            <span class="verse-ref">1 Tessalonicenses 5:17</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 14 — NECESSIDADE DA ORAÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s14">
+        <div class="slide-header">
+            <div class="slide-icon prayer"><i data-lucide="heart-pulse"></i></div>
+            <div class="slide-badge prayer-badge">Necessidade</div>
+            <h2 class="slide-title">Por que o pregador precisa orar?</h2>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1000px;">
+            <div class="card" style="border-top: 5px solid var(--prayer); text-align: center;">
+                <div class="card-icon prayer" style="margin: 0 auto 15px;"><i data-lucide="anchor"></i></div>
+                <h4>Dependência de Deus</h4>
+                <p>O pregador não confia em sua eloquência, mas no poder do Espírito Santo</p>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">"Não por força nem por poder, mas pelo meu Espírito" — Zc 4:6</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--word); text-align: center;">
+                <div class="card-icon word" style="margin: 0 auto 15px;"><i data-lucide="heart"></i></div>
+                <h4>Preparação Espiritual</h4>
+                <p>A oração prepara o coração para receber e transmitir a Palavra</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--flame); text-align: center;">
+                <div class="card-icon flame" style="margin: 0 auto 15px;"><i data-lucide="shield"></i></div>
+                <h4>Proteção Espiritual</h4>
+                <p>O púlpito é campo de batalha; a oração é arma contra o inimigo</p>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">"Revesti-vos de toda a armadura de Deus" — Ef 6:11</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 15 — EFÉSIOS 6:18-20 ═══════════ -->
+    <div class="slide slide-content" id="s15">
+        <div class="slide-header">
+            <div class="slide-icon prayer"><i data-lucide="book-open"></i></div>
+            <div class="slide-badge prayer-badge">Base Bíblica</div>
+            <h2 class="slide-title">Oração: a arma do pregador</h2>
+        </div>
+        <div class="verse-highlight prayer-hl" style="max-width: 900px;">
+            <p class="verse-text" style="font-size: 1.35rem;">"Orando em todo tempo com toda oração e súplica no Espírito e vigiando nisso com toda perseverança e súplica por todos os santos e por mim; para que me seja dada, no abrir da minha boca, a palavra com confiança."</p>
+            <span class="verse-ref">Efésios 6:18-20</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 16 — EXEMPLOS BÍBLICOS DE ORAÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s16">
+        <div class="slide-header">
+            <div class="slide-icon prayer"><i data-lucide="users"></i></div>
+            <div class="slide-badge prayer-badge">Exemplos</div>
+            <h2 class="slide-title">Pregadores que oravam</h2>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1000px;">
+            <div class="card" style="border-top: 5px solid var(--accent); text-align: center;">
+                <div class="card-icon gold" style="margin: 0 auto 15px;"><i data-lucide="crown"></i></div>
+                <h4>Jesus Cristo</h4>
+                <p>Orava antes de grandes decisões e antes de ministrar</p>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">"De madrugada, ainda escuro, levantou-se e saiu, e foi a um lugar deserto, e ali orava" — Mc 1:35</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--prayer); text-align: center;">
+                <div class="card-icon prayer" style="margin: 0 auto 15px;"><i data-lucide="church"></i></div>
+                <h4>Os Apóstolos</h4>
+                <p>A igreja primitiva perseverava na oração</p>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">"Perseveravam na doutrina dos apóstolos, e na comunhão, e no partir do pão, e nas orações" — At 2:42</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--word); text-align: center;">
+                <div class="card-icon word" style="margin: 0 auto 15px;"><i data-lucide="pen-tool"></i></div>
+                <h4>Paulo</h4>
+                <p>Intercedia constantemente pelas igrejas</p>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">"Não cessamos de orar por vós" — Cl 1:9</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 17 — ORAÇÃO E PREPARAÇÃO DA MENSAGEM ═══════════ -->
+    <div class="slide slide-content" id="s17">
+        <div class="slide-header">
+            <div class="slide-icon prayer"><i data-lucide="lightbulb"></i></div>
+            <div class="slide-badge prayer-badge">Preparação</div>
+            <h2 class="slide-title">Oração e a preparação da mensagem</h2>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1000px;">
+            <div class="card" style="border-top: 5px solid var(--prayer); text-align: center;">
+                <div class="card-icon prayer" style="margin: 0 auto 15px;"><i data-lucide="eye"></i></div>
+                <h4>Discernimento</h4>
+                <p>A oração ajuda o pregador a entender o que Deus quer falar ao povo</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--flame); text-align: center;">
+                <div class="card-icon flame" style="margin: 0 auto 15px;"><i data-lucide="zap"></i></div>
+                <h4>Unção</h4>
+                <p>Sem oração é apenas discurso; com oração, torna-se palavra viva</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--accent); text-align: center;">
+                <div class="card-icon gold" style="margin: 0 auto 15px;"><i data-lucide="sun"></i></div>
+                <h4>Clareza</h4>
+                <p>O Espírito Santo ilumina a mente e dá sabedoria</p>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">"Se algum de vós tem falta de sabedoria, peça-a a Deus" — Tg 1:5</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 18 — ORAÇÃO E A VIDA DO PREGADOR ═══════════ -->
+    <div class="slide slide-content" id="s18">
+        <div class="slide-header">
+            <div class="slide-icon prayer"><i data-lucide="user-check"></i></div>
+            <div class="slide-badge prayer-badge">Vida Pessoal</div>
+            <h2 class="slide-title">Oração e a vida do pregador</h2>
+        </div>
+        <ul class="check-list" style="max-width: 750px;">
+            <li>
+                <div class="check-icon sanctify-c"><i data-lucide="sparkles"></i></div>
+                <strong>Santificação</strong> — A oração mantém o pregador separado do pecado
+            </li>
+            <li>
+                <div class="check-icon blue"><i data-lucide="arrow-down"></i></div>
+                <strong>Humildade</strong> — Reconhece que o poder vem de Deus, não de si mesmo
+            </li>
+            <li>
+                <div class="check-icon gold"><i data-lucide="heart"></i></div>
+                <strong>Intimidade com Deus</strong> — O púlpito é consequência da vida secreta de oração
+            </li>
+        </ul>
+        <div class="verse-highlight prayer-hl" style="margin-top: 25px; max-width: 800px;">
+            <p class="verse-text" style="font-size: 1.3rem;">"Mas tu, quando orares, entra no teu aposento, e fechando a tua porta, ora a teu Pai."</p>
+            <span class="verse-ref">Mateus 6:6</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 19 — APLICAÇÕES PRÁTICAS ORAÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s19">
+        <div class="slide-header">
+            <div class="slide-icon prayer"><i data-lucide="clipboard-check"></i></div>
+            <div class="slide-badge prayer-badge">Prática</div>
+            <h2 class="slide-title">Aplicações práticas da oração</h2>
+        </div>
+        <ul class="check-list" style="max-width: 750px;">
+            <li>
+                <div class="check-icon blue"><i data-lucide="calendar"></i></div>
+                Estabelecer <strong>rotina diária</strong> de oração
+            </li>
+            <li>
+                <div class="check-icon blue"><i data-lucide="book-open"></i></div>
+                Orar <strong>antes de preparar</strong> o sermão e antes de subir ao púlpito
+            </li>
+            <li>
+                <div class="check-icon blue"><i data-lucide="users"></i></div>
+                <strong>Interceder</strong> pela igreja e pelas necessidades do povo
+            </li>
+            <li>
+                <div class="check-icon blue"><i data-lucide="volume-x"></i></div>
+                Buscar momentos de <strong>oração silenciosa</strong> e profunda
+            </li>
+        </ul>
+        <div class="impact-box" style="margin-top: 25px; max-width: 700px;">
+            <p class="impact-text" style="font-size: 1.6rem;">
+                <span>"Sem mim nada podeis fazer"</span><br>
+                <small style="font-size: 0.9rem; opacity: 0.8;">João 15:5</small>
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 20 — SEÇÃO SANTIFICAÇÃO (CAPA) ═══════════ -->
+    <div class="slide slide-content" id="s20">
+        <div class="slide-header">
+            <div class="slide-icon sanctify"><i data-lucide="sparkles"></i></div>
+            <div class="slide-badge sanctify-badge">Parte 3</div>
+            <h2 class="slide-title">O Pregador e a Santificação</h2>
+            <p class="slide-subtitle">Processo contínuo de separação do pecado e consagração a Deus</p>
+        </div>
+        <div class="verse-highlight sanctify-hl" style="max-width: 850px;">
+            <p class="verse-text">"Segui a paz com todos, e a santificação, sem a qual ninguém verá o Senhor."</p>
+            <span class="verse-ref">Hebreus 12:14</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 21 — O QUE É SANTIFICAÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s21">
+        <div class="slide-header">
+            <div class="slide-icon sanctify"><i data-lucide="layers"></i></div>
+            <div class="slide-badge sanctify-badge">Significado</div>
+            <h2 class="slide-title">O que é santificação?</h2>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1000px;">
+            <div class="card" style="border-top: 5px solid var(--sanctify); text-align: center;">
+                <div class="card-icon sanctify" style="margin: 0 auto 15px;"><i data-lucide="split"></i></div>
+                <h4>Separação</h4>
+                <p>Viver diferente do mundo, dedicado a Deus</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--word); text-align: center;">
+                <div class="card-icon word" style="margin: 0 auto 15px;"><i data-lucide="refresh-cw"></i></div>
+                <h4>Transformação</h4>
+                <p>Mudança de caráter e conduta pelo Espírito Santo</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--accent); text-align: center;">
+                <div class="card-icon gold" style="margin: 0 auto 15px;"><i data-lucide="gift"></i></div>
+                <h4>Consagração</h4>
+                <p>Vida entregue ao serviço do Senhor</p>
+            </div>
+        </div>
+        <div class="verse-highlight sanctify-hl" style="margin-top: 25px; max-width: 800px;">
+            <p class="verse-text" style="font-size: 1.3rem;">"Santifica-os na verdade; a tua palavra é a verdade."</p>
+            <span class="verse-ref">João 17:17</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 22 — NECESSIDADE DA SANTIFICAÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s22">
+        <div class="slide-header">
+            <div class="slide-icon sanctify"><i data-lucide="shield-check"></i></div>
+            <div class="slide-badge sanctify-badge">Necessidade</div>
+            <h2 class="slide-title">Por que santificação no ministério?</h2>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1000px;">
+            <div class="card" style="border-top: 5px solid var(--sanctify); text-align: center;">
+                <div class="card-icon sanctify" style="margin: 0 auto 15px;"><i data-lucide="zap"></i></div>
+                <h4>Autoridade Espiritual</h4>
+                <p>O pregador só fala com poder se vive em santidade</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--character); text-align: center;">
+                <div class="card-icon character" style="margin: 0 auto 15px;"><i data-lucide="badge-check"></i></div>
+                <h4>Credibilidade</h4>
+                <p>A vida santa dá peso às palavras</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--prayer); text-align: center;">
+                <div class="card-icon prayer" style="margin: 0 auto 15px;"><i data-lucide="users"></i></div>
+                <h4>Exemplo ao Rebanho</h4>
+                <p>O pregador é modelo para a igreja</p>
+            </div>
+        </div>
+        <div class="verse-highlight" style="margin-top: 25px; max-width: 800px;">
+            <p class="verse-text" style="font-size: 1.3rem;">"Sede meus imitadores, como também eu sou de Cristo."</p>
+            <span class="verse-ref">1 Coríntios 11:1</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 23 — EXEMPLOS BÍBLICOS SANTIFICAÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s23">
+        <div class="slide-header">
+            <div class="slide-icon sanctify"><i data-lucide="book-open"></i></div>
+            <div class="slide-badge sanctify-badge">Exemplos Bíblicos</div>
+            <h2 class="slide-title">Homens santificados por Deus</h2>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1000px;">
+            <div class="card" style="border-top: 5px solid var(--flame); text-align: center;">
+                <div class="card-icon flame" style="margin: 0 auto 15px;"><i data-lucide="flame"></i></div>
+                <h4>Isaías</h4>
+                <p>Purificado por Deus antes de ser enviado</p>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">"Eis que isto tocou os teus lábios; a tua iniquidade foi tirada" — Is 6:6-8</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--word); text-align: center;">
+                <div class="card-icon word" style="margin: 0 auto 15px;"><i data-lucide="pen-tool"></i></div>
+                <h4>Paulo</h4>
+                <p>Exortava à santidade como estilo de vida</p>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">"Esta é a vontade de Deus, a vossa santificação" — 1Ts 4:3-4</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--accent); text-align: center;">
+                <div class="card-icon gold" style="margin: 0 auto 15px;"><i data-lucide="crown"></i></div>
+                <h4>Jesus</h4>
+                <p>Santo e separado, exemplo máximo de santificação</p>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">"Santo, inocente, imaculado, separado dos pecadores" — Hb 7:26</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 24 — SANTIFICAÇÃO E O PÚLPITO ═══════════ -->
+    <div class="slide slide-content" id="s24">
+        <div class="slide-header">
+            <div class="slide-icon sanctify"><i data-lucide="mic"></i></div>
+            <div class="slide-badge sanctify-badge">Púlpito</div>
+        </div>
+        <div class="question-impact sanctify-q">
+            <h3>Verdade Central</h3>
+            <p class="question-text">O púlpito não é palco de vaidade,<br>mas altar de entrega.</p>
+            <p style="margin-top: 25px; font-size: 1.15rem; opacity: 0.9;">
+                O pregador deve subir ao púlpito com vida limpa diante de Deus
+            </p>
+        </div>
+        <div class="verse-highlight sanctify-hl" style="margin-top: 25px; max-width: 850px;">
+            <p class="verse-text" style="font-size: 1.3rem;">"Se alguém se purificar destas coisas, será vaso para honra, santificado e útil para o Senhor."</p>
+            <span class="verse-ref">2 Timóteo 2:21</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 25 — APLICAÇÕES PRÁTICAS SANTIFICAÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s25">
+        <div class="slide-header">
+            <div class="slide-icon sanctify"><i data-lucide="clipboard-check"></i></div>
+            <div class="slide-badge sanctify-badge">Prática</div>
+            <h2 class="slide-title">Aplicações práticas da santificação</h2>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 900px;">
+            <div class="card" style="border-left: 5px solid var(--sanctify);">
+                <div class="card-icon sanctify" style="margin-bottom: 10px;"><i data-lucide="book-open"></i></div>
+                <h4>Vida Devocional</h4>
+                <p>Leitura bíblica e oração constantes</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--flame);">
+                <div class="card-icon flame" style="margin-bottom: 10px;"><i data-lucide="x-circle"></i></div>
+                <h4>Renúncia</h4>
+                <p>Abandonar práticas que desagradam a Deus</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--prayer);">
+                <div class="card-icon prayer" style="margin-bottom: 10px;"><i data-lucide="target"></i></div>
+                <h4>Disciplina Espiritual</h4>
+                <p>Jejum, meditação e vigilância</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--character);">
+                <div class="card-icon character" style="margin-bottom: 10px;"><i data-lucide="eye"></i></div>
+                <h4>Testemunho</h4>
+                <p>Santidade visível no lar, no trabalho e na sociedade</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 26 — RESUMO ═══════════ -->
+    <div class="slide slide-content" id="s26">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="list-checks"></i></div>
+            <div class="slide-badge">Resumo</div>
+            <h2 class="slide-title">Antes de pregar…</h2>
+        </div>
+        <ul class="check-list" style="max-width: 750px;">
+            <li>
+                <div class="check-icon character-c"><i data-lucide="check"></i></div>
+                <strong>Cultive o caráter</strong> — Seja moldado pelo fruto do Espírito
+            </li>
+            <li>
+                <div class="check-icon blue"><i data-lucide="check"></i></div>
+                <strong>Viva em oração</strong> — Fale com Deus antes de falar aos homens
+            </li>
+            <li>
+                <div class="check-icon sanctify-c"><i data-lucide="check"></i></div>
+                <strong>Busque a santificação</strong> — Seja exemplo, não apenas pregador
+            </li>
+        </ul>
+        <div style="margin-top: 25px; padding: 15px 30px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-size: 1.05rem; color: var(--primary); font-weight: 600; text-align: center; max-width: 700px;">
+            A mensagem só tem autoridade quando respaldada pela santidade do mensageiro
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 27 — VERSÍCULO FINAL ═══════════ -->
+    <div class="slide slide-content" id="s27">
+        <div class="slide-header">
+            <div class="slide-icon sanctify"><i data-lucide="book-open"></i></div>
+            <div class="slide-badge sanctify-badge">Chamado Final</div>
+        </div>
+        <div class="verse-highlight sanctify-hl" style="max-width: 850px;">
+            <p class="verse-text">"Sede santos, porque eu sou santo."</p>
+            <span class="verse-ref">1 Pedro 1:16</span>
+        </div>
+        <div style="margin-top: 30px;">
+            <div class="verse-highlight prayer-hl" style="max-width: 850px;">
+                <p class="verse-text">"Sem mim nada podeis fazer."</p>
+                <span class="verse-ref">João 15:5</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 28 — FECHAMENTO ═══════════ -->
+    <div class="slide slide-conclusion" id="s28">
+        <div class="conclusion-content">
+            <div class="conclusion-icon"><i data-lucide="mic"></i></div>
+            <div class="conclusion-text">
+                <p style="margin-bottom: 15px; font-size: 1.2rem; opacity: 0.85;">O pregador não é apenas transmissor de conhecimento…</p>
+                <p style="margin-bottom: 25px;">É <strong style="color: var(--accent-light);">testemunha viva</strong> da Palavra.</p>
+            </div>
+            <div class="conclusion-highlight">
+                Curso de Pregadores — Aula 2
+            </div>
+            <p style="margin-top: 30px; opacity: 0.6; font-size: 0.9rem;">Antes do Púlpito: Caráter, Oração e Santificação</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav-bar">
+    <button id="prev" onclick="prev()">◀</button>
+    <div class="counter"><span id="atual">1</span> / 28</div>
+    <button id="next" onclick="next()">▶</button>
+</nav>
+
+<script>
+    lucide.createIcons();
+
+    let slide = 1;
+    const total = 28;
+
+    function show(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        document.getElementById('atual').textContent = n;
+        document.getElementById('prev').disabled = (n === 1);
+        document.getElementById('next').disabled = (n === total);
+        slide = n;
+        lucide.createIcons();
+    }
+
+    function next() { if (slide < total) show(slide + 1); }
+    function prev() { if (slide > 1) show(slide - 1); }
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); showNavBar(); }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); showNavBar(); }
+        if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); }
+        if (e.key === 'Home') { show(1); showNavBar(); }
+        if (e.key === 'End') { show(total); showNavBar(); }
+    });
+
+    let navTimeout;
+    const navBar = document.querySelector('.nav-bar');
+
+    function showNavBar() {
+        navBar.classList.add('visible');
+        clearTimeout(navTimeout);
+        navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 3000);
+    }
+
+    document.addEventListener('mousemove', showNavBar);
+    document.addEventListener('touchstart', showNavBar);
+    navBar.addEventListener('mouseenter', () => { clearTimeout(navTimeout); });
+    navBar.addEventListener('mouseleave', () => { navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 2000); });
+
+    showNavBar();
+
+    setTimeout(() => {
+        const shortcuts = document.querySelector('.shortcuts');
+        if (shortcuts) { shortcuts.style.opacity = '0'; shortcuts.style.transition = 'opacity 1s'; }
+    }, 5000);
+</script>
+</body>
+</html>

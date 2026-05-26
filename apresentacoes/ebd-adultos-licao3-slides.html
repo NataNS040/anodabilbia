@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Impaciência na Espera do Cumprimento da Promessa | EBD Adultos CPAD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #d4b84a;
+            --bg-light: #f8fafc;
+            --bg-dark: #e2e8f0;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --text-muted: #718096;
+            --white: #ffffff;
+            --success: #38a169;
+            --info: #3182ce;
+            --warning: #e67e22;
+            --danger: #c0392b;
+            --flame: #e85d04;
+            --flame-light: #f48c06;
+            --flame-dark: #dc2f02;
+            --faith: #b45309;
+            --faith-light: #d97706;
+            --faith-dark: #92400e;
+            --promise: #7c3aed;
+            --promise-light: #a78bfa;
+            --promise-dark: #5b21b6;
+            --altar: #059669;
+            --altar-light: #34d399;
+            --altar-dark: #047857;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%; height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+        }
+
+        .presentation { width: 100%; height: 100%; position: relative; }
+
+        .slide {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 45px 70px;
+            background: var(--bg-light);
+        }
+
+        .slide.active { display: flex; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulseGlow { 0%,100% { box-shadow: 0 0 30px rgba(180,83,9,0.3); } 50% { box-shadow: 0 0 60px rgba(180,83,9,0.6); } }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes rotateBg { to { transform: rotate(360deg); } }
+        @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+
+        /* ══════ NAV ══════ */
+        .nav-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 18px;
+            background: rgba(255,255,255,0.95); padding: 12px 30px;
+            border-radius: 50px; box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+            z-index: 1000; backdrop-filter: blur(10px);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .nav-bar.visible { opacity: 1; pointer-events: auto; }
+        .nav-bar button {
+            width: 48px; height: 48px; border: none; border-radius: 50%;
+            background: var(--primary); color: white; cursor: pointer;
+            font-size: 1.2rem; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-bar button:hover { background: var(--primary-light); transform: scale(1.05); }
+        .nav-bar button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        .nav-bar .counter { padding: 0 22px; font-weight: 700; font-size: 1.05rem; color: var(--primary); display: flex; align-items: center; }
+
+        .fullscreen-btn {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--primary); color: white; border: none;
+            padding: 12px 20px; border-radius: 12px; cursor: pointer;
+            font-weight: 600; font-size: 0.95rem; z-index: 1000;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s;
+        }
+        .fullscreen-btn:hover { background: var(--primary-light); }
+
+        .shortcuts {
+            position: fixed; bottom: 25px; left: 25px;
+            background: rgba(0,0,0,0.75); color: white;
+            padding: 12px 20px; border-radius: 10px;
+            font-size: 0.8rem; z-index: 1000; opacity: 0.8;
+        }
+        .shortcuts kbd { background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 4px; margin: 0 2px; }
+
+        /* ══════ CAPA ══════ */
+        .slide-capa {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-capa::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(180,83,9,0.06), transparent, rgba(201,162,39,0.06), transparent);
+            animation: rotateBg 25s linear infinite;
+        }
+        .capa-content { position: relative; z-index: 1; max-width: 1000px; }
+        .capa-icon {
+            width: 110px; height: 110px;
+            background: rgba(180,83,9,0.15); border: 2px solid rgba(180,83,9,0.3);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+        .capa-icon svg { width: 55px; height: 55px; color: var(--accent-light); }
+        .capa-badge {
+            display: inline-block; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 30px; border-radius: 50px;
+            font-size: 0.9rem; margin-bottom: 20px;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .capa-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem; font-weight: 700;
+            margin-bottom: 20px; line-height: 1.15;
+        }
+        .capa-title span { color: var(--accent-light); }
+        .capa-subtitle {
+            font-size: 1.2rem; opacity: 0.85;
+            margin-bottom: 30px; font-weight: 300;
+            max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;
+        }
+        .capa-tags {
+            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+        }
+        .capa-tag {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 18px; border-radius: 50px; font-size: 0.85rem;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+        .capa-tag.faith { border-color: rgba(180,83,9,0.4); color: var(--faith-light); }
+        .capa-tag.promise { border-color: rgba(124,58,237,0.4); color: var(--promise-light); }
+        .capa-tag.altar { border-color: rgba(5,150,105,0.4); color: var(--altar-light); }
+        .capa-date { margin-top: 25px; font-size: 1rem; opacity: 0.7; }
+
+        /* ══════ CONTENT SLIDES ══════ */
+        .slide-content { background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-dark) 100%); }
+
+        .slide-header { text-align: center; margin-bottom: 35px; }
+
+        .slide-icon {
+            width: 70px; height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 18px; margin: 0 auto 18px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(30,58,95,0.25);
+        }
+        .slide-icon svg { width: 35px; height: 35px; color: var(--accent); }
+        .slide-icon.faith { background: linear-gradient(135deg, var(--faith), var(--faith-light)); }
+        .slide-icon.faith svg { color: white; }
+        .slide-icon.promise { background: linear-gradient(135deg, var(--promise), var(--promise-light)); }
+        .slide-icon.promise svg { color: white; }
+        .slide-icon.flame { background: linear-gradient(135deg, var(--flame), var(--flame-light)); }
+        .slide-icon.flame svg { color: white; }
+        .slide-icon.altar { background: linear-gradient(135deg, var(--altar), var(--altar-light)); }
+        .slide-icon.altar svg { color: white; }
+        .slide-icon.green { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .slide-icon.green svg { color: white; }
+        .slide-icon.blue { background: linear-gradient(135deg, var(--info), #3498db); }
+        .slide-icon.blue svg { color: white; }
+        .slide-icon.gold { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+        .slide-icon.gold svg { color: var(--primary-dark); }
+
+        .slide-badge {
+            display: inline-block; padding: 7px 20px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 700; margin-bottom: 12px;
+            letter-spacing: 1px; text-transform: uppercase;
+            background: var(--accent); color: var(--primary-dark);
+        }
+        .slide-badge.faith-badge { background: var(--faith); color: white; }
+        .slide-badge.promise-badge { background: var(--promise); color: white; }
+        .slide-badge.flame-badge { background: var(--flame); color: white; }
+        .slide-badge.altar-badge { background: var(--altar); color: white; }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem; color: var(--primary); line-height: 1.2;
+        }
+        .slide-subtitle { font-size: 1.05rem; color: var(--text-muted); margin-top: 8px; }
+
+        /* Verse highlight */
+        .verse-highlight {
+            background: linear-gradient(135deg, var(--promise), var(--promise-dark));
+            border-radius: 18px; padding: 35px 45px; color: white;
+            text-align: center; max-width: 900px; width: 100%;
+        }
+        .verse-highlight.faith-hl { background: linear-gradient(135deg, var(--faith), var(--faith-dark)); }
+        .verse-highlight.flame-hl { background: linear-gradient(135deg, var(--flame), var(--flame-dark)); }
+        .verse-highlight.primary-hl { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
+        .verse-highlight.altar-hl { background: linear-gradient(135deg, var(--altar), var(--altar-dark)); }
+        .verse-highlight .verse-text {
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            line-height: 1.5; margin-bottom: 18px; font-style: italic;
+        }
+        .verse-highlight .verse-ref {
+            background: var(--accent); color: var(--primary-dark);
+            padding: 7px 22px; border-radius: 50px; font-weight: 700;
+            font-size: 0.95rem; display: inline-block;
+        }
+
+        /* Content box */
+        .content-box {
+            background: white; border-radius: 18px; padding: 35px;
+            box-shadow: 0 8px 35px rgba(0,0,0,0.07); max-width: 1100px; width: 100%;
+        }
+
+        /* Impact phrase */
+        .impact-box {
+            background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+            border-radius: 20px; padding: 50px; color: white;
+            text-align: center; max-width: 950px; width: 100%;
+            position: relative; overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+        }
+        .impact-box::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(180,83,9,0.15) 0%, transparent 60%);
+        }
+        .impact-box .impact-text {
+            font-family: 'Playfair Display', serif; font-size: 2.2rem;
+            line-height: 1.5; position: relative; font-weight: 600;
+        }
+        .impact-box .impact-text span { color: var(--accent-light); }
+
+        /* ══════ PRINT ══════ */
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+            html, body { width: 100%; height: auto; overflow: visible; background: white !important; margin: 0; padding: 0; }
+            .presentation { display: block; height: auto; }
+            .nav-bar, .fullscreen-btn, .shortcuts { display: none !important; }
+            .slide {
+                position: relative !important; display: flex !important;
+                width: 100% !important; height: 100vh !important;
+                min-height: 100vh !important; max-height: 100vh !important;
+                padding: 30px 50px !important;
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            .slide:last-child { page-break-after: avoid !important; break-after: avoid !important; }
+            .slide-capa { background: #0f0f1a !important; }
+            .slide-header { margin-bottom: 20px !important; }
+            .slide-title { font-size: 2rem !important; }
+            .slide-icon { width: 55px !important; height: 55px !important; }
+            .capa-title { font-size: 2.8rem !important; }
+            .verse-highlight { padding: 20px 25px !important; }
+            .verse-highlight .verse-text { font-size: 1.2rem !important; }
+            .content-box { padding: 20px 25px !important; }
+            .impact-box { padding: 30px !important; }
+            .impact-box .impact-text { font-size: 1.6rem !important; }
+            @keyframes float { 0%,50%,100% { transform: none; } }
+            @keyframes pulseGlow { 0%,50%,100% { box-shadow: none; } }
+            @keyframes rotateBg { 0%,100% { transform: none; } }
+            @keyframes breathe { 0%,50%,100% { transform: none; } }
+        }
+        @page { size: landscape; margin: 0; }
+        :fullscreen .nav-bar { bottom: 35px; }
+        :fullscreen .fullscreen-btn { display: none; }
+    </style>
+</head>
+<body>
+
+<button class="fullscreen-btn" onclick="toggleFullscreen()">
+    <i data-lucide="maximize"></i> Tela Cheia
+</button>
+<div class="shortcuts">
+    <kbd>←</kbd> <kbd>→</kbd> navegar | <kbd>F</kbd> tela cheia
+</div>
+
+<div class="presentation">
+
+    <!-- ═══════════ SLIDE 1 — CAPA / TÍTULO DA LIÇÃO ═══════════ -->
+    <div class="slide slide-capa active" id="s1">
+        <div class="capa-content">
+            <div class="capa-icon"><i data-lucide="hourglass"></i></div>
+            <div class="capa-badge">EBD Adultos • Lições Bíblicas CPAD • 2º Trimestre 2026</div>
+            <h1 class="capa-title">A Impaciência na Espera do<br><span>Cumprimento da Promessa</span></h1>
+            <p class="capa-subtitle">Lição 3 — 19 de Abril de 2026</p>
+            <div class="capa-tags">
+                <span class="capa-tag faith">Paciência</span>
+                <span class="capa-tag promise">Promessa</span>
+                <span class="capa-tag altar">Fidelidade</span>
+                <span class="capa-tag">Gênesis 16</span>
+            </div>
+            <p class="capa-date">Homens dos quais o mundo não era digno — O Legado de Abraão, Isaque e Jacó</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 2 — TEXTO ÁUREO ═══════════ -->
+    <div class="slide slide-content" id="s2">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="book-open"></i></div>
+            <div class="slide-badge">Texto Áureo</div>
+            <h2 class="slide-title">Palavra-Chave da Lição</h2>
+            <p class="slide-subtitle">📖 Gênesis 16.2</p>
+        </div>
+        <div class="verse-highlight primary-hl" style="max-width: 900px;">
+            <p class="verse-text">"E disse Sarai a Abrão: Eis que o Senhor me tem impedido de gerar; entra, pois, à minha serva; porventura, terei filhos dela. E ouviu Abrão a voz de Sarai."</p>
+            <span class="verse-ref">Gênesis 16.2</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 3 — VERDADE PRÁTICA ═══════════ -->
+    <div class="slide slide-content" id="s3">
+        <div class="slide-header">
+            <div class="slide-icon faith"><i data-lucide="heart"></i></div>
+            <div class="slide-badge faith-badge">Verdade Prática</div>
+            <h2 class="slide-title">Para Guardar no Coração</h2>
+        </div>
+        <div class="impact-box" style="max-width: 900px;">
+            <p class="impact-text">
+                A impaciência é antagônica à <span>fé</span>, por isso não devemos ser dominados por ela.<br><br>
+                Deus é fiel e cumpre com suas <span>promessas</span> no tempo certo.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav-bar">
+    <button id="prev" onclick="prev()">◀</button>
+    <div class="counter"><span id="atual">1</span> / 3</div>
+    <button id="next" onclick="next()">▶</button>
+</nav>
+
+<script>
+    lucide.createIcons();
+
+    let slide = 1;
+    const total = 3;
+
+    function show(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        document.getElementById('atual').textContent = n;
+        document.getElementById('prev').disabled = (n === 1);
+        document.getElementById('next').disabled = (n === total);
+        slide = n;
+        lucide.createIcons();
+    }
+
+    function next() { if (slide < total) show(slide + 1); }
+    function prev() { if (slide > 1) show(slide - 1); }
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); showNavBar(); }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); showNavBar(); }
+        if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); }
+        if (e.key === 'Home') { show(1); showNavBar(); }
+        if (e.key === 'End') { show(total); showNavBar(); }
+    });
+
+    let navTimeout;
+    const navBar = document.querySelector('.nav-bar');
+
+    function showNavBar() {
+        navBar.classList.add('visible');
+        clearTimeout(navTimeout);
+        navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 3000);
+    }
+
+    document.addEventListener('mousemove', showNavBar);
+    document.addEventListener('touchstart', showNavBar);
+    navBar.addEventListener('mouseenter', () => { clearTimeout(navTimeout); });
+    navBar.addEventListener('mouseleave', () => { navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 2000); });
+
+    showNavBar();
+
+    setTimeout(() => {
+        const shortcuts = document.querySelector('.shortcuts');
+        if (shortcuts) { shortcuts.style.opacity = '0'; shortcuts.style.transition = 'opacity 1s'; }
+    }, 5000);
+</script>
+</body>
+</html>

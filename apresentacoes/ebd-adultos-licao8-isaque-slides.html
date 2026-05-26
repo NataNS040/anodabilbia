@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lição 8 - Isaque: Herdeiro da Promessa | EBD Adultos CPAD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #d4b84a;
+            --bg-light: #f8fafc;
+            --bg-dark: #e2e8f0;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --text-muted: #718096;
+            --white: #ffffff;
+            --success: #38a169;
+            --info: #3182ce;
+            --warning: #e67e22;
+            --danger: #c0392b;
+            /* Tema Isaque */
+            --well: #0369a1;
+            --well-light: #38bdf8;
+            --well-dark: #075985;
+            --sand: #92400e;
+            --sand-light: #d97706;
+            --sand-dark: #78350f;
+            --promise: #7c3aed;
+            --promise-light: #a78bfa;
+            --promise-dark: #5b21b6;
+            --peace: #059669;
+            --peace-light: #34d399;
+            --peace-dark: #047857;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%; height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+        }
+
+        .presentation { width: 100%; height: 100%; position: relative; }
+
+        .slide {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 45px 70px;
+            background: var(--bg-light);
+        }
+
+        .slide.active { display: flex; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulseWell { 0%,100% { box-shadow: 0 0 30px rgba(3,105,161,0.3); } 50% { box-shadow: 0 0 60px rgba(3,105,161,0.6); } }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes rotateBg { to { transform: rotate(360deg); } }
+        @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+
+        /* ══════ NAV ══════ */
+        .nav-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 18px;
+            background: rgba(255,255,255,0.95); padding: 12px 30px;
+            border-radius: 50px; box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+            z-index: 1000; backdrop-filter: blur(10px);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .nav-bar.visible { opacity: 1; pointer-events: auto; }
+        .nav-bar button {
+            width: 48px; height: 48px; border: none; border-radius: 50%;
+            background: var(--primary); color: white; cursor: pointer;
+            font-size: 1.2rem; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-bar button:hover { background: var(--primary-light); transform: scale(1.05); }
+        .nav-bar button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        .nav-bar .counter { padding: 0 22px; font-weight: 700; font-size: 1.05rem; color: var(--primary); display: flex; align-items: center; }
+
+        .fullscreen-btn {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--primary); color: white; border: none;
+            padding: 12px 20px; border-radius: 12px; cursor: pointer;
+            font-weight: 600; font-size: 0.95rem; z-index: 1000;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s;
+        }
+        .fullscreen-btn:hover { background: var(--primary-light); }
+
+        .shortcuts {
+            position: fixed; bottom: 25px; left: 25px;
+            background: rgba(0,0,0,0.75); color: white;
+            padding: 12px 20px; border-radius: 10px;
+            font-size: 0.8rem; z-index: 1000; opacity: 0.8;
+        }
+        .shortcuts kbd { background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 4px; margin: 0 2px; }
+
+        /* ══════ CAPA ══════ */
+        .slide-capa {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-capa::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(3,105,161,0.06), transparent, rgba(201,162,39,0.06), transparent);
+            animation: rotateBg 25s linear infinite;
+        }
+        .capa-content { position: relative; z-index: 1; max-width: 1000px; }
+        .capa-icon {
+            width: 110px; height: 110px;
+            background: rgba(3,105,161,0.15); border: 2px solid rgba(3,105,161,0.35);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: pulseWell 3s ease-in-out infinite;
+        }
+        .capa-icon svg { width: 55px; height: 55px; color: var(--accent-light); }
+        .capa-badge {
+            display: inline-block; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 30px; border-radius: 50px;
+            font-size: 0.9rem; margin-bottom: 20px;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .capa-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem; font-weight: 700;
+            margin-bottom: 20px; line-height: 1.15;
+        }
+        .capa-title span { color: var(--accent-light); }
+        .capa-subtitle {
+            font-size: 1.2rem; opacity: 0.85;
+            margin-bottom: 30px; font-weight: 300;
+            max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;
+        }
+        .capa-tags { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .capa-tag {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 18px; border-radius: 50px; font-size: 0.85rem;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+        .capa-tag.well { border-color: rgba(3,105,161,0.4); color: var(--well-light); }
+        .capa-tag.promise { border-color: rgba(124,58,237,0.4); color: var(--promise-light); }
+        .capa-tag.peace { border-color: rgba(5,150,105,0.4); color: var(--peace-light); }
+        .capa-tag.sand { border-color: rgba(146,64,14,0.4); color: #fbbf24; }
+        .capa-date { margin-top: 25px; font-size: 1rem; opacity: 0.7; }
+
+        /* ══════ CONTENT SLIDES ══════ */
+        .slide-content { background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-dark) 100%); }
+
+        .slide-header { text-align: center; margin-bottom: 35px; }
+
+        .slide-icon {
+            width: 70px; height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 18px; margin: 0 auto 18px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(30,58,95,0.25);
+        }
+        .slide-icon svg { width: 35px; height: 35px; color: var(--accent); }
+        .slide-icon.well { background: linear-gradient(135deg, var(--well), var(--well-light)); }
+        .slide-icon.well svg { color: white; }
+        .slide-icon.sand { background: linear-gradient(135deg, var(--sand), var(--sand-light)); }
+        .slide-icon.sand svg { color: white; }
+        .slide-icon.promise { background: linear-gradient(135deg, var(--promise), var(--promise-light)); }
+        .slide-icon.promise svg { color: white; }
+        .slide-icon.peace { background: linear-gradient(135deg, var(--peace), var(--peace-light)); }
+        .slide-icon.peace svg { color: white; }
+        .slide-icon.green { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .slide-icon.green svg { color: white; }
+        .slide-icon.blue { background: linear-gradient(135deg, var(--info), #3498db); }
+        .slide-icon.blue svg { color: white; }
+        .slide-icon.gold { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+        .slide-icon.gold svg { color: var(--primary-dark); }
+        .slide-icon.danger { background: linear-gradient(135deg, var(--danger), #e74c3c); }
+        .slide-icon.danger svg { color: white; }
+        .slide-icon.warning { background: linear-gradient(135deg, var(--warning), #f39c12); }
+        .slide-icon.warning svg { color: white; }
+
+        .slide-badge {
+            display: inline-block; padding: 7px 20px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 700; margin-bottom: 12px;
+            letter-spacing: 1px; text-transform: uppercase;
+            background: var(--accent); color: var(--primary-dark);
+        }
+        .slide-badge.well-badge { background: var(--well); color: white; }
+        .slide-badge.sand-badge { background: var(--sand); color: white; }
+        .slide-badge.promise-badge { background: var(--promise); color: white; }
+        .slide-badge.peace-badge { background: var(--peace); color: white; }
+        .slide-badge.block-badge { background: #64748b; color: white; }
+        .slide-badge.danger-badge { background: var(--danger); color: white; }
+        .slide-badge.warning-badge { background: var(--warning); color: white; }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem; color: var(--primary); line-height: 1.2;
+        }
+        .slide-subtitle { font-size: 1.05rem; color: var(--text-muted); margin-top: 8px; }
+
+        /* Cards */
+        .cards-grid { display: grid; gap: 20px; width: 100%; max-width: 1200px; }
+        .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); max-width: 950px; }
+        .cards-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .cards-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+        .card {
+            background: white; border-radius: 14px; padding: 25px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.07); transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-4px); }
+
+        .card-icon {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 12px; margin-bottom: 15px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card-icon svg { width: 25px; height: 25px; color: var(--accent); }
+        .card-icon.well { background: linear-gradient(135deg, var(--well), var(--well-light)); }
+        .card-icon.well svg { color: white; }
+        .card-icon.sand { background: linear-gradient(135deg, var(--sand), var(--sand-light)); }
+        .card-icon.sand svg { color: white; }
+        .card-icon.promise { background: linear-gradient(135deg, var(--promise), var(--promise-light)); }
+        .card-icon.promise svg { color: white; }
+        .card-icon.peace { background: linear-gradient(135deg, var(--peace), var(--peace-light)); }
+        .card-icon.peace svg { color: white; }
+        .card-icon.green { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .card-icon.green svg { color: white; }
+        .card-icon.danger { background: linear-gradient(135deg, var(--danger), #e74c3c); }
+        .card-icon.danger svg { color: white; }
+        .card-icon.warning { background: linear-gradient(135deg, var(--warning), #f39c12); }
+        .card-icon.warning svg { color: white; }
+
+        .card h4 { font-size: 1.05rem; color: var(--primary); margin-bottom: 8px; }
+        .card p { font-size: 0.95rem; color: var(--text-light); line-height: 1.55; }
+
+        /* Verse highlight */
+        .verse-highlight {
+            background: linear-gradient(135deg, var(--promise), var(--promise-dark));
+            border-radius: 18px; padding: 35px 45px; color: white;
+            text-align: center; max-width: 900px; width: 100%;
+        }
+        .verse-highlight.well-hl { background: linear-gradient(135deg, var(--well), var(--well-dark)); }
+        .verse-highlight.sand-hl { background: linear-gradient(135deg, var(--sand), var(--sand-dark)); }
+        .verse-highlight.primary-hl { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
+        .verse-highlight.peace-hl { background: linear-gradient(135deg, var(--peace), var(--peace-dark)); }
+        .verse-highlight .verse-text {
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            line-height: 1.5; margin-bottom: 18px; font-style: italic;
+        }
+        .verse-highlight .verse-ref {
+            background: var(--accent); color: var(--primary-dark);
+            padding: 7px 22px; border-radius: 50px; font-weight: 700;
+            font-size: 0.95rem; display: inline-block;
+        }
+
+        /* Content box */
+        .content-box {
+            background: white; border-radius: 18px; padding: 35px;
+            box-shadow: 0 8px 35px rgba(0,0,0,0.07); max-width: 1100px; width: 100%;
+        }
+        .content-box h3 {
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            color: var(--primary); margin-bottom: 20px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .content-box p { font-size: 1.05rem; color: var(--text-dark); line-height: 1.65; margin-bottom: 12px; }
+
+        /* Two columns */
+        .two-columns { display: flex; gap: 30px; width: 100%; max-width: 1200px; align-items: stretch; }
+        .column { flex: 1; }
+
+        /* Question impact */
+        .question-impact {
+            background: linear-gradient(135deg, var(--promise), var(--promise-dark));
+            border-radius: 18px; padding: 45px; color: white;
+            text-align: center; max-width: 1000px; width: 100%;
+            box-shadow: 0 12px 45px rgba(124,58,237,0.3);
+        }
+        .question-impact.well-q { background: linear-gradient(135deg, var(--well), var(--well-dark)); box-shadow: 0 12px 45px rgba(3,105,161,0.3); }
+        .question-impact.sand-q { background: linear-gradient(135deg, var(--sand), var(--sand-dark)); box-shadow: 0 12px 45px rgba(146,64,14,0.3); }
+        .question-impact.peace-q { background: linear-gradient(135deg, var(--peace), var(--peace-dark)); box-shadow: 0 12px 45px rgba(5,150,105,0.3); }
+        .question-impact.warm-q { background: linear-gradient(135deg, var(--warning), #f39c12); box-shadow: 0 12px 45px rgba(230,126,34,0.3); }
+        .question-impact h3 {
+            font-size: 1rem; opacity: 0.9; margin-bottom: 18px;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .question-impact .question-text {
+            font-family: 'Playfair Display', serif; font-size: 2rem;
+            line-height: 1.4; font-weight: 600;
+        }
+
+        /* Check list */
+        .check-list { list-style: none; max-width: 800px; width: 100%; }
+        .check-list li {
+            display: flex; align-items: center; gap: 15px;
+            padding: 15px 20px; margin-bottom: 12px;
+            background: white; border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            font-size: 1.1rem; color: var(--text-dark);
+        }
+        .check-list li .check-icon {
+            width: 38px; height: 38px; border-radius: 50%;
+            background: rgba(3,105,161,0.15);
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .check-list li .check-icon svg { width: 20px; height: 20px; color: var(--well); }
+        .check-list li .check-icon.green { background: rgba(5,150,105,0.15); }
+        .check-list li .check-icon.green svg { color: var(--peace); }
+        .check-list li .check-icon.danger { background: rgba(192,57,43,0.15); }
+        .check-list li .check-icon.danger svg { color: var(--danger); }
+        .check-list li .check-icon.sand { background: rgba(146,64,14,0.15); }
+        .check-list li .check-icon.sand svg { color: var(--sand); }
+        .check-list li .check-icon.warning { background: rgba(230,126,34,0.15); }
+        .check-list li .check-icon.warning svg { color: var(--warning); }
+
+        /* Item list */
+        .item-list { list-style: none; width: 100%; max-width: 900px; }
+        .item-list li {
+            display: flex; align-items: flex-start; gap: 15px;
+            padding: 13px 0; border-bottom: 1px solid rgba(0,0,0,0.06);
+            font-size: 1.05rem; color: var(--text-dark);
+        }
+        .item-list li:last-child { border-bottom: none; }
+        .item-list .icon {
+            width: 42px; height: 42px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            background: rgba(3,105,161,0.1);
+        }
+        .item-list .icon svg { width: 20px; height: 20px; color: var(--well); }
+        .item-list .text strong { color: var(--primary); display: block; margin-bottom: 3px; }
+        .item-list .text small { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Wells card grid */
+        .wells-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 20px; max-width: 900px; width: 100%;
+        }
+        .well-card {
+            background: white; border-radius: 16px; padding: 30px 25px;
+            text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border-top: 5px solid; transition: transform 0.3s;
+        }
+        .well-card:hover { transform: translateY(-5px); }
+        .well-card-num {
+            width: 50px; height: 50px; border-radius: 50%;
+            margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+        }
+        .well-card h4 { font-size: 1.1rem; color: var(--primary); margin-bottom: 6px; font-family: 'Playfair Display', serif; }
+        .well-card .meaning { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .well-card p { font-size: 0.88rem; color: var(--text-light); line-height: 1.4; }
+
+        /* Conclusion slide */
+        .slide-conclusion {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-conclusion::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(3,105,161,0.1) 0%, transparent 60%);
+        }
+        .conclusion-content { position: relative; z-index: 1; max-width: 900px; }
+        .conclusion-icon {
+            width: 100px; height: 100px;
+            background: rgba(3,105,161,0.2); border: 2px solid rgba(3,105,161,0.4);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: breathe 3s ease-in-out infinite;
+        }
+        .conclusion-icon svg { width: 50px; height: 50px; color: var(--accent-light); }
+        .conclusion-text {
+            font-family: 'Playfair Display', serif; font-size: 1.8rem;
+            line-height: 1.6; margin-bottom: 30px;
+        }
+        .conclusion-calls {
+            display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .conclusion-call {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+            padding: 14px 28px; border-radius: 50px;
+            font-size: 1.1rem; font-weight: 600;
+        }
+        .conclusion-highlight {
+            background: linear-gradient(135deg, var(--well), var(--well-dark));
+            padding: 25px 45px; border-radius: 16px;
+            font-family: 'Playfair Display', serif; font-size: 1.7rem;
+            font-weight: 600; display: inline-block;
+            box-shadow: 0 15px 50px rgba(3,105,161,0.4);
+        }
+
+        /* Impact phrase */
+        .impact-box {
+            background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+            border-radius: 20px; padding: 50px; color: white;
+            text-align: center; max-width: 950px; width: 100%;
+            position: relative; overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+        }
+        .impact-box::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(3,105,161,0.15) 0%, transparent 60%);
+        }
+        .impact-box .impact-text {
+            font-family: 'Playfair Display', serif; font-size: 2.2rem;
+            line-height: 1.5; position: relative; font-weight: 600;
+        }
+        .impact-box .impact-text span { color: var(--accent-light); }
+
+        /* ══════ PRINT ══════ */
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+            html, body { width: 100%; height: auto; overflow: visible; background: white !important; margin: 0; padding: 0; }
+            .presentation { display: block; height: auto; }
+            .nav-bar, .fullscreen-btn, .shortcuts { display: none !important; }
+            .slide {
+                position: relative !important; display: flex !important;
+                width: 100% !important; height: 100vh !important;
+                min-height: 100vh !important; max-height: 100vh !important;
+                padding: 30px 50px !important;
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            .slide:last-child { page-break-after: avoid !important; break-after: avoid !important; }
+            .slide-capa, .slide-conclusion { background: #0f0f1a !important; }
+            .slide-header { margin-bottom: 20px !important; }
+            .slide-title { font-size: 2rem !important; }
+            .slide-icon { width: 55px !important; height: 55px !important; }
+            .capa-title { font-size: 2.8rem !important; }
+            .cards-grid { gap: 12px !important; }
+            .card { padding: 16px !important; }
+            .card h4 { font-size: 0.95rem !important; }
+            .card p { font-size: 0.85rem !important; }
+            .verse-highlight { padding: 20px 25px !important; }
+            .verse-highlight .verse-text { font-size: 1.2rem !important; }
+            .question-impact { padding: 25px !important; }
+            .question-impact .question-text { font-size: 1.5rem !important; }
+            .content-box { padding: 20px 25px !important; }
+            .impact-box { padding: 30px !important; }
+            .impact-box .impact-text { font-size: 1.6rem !important; }
+            @keyframes float { 0%,50%,100% { transform: none; } }
+            @keyframes pulseWell { 0%,50%,100% { box-shadow: none; } }
+            @keyframes rotateBg { 0%,100% { transform: none; } }
+            @keyframes breathe { 0%,50%,100% { transform: none; } }
+        }
+        @page { size: landscape; margin: 0; }
+        :fullscreen .nav-bar { bottom: 35px; }
+        :fullscreen .fullscreen-btn { display: none; }
+    </style>
+</head>
+<body>
+
+<button class="fullscreen-btn" onclick="toggleFullscreen()">
+    <i data-lucide="maximize"></i> Tela Cheia
+</button>
+<div class="shortcuts">
+    <kbd>←</kbd> <kbd>→</kbd> navegar | <kbd>F</kbd> tela cheia
+</div>
+
+<div class="presentation">
+
+    <!-- ═══════════ SLIDE 1 — CAPA ═══════════ -->
+    <div class="slide slide-capa active" id="s1">
+        <div class="capa-content">
+            <div class="capa-icon"><i data-lucide="droplets"></i></div>
+            <div class="capa-badge">EBD Adultos • Lições Bíblicas CPAD • 2º Trimestre 2026</div>
+            <h1 class="capa-title">Isaque:<br><span>Herdeiro da Promessa</span></h1>
+            <p class="capa-subtitle">📖 "E semeou Isaque naquela mesma terra e colheu, naquele mesmo ano, cem medidas, porque o Senhor o abençoava." (Gn 26.12)</p>
+            <div class="capa-tags">
+                <span class="capa-tag well">Promessa</span>
+                <span class="capa-tag sand">Herança</span>
+                <span class="capa-tag peace">Mansidão</span>
+                <span class="capa-tag promise">Fidelidade</span>
+            </div>
+            <p class="capa-date">Lição 8 • Escola Bíblica Dominical</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 2 — INTRODUÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s2">
+        <div class="slide-header">
+            <div class="slide-icon well"><i data-lucide="book-open"></i></div>
+            <div class="slide-badge well-badge">Introdução</div>
+            <h2 class="slide-title">Isaque: O Filho da Promessa</h2>
+        </div>
+        <div class="two-columns" style="max-width: 1100px;">
+            <div class="column">
+                <ul class="check-list">
+                    <li>
+                        <span class="check-icon green"><i data-lucide="check-circle-2"></i></span>
+                        <span>Isaque era o <strong>filho da promessa</strong></span>
+                    </li>
+                    <li>
+                        <span class="check-icon green"><i data-lucide="check-circle-2"></i></span>
+                        <span>Herdou o <strong>legado espiritual</strong> de Abraão</span>
+                    </li>
+                    <li>
+                        <span class="check-icon green"><i data-lucide="check-circle-2"></i></span>
+                        <span>Mesmo sendo <strong>homem de Deus</strong>, enfrentou provas</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="column">
+                <div class="cards-grid cols-2" style="max-width: 500px;">
+                    <div class="card" style="border-top: 4px solid var(--danger); text-align: center; padding: 18px;">
+                        <p style="font-size: 1.3rem;">🌵</p>
+                        <h4 style="font-size: 0.95rem; margin: 0;">Fome</h4>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--warning); text-align: center; padding: 18px;">
+                        <p style="font-size: 1.3rem;">⚔️</p>
+                        <h4 style="font-size: 0.95rem; margin: 0;">Perseguição</h4>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--sand); text-align: center; padding: 18px;">
+                        <p style="font-size: 1.3rem;">👁️</p>
+                        <h4 style="font-size: 0.95rem; margin: 0;">Inveja</h4>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--promise); text-align: center; padding: 18px;">
+                        <p style="font-size: 1.3rem;">💬</p>
+                        <h4 style="font-size: 0.95rem; margin: 0;">Conflitos</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-box" style="margin-top: 25px; max-width: 900px; text-align: center; background: linear-gradient(135deg, rgba(3,105,161,0.05), rgba(3,105,161,0.1));">
+            <p style="font-size: 1.2rem; font-weight: 600; color: var(--primary);">
+                📌 A promessa não nos isenta das provas — Deus promete <strong>presença</strong>, não ausência de lutas
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 3 — PERGUNTA INICIAL ═══════════ -->
+    <div class="slide slide-content" id="s3">
+        <div class="slide-header">
+            <div class="slide-icon promise"><i data-lucide="help-circle"></i></div>
+            <div class="slide-badge promise-badge">Pergunta de Abertura</div>
+            <h2 class="slide-title">Pense Nisso</h2>
+        </div>
+        <div class="question-impact well-q" style="max-width: 950px;">
+            <h3>Reflexão Inicial</h3>
+            <p class="question-text">🤔 Quem carrega promessas de Deus também passa por crises?</p>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 850px; margin-top: 25px;">
+            <div class="card" style="border-left: 5px solid var(--sand); text-align: center;">
+                <div class="card-icon sand" style="margin: 0 auto 12px;"><i data-lucide="swords"></i></div>
+                <h4>Isaque: herdeiro da promessa</h4>
+                <p>Mas enfrentou fome, perseguição e oposição</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--well); text-align: center;">
+                <div class="card-icon well" style="margin: 0 auto 12px;"><i data-lucide="shield-check"></i></div>
+                <h4>Promessa é garantia de presença</h4>
+                <p>Não ausência de batalha</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 4 — O QUE APRENDER COM ISAQUE ═══════════ -->
+    <div class="slide slide-content" id="s4">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="sparkles"></i></div>
+            <div class="slide-badge">Lições de Caráter</div>
+            <h2 class="slide-title">O Que Podemos Aprender com Isaque?</h2>
+            <p class="slide-subtitle">✨ Características marcantes</p>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1050px;">
+            <div class="card" style="border-top: 5px solid var(--well); text-align: center;">
+                <div class="card-icon well" style="margin: 0 auto 15px;"><i data-lucide="check"></i></div>
+                <h4>Obediência</h4>
+                <p>Seguiu a Deus no lugar certo</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--peace); text-align: center;">
+                <div class="card-icon peace" style="margin: 0 auto 15px;"><i data-lucide="heart"></i></div>
+                <h4>Mansidão</h4>
+                <p>Espírito pacífico diante da oposição</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--sand); text-align: center;">
+                <div class="card-icon sand" style="margin: 0 auto 15px;"><i data-lucide="clock"></i></div>
+                <h4>Paciência</h4>
+                <p>Esperou o tempo de Deus agir</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--promise); text-align: center;">
+                <div class="card-icon promise" style="margin: 0 auto 15px;"><i data-lucide="dumbbell"></i></div>
+                <h4>Perseverança</h4>
+                <p>Continuou mesmo após perdas</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--accent); text-align: center;">
+                <div class="card-icon gold" style="margin: 0 auto 15px;"><i data-lucide="anchor"></i></div>
+                <h4>Dependência de Deus</h4>
+                <p>Buscou a Deus a cada passo</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--success); text-align: center;">
+                <div class="card-icon green" style="margin: 0 auto 15px;"><i data-lucide="handshake"></i></div>
+                <h4>Espírito Pacificador</h4>
+                <p>Preferiu paz a ter razão</p>
+            </div>
+        </div>
+        <div class="content-box" style="margin-top: 22px; max-width: 800px; text-align: center; background: linear-gradient(135deg, rgba(124,58,237,0.05), rgba(124,58,237,0.1));">
+            <p style="font-size: 1rem; font-weight: 600; color: var(--primary);">
+                📖 Gálatas 5.22 — "Mas o fruto do Espírito é amor, alegria, paz, longanimidade, benignidade…"
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 5 — TÓPICO I: A FOME NA TERRA ═══════════ -->
+    <div class="slide slide-content" id="s5">
+        <div class="slide-header">
+            <div class="slide-icon sand"><i data-lucide="cloud-off"></i></div>
+            <div class="slide-badge sand-badge">Tópico I — A Fome na Terra</div>
+            <h2 class="slide-title">A Fome na Terra</h2>
+            <p class="slide-subtitle">📖 Gênesis 26.1-5</p>
+        </div>
+        <div class="two-columns" style="max-width: 1100px;">
+            <div class="column">
+                <ul class="check-list">
+                    <li>
+                        <span class="check-icon sand"><i data-lucide="cloud-rain"></i></span>
+                        <span>Assim como Abraão, Isaque enfrentou <strong>tempo de fome</strong></span>
+                    </li>
+                    <li>
+                        <span class="check-icon warning"><i data-lucide="arrow-down"></i></span>
+                        <span>Sua intenção era <strong>descer ao Egito</strong></span>
+                    </li>
+                    <li>
+                        <span class="check-icon green"><i data-lucide="navigation"></i></span>
+                        <span>Deus lhe deu uma <strong>direção diferente</strong></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="column">
+                <div class="verse-highlight well-hl">
+                    <p class="verse-text">"Não desças ao Egito"</p>
+                    <span class="verse-ref">Gênesis 26.2</span>
+                </div>
+            </div>
+        </div>
+        <div class="content-box" style="margin-top: 25px; max-width: 900px; text-align: center; background: linear-gradient(135deg, rgba(146,64,14,0.05), rgba(146,64,14,0.1));">
+            <p style="font-size: 1.2rem; font-weight: 600; color: var(--primary);">
+                📌 Nem sempre a saída lógica é a <strong>direção de Deus</strong> — o lugar da promessa pode exigir fé
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 6 — PROMESSA NÃO É ILUSÃO ═══════════ -->
+    <div class="slide slide-content" id="s6">
+        <div class="slide-header">
+            <div class="slide-icon warning"><i data-lucide="alert-triangle"></i></div>
+            <div class="slide-badge warning-badge">Atenção</div>
+            <h2 class="slide-title">Promessa Não É Ilusão</h2>
+            <p class="slide-subtitle">⚠️ Precisamos discernir o que realmente veio de Deus</p>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 950px;">
+            <div class="card" style="border-left: 5px solid var(--peace);">
+                <div class="card-icon peace"><i data-lucide="check-circle-2"></i></div>
+                <h4>✅ Promessa de Deus</h4>
+                <p>Confirmada pela Palavra e pelo Espírito</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--warning);">
+                <div class="card-icon warning"><i data-lucide="brain"></i></div>
+                <h4>⚠️ Expectativa Humana</h4>
+                <p>Desejo próprio disfarçado de fé</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--sand);">
+                <div class="card-icon sand"><i data-lucide="zap"></i></div>
+                <h4>⚠️ Emoção Momentânea</h4>
+                <p>Sentimento passageiro sem fundamento</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--danger);">
+                <div class="card-icon danger"><i data-lucide="x-circle"></i></div>
+                <h4>❌ Palavra Sem Confirmação</h4>
+                <p>Sem base bíblica, sem confirmação</p>
+            </div>
+        </div>
+        <div class="content-box" style="margin-top: 22px; max-width: 900px; text-align: center;">
+            <p style="font-size: 1.1rem; color: var(--text-dark);">
+                📖 <strong>Jr 17.9</strong> "Enganoso é o coração…" | 📖 <strong>Dt 18.22</strong> Quando Deus fala, a Palavra se cumpre
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 7 — O PROBLEMA SE REPETE ═══════════ -->
+    <div class="slide slide-content" id="s7">
+        <div class="slide-header">
+            <div class="slide-icon danger"><i data-lucide="refresh-cw"></i></div>
+            <div class="slide-badge danger-badge">Cuidado</div>
+            <h2 class="slide-title">O Problema Se Repete</h2>
+            <p class="slide-subtitle">📖 Gênesis 26.7</p>
+        </div>
+        <div class="impact-box" style="max-width: 850px; margin-bottom: 25px;">
+            <p class="impact-text" style="font-size: 1.9rem;">
+                ➡️ Isaque repetiu o <span>erro de Abraão</span><br>
+                <span style="font-size: 1.4rem; color: rgba(255,255,255,0.8); font-style: italic;">Mentiu dizendo que Rebeca era sua irmã</span>
+            </p>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 850px;">
+            <div class="card" style="border-top: 5px solid var(--sand); text-align: center;">
+                <div class="card-icon sand" style="margin: 0 auto 12px;"><i data-lucide="user-check"></i></div>
+                <h4>Grandes homens de Deus também falham</h4>
+                <p>O legado espiritual não elimina a vigilância</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--danger); text-align: center;">
+                <div class="card-icon danger" style="margin: 0 auto 12px;"><i data-lucide="shield-alert"></i></div>
+                <h4>Promessa não é licença para o erro</h4>
+                <p>Ser abençoado exige ainda mais responsabilidade</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 8 — TÓPICO II: A INVEJA ═══════════ -->
+    <div class="slide slide-content" id="s8">
+        <div class="slide-header">
+            <div class="slide-icon danger"><i data-lucide="flame"></i></div>
+            <div class="slide-badge danger-badge">Tópico II — A Inveja Contra Isaque</div>
+            <h2 class="slide-title">A Inveja Contra Isaque</h2>
+            <p class="slide-subtitle">📖 Gênesis 26.14-15 — "Os filisteus o invejavam"</p>
+        </div>
+        <div class="verse-highlight sand-hl" style="max-width: 850px; margin-bottom: 25px;">
+            <p class="verse-text">"A inveja é a podridão dos ossos."</p>
+            <span class="verse-ref">Provérbios 14.30</span>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 900px;">
+            <div class="card" style="border-left: 5px solid var(--danger);">
+                <div class="card-icon danger"><i data-lucide="heart-crack"></i></div>
+                <h4>Destrói relacionamentos</h4>
+                <p>A inveja rompe vínculos e gera afastamento</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--warning);">
+                <div class="card-icon warning"><i data-lucide="user-x"></i></div>
+                <h4>Gera perseguição</h4>
+                <p>Quanto mais Deus abençoava, mais oposição surgia</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--sand);">
+                <div class="card-icon sand"><i data-lucide="swords"></i></div>
+                <h4>Produz contendas</h4>
+                <p>Conflito nascido não de culpa, mas de bênção</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--promise);">
+                <div class="card-icon promise"><i data-lucide="ban"></i></div>
+                <h4>Tenta parar o propósito de Deus</h4>
+                <p>Mas o que Deus propõe, ninguém detém</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 9 — OS POÇOS DE ISAQUE ═══════════ -->
+    <div class="slide slide-content" id="s9">
+        <div class="slide-header">
+            <div class="slide-icon well"><i data-lucide="circle-dot"></i></div>
+            <div class="slide-badge well-badge">Os Três Poços</div>
+            <h2 class="slide-title">Os Poços de Isaque</h2>
+            <p class="slide-subtitle">🕳️ Cada poço tinha um nome — e uma lição</p>
+        </div>
+        <div class="wells-grid">
+            <div class="well-card" style="border-top-color: var(--danger);">
+                <div class="well-card-num" style="background: rgba(192,57,43,0.1);">⚔️</div>
+                <h4>Eseque</h4>
+                <p class="meaning" style="color: var(--danger);">Contenda</p>
+                <p>Tomaram o poço por inveja e disputas</p>
+            </div>
+            <div class="well-card" style="border-top-color: var(--sand);">
+                <div class="well-card-num" style="background: rgba(146,64,14,0.1);">🗡️</div>
+                <h4>Sitna</h4>
+                <p class="meaning" style="color: var(--sand);">Inimizade</p>
+                <p>A oposição persistiu sem motivo justo</p>
+            </div>
+            <div class="well-card" style="border-top-color: var(--peace);">
+                <div class="well-card-num" style="background: rgba(5,150,105,0.1);">🌊</div>
+                <h4>Reobote</h4>
+                <p class="meaning" style="color: var(--peace);">Alargamento</p>
+                <p>Espaço aberto por Deus para crescer</p>
+            </div>
+        </div>
+        <div class="impact-box" style="margin-top: 25px; max-width: 900px;">
+            <p class="impact-text" style="font-size: 1.8rem;">
+                ➡️ Quem tem promessa não pode parar.<br>
+                <span>Continue cavando os poços que Deus mandou abrir.</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 10 — DIPLOMACIA ═══════════ -->
+    <div class="slide slide-content" id="s10">
+        <div class="slide-header">
+            <div class="slide-icon peace"><i data-lucide="handshake"></i></div>
+            <div class="slide-badge peace-badge">Sabedoria Prática</div>
+            <h2 class="slide-title">Isaque Agiu com Diplomacia</h2>
+            <p class="slide-subtitle">📖 Romanos 12.18 — "Se for possível, tende paz com todos"</p>
+        </div>
+        <ul class="check-list" style="max-width: 900px;">
+            <li>
+                <span class="check-icon green"><i data-lucide="check"></i></span>
+                <span>Isaque <strong>evitou conflitos desnecessários</strong></span>
+            </li>
+            <li>
+                <span class="check-icon green"><i data-lucide="check"></i></span>
+                <span>Preferiu a <strong>paz em vez da guerra</strong></span>
+            </li>
+            <li>
+                <span class="check-icon green"><i data-lucide="check"></i></span>
+                <span>Abriu mão de direitos para <strong>preservar a paz</strong></span>
+            </li>
+        </ul>
+        <div class="cards-grid cols-2" style="max-width: 850px; margin-top: 22px;">
+            <div class="card" style="border-top: 5px solid var(--peace); text-align: center; background: linear-gradient(135deg, rgba(5,150,105,0.05), rgba(5,150,105,0.1));">
+                <div class="card-icon peace" style="margin: 0 auto 12px;"><i data-lucide="shield"></i></div>
+                <h4>Nem toda batalha vale a pena</h4>
+                <p>Escolha as guerras certas</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--danger); text-align: center; background: linear-gradient(135deg, rgba(192,57,43,0.05), rgba(192,57,43,0.1));">
+                <div class="card-icon danger" style="margin: 0 auto 12px;"><i data-lucide="zap-off"></i></div>
+                <h4>Guerras desnecessárias roubam a paz</h4>
+                <p>E desviam do propósito de Deus</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 11 — TÓPICO III: DEUS APARECE ═══════════ -->
+    <div class="slide slide-content" id="s11">
+        <div class="slide-header">
+            <div class="slide-icon promise"><i data-lucide="sun"></i></div>
+            <div class="slide-badge promise-badge">Tópico III — Deus Aparece a Isaque</div>
+            <h2 class="slide-title">Deus Aparece a Isaque</h2>
+            <p class="slide-subtitle">📖 Gênesis 26.24</p>
+        </div>
+        <div class="verse-highlight primary-hl" style="max-width: 850px; margin-bottom: 25px;">
+            <p class="verse-text">"Não temas, porque eu sou contigo."</p>
+            <span class="verse-ref">Gênesis 26.24</span>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 950px;">
+            <div class="card" style="border-top: 5px solid var(--well); text-align: center;">
+                <div class="card-icon well" style="margin: 0 auto 12px;"><i data-lucide="user-check"></i></div>
+                <h4>Presença</h4>
+                <p>"Eu sou contigo"</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--accent); text-align: center;">
+                <div class="card-icon gold" style="margin: 0 auto 12px;"><i data-lucide="gift"></i></div>
+                <h4>Bênção</h4>
+                <p>"Eu te abençoarei"</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--peace); text-align: center;">
+                <div class="card-icon peace" style="margin: 0 auto 12px;"><i data-lucide="users"></i></div>
+                <h4>Multiplicação</h4>
+                <p>"Multiplicarei a tua semente"</p>
+            </div>
+        </div>
+        <div class="content-box" style="margin-top: 22px; max-width: 900px; text-align: center; background: linear-gradient(135deg, rgba(124,58,237,0.05), rgba(124,58,237,0.1));">
+            <p style="font-size: 1.15rem; font-weight: 600; color: var(--primary);">
+                ➡️ Ninguém vive apenas da experiência espiritual dos pais — <strong>cada geração precisa ter encontro próprio com Deus</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 12 — BERSEBA ═══════════ -->
+    <div class="slide slide-content" id="s12">
+        <div class="slide-header">
+            <div class="slide-icon well"><i data-lucide="droplets"></i></div>
+            <div class="slide-badge well-badge">Vitória Final</div>
+            <h2 class="slide-title">Berseba: O Poço do Juramento</h2>
+            <p class="slide-subtitle">📖 Gênesis 26.32-33</p>
+        </div>
+        <ul class="check-list" style="max-width: 900px;">
+            <li>
+                <span class="check-icon green"><i data-lucide="crown"></i></span>
+                <span><strong>Deus honrou Isaque</strong> — A fidelidade teve recompensa visível</span>
+            </li>
+            <li>
+                <span class="check-icon green"><i data-lucide="eye"></i></span>
+                <span>Os <strong>inimigos reconheceram</strong> que o Senhor era com ele</span>
+            </li>
+            <li>
+                <span class="check-icon green"><i data-lucide="droplets"></i></span>
+                <span>O poço <strong>Seba</strong> simbolizou confirmação e aliança</span>
+            </li>
+        </ul>
+        <div class="impact-box" style="margin-top: 30px; max-width: 900px;">
+            <p class="impact-text" style="font-size: 1.9rem;">
+                💧 O mesmo Deus que manda cavar<br>
+                <span>também faz a água aparecer</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 13 — APLICAÇÃO ESPIRITUAL ═══════════ -->
+    <div class="slide slide-content" id="s13">
+        <div class="slide-header">
+            <div class="slide-icon green"><i data-lucide="lightbulb"></i></div>
+            <div class="slide-badge peace-badge">Aplicação Espiritual</div>
+            <h2 class="slide-title">O Que Aprendemos com Isaque?</h2>
+        </div>
+        <ul class="check-list" style="max-width: 950px;">
+            <li>
+                <span class="check-icon green"><i data-lucide="check-circle-2"></i></span>
+                <span>Promessa <strong>não elimina crises</strong> — mas garante a presença de Deus nelas</span>
+            </li>
+            <li>
+                <span class="check-icon green"><i data-lucide="check-circle-2"></i></span>
+                <span>Deus continua <strong>fiel mesmo em tempos difíceis</strong></span>
+            </li>
+            <li>
+                <span class="check-icon green"><i data-lucide="check-circle-2"></i></span>
+                <span>A <strong>inveja dos homens</strong> não anula o propósito de Deus</span>
+            </li>
+            <li>
+                <span class="check-icon green"><i data-lucide="check-circle-2"></i></span>
+                <span>Precisamos <strong>permanecer cavando os poços</strong> que Deus mandou abrir</span>
+            </li>
+            <li>
+                <span class="check-icon green"><i data-lucide="check-circle-2"></i></span>
+                <span>A <strong>mansidão também é força espiritual</strong> — permanecer firme sem perder a paz</span>
+            </li>
+        </ul>
+        <div class="content-box" style="margin-top: 20px; max-width: 800px; text-align: center; background: linear-gradient(135deg, rgba(5,150,105,0.05), rgba(5,150,105,0.1));">
+            <p style="font-size: 1.2rem; font-weight: 700; color: var(--peace-dark);">
+                🙏 Deus honra quem permanece fiel
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 14 — PERGUNTA PARA A CLASSE ═══════════ -->
+    <div class="slide slide-content" id="s14">
+        <div class="slide-header">
+            <div class="slide-icon promise"><i data-lucide="message-circle-question"></i></div>
+            <div class="slide-badge promise-badge">Pergunta para a Classe</div>
+            <h2 class="slide-title">E Você?</h2>
+        </div>
+        <div class="question-impact well-q" style="max-width: 900px; margin-bottom: 25px;">
+            <h3>Reflexão</h3>
+            <p class="question-text">🤔 O que você faz quando enfrenta oposição no lugar da promessa?</p>
+        </div>
+        <div class="cards-grid cols-4" style="max-width: 1050px;">
+            <div class="card" style="border-top: 5px solid var(--danger); text-align: center; padding: 18px;">
+                <div class="card-icon danger" style="margin: 0 auto 12px; width: 44px; height: 44px;"><i data-lucide="log-out"></i></div>
+                <h4 style="font-size: 0.9rem;">Desiste?</h4>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--warning); text-align: center; padding: 18px;">
+                <div class="card-icon warning" style="margin: 0 auto 12px; width: 44px; height: 44px;"><i data-lucide="message-square-warning"></i></div>
+                <h4 style="font-size: 0.9rem;">Murmura?</h4>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--sand); text-align: center; padding: 18px;">
+                <div class="card-icon sand" style="margin: 0 auto 12px; width: 44px; height: 44px;"><i data-lucide="swords"></i></div>
+                <h4 style="font-size: 0.9rem;">Entra em guerra?</h4>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--peace); text-align: center; padding: 18px; background: linear-gradient(135deg, rgba(5,150,105,0.05), rgba(5,150,105,0.1));">
+                <div class="card-icon peace" style="margin: 0 auto 12px; width: 44px; height: 44px;"><i data-lucide="anchor"></i></div>
+                <h4 style="font-size: 0.9rem; color: var(--peace-dark);">Continua confiando?</h4>
+            </div>
+        </div>
+        <div class="content-box" style="margin-top: 20px; max-width: 800px; text-align: center;">
+            <p style="font-size: 1.1rem; font-weight: 600; color: var(--primary);">
+                📌 Isaque nos ensina que permanecer firme vale mais do que vencer discussões
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 15 — CONCLUSÃO ═══════════ -->
+    <div class="slide slide-conclusion" id="s15">
+        <div class="conclusion-content">
+            <div class="conclusion-icon"><i data-lucide="droplets"></i></div>
+            <div class="conclusion-text">
+                <p style="margin-bottom: 12px; font-size: 1rem; opacity: 0.8; letter-spacing: 2px; text-transform: uppercase;">Números 23.19</p>
+                <p style="font-style: italic; font-size: 1.4rem; opacity: 0.9; margin-bottom: 20px;">"Deus não é homem para que minta…"</p>
+                <p style="margin-bottom: 8px;">✅ Deus foi fiel a <strong>Abraão</strong></p>
+                <p style="margin-bottom: 8px;">✅ Deus foi fiel a <strong>Isaque</strong></p>
+                <p style="margin-bottom: 20px;">✅ Deus continua <strong style="color: var(--accent-light);">fiel hoje</strong></p>
+            </div>
+            <div class="conclusion-calls">
+                <span class="conclusion-call">🕳️ Continue cavando</span>
+                <span class="conclusion-call">🙏 Continue crendo</span>
+                <span class="conclusion-call">✝️ Continue obedecendo</span>
+            </div>
+            <div class="conclusion-highlight">
+                💧 Aquilo que Deus prometeu, Ele é poderoso para cumprir
+            </div>
+            <p style="margin-top: 30px; opacity: 0.5; font-size: 0.9rem;">EBD Adultos CPAD • Lição 8 • Isaque: Herdeiro da Promessa</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav-bar">
+    <button id="prev" onclick="prev()">◀</button>
+    <div class="counter"><span id="atual">1</span> / 15</div>
+    <button id="next" onclick="next()">▶</button>
+</nav>
+
+<script>
+    lucide.createIcons();
+
+    let slide = 1;
+    const total = 15;
+
+    function show(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        document.getElementById('atual').textContent = n;
+        document.getElementById('prev').disabled = (n === 1);
+        document.getElementById('next').disabled = (n === total);
+        slide = n;
+        lucide.createIcons();
+    }
+
+    function next() { if (slide < total) show(slide + 1); }
+    function prev() { if (slide > 1) show(slide - 1); }
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); showNavBar(); }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); showNavBar(); }
+        if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); }
+        if (e.key === 'Home') { show(1); showNavBar(); }
+        if (e.key === 'End') { show(total); showNavBar(); }
+    });
+
+    let navTimeout;
+    const navBar = document.querySelector('.nav-bar');
+
+    function showNavBar() {
+        navBar.classList.add('visible');
+        clearTimeout(navTimeout);
+        navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 3000);
+    }
+
+    document.addEventListener('mousemove', showNavBar);
+    document.addEventListener('touchstart', showNavBar);
+    navBar.addEventListener('mouseenter', () => { clearTimeout(navTimeout); });
+    navBar.addEventListener('mouseleave', () => { navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 2000); });
+
+    showNavBar();
+
+    setTimeout(() => {
+        const shortcuts = document.querySelector('.shortcuts');
+        if (shortcuts) { shortcuts.style.opacity = '0'; shortcuts.style.transition = 'opacity 1s'; }
+    }, 5000);
+</script>
+</body>
+</html>

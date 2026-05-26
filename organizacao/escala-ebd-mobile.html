@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escala EBD 2026 - 2º Trimestre (Mobile)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d4a6f;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #d4b33a;
+            --bg-light: #f5f7fa;
+            --text-dark: #1a1a2e;
+            --text-light: #666;
+            --white: #ffffff;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+        }
+        
+        /* Container de apresentação */
+        .presentation {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        /* Cada slide - formato retrato */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 30px;
+            background: var(--bg-light);
+            overflow-y: auto;
+        }
+        
+        .slide.active {
+            display: flex;
+            animation: slideIn 0.4s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        /* Navegação */
+        .nav-bar {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            background: rgba(255,255,255,0.95);
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-bar button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-bar button:hover { background: var(--primary-light); }
+        .nav-bar button:disabled { opacity: 0.3; cursor: not-allowed; }
+        
+        .nav-bar .counter {
+            padding: 0 15px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .print-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+        
+        .print-btn:hover { background: var(--primary-light); }
+        
+        /* ==================== SLIDE 1 - INTRO ==================== */
+        .slide-intro {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+            justify-content: center;
+            padding: 40px 25px;
+        }
+        
+        .intro-content { 
+            position: relative; 
+            z-index: 1;
+            width: 100%;
+            max-width: 350px;
+        }
+        
+        .intro-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(201,162,39,0.2);
+            border: 3px solid rgba(201,162,39,0.4);
+            border-radius: 24px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .intro-icon svg { width: 50px; height: 50px; color: var(--accent); }
+        
+        .intro-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+        
+        .intro-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.1;
+        }
+        .intro-title span { color: var(--accent); }
+        
+        .intro-subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        
+        .intro-stats {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .intro-stat {
+            text-align: center;
+            padding: 18px 25px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            min-width: 100px;
+        }
+        .intro-stat .num { font-size: 2.5rem; font-weight: 700; color: var(--accent); }
+        .intro-stat .label { font-size: 1rem; opacity: 0.8; margin-top: 5px; }
+        
+        /* ==================== SLIDE 2 - TABELA ==================== */
+        .slide-tabela { 
+            background: linear-gradient(180deg, #f8fafc 0%, #e8ecf0 100%);
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        
+        .slide-header { text-align: center; margin-bottom: 30px; width: 100%; }
+        .slide-header .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .slide-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .slide-header p { color: var(--text-light); font-size: 1.1rem; }
+        
+        .table-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: none;
+            overflow: hidden;
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); }
+        th {
+            color: white;
+            padding: 14px 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        th:first-child { text-align: left; padding-left: 14px; }
+        tbody tr { border-bottom: 1px solid #eee; }
+        tbody tr:last-child { border-bottom: none; }
+        td {
+            padding: 14px 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+        td:first-child {
+            text-align: left;
+            padding-left: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+        
+        /* ==================== SLIDES CLASSES ==================== */
+        .slide-classe { 
+            background: linear-gradient(180deg, #f8fafc 0%, #eef1f5 100%);
+            justify-content: center;
+            padding: 40px 30px;
+        }
+        
+        .classe-header { text-align: center; margin-bottom: 35px; width: 100%; }
+        .classe-icon-big {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(30,58,95,0.3);
+        }
+        .classe-icon-big svg { width: 40px; height: 40px; color: var(--accent); }
+        
+        .classe-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .classe-header p { color: var(--text-light); font-size: 1.1rem; }
+        
+        .cards-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px 25px;
+            box-shadow: none;
+            border-left: 5px solid var(--accent);
+        }
+        
+        .card h4 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card h4 svg { width: 24px; height: 24px; color: var(--accent); }
+        
+        .datas { display: flex; flex-wrap: wrap; gap: 10px; }
+        .data {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .versiculo {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px 20px;
+            max-width: 350px;
+        }
+        .versiculo p {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        .versiculo span {
+            display: block;
+            margin-top: 10px;
+            color: var(--accent);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        /* ==================== PRINT STYLES - RETRATO ==================== */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                box-shadow: none !important;
+            }
+            
+            html, body {
+                width: 100%;
+                height: auto;
+                overflow: visible;
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            .nav-bar, .print-btn { display: none !important; }
+            
+            .presentation { 
+                height: auto;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            .slide {
+                position: relative !important;
+                display: flex !important;
+                width: 100% !important;
+                height: 100vh !important;
+                min-height: 100vh !important;
+                max-height: 100vh !important;
+                page-break-after: always;
+                page-break-inside: avoid;
+                break-after: page;
+                padding: 50px 35px !important;
+                overflow: hidden !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+            }
+            
+            .slide:last-child { page-break-after: avoid; }
+            
+            /* Forçar cores */
+            .slide-intro {
+                background: #1e3a5f !important;
+                background-image: linear-gradient(180deg, #1e3a5f 0%, #0f2744 100%) !important;
+            }
+            
+            .intro-icon {
+                background-color: rgba(201,162,39,0.3) !important;
+                border: 2px solid #c9a227 !important;
+            }
+            
+            .intro-badge {
+                background-color: rgba(255,255,255,0.2) !important;
+            }
+            
+            .intro-stat {
+                background-color: rgba(255,255,255,0.15) !important;
+            }
+            
+            .intro-title span,
+            .intro-stat .num {
+                color: #c9a227 !important;
+            }
+            
+            thead, thead tr, th {
+                background: #1e3a5f !important;
+                background-color: #1e3a5f !important;
+                color: white !important;
+            }
+            
+            .slide-header .badge {
+                background: #1e3a5f !important;
+                background-color: #1e3a5f !important;
+                color: white !important;
+            }
+            
+            .classe-icon-big {
+                background: #1e3a5f !important;
+                background-color: #1e3a5f !important;
+            }
+            
+            .classe-icon-big svg {
+                color: #c9a227 !important;
+            }
+            
+            .card {
+                border-left: 5px solid #c9a227 !important;
+                box-shadow: none !important;
+            }
+            
+            .card h4 svg {
+                color: #c9a227 !important;
+            }
+            
+            .data {
+                background: #1e3a5f !important;
+                background-color: #1e3a5f !important;
+                color: white !important;
+            }
+            
+            .versiculo span {
+                color: #c9a227 !important;
+            }
+            
+            .slide-tabela, .slide-classe {
+                background: #f5f7fa !important;
+            }
+        }
+        
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+        
+        .table-container {
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">
+    <i data-lucide="printer"></i> PDF
+</button>
+
+<div class="presentation">
+
+    <!-- SLIDE 1 - ABERTURA -->
+    <div class="slide slide-intro active" id="s1">
+        <div class="intro-content">
+            <div class="intro-icon"><i data-lucide="book-open"></i></div>
+            <div class="intro-badge">📖 ESCOLA BÍBLICA DOMINICAL</div>
+            <h1 class="intro-title">Escala<br><span>EBD</span></h1>
+            <p class="intro-subtitle">2º Trimestre 2026</p>
+            <div class="intro-stats">
+                <div class="intro-stat"><div class="num">7</div><div class="label">Classes</div></div>
+                <div class="intro-stat"><div class="num">21</div><div class="label">Professores</div></div>
+                <div class="intro-stat"><div class="num">12</div><div class="label">Domingos</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2 - ESCALA ABRIL/MAIO -->
+    <div class="slide slide-tabela" id="s2">
+        <div class="slide-header">
+            <div class="badge">📋 ESCALA - ABRIL/MAIO</div>
+            <h2>Escala Geral</h2>
+            <p>Abril e Maio 2026</p>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Classe</th>
+                        <th>12/04</th>
+                        <th>19/04</th>
+                        <th>26/04</th>
+                        <th>03/05</th>
+                        <th>10/05</th>
+                        <th>17/05</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Homens</td><td>Françoar</td><td>Pastor</td><td>Natã</td><td>Everton</td><td>Françoar</td><td>Pastor</td></tr>
+                    <tr><td>Irmãs</td><td>Natã</td><td>Nara</td><td>Vanja</td><td>Maxwell</td><td>Nara</td><td>Vanja</td></tr>
+                    <tr><td>Discipulando</td><td>Guilherme</td><td>Joaz</td><td>Guilherme</td><td>Paulo</td><td>João</td><td>Joaz</td></tr>
+                    <tr><td>Jovens</td><td>Everton</td><td>Henrique</td><td>Nara</td><td>Natã</td><td>Everton</td><td>Henrique</td></tr>
+                    <tr><td>Pré-Adolescentes</td><td>Beatriz</td><td>Miqueias</td><td>Henrique</td><td>Beatriz</td><td>Miqueias</td><td>Henrique</td></tr>
+                    <tr><td>Juniores</td><td>Ana B.</td><td>Talita</td><td>Fernanda</td><td>Ana B.</td><td>Lucas</td><td>Talita</td></tr>
+                    <tr><td>Jardim</td><td>Yasmin</td><td>Lívia</td><td>Sofia</td><td>Yasmin</td><td>Lívia</td><td>Sofia</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- SLIDE 3 - ESCALA MAIO/JUNHO -->
+    <div class="slide slide-tabela" id="s3">
+        <div class="slide-header">
+            <div class="badge">📋 ESCALA - MAIO/JUNHO</div>
+            <h2>Escala Geral</h2>
+            <p>Maio e Junho 2026</p>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Classe</th>
+                        <th>24/05</th>
+                        <th>31/05</th>
+                        <th>07/06</th>
+                        <th>14/06</th>
+                        <th>21/06</th>
+                        <th>28/06</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Homens</td><td>Natã</td><td>Everton</td><td>Françoar</td><td>Pastor</td><td>Natã</td><td>Everton</td></tr>
+                    <tr><td>Irmãs</td><td>Maxwell</td><td>Nara</td><td>Vanja</td><td>Maxwell</td><td>Nara</td><td>Vanja</td></tr>
+                    <tr><td>Discipulando</td><td>Guilherme</td><td>Paulo</td><td>João</td><td>Joaz</td><td>Guilherme</td><td>Paulo</td></tr>
+                    <tr><td>Jovens</td><td>Nara</td><td>Natã</td><td>Everton</td><td>Henrique</td><td>Nara</td><td>Natã</td></tr>
+                    <tr><td>Pré-Adolescentes</td><td>Beatriz</td><td>Miqueias</td><td>Henrique</td><td>Beatriz</td><td>Miqueias</td><td>Henrique</td></tr>
+                    <tr><td>Juniores</td><td>Fernanda</td><td>Ana B.</td><td>Lucas</td><td>Talita</td><td>Fernanda</td><td>Ana B.</td></tr>
+                    <tr><td>Jardim</td><td>Yasmin</td><td>Lívia</td><td>Sofia</td><td>Yasmin</td><td>Lívia</td><td>Sofia</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- SLIDE 4 - CLASSE DE HOMENS -->
+    <div class="slide slide-classe" id="s4">
+        <div class="classe-header">
+            <div class="classe-icon-big"><i data-lucide="users"></i></div>
+            <h2>Classe de Homens</h2>
+            <p>2º Trimestre 2026</p>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+                <h4><i data-lucide="user"></i> Françoar</h4>
+                <div class="datas">
+                    <span class="data">12/04</span>
+                    <span class="data">10/05</span>
+                    <span class="data">07/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Pastor</h4>
+                <div class="datas">
+                    <span class="data">19/04</span>
+                    <span class="data">17/05</span>
+                    <span class="data">14/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Natã</h4>
+                <div class="datas">
+                    <span class="data">26/04</span>
+                    <span class="data">24/05</span>
+                    <span class="data">21/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Everton</h4>
+                <div class="datas">
+                    <span class="data">03/05</span>
+                    <span class="data">31/05</span>
+                    <span class="data">28/06</span>
+                </div>
+            </div>
+        </div>
+        <div class="versiculo">
+            <p>"Vós sois a luz do mundo."</p>
+            <span>Mateus 5:14</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 5 - CLASSE DAS IRMÃS -->
+    <div class="slide slide-classe" id="s5">
+        <div class="classe-header">
+            <div class="classe-icon-big"><i data-lucide="heart"></i></div>
+            <h2>Classe das Irmãs</h2>
+            <p>2º Trimestre 2026</p>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+                <h4><i data-lucide="user"></i> Maxwell</h4>
+                <div class="datas">
+                    <span class="data">03/05</span>
+                    <span class="data">24/05</span>
+                    <span class="data">14/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Nara</h4>
+                <div class="datas">
+                    <span class="data">19/04</span>
+                    <span class="data">10/05</span>
+                    <span class="data">31/05</span>
+                    <span class="data">21/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Vanja</h4>
+                <div class="datas">
+                    <span class="data">26/04</span>
+                    <span class="data">17/05</span>
+                    <span class="data">07/06</span>
+                    <span class="data">28/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Natã</h4>
+                <div class="datas">
+                    <span class="data">12/04</span>
+                </div>
+            </div>
+        </div>
+        <div class="versiculo">
+            <p>"Mulher virtuosa, quem a achará?"</p>
+            <span>Provérbios 31:10</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 6 - DISCIPULANDO -->
+    <div class="slide slide-classe" id="s6">
+        <div class="classe-header">
+            <div class="classe-icon-big"><i data-lucide="book-open"></i></div>
+            <h2>Discipulando</h2>
+            <p>2º Trimestre 2026</p>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+                <h4><i data-lucide="user"></i> João</h4>
+                <div class="datas">
+                    <span class="data">10/05</span>
+                    <span class="data">07/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Joaz</h4>
+                <div class="datas">
+                    <span class="data">19/04</span>
+                    <span class="data">17/05</span>
+                    <span class="data">14/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Guilherme</h4>
+                <div class="datas">
+                    <span class="data">12/04</span>
+                    <span class="data">26/04</span>
+                    <span class="data">24/05</span>
+                    <span class="data">21/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Paulo</h4>
+                <div class="datas">
+                    <span class="data">03/05</span>
+                    <span class="data">31/05</span>
+                    <span class="data">28/06</span>
+                </div>
+            </div>
+        </div>
+        <div class="versiculo">
+            <p>"Fazei discípulos de todas as nações."</p>
+            <span>Mateus 28:19</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 7 - JOVENS -->
+    <div class="slide slide-classe" id="s7">
+        <div class="classe-header">
+            <div class="classe-icon-big"><i data-lucide="flame"></i></div>
+            <h2>Jovens</h2>
+            <p>2º Trimestre 2026</p>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+                <h4><i data-lucide="user"></i> Everton</h4>
+                <div class="datas">
+                    <span class="data">12/04</span>
+                    <span class="data">10/05</span>
+                    <span class="data">07/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Henrique</h4>
+                <div class="datas">
+                    <span class="data">19/04</span>
+                    <span class="data">17/05</span>
+                    <span class="data">14/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Nara</h4>
+                <div class="datas">
+                    <span class="data">26/04</span>
+                    <span class="data">24/05</span>
+                    <span class="data">21/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Natã</h4>
+                <div class="datas">
+                    <span class="data">03/05</span>
+                    <span class="data">31/05</span>
+                    <span class="data">28/06</span>
+                </div>
+            </div>
+        </div>
+        <div class="versiculo">
+            <p>"Ninguém despreze a tua mocidade."</p>
+            <span>1 Timóteo 4:12</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 8 - PRÉ-ADOLESCENTES -->
+    <div class="slide slide-classe" id="s8">
+        <div class="classe-header">
+            <div class="classe-icon-big"><i data-lucide="rocket"></i></div>
+            <h2>Pré-Adolescentes</h2>
+            <p>2º Trimestre 2026</p>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+                <h4><i data-lucide="user"></i> Beatriz</h4>
+                <div class="datas">
+                    <span class="data">12/04</span>
+                    <span class="data">03/05</span>
+                    <span class="data">24/05</span>
+                    <span class="data">14/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Miqueias</h4>
+                <div class="datas">
+                    <span class="data">19/04</span>
+                    <span class="data">10/05</span>
+                    <span class="data">31/05</span>
+                    <span class="data">21/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Henrique</h4>
+                <div class="datas">
+                    <span class="data">26/04</span>
+                    <span class="data">17/05</span>
+                    <span class="data">07/06</span>
+                    <span class="data">28/06</span>
+                </div>
+            </div>
+        </div>
+        <div class="versiculo">
+            <p>"Lembrai-vos do Criador na mocidade."</p>
+            <span>Eclesiastes 12:1</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 9 - JUNIORES -->
+    <div class="slide slide-classe" id="s9">
+        <div class="classe-header">
+            <div class="classe-icon-big"><i data-lucide="star"></i></div>
+            <h2>Juniores</h2>
+            <p>2º Trimestre 2026</p>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+                <h4><i data-lucide="user"></i> Lucas</h4>
+                <div class="datas">
+                    <span class="data">10/05</span>
+                    <span class="data">07/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Talita</h4>
+                <div class="datas">
+                    <span class="data">19/04</span>
+                    <span class="data">17/05</span>
+                    <span class="data">14/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Fernanda</h4>
+                <div class="datas">
+                    <span class="data">26/04</span>
+                    <span class="data">24/05</span>
+                    <span class="data">21/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Ana B.</h4>
+                <div class="datas">
+                    <span class="data">12/04</span>
+                    <span class="data">03/05</span>
+                    <span class="data">31/05</span>
+                    <span class="data">28/06</span>
+                </div>
+            </div>
+        </div>
+        <div class="versiculo">
+            <p>"Deixai vir a mim as crianças."</p>
+            <span>Marcos 10:14</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 10 - JARDIM -->
+    <div class="slide slide-classe" id="s10">
+        <div class="classe-header">
+            <div class="classe-icon-big"><i data-lucide="flower-2"></i></div>
+            <h2>Jardim</h2>
+            <p>2º Trimestre 2026</p>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+                <h4><i data-lucide="user"></i> Yasmin</h4>
+                <div class="datas">
+                    <span class="data">12/04</span>
+                    <span class="data">03/05</span>
+                    <span class="data">24/05</span>
+                    <span class="data">14/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Lívia</h4>
+                <div class="datas">
+                    <span class="data">19/04</span>
+                    <span class="data">10/05</span>
+                    <span class="data">31/05</span>
+                    <span class="data">21/06</span>
+                </div>
+            </div>
+            <div class="card">
+                <h4><i data-lucide="user"></i> Sofia</h4>
+                <div class="datas">
+                    <span class="data">26/04</span>
+                    <span class="data">17/05</span>
+                    <span class="data">07/06</span>
+                    <span class="data">28/06</span>
+                </div>
+            </div>
+        </div>
+        <div class="versiculo">
+            <p>"Da boca das crianças tiraste louvor."</p>
+            <span>Mateus 21:16</span>
+        </div>
+    </div>
+
+</div>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav-bar">
+    <button id="prev" onclick="prev()">◀</button>
+    <div class="counter"><span id="atual">1</span> / 10</div>
+    <button id="next" onclick="next()">▶</button>
+</nav>
+
+<script>
+    lucide.createIcons();
+    
+    let slide = 1;
+    const total = 10;
+    
+    function show(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        document.getElementById('atual').textContent = n;
+        document.getElementById('prev').disabled = (n === 1);
+        document.getElementById('next').disabled = (n === total);
+        slide = n;
+        lucide.createIcons();
+    }
+    
+    function next() { if (slide < total) show(slide + 1); }
+    function prev() { if (slide > 1) show(slide - 1); }
+    
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ') next();
+        if (e.key === 'ArrowLeft') prev();
+    });
+    
+    // Suporte a toque/swipe
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', e => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (diff > 50) next();
+        else if (diff < -50) prev();
+    });
+</script>
+</body>
+</html>

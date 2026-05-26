@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heresias que Negam a Pessoa do Espírito Santo | EBD Jovens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #d4b84a;
+            --bg-light: #f8fafc;
+            --bg-dark: #e2e8f0;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --text-muted: #718096;
+            --white: #ffffff;
+            --success: #38a169;
+            --info: #3182ce;
+            --warning: #e67e22;
+            --danger: #c0392b;
+            --flame: #e85d04;
+            --flame-light: #f48c06;
+            --flame-dark: #dc2f02;
+            --spirit: #7c3aed;
+            --spirit-light: #a78bfa;
+            --spirit-dark: #5b21b6;
+            --heresy: #991b1b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%; height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+        }
+
+        .presentation { width: 100%; height: 100%; position: relative; }
+
+        .slide {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 45px 70px;
+            background: var(--bg-light);
+        }
+
+        .slide.active { display: flex; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulseFlame { 0%,100% { box-shadow: 0 0 30px rgba(232,93,4,0.3); } 50% { box-shadow: 0 0 60px rgba(232,93,4,0.6); } }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes rotateBg { to { transform: rotate(360deg); } }
+
+        /* ══════ NAV ══════ */
+        .nav-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 18px;
+            background: rgba(255,255,255,0.95); padding: 12px 30px;
+            border-radius: 50px; box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+            z-index: 1000; backdrop-filter: blur(10px);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .nav-bar.visible { opacity: 1; pointer-events: auto; }
+        .nav-bar button {
+            width: 48px; height: 48px; border: none; border-radius: 50%;
+            background: var(--primary); color: white; cursor: pointer;
+            font-size: 1.2rem; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-bar button:hover { background: var(--primary-light); transform: scale(1.05); }
+        .nav-bar button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        .nav-bar .counter { padding: 0 22px; font-weight: 700; font-size: 1.05rem; color: var(--primary); display: flex; align-items: center; }
+
+        .fullscreen-btn {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--primary); color: white; border: none;
+            padding: 12px 20px; border-radius: 12px; cursor: pointer;
+            font-weight: 600; font-size: 0.95rem; z-index: 1000;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s;
+        }
+        .fullscreen-btn:hover { background: var(--primary-light); }
+
+        .shortcuts {
+            position: fixed; bottom: 25px; left: 25px;
+            background: rgba(0,0,0,0.75); color: white;
+            padding: 12px 20px; border-radius: 10px;
+            font-size: 0.8rem; z-index: 1000; opacity: 0.8;
+        }
+        .shortcuts kbd { background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 4px; margin: 0 2px; }
+
+        /* ══════ CAPA ══════ */
+        .slide-capa {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-capa::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(232,93,4,0.06), transparent, rgba(124,58,237,0.06), transparent);
+            animation: rotateBg 25s linear infinite;
+        }
+        .capa-content { position: relative; z-index: 1; max-width: 1000px; }
+        .capa-icon {
+            width: 110px; height: 110px;
+            background: rgba(232,93,4,0.15); border: 2px solid rgba(232,93,4,0.3);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: pulseFlame 3s ease-in-out infinite;
+        }
+        .capa-icon svg { width: 55px; height: 55px; color: var(--flame); }
+        .capa-badge {
+            display: inline-block; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 30px; border-radius: 50px;
+            font-size: 0.9rem; margin-bottom: 20px;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .capa-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.6rem; font-weight: 700;
+            margin-bottom: 20px; line-height: 1.15;
+        }
+        .capa-title span { color: var(--flame); }
+        .capa-subtitle {
+            font-size: 1.25rem; opacity: 0.85;
+            margin-bottom: 30px; font-weight: 300;
+            max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;
+        }
+        .capa-tags {
+            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+        }
+        .capa-tag {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 18px; border-radius: 50px; font-size: 0.85rem;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+        .capa-tag.fire { border-color: rgba(232,93,4,0.4); color: var(--flame-light); }
+        .capa-tag.purple { border-color: rgba(124,58,237,0.4); color: var(--spirit-light); }
+
+        /* ══════ CONTENT SLIDES ══════ */
+        .slide-content { background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-dark) 100%); }
+
+        .slide-header { text-align: center; margin-bottom: 35px; }
+
+        .slide-icon {
+            width: 70px; height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 18px; margin: 0 auto 18px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(30,58,95,0.25);
+        }
+        .slide-icon svg { width: 35px; height: 35px; color: var(--accent); }
+        .slide-icon.flame { background: linear-gradient(135deg, var(--flame), var(--flame-light)); }
+        .slide-icon.flame svg { color: white; }
+        .slide-icon.spirit { background: linear-gradient(135deg, var(--spirit), var(--spirit-light)); }
+        .slide-icon.spirit svg { color: white; }
+        .slide-icon.heresy { background: linear-gradient(135deg, var(--heresy), #b91c1c); }
+        .slide-icon.heresy svg { color: #fca5a5; }
+        .slide-icon.green { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .slide-icon.green svg { color: white; }
+
+        .slide-badge {
+            display: inline-block; padding: 7px 20px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 700; margin-bottom: 12px;
+            letter-spacing: 1px; text-transform: uppercase;
+            background: var(--accent); color: var(--primary-dark);
+        }
+        .slide-badge.flame-badge { background: var(--flame); color: white; }
+        .slide-badge.spirit-badge { background: var(--spirit); color: white; }
+        .slide-badge.heresy-badge { background: var(--heresy); color: #fca5a5; }
+        .slide-badge.green-badge { background: var(--success); color: white; }
+        .slide-badge.info-badge { background: var(--info); color: white; }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem; color: var(--primary); line-height: 1.2;
+        }
+        .slide-subtitle { font-size: 1.05rem; color: var(--text-muted); margin-top: 8px; }
+
+        /* Cards */
+        .cards-grid {
+            display: grid; gap: 20px; width: 100%; max-width: 1200px;
+        }
+        .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); max-width: 950px; }
+        .cards-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .cards-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+        .cards-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+
+        .card {
+            background: white; border-radius: 14px; padding: 25px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.07); transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-4px); }
+
+        .card-icon {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 12px; margin-bottom: 15px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card-icon svg { width: 25px; height: 25px; color: var(--accent); }
+        .card-icon.flame { background: linear-gradient(135deg, var(--flame), var(--flame-light)); }
+        .card-icon.flame svg { color: white; }
+        .card-icon.spirit { background: linear-gradient(135deg, var(--spirit), var(--spirit-light)); }
+        .card-icon.spirit svg { color: white; }
+        .card-icon.heresy-icon { background: linear-gradient(135deg, var(--heresy), #b91c1c); }
+        .card-icon.heresy-icon svg { color: #fca5a5; }
+        .card-icon.green { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .card-icon.green svg { color: white; }
+        .card-icon.blue { background: linear-gradient(135deg, var(--info), #3498db); }
+        .card-icon.blue svg { color: white; }
+
+        .card h4 { font-size: 1.05rem; color: var(--primary); margin-bottom: 8px; }
+        .card p { font-size: 0.95rem; color: var(--text-light); line-height: 1.55; }
+        .card .verse {
+            display: inline-block; background: rgba(124,58,237,0.1);
+            color: var(--spirit-dark); padding: 4px 12px; border-radius: 20px;
+            font-size: 0.78rem; font-weight: 600; margin-top: 10px;
+        }
+
+        /* Item list */
+        .item-list { list-style: none; width: 100%; max-width: 900px; }
+        .item-list li {
+            display: flex; align-items: flex-start; gap: 15px;
+            padding: 13px 0; border-bottom: 1px solid rgba(0,0,0,0.06);
+            font-size: 1.05rem; color: var(--text-dark);
+        }
+        .item-list li:last-child { border-bottom: none; }
+        .item-list .icon {
+            width: 42px; height: 42px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            background: rgba(124,58,237,0.1);
+        }
+        .item-list .icon svg { width: 20px; height: 20px; color: var(--spirit); }
+        .item-list .text strong { color: var(--primary); display: block; margin-bottom: 3px; }
+        .item-list .text small { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Verse highlight */
+        .verse-highlight {
+            background: linear-gradient(135deg, var(--spirit), var(--spirit-dark));
+            border-radius: 18px; padding: 35px 45px; color: white;
+            text-align: center; max-width: 900px; width: 100%;
+        }
+        .verse-highlight.flame-hl { background: linear-gradient(135deg, var(--flame), var(--flame-dark)); }
+        .verse-highlight.primary-hl { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
+        .verse-highlight .verse-text {
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            line-height: 1.5; margin-bottom: 18px; font-style: italic;
+        }
+        .verse-highlight .verse-ref {
+            background: var(--accent); color: var(--primary-dark);
+            padding: 7px 22px; border-radius: 50px; font-weight: 700;
+            font-size: 0.95rem; display: inline-block;
+        }
+
+        /* Content box */
+        .content-box {
+            background: white; border-radius: 18px; padding: 35px;
+            box-shadow: 0 8px 35px rgba(0,0,0,0.07); max-width: 1100px; width: 100%;
+        }
+        .content-box h3 {
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            color: var(--primary); margin-bottom: 20px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .content-box h3 .icon {
+            width: 45px; height: 45px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--spirit), var(--spirit-light));
+        }
+        .content-box h3 .icon svg { width: 22px; height: 22px; color: white; }
+        .content-box p { font-size: 1.05rem; color: var(--text-dark); line-height: 1.65; margin-bottom: 12px; }
+
+        /* Two columns */
+        .two-columns { display: flex; gap: 30px; width: 100%; max-width: 1200px; align-items: stretch; }
+        .column { flex: 1; }
+
+        /* Question impact */
+        .question-impact {
+            background: linear-gradient(135deg, var(--spirit), var(--spirit-dark));
+            border-radius: 18px; padding: 45px; color: white;
+            text-align: center; max-width: 1000px; width: 100%;
+            box-shadow: 0 12px 45px rgba(124,58,237,0.3);
+        }
+        .question-impact.flame-q { background: linear-gradient(135deg, var(--flame), var(--flame-dark)); box-shadow: 0 12px 45px rgba(232,93,4,0.3); }
+        .question-impact.warm-q { background: linear-gradient(135deg, var(--warning), #f39c12); box-shadow: 0 12px 45px rgba(230,126,34,0.3); }
+        .question-impact h3 {
+            font-size: 1rem; opacity: 0.9; margin-bottom: 18px;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .question-impact .question-text {
+            font-family: 'Playfair Display', serif; font-size: 2rem;
+            line-height: 1.4; font-weight: 600;
+        }
+
+        /* Dark contrast box */
+        .dark-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 18px; padding: 35px; color: white;
+            max-width: 1100px; width: 100%;
+        }
+        .dark-box h3 {
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            color: var(--flame-light); margin-bottom: 20px; text-align: center;
+        }
+        .dark-box p { font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+        .dark-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .dark-item {
+            background: rgba(255,255,255,0.06); border-radius: 12px;
+            padding: 18px 22px; border-left: 4px solid; display: flex;
+            align-items: center; gap: 12px;
+        }
+        .dark-item.error { border-color: var(--danger); }
+        .dark-item.ok { border-color: var(--success); }
+        .dark-item .di-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .dark-item.error .di-icon { background: rgba(192,57,43,0.2); }
+        .dark-item.error .di-icon svg { color: #e74c3c; }
+        .dark-item.ok .di-icon { background: rgba(56,161,105,0.2); }
+        .dark-item.ok .di-icon svg { color: #48bb78; }
+        .dark-item p { font-size: 0.95rem; line-height: 1.45; }
+        .dark-item p strong { display: block; margin-bottom: 2px; color: white; }
+
+        /* Greek word highlight */
+        .greek-box {
+            background: linear-gradient(135deg, var(--spirit) 0%, var(--spirit-dark) 100%);
+            border-radius: 20px; padding: 40px 50px; color: white;
+            text-align: center; max-width: 950px; width: 100%;
+            position: relative; overflow: hidden;
+        }
+        .greek-box::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.06) 0%, transparent 50%);
+        }
+        .greek-box .greek-word {
+            font-family: 'Playfair Display', serif; font-size: 3.5rem;
+            font-weight: 700; margin-bottom: 10px; position: relative;
+        }
+        .greek-box .greek-original {
+            font-size: 1.6rem; opacity: 0.8; margin-bottom: 20px;
+            font-style: italic; position: relative;
+        }
+        .greek-items {
+            display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+            position: relative;
+        }
+        .greek-item {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 14px; padding: 15px 22px; min-width: 140px;
+        }
+        .greek-item h4 { font-size: 1rem; margin-bottom: 4px; color: var(--accent-light); }
+        .greek-item p { font-size: 0.9rem; opacity: 0.85; }
+
+        /* Comparison boxes (allos vs heteros) */
+        .compare-container {
+            display: flex; gap: 30px; width: 100%; max-width: 1050px; align-items: stretch;
+        }
+        .compare-box {
+            flex: 1; border-radius: 18px; padding: 30px; text-align: center;
+        }
+        .compare-box.allos {
+            background: linear-gradient(135deg, var(--spirit), var(--spirit-dark));
+            color: white;
+        }
+        .compare-box.heteros {
+            background: linear-gradient(135deg, #4a5568, #2d3748);
+            color: white;
+        }
+        .compare-box h3 {
+            font-family: 'Playfair Display', serif; font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        .compare-box .greek-small { font-style: italic; opacity: 0.7; font-size: 1rem; margin-bottom: 15px; }
+        .compare-box p { font-size: 1.05rem; line-height: 1.6; opacity: 0.9; }
+        .compare-vs {
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; width: 60px;
+        }
+        .compare-vs span {
+            background: var(--accent); color: var(--primary-dark);
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1.2rem;
+        }
+
+        /* Symbol cards */
+        .symbol-card {
+            background: white; border-radius: 16px; padding: 28px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+            display: flex; align-items: flex-start; gap: 20px;
+        }
+        .symbol-visual {
+            width: 80px; height: 80px; border-radius: 20px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .symbol-visual svg { width: 40px; height: 40px; }
+        .symbol-info h4 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--primary); margin-bottom: 8px; }
+        .symbol-info p { font-size: 0.95rem; color: var(--text-light); line-height: 1.55; margin-bottom: 6px; }
+        .symbol-info .verse { display: inline-block; background: rgba(124,58,237,0.1); color: var(--spirit-dark); padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+
+        /* Summary row (for symbols) */
+        .summary-row {
+            display: flex; gap: 15px; width: 100%; max-width: 1100px; justify-content: center;
+        }
+        .summary-pill {
+            background: white; border-radius: 14px; padding: 18px 22px;
+            text-align: center; flex: 1; box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border-top: 4px solid;
+        }
+        .summary-pill h5 { font-size: 0.9rem; color: var(--primary); margin-bottom: 5px; }
+        .summary-pill p { font-size: 0.85rem; color: var(--text-light); }
+
+        /* ══════ PRINT ══════ */
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+            html, body { width: 100%; height: auto; overflow: visible; background: white !important; margin: 0; padding: 0; }
+            .presentation { display: block; height: auto; }
+            .nav-bar, .fullscreen-btn, .shortcuts { display: none !important; }
+            .slide {
+                position: relative !important; display: flex !important;
+                width: 100% !important; height: 100vh !important;
+                min-height: 100vh !important; max-height: 100vh !important;
+                padding: 30px 50px !important;
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            .slide:last-child { page-break-after: avoid !important; break-after: avoid !important; }
+            .slide-capa { background: #0f0f1a !important; }
+            .slide-header { margin-bottom: 20px !important; }
+            .slide-title { font-size: 2rem !important; }
+            .slide-icon { width: 55px !important; height: 55px !important; }
+            .capa-title { font-size: 2.8rem !important; }
+            .cards-grid { gap: 12px !important; }
+            .card { padding: 16px !important; }
+            .card h4 { font-size: 0.95rem !important; }
+            .card p { font-size: 0.85rem !important; }
+            .verse-highlight { padding: 20px 25px !important; }
+            .verse-highlight .verse-text { font-size: 1.2rem !important; }
+            .question-impact { padding: 25px !important; }
+            .question-impact .question-text { font-size: 1.5rem !important; }
+            .greek-box { padding: 25px 30px !important; }
+            .greek-box .greek-word { font-size: 2.5rem !important; }
+            .content-box { padding: 20px 25px !important; }
+            .dark-box { padding: 20px 25px !important; }
+            .symbol-card { padding: 18px !important; }
+            @keyframes float { 0%,50%,100% { transform: none; } }
+            @keyframes pulseFlame { 0%,50%,100% { box-shadow: none; } }
+            @keyframes rotateBg { 0%,100% { transform: none; } }
+        }
+        @page { size: landscape; margin: 0; }
+        :fullscreen .nav-bar { bottom: 35px; }
+        :fullscreen .fullscreen-btn { display: none; }
+    </style>
+</head>
+<body>
+
+<button class="fullscreen-btn" onclick="toggleFullscreen()">
+    <i data-lucide="maximize"></i> Tela Cheia
+</button>
+<div class="shortcuts">
+    <kbd>←</kbd> <kbd>→</kbd> navegar | <kbd>F</kbd> tela cheia
+</div>
+
+<div class="presentation">
+
+    <!-- ═══════════ SLIDE 1 — CAPA ═══════════ -->
+    <div class="slide slide-capa active" id="s1">
+        <div class="capa-content">
+            <div class="capa-icon"><i data-lucide="flame"></i></div>
+            <div class="capa-badge">EBD Jovens • Estudo Teológico</div>
+            <h1 class="capa-title">Heresias que Negam a Pessoa do <span>Espírito Santo</span></h1>
+            <p class="capa-subtitle">Sua personalidade, divindade, obra e símbolos — o que a Bíblia ensina e o que as heresias distorcem.</p>
+            <div class="capa-tags">
+                <span class="capa-tag fire">Personalidade</span>
+                <span class="capa-tag purple">Divindade</span>
+                <span class="capa-tag fire">Consolador</span>
+                <span class="capa-tag purple">Símbolos</span>
+                <span class="capa-tag">Heresias</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 2 — ARIANISMO ═══════════ -->
+    <div class="slide slide-content" id="s2">
+        <div class="slide-header">
+            <div class="slide-icon heresy"><i data-lucide="alert-triangle"></i></div>
+            <div class="slide-badge heresy-badge">Heresia • Séc. IV</div>
+            <h2 class="slide-title">Arianismo</h2>
+            <p class="slide-subtitle">Fundador: Ário — Negava a plena divindade de Cristo e rebaixava o Espírito Santo</p>
+        </div>
+        <div class="dark-box">
+            <h3>O que o Arianismo ensinava</h3>
+            <div class="dark-items">
+                <div class="dark-item error">
+                    <div class="di-icon"><i data-lucide="x"></i></div>
+                    <p><strong>O Filho era criado</strong>Não era da mesma substância do Pai</p>
+                </div>
+                <div class="dark-item error">
+                    <div class="di-icon"><i data-lucide="x"></i></div>
+                    <p><strong>O Espírito Santo não era Deus pleno</strong>Rebaixado a uma criatura inferior</p>
+                </div>
+                <div class="dark-item error">
+                    <div class="di-icon"><i data-lucide="x"></i></div>
+                    <p><strong>Hierarquia ontológica na Trindade</strong>Pai superior, Filho inferior, Espírito ainda menor</p>
+                </div>
+                <div class="dark-item error">
+                    <div class="di-icon"><i data-lucide="x"></i></div>
+                    <p><strong>Negação da igualdade trinitária</strong>Destruía a essência do Deus trino revelado na Bíblia</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 3 — CONCÍLIOS ═══════════ -->
+    <div class="slide slide-content" id="s3">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="shield-check"></i></div>
+            <div class="slide-badge">Defesa da Fé</div>
+            <h2 class="slide-title">Como o Arianismo foi Combatido?</h2>
+        </div>
+        <div class="two-columns">
+            <div class="column">
+                <div class="content-box" style="height: 100%;">
+                    <h3><span class="icon" style="background: linear-gradient(135deg, var(--accent), var(--accent-light));"><i data-lucide="landmark"></i></span> Concílio de Niceia (325 d.C.)</h3>
+                    <p>Convocado pelo imperador <strong>Constantino</strong>.</p>
+                    <p>Principais defensores da ortodoxia:</p>
+                    <ul class="item-list" style="max-width: 100%;">
+                        <li>
+                            <span class="icon" style="background: rgba(201,162,39,0.15);"><i data-lucide="user" style="color: var(--accent);"></i></span>
+                            <span class="text"><strong>Atanásio de Alexandria</strong><small>Defensor incansável da divindade do Filho</small></span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background: rgba(201,162,39,0.15);"><i data-lucide="user" style="color: var(--accent);"></i></span>
+                            <span class="text"><strong>Alexandre de Alexandria</strong><small>Bispo que confrontou Ário diretamente</small></span>
+                        </li>
+                    </ul>
+                    <p style="margin-top: 12px;">Declarou que o Filho é <strong>"da mesma substância"</strong> (<em>homoousios</em>) do Pai.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="content-box" style="height: 100%; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white;">
+                    <h3 style="color: var(--accent);"><span class="icon"><i data-lucide="crown"></i></span> Constantinopla (381 d.C.)</h3>
+                    <p style="color: rgba(255,255,255,0.9);">Confirmou a <strong>plena divindade do Espírito Santo</strong>:</p>
+                    <div style="margin-top: 15px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 12px; border-left: 4px solid var(--accent);">
+                        <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; color: white;">"Cremos no Espírito Santo, Senhor e Vivificador…"</p>
+                    </div>
+                    <p style="margin-top: 15px; color: rgba(255,255,255,0.9);">O arianismo foi <strong>oficialmente condenado</strong> como heresia.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 4 — QUESTÕES INICIAIS ═══════════ -->
+    <div class="slide slide-content" id="s4">
+        <div class="slide-header">
+            <div class="slide-icon flame"><i data-lucide="message-circle-question"></i></div>
+            <div class="slide-badge flame-badge">Interação</div>
+            <h2 class="slide-title">Questões para Reflexão</h2>
+        </div>
+        <div class="cards-grid cols-2">
+            <div class="card" style="border-left: 5px solid var(--flame); text-align: center; padding: 30px;">
+                <div class="card-icon flame" style="margin: 0 auto 15px;"><i data-lucide="zap"></i></div>
+                <h4 style="font-size: 1.15rem;">O Espírito Santo é uma força ou energia ativa de Deus?</h4>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--flame); text-align: center; padding: 30px;">
+                <div class="card-icon flame" style="margin: 0 auto 15px;"><i data-lucide="help-circle"></i></div>
+                <h4 style="font-size: 1.15rem;">O Espírito Santo foi criado por Deus?</h4>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--spirit); text-align: center; padding: 30px;">
+                <div class="card-icon spirit" style="margin: 0 auto 15px;"><i data-lucide="crown"></i></div>
+                <h4 style="font-size: 1.15rem;">O Espírito Santo é Deus?</h4>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--spirit); text-align: center; padding: 30px;">
+                <div class="card-icon spirit" style="margin: 0 auto 15px;"><i data-lucide="user"></i></div>
+                <h4 style="font-size: 1.15rem;">O Espírito Santo tem personalidade?</h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 5 — O ESPÍRITO SANTO É UMA PESSOA ═══════════ -->
+    <div class="slide slide-content" id="s5">
+        <div class="slide-header">
+            <div class="slide-icon spirit"><i data-lucide="user-check"></i></div>
+            <div class="slide-badge spirit-badge">Tópico 1</div>
+            <h2 class="slide-title">O Espírito Santo é uma Pessoa</h2>
+            <p class="slide-subtitle">Não é uma força impessoal nem uma energia cósmica — possui atributos de personalidade</p>
+        </div>
+        <div class="cards-grid cols-5" style="max-width: 1200px;">
+            <div class="card" style="text-align: center;">
+                <div class="card-icon spirit" style="margin: 0 auto 12px;"><i data-lucide="brain"></i></div>
+                <h4>Intelecto</h4>
+                <p>Tem pensamento, intenção e racionalidade (<em>phronema</em>)</p>
+                <span class="verse">Rm 8.27</span>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div class="card-icon spirit" style="margin: 0 auto 12px;"><i data-lucide="heart"></i></div>
+                <h4>Emoções</h4>
+                <p>Pode ser entristecido — sente e reage</p>
+                <span class="verse">Ef 4.30</span>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div class="card-icon spirit" style="margin: 0 auto 12px;"><i data-lucide="compass"></i></div>
+                <h4>Vontade</h4>
+                <p>Distribui dons "como quer" — decisão soberana</p>
+                <span class="verse">1 Co 12.11</span>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div class="card-icon spirit" style="margin: 0 auto 12px;"><i data-lucide="book-open"></i></div>
+                <h4>Ensina</h4>
+                <p>Instrui, comunica e guia a toda verdade</p>
+                <span class="verse">Jo 14.26; 16.13</span>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div class="card-icon spirit" style="margin: 0 auto 12px;"><i data-lucide="megaphone"></i></div>
+                <h4>Fala e Chama</h4>
+                <p>"Apartai-me a Barnabé e a Saulo"</p>
+                <span class="verse">At 13.2</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 6 — O ESPÍRITO SANTO É DEUS ═══════════ -->
+    <div class="slide slide-content" id="s6">
+        <div class="slide-header">
+            <div class="slide-icon flame"><i data-lucide="crown"></i></div>
+            <div class="slide-badge flame-badge">Divindade Comprovada</div>
+            <h2 class="slide-title">O Espírito Santo é Deus</h2>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1100px;">
+            <div class="card" style="text-align: center; border-top: 4px solid var(--flame);">
+                <div class="card-icon flame" style="margin: 0 auto 12px;"><i data-lucide="shield-alert"></i></div>
+                <h4>Mentir ao Espírito = Mentir a Deus</h4>
+                <p>Ananias mentiu ao Espírito Santo e Pedro diz: "Não mentiste aos homens, mas a <strong>Deus</strong>"</p>
+                <span class="verse">Atos 5.3-4</span>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--spirit);">
+                <div class="card-icon spirit" style="margin: 0 auto 12px;"><i data-lucide="equal"></i></div>
+                <h4>O Senhor é o Espírito</h4>
+                <p>"Ora, o Senhor é o Espírito; e onde está o Espírito do Senhor, aí há liberdade"</p>
+                <span class="verse">2 Coríntios 3.17</span>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--accent);">
+                <div class="card-icon" style="margin: 0 auto 12px; background: linear-gradient(135deg, var(--accent), var(--accent-light));"><i data-lucide="infinity"></i></div>
+                <h4>Espírito Eterno</h4>
+                <p>"Pelo Espírito <strong>eterno</strong> se ofereceu a si mesmo imaculado a Deus"</p>
+                <span class="verse">Hebreus 9.14</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 7 — PESSOA DISTINTA / MODALISMO ═══════════ -->
+    <div class="slide slide-content" id="s7">
+        <div class="slide-header">
+            <div class="slide-icon spirit"><i data-lucide="triangle"></i></div>
+            <div class="slide-badge spirit-badge">Trindade</div>
+            <h2 class="slide-title">A Pessoa Distinta na Trindade</h2>
+        </div>
+        <div class="two-columns">
+            <div class="column">
+                <div class="content-box" style="height: 100%; border-left: 5px solid var(--success);">
+                    <h3><span class="icon" style="background: linear-gradient(135deg, var(--success), #2ecc71);"><i data-lucide="check"></i></span> Verdade Bíblica</h3>
+                    <p><strong>Deus é um só em essência</strong>, mas subsiste em 3 pessoas distintas.</p>
+                    <p>Pai não é Filho. Filho não é Espírito Santo. Espírito Santo não é Pai.</p>
+                    <p style="font-weight: 700; color: var(--primary); font-size: 1.15rem; margin-top: 10px;">Mas os três são Deus.</p>
+                    <div style="margin-top: 12px; padding: 15px; background: rgba(124,58,237,0.08); border-radius: 10px;">
+                        <p style="font-style: italic; font-size: 0.95rem;">"O Consolador, o Espírito Santo, que o <strong>Pai</strong> enviará em meu nome, <strong>esse</strong> vos ensinará"</p>
+                        <p style="text-align: right; font-weight: 700; color: var(--spirit); font-size: 0.85rem;">João 14.26</p>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="content-box" style="height: 100%; background: #fef2f2; border-left: 5px solid var(--heresy);">
+                    <h3 style="color: var(--heresy);"><span class="icon" style="background: linear-gradient(135deg, var(--heresy), #b91c1c);"><i data-lucide="alert-triangle"></i></span> Heresia: Modalismo</h3>
+                    <p>Ensina que Deus é uma <strong>única pessoa</strong> que age em "modos" diferentes.</p>
+                    <p>Ora age como Pai, outra hora como Filho, ora como Espírito Santo.</p>
+                    <p style="margin-top: 10px; font-weight: 700; color: var(--heresy);">O Modalismo destrói a distinção da Trindade.</p>
+                    <p style="margin-top: 10px; font-size: 0.95rem;">Se Pai e Filho são a mesma pessoa, como Jesus ora ao Pai? Como o Pai envia o Espírito em nome do Filho?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 8 — QUESTÕES + PNEUMATÔMACOS ═══════════ -->
+    <div class="slide slide-content" id="s8">
+        <div class="slide-header">
+            <div class="slide-icon heresy"><i data-lucide="swords"></i></div>
+            <div class="slide-badge heresy-badge">Heresias • Séc. IV</div>
+            <h2 class="slide-title">Pneumatômacos — Combatentes do Espírito</h2>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 1000px; margin-bottom: 25px;">
+            <div class="card" style="text-align: center; border-left: 5px solid var(--spirit); padding: 25px;">
+                <h4 style="font-size: 1.1rem; color: var(--spirit);">Quem intercede por nós ao Pai?</h4>
+                <p style="margin-top: 8px;">O Espírito intercede com gemidos inexprimíveis (Rm 8.26)</p>
+            </div>
+            <div class="card" style="text-align: center; border-left: 5px solid var(--spirit); padding: 25px;">
+                <h4 style="font-size: 1.1rem; color: var(--spirit);">Como Jesus ora ao Pai se fossem a mesma pessoa?</h4>
+                <p style="margin-top: 8px;">Prova da distinção pessoal dentro da Trindade</p>
+            </div>
+        </div>
+        <div class="dark-box" style="max-width: 1000px;">
+            <h3>Pneumatômacos (séc. IV)</h3>
+            <div class="dark-items">
+                <div class="dark-item error">
+                    <div class="di-icon"><i data-lucide="x"></i></div>
+                    <p><strong>O Espírito Santo não era Deus</strong>Considerado criatura ou poder subordinado</p>
+                </div>
+                <div class="dark-item error">
+                    <div class="di-icon"><i data-lucide="x"></i></div>
+                    <p><strong>Sem plena divindade</strong>Negavam a igualdade com o Pai e o Filho</p>
+                </div>
+                <div class="dark-item ok">
+                    <div class="di-icon"><i data-lucide="shield-check"></i></div>
+                    <p><strong>Combatidos em Constantinopla (381)</strong>"Cremos no Espírito Santo, Senhor e Vivificador"</p>
+                </div>
+                <div class="dark-item ok">
+                    <div class="di-icon"><i data-lucide="book-open"></i></div>
+                    <p><strong>A Bíblia confirma a divindade</strong>At 5.3-4; 2 Co 3.17; Hb 9.14</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 9 — TESTEMUNHAS DE JEOVÁ ═══════════ -->
+    <div class="slide slide-content" id="s9">
+        <div class="slide-header">
+            <div class="slide-icon heresy"><i data-lucide="eye-off"></i></div>
+            <div class="slide-badge heresy-badge">Heresia Moderna • Séc. XIX</div>
+            <h2 class="slide-title">Testemunhas de Jeová</h2>
+            <p class="slide-subtitle">Fundado na década de 1870, nos Estados Unidos</p>
+        </div>
+        <div class="two-columns" style="max-width: 1100px;">
+            <div class="column">
+                <div class="content-box" style="height: 100%; background: #fef2f2; border-left: 5px solid var(--heresy);">
+                    <h3 style="color: var(--heresy);"><span class="icon" style="background: linear-gradient(135deg, var(--heresy), #b91c1c);"><i data-lucide="x-circle"></i></span> O que ensinam</h3>
+                    <ul class="item-list" style="max-width: 100%;">
+                        <li>
+                            <span class="icon" style="background: rgba(153,27,27,0.1);"><i data-lucide="x" style="color: var(--heresy);"></i></span>
+                            <span class="text"><strong>O Espírito Santo não é pessoa</strong><small>Apenas a "força ativa" de Jeová</small></span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background: rgba(153,27,27,0.1);"><i data-lucide="x" style="color: var(--heresy);"></i></span>
+                            <span class="text"><strong>Não é Deus</strong><small>Negam qualquer divindade do Espírito</small></span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background: rgba(153,27,27,0.1);"><i data-lucide="x" style="color: var(--heresy);"></i></span>
+                            <span class="text"><strong>Não tem personalidade própria</strong><small>Reduzido a uma energia despersonalizada</small></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="column">
+                <div class="content-box" style="height: 100%; background: #fef2f2; border-left: 5px solid var(--heresy);">
+                    <h3 style="color: var(--heresy);"><span class="icon" style="background: linear-gradient(135deg, var(--heresy), #b91c1c);"><i data-lucide="ban"></i></span> Também negam</h3>
+                    <ul class="item-list" style="max-width: 100%;">
+                        <li>
+                            <span class="icon" style="background: rgba(153,27,27,0.1);"><i data-lucide="x" style="color: var(--heresy);"></i></span>
+                            <span class="text"><strong>A Trindade</strong><small>Consideram doutrina pagã</small></span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background: rgba(153,27,27,0.1);"><i data-lucide="x" style="color: var(--heresy);"></i></span>
+                            <span class="text"><strong>A plena divindade de Cristo</strong><small>Dizem que Jesus é criatura, o arcanjo Miguel</small></span>
+                        </li>
+                    </ul>
+                    <div style="margin-top: 15px; padding: 15px; background: rgba(56,161,105,0.1); border-radius: 10px; border-left: 4px solid var(--success);">
+                        <p style="font-size: 0.95rem;"><strong style="color: var(--success);">Resposta bíblica:</strong> O Espírito tem mente (Rm 8.27), emoções (Ef 4.30), vontade (1 Co 12.11) e é chamado de Deus (At 5.3-4).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 10 — O CONSOLADOR PROMETIDO ═══════════ -->
+    <div class="slide slide-content" id="s10">
+        <div class="slide-header">
+            <div class="slide-icon spirit"><i data-lucide="hand-heart"></i></div>
+            <div class="slide-badge spirit-badge">1.3 • O Consolador</div>
+            <h2 class="slide-title">O Consolador Prometido</h2>
+            <p class="slide-subtitle">Na noite anterior à crucificação, Jesus fez uma promessa fundamental</p>
+        </div>
+        <div class="verse-highlight" style="max-width: 950px; padding: 40px 50px;">
+            <p class="verse-text" style="font-size: 1.9rem;">"E eu rogarei ao Pai, e ele vos dará <strong>outro Consolador</strong>, para que fique convosco para sempre."</p>
+            <span class="verse-ref">João 14.16</span>
+        </div>
+        <div class="content-box" style="margin-top: 25px; max-width: 850px; text-align: center;">
+            <p style="font-size: 1.15rem;">Essa promessa não era apenas emocional — era profundamente <strong>teológica</strong>.</p>
+            <p>Jesus estava anunciando a <strong>continuidade da presença divina</strong> entre os discípulos.</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 11 — PARAKLETOS ═══════════ -->
+    <div class="slide slide-content" id="s11">
+        <div class="slide-header">
+            <div class="slide-icon spirit"><i data-lucide="languages"></i></div>
+            <div class="slide-badge spirit-badge">Estudo do Grego</div>
+            <h2 class="slide-title">O Significado de "Paráklētos"</h2>
+        </div>
+        <div class="greek-box">
+            <p class="greek-word">Paráklētos</p>
+            <p class="greek-original">παράκλητος</p>
+            <div class="greek-items">
+                <div class="greek-item"><h4>Consolador</h4><p>Conforta e ampara</p></div>
+                <div class="greek-item"><h4>Ajudador</h4><p>Auxilia e fortalece</p></div>
+                <div class="greek-item"><h4>Advogado</h4><p>Defende e intercede</p></div>
+                <div class="greek-item"><h4>Intercessor</h4><p>Pleiteia a favor</p></div>
+                <div class="greek-item"><h4>Ao Lado</h4><p>Chamado p/ estar junto</p></div>
+            </div>
+        </div>
+        <div class="content-box" style="margin-top: 20px; max-width: 950px;">
+            <h3><span class="icon"><i data-lucide="book-open"></i></span> 5 ocorrências nos escritos joaninos</h3>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <span class="verse" style="background: rgba(124,58,237,0.1); color: var(--spirit-dark); padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">Jo 14.16</span>
+                <span class="verse" style="background: rgba(124,58,237,0.1); color: var(--spirit-dark); padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">Jo 14.26</span>
+                <span class="verse" style="background: rgba(124,58,237,0.1); color: var(--spirit-dark); padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">Jo 15.26</span>
+                <span class="verse" style="background: rgba(124,58,237,0.1); color: var(--spirit-dark); padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">Jo 16.7</span>
+                <span class="verse" style="background: rgba(232,93,4,0.1); color: var(--flame-dark); padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">1 Jo 2.1 → aplicado a Cristo</span>
+            </div>
+            <p style="margin-top: 12px;">Em 1 João 2.1, <em>paráklētos</em> é aplicado ao próprio <strong>Cristo</strong>. Tanto Jesus quanto o Espírito são chamados de Consolador.</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 12 — ALLOS x HETEROS ═══════════ -->
+    <div class="slide slide-content" id="s12">
+        <div class="slide-header">
+            <div class="slide-icon spirit"><i data-lucide="split"></i></div>
+            <div class="slide-badge spirit-badge">Grego Bíblico</div>
+            <h2 class="slide-title">"Outro Consolador": <em>Allos</em>, não <em>Heteros</em></h2>
+        </div>
+        <div class="compare-container">
+            <div class="compare-box allos">
+                <h3>Allos (ἄλλος)</h3>
+                <p class="greek-small">Usado em João 14.16</p>
+                <p>Outro <strong>da mesma natureza</strong></p>
+                <p style="margin-top: 12px; font-size: 0.95rem;">O Espírito é da mesma essência divina que Cristo. Não é inferior, não é substituto menor.</p>
+            </div>
+            <div class="compare-vs"><span>VS</span></div>
+            <div class="compare-box heteros">
+                <h3>Heteros (ἕτερος)</h3>
+                <p class="greek-small">Usado em Gálatas 1.6</p>
+                <p>Outro <strong>de natureza diferente</strong></p>
+                <p style="margin-top: 12px; font-size: 0.95rem;">Um evangelho essencialmente distinto e falso — heteros indica diferença de essência.</p>
+            </div>
+        </div>
+        <div class="content-box" style="margin-top: 25px; max-width: 900px; text-align: center;">
+            <p style="font-size: 1.1rem;">Jesus disse <strong><em>allos paráklētos</em></strong> — outro da mesma espécie. O Espírito Santo é a <strong>continuidade da presença de Cristo</strong> entre nós.</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 13 — GÁLATAS 1:6-7 ═══════════ -->
+    <div class="slide slide-content" id="s13">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="book-open"></i></div>
+            <div class="slide-badge info-badge">Aplicação Textual</div>
+            <h2 class="slide-title">Gálatas 1.6-7 — Allos e Heteros em contexto</h2>
+        </div>
+        <div class="two-columns" style="max-width: 1100px;">
+            <div class="column">
+                <div class="content-box" style="height: 100%; border-top: 5px solid #4a5568;">
+                    <h3 style="font-size: 1.4rem;"><span class="icon" style="background: linear-gradient(135deg, #4a5568, #2d3748);"><i data-lucide="alert-circle"></i></span> Versículo 6 — <em>heteros</em></h3>
+                    <p style="font-style: italic; font-size: 1.1rem; margin-bottom: 15px;">"Estou admirado de que tão depressa passásseis para <strong>outro</strong> evangelho..."</p>
+                    <p>A palavra <strong><em>heteros</em></strong> indica que os gálatas estavam seguindo um evangelho de <strong>natureza diferente</strong> — essencialmente distinto e <strong>falso</strong>.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="content-box" style="height: 100%; border-top: 5px solid var(--spirit);">
+                    <h3 style="font-size: 1.4rem;"><span class="icon"><i data-lucide="check-circle"></i></span> Versículo 7 — <em>allos</em></h3>
+                    <p style="font-style: italic; font-size: 1.1rem; margin-bottom: 15px;">"O qual não é <strong>outro</strong>..."</p>
+                    <p>A palavra <strong><em>allos</em></strong> indica que <strong>não existe outro evangelho verdadeiro da mesma natureza</strong> do que foi pregado por Paulo. Só há um evangelho legítimo.</p>
+                </div>
+            </div>
+        </div>
+        <div class="verse-highlight" style="margin-top: 20px; max-width: 900px;">
+            <p class="verse-text" style="font-size: 1.3rem;">Essa distinção comprova: em João 14.16, Jesus usa <strong><em>allos</em></strong> — o Espírito é da mesma natureza e essência que Cristo, reforçando sua plena divindade e igualdade na Trindade.</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 14 — A OBRA DO CONSOLADOR ═══════════ -->
+    <div class="slide slide-content" id="s14">
+        <div class="slide-header">
+            <div class="slide-icon flame"><i data-lucide="sparkles"></i></div>
+            <div class="slide-badge flame-badge">Obra do Espírito</div>
+            <h2 class="slide-title">A Obra do Consolador</h2>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1150px;">
+            <div class="card" style="border-top: 4px solid var(--spirit);">
+                <div class="card-icon spirit" style="margin-bottom: 12px;"><i data-lucide="search"></i></div>
+                <h4>Espírito da Verdade</h4>
+                <p>Habita em nós e nos guia à verdade. Corrige nossas distorções sobre Deus.</p>
+                <span class="verse">Jo 14.16; 15.26</span>
+            </div>
+            <div class="card" style="border-top: 4px solid var(--info);">
+                <div class="card-icon blue" style="margin-bottom: 12px;"><i data-lucide="book-open"></i></div>
+                <h4>Ensinador</h4>
+                <p>"Ele vos ensinará todas as coisas." Ilumina a mente para compreender a Palavra.</p>
+                <span class="verse">Jo 14.26</span>
+            </div>
+            <div class="card" style="border-top: 4px solid var(--accent);">
+                <div class="card-icon" style="margin-bottom: 12px; background: linear-gradient(135deg, var(--accent), var(--accent-light));"><i data-lucide="brain"></i></div>
+                <h4>Faz Lembrar</h4>
+                <p>"E vos fará lembrar de tudo quanto vos tenho dito." Preserva o ensino de Cristo.</p>
+                <span class="verse">Jo 14.26</span>
+            </div>
+            <div class="card" style="border-top: 4px solid var(--flame);">
+                <div class="card-icon flame" style="margin-bottom: 12px;"><i data-lucide="megaphone"></i></div>
+                <h4>Testemunha de Cristo</h4>
+                <p>"Ele dará testemunho de mim." O Espírito nunca promove a si mesmo — glorifica o Filho.</p>
+                <span class="verse">Jo 15.26; 16.14</span>
+            </div>
+            <div class="card" style="border-top: 4px solid var(--danger); grid-column: span 2;">
+                <div class="card-icon heresy-icon" style="margin-bottom: 12px; background: linear-gradient(135deg, var(--danger), #e74c3c);"><i data-lucide="alert-circle"></i></div>
+                <h4>Convencedor do Mundo</h4>
+                <p>"Ele convencerá o mundo do pecado, da justiça e do juízo." Obra sobrenatural — nenhum argumento humano produz arrependimento verdadeiro; é obra do Espírito.</p>
+                <span class="verse">Jo 16.8</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 15 — REGENERAÇÃO E SANTIFICAÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s15">
+        <div class="slide-header">
+            <div class="slide-icon green"><i data-lucide="sprout"></i></div>
+            <div class="slide-badge green-badge">Obra Transformadora</div>
+            <h2 class="slide-title">Regeneração e Santificação</h2>
+        </div>
+        <div class="two-columns" style="max-width: 1100px;">
+            <div class="column">
+                <div class="content-box" style="height: 100%; border-top: 5px solid var(--success);">
+                    <h3><span class="icon" style="background: linear-gradient(135deg, var(--success), #2ecc71);"><i data-lucide="zap"></i></span> Regeneração</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 15px;">O nascimento de uma nova vida, gerada pela Palavra de Deus, agindo pelo Espírito Santo na conversão.</p>
+                    <ul class="item-list" style="max-width: 100%;">
+                        <li>
+                            <span class="icon" style="background: rgba(56,161,105,0.15);"><i data-lucide="book-open" style="color: var(--success);"></i></span>
+                            <span class="text"><strong>O Meio: a Palavra</strong><small>Semente incorruptível da Palavra de Deus</small></span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background: rgba(56,161,105,0.15);"><i data-lucide="wind" style="color: var(--success);"></i></span>
+                            <span class="text"><strong>O Agente: o Espírito Santo</strong><small>Quem opera a transformação interior</small></span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background: rgba(56,161,105,0.15);"><i data-lucide="crown" style="color: var(--success);"></i></span>
+                            <span class="text"><strong>O Autor: Deus</strong><small>A origem e fonte de toda a obra</small></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="column">
+                <div class="content-box" style="height: 100%; border-top: 5px solid var(--spirit);">
+                    <h3><span class="icon"><i data-lucide="trending-up"></i></span> Santificação</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 15px;">Processo contínuo de separação e crescimento em santidade.</p>
+                    <div style="padding: 18px; background: rgba(124,58,237,0.06); border-radius: 12px; margin-bottom: 15px;">
+                        <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem;">"Esta é a vontade de Deus: a vossa santificação."</p>
+                        <p style="text-align: right; font-weight: 700; color: var(--spirit); font-size: 0.9rem;">1 Tessalonicenses 4.3</p>
+                    </div>
+                    <p><strong>Vontade expressa de Deus</strong> para cada crente.</p>
+                    <p><strong>Chamado para separação</strong> — viver diferente do mundo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 16 — FILIOQUE ═══════════ -->
+    <div class="slide slide-content" id="s16">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="history"></i></div>
+            <div class="slide-badge">Debate Histórico</div>
+            <h2 class="slide-title">A Divindade do Espírito Santo</h2>
+            <p class="slide-subtitle">2.1 O Debate do Filioque ("e do Filho")</p>
+        </div>
+        <div class="content-box" style="max-width: 1050px;">
+            <h3><span class="icon" style="background: linear-gradient(135deg, var(--accent), var(--accent-light));"><i data-lucide="scroll"></i></span> O que é o Filioque?</h3>
+            <p>O Concílio de Constantinopla (381) definiu: <strong>"Creio no Espírito Santo… que procede do Pai."</strong></p>
+            <p>Séculos depois, o Ocidente acrescentou: <strong>"…que procede do Pai <em>e do Filho</em>"</strong> (Filioque).</p>
+        </div>
+        <div class="two-columns" style="margin-top: 20px; max-width: 1050px;">
+            <div class="column">
+                <div class="card" style="height: 100%; border-top: 4px solid var(--info);">
+                    <div class="card-icon blue" style="margin-bottom: 12px;"><i data-lucide="landmark"></i></div>
+                    <h4>Objetivo Ocidental</h4>
+                    <p>Combater o arianismo e reforçar a plena divindade do Filho. Agostinho explicou: o Espírito é o <strong>vínculo eterno de amor</strong> entre Pai e Filho.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="card" style="height: 100%; border-top: 4px solid var(--spirit);">
+                    <div class="card-icon spirit" style="margin-bottom: 12px;"><i data-lucide="book-open"></i></div>
+                    <h4>Base Bíblica</h4>
+                    <p>João 15.26: "procede do Pai". Mas outros textos mostram que o Espírito é enviado pelo Filho e chamado <strong>"Espírito de Cristo"</strong>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="verse-highlight primary-hl" style="margin-top: 20px; max-width: 800px;">
+            <p class="verse-text" style="font-size: 1.2rem;">O debate não gira em torno da divindade do Espírito — que ambos os lados afirmam — mas sobre como expressar sua relação eterna dentro da Trindade.</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 17 — ATRIBUTOS DIVINOS + HIERARQUIA ═══════════ -->
+    <div class="slide slide-content" id="s17">
+        <div class="slide-header">
+            <div class="slide-icon flame"><i data-lucide="infinity"></i></div>
+            <div class="slide-badge flame-badge">2.2 Atributos Divinos</div>
+            <h2 class="slide-title">Os Atributos Divinos do Espírito Santo</h2>
+        </div>
+        <div class="cards-grid cols-5" style="max-width: 1200px; margin-bottom: 20px;">
+            <div class="card" style="text-align: center; border-top: 4px solid var(--spirit);">
+                <div class="card-icon spirit" style="margin: 0 auto 10px;"><i data-lucide="infinity"></i></div>
+                <h4>Eterno</h4>
+                <span class="verse">Hb 9.14</span>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--spirit);">
+                <div class="card-icon spirit" style="margin: 0 auto 10px;"><i data-lucide="eye"></i></div>
+                <h4>Onisciente</h4>
+                <span class="verse">1 Co 2.10</span>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--spirit);">
+                <div class="card-icon spirit" style="margin: 0 auto 10px;"><i data-lucide="globe"></i></div>
+                <h4>Onipresente</h4>
+                <span class="verse">Sl 139.7</span>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--spirit);">
+                <div class="card-icon spirit" style="margin: 0 auto 10px;"><i data-lucide="zap"></i></div>
+                <h4>Onipotente</h4>
+                <span class="verse">Rm 8.11</span>
+            </div>
+            <div class="card" style="text-align: center; border-top: 4px solid var(--flame);">
+                <div class="card-icon flame" style="margin: 0 auto 10px;"><i data-lucide="crown"></i></div>
+                <h4>Chamado Deus</h4>
+                <span class="verse">At 5.3-4</span>
+            </div>
+        </div>
+        <div class="dark-box" style="max-width: 1000px;">
+            <h3 style="color: var(--accent-light);">Existe hierarquia de poder na Trindade?</h3>
+            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 15px;"><strong style="color: var(--flame-light);">Não.</strong> Pai, Filho e Espírito possuem a mesma natureza, glória, poder e atributos eternos.</p>
+            <div style="padding: 18px; background: rgba(255,255,255,0.06); border-radius: 12px; border-left: 4px solid var(--accent);">
+                <p style="margin-bottom: 8px;"><strong style="color: var(--accent-light);">João 14.28</strong> — "O Pai é maior do que eu"</p>
+                <p>Jesus fala do estado de <strong>humilhação na encarnação</strong> (Fp 2.6-8). Ele assumiu voluntariamente uma posição funcional de submissão.</p>
+                <p style="margin-top: 8px;"><strong>"Maior"</strong> refere-se à <strong>posição naquele momento</strong> da missão redentora, não à essência eterna.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 18 — SÍMBOLOS: FOGO E ÁGUA ═══════════ -->
+    <div class="slide slide-content" id="s18">
+        <div class="slide-header">
+            <div class="slide-icon flame"><i data-lucide="flame"></i></div>
+            <div class="slide-badge flame-badge">2.3 Símbolos</div>
+            <h2 class="slide-title">Símbolos do Espírito Santo</h2>
+        </div>
+        <div class="two-columns" style="max-width: 1150px;">
+            <div class="column">
+                <div class="symbol-card" style="height: 100%;">
+                    <div class="symbol-visual" style="background: linear-gradient(135deg, var(--flame), var(--flame-dark));">
+                        <i data-lucide="flame" style="color: white;"></i>
+                    </div>
+                    <div class="symbol-info">
+                        <h4>🔥 Fogo</h4>
+                        <p>"Línguas repartidas como que de fogo" no Pentecostes</p>
+                        <p><strong>Representa:</strong> Presença divina, santidade, purificação, juízo e poder transformador.</p>
+                        <p>O fogo purifica metais removendo impurezas. Assim, o Espírito santifica o crente, consumindo o que não glorifica a Deus.</p>
+                        <span class="verse">Atos 2.3 · Êx 3.2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="symbol-card" style="height: 100%;">
+                    <div class="symbol-visual" style="background: linear-gradient(135deg, var(--info), #3498db);">
+                        <i data-lucide="droplets" style="color: white;"></i>
+                    </div>
+                    <div class="symbol-info">
+                        <h4>💧 Água</h4>
+                        <p>"Rios de água viva fluirão do seu interior"</p>
+                        <p><strong>Representa:</strong> Vida espiritual, renovação interior, satisfação da sede espiritual, purificação contínua.</p>
+                        <p>Indispensável à vida física — assim como o Espírito é indispensável à vida espiritual.</p>
+                        <span class="verse">João 7.37-39 · Jo 3.5-6</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 19 — SÍMBOLOS: VENTO E ÓLEO ═══════════ -->
+    <div class="slide slide-content" id="s19">
+        <div class="slide-header">
+            <div class="slide-icon spirit"><i data-lucide="wind"></i></div>
+            <div class="slide-badge spirit-badge">Símbolos</div>
+            <h2 class="slide-title">Vento e Óleo</h2>
+        </div>
+        <div class="two-columns" style="max-width: 1150px;">
+            <div class="column">
+                <div class="symbol-card" style="height: 100%;">
+                    <div class="symbol-visual" style="background: linear-gradient(135deg, #64748b, #475569);">
+                        <i data-lucide="wind" style="color: white;"></i>
+                    </div>
+                    <div class="symbol-info">
+                        <h4>🌬️ Vento</h4>
+                        <p>"O vento sopra onde quer..." — <em>ruach</em> (heb.) = vento, sopro, espírito.</p>
+                        <p><strong>Representa:</strong> Invisibilidade, poder, incontrolabilidade e soberania divina.</p>
+                        <p>No Pentecostes houve som como de vento impetuoso. O Espírito age de maneira invisível, porém real e eficaz.</p>
+                        <span class="verse">João 3.8 · Atos 2.2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="symbol-card" style="height: 100%;">
+                    <div class="symbol-visual" style="background: linear-gradient(135deg, var(--accent), #b8860b);">
+                        <i data-lucide="droplet" style="color: white;"></i>
+                    </div>
+                    <div class="symbol-info">
+                        <h4>🫒 Óleo</h4>
+                        <p>Usado para ungir reis, sacerdotes e profetas. Alimentava a luz das lâmpadas.</p>
+                        <p><strong>Representa:</strong> Consagração, capacitação divina, iluminação espiritual e separação para Deus.</p>
+                        <p>A unção do Espírito não é ritual — é capacitação e separação para o serviço.</p>
+                        <span class="verse">2 Co 1.21-22 · 1 Jo 2.20,27</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 20 — POMBA + RESUMO ═══════════ -->
+    <div class="slide slide-content" id="s20">
+        <div class="slide-header">
+            <div class="slide-icon" style="background: linear-gradient(135deg, #e2e8f0, #cbd5e1);"><i data-lucide="bird" style="color: var(--primary);"></i></div>
+            <div class="slide-badge">Símbolo Final</div>
+            <h2 class="slide-title">Pomba — Pureza Celestial</h2>
+        </div>
+        <div class="content-box" style="max-width: 900px; margin-bottom: 25px;">
+            <h3><span class="icon" style="background: linear-gradient(135deg, #e2e8f0, #cbd5e1);"><i data-lucide="bird" style="color: var(--primary);"></i></span> 🕊️ A Pomba</h3>
+            <p>Em Mateus 3.16, o Espírito desce sobre Jesus <strong>"como pomba"</strong>.</p>
+            <p><strong>Representa:</strong> Pureza, paz, inocência e reconciliação. Não significa fragilidade, mas <strong>suavidade e harmonia</strong>. O Espírito promove paz entre Deus e o homem.</p>
+        </div>
+        <div class="summary-row">
+            <div class="summary-pill" style="border-color: var(--flame);">
+                <h5>🔥 Fogo</h5>
+                <p>Santidade divina</p>
+            </div>
+            <div class="summary-pill" style="border-color: var(--info);">
+                <h5>💧 Água</h5>
+                <p>Poder vivificador</p>
+            </div>
+            <div class="summary-pill" style="border-color: #64748b;">
+                <h5>🌬️ Vento</h5>
+                <p>Soberania invisível</p>
+            </div>
+            <div class="summary-pill" style="border-color: var(--accent);">
+                <h5>🫒 Óleo</h5>
+                <p>Autoridade consagradora</p>
+            </div>
+            <div class="summary-pill" style="border-color: #94a3b8;">
+                <h5>🕊️ Pomba</h5>
+                <p>Pureza celestial</p>
+            </div>
+        </div>
+        <div class="verse-highlight flame-hl" style="margin-top: 20px; max-width: 800px;">
+            <p class="verse-text" style="font-size: 1.3rem;">Cada símbolo revela um atributo que pertence <strong>exclusivamente a Deus</strong>. O Espírito Santo é Pessoa. É Deus. É o Consolador que permanece conosco para sempre.</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav-bar">
+    <button id="prev" onclick="prev()">◀</button>
+    <div class="counter"><span id="atual">1</span> / 20</div>
+    <button id="next" onclick="next()">▶</button>
+</nav>
+
+<script>
+    lucide.createIcons();
+
+    let slide = 1;
+    const total = 20;
+
+    function show(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        document.getElementById('atual').textContent = n;
+        document.getElementById('prev').disabled = (n === 1);
+        document.getElementById('next').disabled = (n === total);
+        slide = n;
+        lucide.createIcons();
+    }
+
+    function next() { if (slide < total) show(slide + 1); }
+    function prev() { if (slide > 1) show(slide - 1); }
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); showNavBar(); }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); showNavBar(); }
+        if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); }
+        if (e.key === 'Home') { show(1); showNavBar(); }
+        if (e.key === 'End') { show(total); showNavBar(); }
+    });
+
+    let navTimeout;
+    const navBar = document.querySelector('.nav-bar');
+
+    function showNavBar() {
+        navBar.classList.add('visible');
+        clearTimeout(navTimeout);
+        navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 3000);
+    }
+
+    document.addEventListener('mousemove', showNavBar);
+    document.addEventListener('touchstart', showNavBar);
+    navBar.addEventListener('mouseenter', () => { clearTimeout(navTimeout); });
+    navBar.addEventListener('mouseleave', () => { navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 2000); });
+
+    showNavBar();
+
+    setTimeout(() => {
+        const shortcuts = document.querySelector('.shortcuts');
+        if (shortcuts) { shortcuts.style.opacity = '0'; shortcuts.style.transition = 'opacity 1s'; }
+    }, 5000);
+</script>
+</body>
+</html>

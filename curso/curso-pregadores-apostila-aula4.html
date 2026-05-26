@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Pregadores — Homilética: Preparação e Exposição do Esboço</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #e8c84a;
+            --accent-dark: #a68520;
+            --bg: #fdfcf9;
+            --bg-chapter: #f7f5f0;
+            --bg-card: #ffffff;
+            --text: #2d2a26;
+            --text-light: #5a564f;
+            --text-muted: #8a857d;
+            --border: #e8e4dc;
+            --border-light: #f0ece4;
+            --success: #2d7d46;
+            --info: #2563eb;
+            --warning: #d97706;
+            --danger: #c0392b;
+            --purple: #6d28d9;
+            --teal: #0d9488;
+            --wine: #7a1f40;
+            --wine-light: #b03060;
+            --sidebar-w: 300px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; font-size: 17px; }
+
+        body {
+            font-family: 'Source Serif 4', 'Georgia', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.85;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ══════════════════════════════════════
+           CAPA
+           ══════════════════════════════════════ */
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(160deg, #1a0a14 0%, #4e1b2e 40%, #7a1f40 100%);
+            color: #fff;
+            padding: 60px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(201,162,39,0.12) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(255,255,255,0.04) 0%, transparent 50%);
+            animation: rotateBg 60s linear infinite;
+        }
+
+        @keyframes rotateBg { to { transform: rotate(360deg); } }
+
+        .cover-content { position: relative; z-index: 2; max-width: 700px; }
+
+        .cover-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(201,162,39,0.15);
+            border: 2px solid rgba(201,162,39,0.3);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        .cover-icon svg { width: 50px; height: 50px; color: var(--accent-light); }
+
+        @keyframes pulseGlow {
+            0%,100% { box-shadow: 0 0 30px rgba(201,162,39,0.2); }
+            50% { box-shadow: 0 0 60px rgba(201,162,39,0.5); }
+        }
+
+        .cover-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(201,162,39,0.2);
+            border: 1px solid rgba(201,162,39,0.4);
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            margin-bottom: 30px;
+        }
+
+        .cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
+
+        .cover h1 span {
+            display: block;
+            color: var(--accent-light);
+        }
+
+        .cover-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 40px;
+        }
+
+        .cover-divider {
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+            margin: 0 auto 30px;
+            border-radius: 2px;
+        }
+
+        .cover-author {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .cover-author strong { color: var(--accent-light); }
+
+        .cover-tags {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .cover-tag {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .cover-tag.hom   { border-color: rgba(201,162,39,0.5); color: var(--accent-light); }
+        .cover-tag.serm  { border-color: rgba(176,48,96,0.6);  color: #f9a8d4; }
+        .cover-tag.pulp  { border-color: rgba(37,99,235,0.5);  color: #93c5fd; }
+
+        .cover-scroll {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.4);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: bounce 2s infinite;
+            z-index: 2;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+        }
+
+        /* ══════════════════════════════════════
+           LAYOUT
+           ══════════════════════════════════════ */
+        .page-wrapper { display: flex; min-height: 100vh; }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-w);
+            height: 100vh;
+            background: var(--primary-dark);
+            color: #fff;
+            overflow-y: auto;
+            padding: 30px 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            padding: 0 25px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 25px;
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+
+        .sidebar-nav a.active {
+            background: rgba(201,162,39,0.1);
+            color: var(--accent-light);
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-nav a .ch-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .sidebar-nav a.active .ch-num { background: var(--accent); color: var(--primary-dark); }
+
+        .main-content {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            max-width: 840px;
+            padding: 0 60px 100px;
+            margin-right: auto;
+        }
+
+        /* ══════════════════════════════════════
+           CAPÍTULOS
+           ══════════════════════════════════════ */
+        .chapter {
+            padding-top: 70px;
+            margin-bottom: 60px;
+        }
+
+        .chapter-header {
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .chapter-num {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-dark);
+            margin-bottom: 8px;
+        }
+
+        .chapter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 800;
+            color: var(--primary-dark);
+            line-height: 1.25;
+        }
+
+        .intro-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--wine);
+            margin-bottom: 8px;
+        }
+
+        .chapter p {
+            margin-bottom: 1.2em;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .chapter p.lead {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.9;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 45px 0 18px;
+            padding-left: 18px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .subsection-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary-light);
+            margin: 30px 0 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ══════════════════════════════════════
+           COMPONENTES
+           ══════════════════════════════════════ */
+        .verse-card {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: #fff;
+            padding: 30px 35px;
+            border-radius: 14px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verse-card::before {
+            content: '\201C';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            font-size: 8rem;
+            font-family: 'Playfair Display', serif;
+            color: rgba(201,162,39,0.15);
+            line-height: 1;
+        }
+
+        .verse-card p {
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 12px !important;
+            text-align: left !important;
+        }
+
+        .verse-card .ref {
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-light);
+        }
+
+        .verse-card.purple-card { background: linear-gradient(135deg, #2d1b4e 0%, #6d28d9 100%); }
+        .verse-card.teal-card   { background: linear-gradient(135deg, #064e3b 0%, #0d9488 100%); }
+        .verse-card.wine-card   { background: linear-gradient(135deg, #3e0f20 0%, #7a1f40 100%); }
+        .verse-card.gold-card   { background: linear-gradient(135deg, #3d2800 0%, #a68520 100%); }
+
+        .info-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--info);
+            border-radius: 10px;
+            padding: 22px 28px;
+            margin: 28px 0;
+        }
+
+        .info-box.accent  { border-left-color: var(--accent); }
+        .info-box.success { border-left-color: var(--success); }
+        .info-box.warning { border-left-color: var(--warning); }
+        .info-box.danger  { border-left-color: var(--danger); }
+        .info-box.purple  { border-left-color: var(--purple); }
+        .info-box.teal    { border-left-color: var(--teal); }
+        .info-box.wine    { border-left-color: var(--wine); }
+
+        .info-box-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box.accent  .info-box-title { color: var(--accent-dark); }
+        .info-box.success .info-box-title { color: var(--success); }
+        .info-box.warning .info-box-title { color: var(--warning); }
+        .info-box.danger  .info-box-title { color: var(--danger); }
+        .info-box.purple  .info-box-title { color: var(--purple); }
+        .info-box.teal    .info-box-title { color: var(--teal); }
+        .info-box.wine    .info-box-title { color: var(--wine-light); }
+        .info-box         .info-box-title { color: var(--info); }
+
+        .info-box p, .info-box ul { font-size: 0.92rem; }
+        .info-box ul { padding-left: 18px; }
+        .info-box ul li { margin-bottom: 4px; }
+
+        .definition {
+            background: linear-gradient(135deg, #fefce8 0%, #fff7ed 100%);
+            border: 1px solid #fde68a;
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin: 28px 0;
+        }
+
+        .definition-word {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+
+        .definition-origin {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .definition p { font-size: 0.95rem; }
+
+        .styled-table-wrap {
+            overflow-x: auto;
+            margin: 28px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .styled-table thead th {
+            background: var(--primary);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 14px 18px;
+            text-align: left;
+        }
+
+        .styled-table thead th.good    { background: var(--success); }
+        .styled-table thead th.bad     { background: var(--danger); }
+        .styled-table thead th.neutral { background: var(--teal); }
+        .styled-table thead th.wine    { background: var(--wine); }
+        .styled-table thead th.gold    { background: var(--accent-dark); }
+        .styled-table thead th.purple  { background: var(--purple); }
+
+        .styled-table tbody td {
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .styled-table tbody tr:nth-child(even) { background: #faf9f6; }
+        .styled-table tbody tr:hover { background: #f5f0e8; }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin: 28px 0;
+        }
+
+        .mini-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .mini-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .mini-card-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            color: #fff;
+        }
+
+        .mini-card-icon.blue   { background: var(--info); }
+        .mini-card-icon.gold   { background: var(--accent); }
+        .mini-card-icon.green  { background: var(--success); }
+        .mini-card-icon.purple { background: var(--purple); }
+        .mini-card-icon.teal   { background: var(--teal); }
+        .mini-card-icon.red    { background: var(--danger); }
+        .mini-card-icon.orange { background: var(--warning); }
+        .mini-card-icon.dark   { background: var(--primary-dark); }
+        .mini-card-icon.wine   { background: var(--wine); }
+
+        .mini-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+        }
+
+        .mini-card p {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 0 !important;
+        }
+
+        /* Quality badge cards */
+        .quality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin: 28px 0;
+        }
+
+        .quality-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 16px;
+            border-top: 3px solid var(--wine);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .quality-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+        }
+
+        .quality-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .quality-card p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            line-height: 1.55;
+            margin-bottom: 0 !important;
+        }
+
+        /* Sermon type cards */
+        .sermon-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 28px 0;
+        }
+
+        .sermon-type-card {
+            border-radius: 14px;
+            padding: 28px 22px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sermon-type-card::after {
+            content: attr(data-letter);
+            position: absolute;
+            bottom: -10px;
+            right: -4px;
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            opacity: 0.1;
+            line-height: 1;
+        }
+
+        .sermon-type-card.t-card { background: linear-gradient(135deg, #1e3a5f, #2563eb); }
+        .sermon-type-card.x-card { background: linear-gradient(135deg, #3e0f20, #7a1f40); }
+        .sermon-type-card.e-card { background: linear-gradient(135deg, #14432e, #1a5c40); }
+
+        .sermon-type-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 8px;
+        }
+
+        .sermon-type-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent-light);
+            margin-bottom: 10px;
+        }
+
+        .sermon-type-card p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+            margin-bottom: 0 !important;
+            text-align: left !important;
+        }
+
+        /* Sermon structure steps */
+        .steps-list {
+            list-style: none;
+            margin: 28px 0;
+        }
+
+        .steps-list li {
+            display: flex;
+            gap: 20px;
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .steps-list li:last-child { border-bottom: none; }
+
+        .step-num {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .step-body h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .step-body p {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            line-height: 1.65;
+            margin-bottom: 0 !important;
+        }
+
+        .styled-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .styled-list li {
+            padding: 8px 0 8px 30px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .styled-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 16px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .styled-list.numbered { counter-reset: item; }
+        .styled-list.numbered li::before {
+            content: counter(item);
+            counter-increment: item;
+            width: 22px;
+            height: 22px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 10px;
+        }
+
+        .highlight {
+            background: linear-gradient(to bottom, transparent 60%, rgba(201,162,39,0.25) 60%);
+            font-weight: 600;
+        }
+
+        strong { color: var(--primary-dark); }
+        .author-card strong { color: rgba(255,255,255,0.95); }
+
+        /* Referências */
+        .ref-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .ref-list li {
+            padding: 10px 0 10px 14px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 8px;
+            font-size: 0.88rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .ref-list a {
+            color: var(--info);
+            text-decoration: none;
+        }
+
+        /* Back to top */
+        .back-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .back-top.visible { opacity: 1; transform: translateY(0); }
+        .back-top:hover { background: var(--accent); }
+
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--wine), var(--accent-light));
+            z-index: 200;
+            transition: width 0.15s;
+        }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE
+           ══════════════════════════════════════ */
+        @media (max-width: 1100px) {
+            .main-content { padding: 0 40px 80px; }
+        }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-toggle { display: flex; }
+            .main-content { margin-left: 0; padding: 0 24px 80px; }
+            .chapter { padding-top: 50px; }
+            .card-grid { grid-template-columns: 1fr; }
+            .quality-grid { grid-template-columns: repeat(2, 1fr); }
+            .sermon-type-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            html { font-size: 15px; }
+            .cover { padding: 40px 20px; }
+            .verse-card { padding: 22px; }
+            .quality-grid { grid-template-columns: 1fr; }
+        }
+
+        @media print {
+            .sidebar, .back-top, .sidebar-toggle, .progress-bar, .cover-scroll { display: none !important; }
+            .main-content { margin-left: 0; max-width: 100%; }
+            .chapter { page-break-before: always; }
+            .chapter:first-child { page-break-before: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ═══════════════════════════════════════
+     CAPA
+     ═══════════════════════════════════════ -->
+<section class="cover" id="capa">
+    <div class="cover-content">
+        <div class="cover-icon">
+            <i data-lucide="mic" style="width: 50px; height: 50px;"></i>
+        </div>
+        <div class="cover-badge">
+            <i data-lucide="book-open" style="width: 16px; height: 16px;"></i>
+            Curso de Pregadores • Aula 4
+        </div>
+        <h1>Homilética: <span>Preparação e Exposição do Esboço</span></h1>
+        <p class="cover-subtitle">A arte de pregar a Palavra de Deus com excelência</p>
+        <div class="cover-divider"></div>
+        <p class="cover-author">Texto-base: <strong>Salmos 119.130</strong></p>
+        <div class="cover-tags">
+            <span class="cover-tag hom">Homilética</span>
+            <span class="cover-tag serm">Sermão</span>
+            <span class="cover-tag pulp">Púlpito</span>
+        </div>
+    </div>
+    <div class="cover-scroll">
+        Role para baixo
+        <i data-lucide="chevrons-down" style="width: 20px; height: 20px;"></i>
+    </div>
+</section>
+
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Abrir menu">
+    <i data-lucide="menu" style="width: 22px; height: 22px;"></i>
+</button>
+
+<div class="page-wrapper">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-title">Sumário</div>
+        <nav class="sidebar-nav" id="sidebarNav">
+            <a href="#intro"><span class="ch-num">•</span> Introdução</a>
+            <a href="#cap1"><span class="ch-num">1</span> O Pregador e suas Qualidades</a>
+            <a href="#cap2"><span class="ch-num">2</span> Postura no Púlpito</a>
+            <a href="#cap3"><span class="ch-num">3</span> Tipos Negativos de Sermões</a>
+            <a href="#cap4"><span class="ch-num">4</span> Conselhos ao Pregador</a>
+            <a href="#cap5"><span class="ch-num">5</span> Ilustrando o Sermão</a>
+            <a href="#cap6"><span class="ch-num">6</span> Classificação dos Sermões</a>
+            <a href="#cap7"><span class="ch-num">7</span> Construindo o Sermão</a>
+            <a href="#cap8"><span class="ch-num">8</span> Referências</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <!-- ═══════════════════════════════════════
+             INTRODUÇÃO
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="intro">
+            <div class="chapter-header">
+                <div class="intro-label">Introdução</div>
+                <h2 class="chapter-title">Conhecendo a Homilética</h2>
+            </div>
+
+            <div class="verse-card wine-card">
+                <p>"A entrada das tuas palavras ilumina, dá entendimento aos simples."</p>
+                <span class="ref">— Salmos 119.130</span>
+            </div>
+
+            <p class="lead">A Homilética é mais do que uma técnica de oratória — é a ciência que equipa o pregador para comunicar com fidelidade, clareza e poder a Palavra do Deus vivo.</p>
+
+            <div class="definition">
+                <div class="definition-word">Homilética</div>
+                <div class="definition-origin">Do grego homilía — conversação, reunião, comunhão</div>
+                <p>Ciência que se ocupa com a <span class="highlight">pregação cristã</span> e, particularmente, com o sermão proferido no culto, no seio da igreja. É a disciplina que estuda os princípios, as formas e os métodos da pregação eficaz.</p>
+            </div>
+
+            <h3 class="section-title">Objetivos da Homilética</h3>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon wine"><i data-lucide="compass" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Orientar os Pregadores</h4>
+                    <p>Orientar os pregadores na dissertação de seus sermões, fornecendo-lhes estrutura e clareza para comunicar a mensagem bíblica com eficácia.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon gold"><i data-lucide="lightbulb" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Princípios Corretos</h4>
+                    <p>Possibilitar que os pregadores adquiram princípios gerais corretos, despertando-os a terem a ideia dos erros e falhas geralmente cometidos.</p>
+                </div>
+            </div>
+
+            <div class="info-box accent">
+                <div class="info-box-title"><i data-lucide="scroll-text" style="width: 16px; height: 16px;"></i> A Responsabilidade do Pregador</div>
+                <p>Todo aquele que sobe ao púlpito carrega o peso de uma <strong>responsabilidade divina</strong>. A Palavra que ele prega tem poder para salvar, edificar e transformar — por isso, a preparação cuidadosa não é opcional, é obrigação de quem foi chamado.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 1 — O PREGADOR E SUAS QUALIDADES
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap1">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 1</div>
+                <h2 class="chapter-title">O Pregador e suas Qualidades</h2>
+            </div>
+
+            <p class="lead">Antes de cuidar do sermão, o pregador deve cuidar de si mesmo. As qualidades a seguir não são talentos inatos — são virtudes cultivadas na comunhão diária com Deus.</p>
+
+            <div class="quality-grid">
+                <div class="quality-card">
+                    <h4>Chamada</h4>
+                    <p>Tem convicção desse chamado? Já avaliou os riscos e desafios? O chamado é o alicerce que sustenta nos momentos difíceis do ministério.</p>
+                </div>
+                <div class="quality-card">
+                    <h4>Oração</h4>
+                    <p>Deve fazer parte da vida do crente/pregador. Nenhum sermão poderoso nasceu fora do altar de oração.</p>
+                </div>
+                <div class="quality-card">
+                    <h4>Caráter</h4>
+                    <p>O testemunho muito pesa na hora que assumimos o púlpito. A mensagem começa antes de o pregador abrir a boca.</p>
+                </div>
+                <div class="quality-card">
+                    <h4>Inspiração</h4>
+                    <p>Resultado de uma vida de comunhão com o Senhor. O pregador cheio do Espírito transmite mais do que palavras — transmite vida.</p>
+                </div>
+                <div class="quality-card">
+                    <h4>Determinação</h4>
+                    <p>Requer esforço, muito esforço. A preguiça intelectual e espiritual é o maior inimigo do pregador em formação.</p>
+                </div>
+                <div class="quality-card">
+                    <h4>Criatividade e Imaginação</h4>
+                    <p>Coloque o ouvinte no acontecimento pregado. Faça-o ver, sentir e viver o texto bíblico.</p>
+                </div>
+                <div class="quality-card">
+                    <h4>Novidade</h4>
+                    <p>O pregador precisa sempre trazer coisas novas: exemplos, ilustrações, perspectivas frescas da Palavra.</p>
+                </div>
+                <div class="quality-card">
+                    <h4>Síntese</h4>
+                    <p>O segredo não é falar muito, mas falar bem. A objetividade é sinal de respeito ao ouvinte.</p>
+                </div>
+                <div class="quality-card">
+                    <h4>Observação</h4>
+                    <p>Estar antenado em tudo ao seu redor. A vida cotidiana oferece ricas ilustrações para enriquecer qualquer sermão.</p>
+                </div>
+                <div class="quality-card">
+                    <h4>Boa Aparência</h4>
+                    <p>Cuide bem da sua aparência. A forma como o pregador se apresenta comunica respeito a Deus e ao ouvinte.</p>
+                </div>
+                <div class="quality-card">
+                    <h4>Vocabulário</h4>
+                    <p>Quanto mais você ler, maior será seu vocabulário. Leia a Bíblia, teologia, literatura, jornais — tudo alimenta o pregador.</p>
+                </div>
+                <div class="quality-card">
+                    <h4>Humildade</h4>
+                    <p>Não "vomite" conhecimento. O sábio sabe selecionar o que edifica e apresentá-lo com graça e mansidão.</p>
+                </div>
+            </div>
+
+            <div class="info-box teal">
+                <div class="info-box-title"><i data-lucide="heart" style="width: 16px; height: 16px;"></i> O pregador é a mensagem</div>
+                <p>Charles Spurgeon afirmava que a maior ilustração de qualquer sermão é a <strong>vida do pregador</strong>. A congregação ouvirá com muito mais atenção aquele cujo caráter valida o que proclama.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 2 — POSTURA NO PÚLPITO
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap2">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 2</div>
+                <h2 class="chapter-title">Postura no Púlpito</h2>
+            </div>
+
+            <p class="lead">A comunicação vai muito além das palavras. O corpo, o olhar e os vícios de linguagem podem fortalecer ou sabitar completamente a pregação mais bem preparada.</p>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon orange"><i data-lucide="hand" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Movimentos</h4>
+                    <p><strong>Muita gesticulação, não!</strong> Os gestos devem complementar a mensagem, não competir com ela. Gestos excessivos distraem e prejudicam a comunicação da Palavra.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon blue"><i data-lucide="eye" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Olhar</h4>
+                    <p><strong>Concentrar em pessoas, não!</strong> Distribua o olhar pela congregação de forma natural. Fixar em uma única pessoa gera constrangimento e desconforto.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon red"><i data-lucide="message-square-x" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Vazios e Corruptelas</h4>
+                    <p>Expressões como <em>"Amém?"</em>, <em>"Glória a Deus?"</em> e <em>"Né?"</em> usadas como muleta para preencher pausas fragilizam a credibilidade e interrompem o fluxo da mensagem.</p>
+                </div>
+            </div>
+
+            <div class="info-box warning">
+                <div class="info-box-title"><i data-lucide="alert-triangle" style="width: 16px; height: 16px;"></i> Atenção à comunicação não-verbal</div>
+                <p>Estudos de comunicação indicam que <strong>mais de 70% da mensagem</strong> é transmitida pela linguagem não-verbal — postura, expressão facial, gestos e tom de voz. Negligenciar esses elementos compromete mesmo o conteúdo mais sólido.</p>
+            </div>
+
+            <div class="verse-card">
+                <p>"Deixai pois que as palavras de minha boca e a meditação do meu coração sejam agradáveis à tua presença, SENHOR, rocha minha e redentor meu."</p>
+                <span class="ref">— Salmos 19.14</span>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 3 — TIPOS NEGATIVOS DE SERMÕES
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap3">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 3</div>
+                <h2 class="chapter-title">Tipos Negativos de Sermões</h2>
+            </div>
+
+            <p class="lead">Conhecer os erros é o primeiro passo para evitá-los. Esses padrões de pregação são comuns, mas comprometem a fidelidade ao texto e a eficácia da mensagem.</p>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon orange"><i data-lucide="smile" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Sermão Stand Up</h4>
+                    <p>Diferente de ilustrações ou exemplos com <em>uma pitada</em> de humor — o sermão stand up faz do humor o objetivo principal, esvaziando o peso e a seriedade da Palavra de Deus.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon wine"><i data-lucide="drama" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Sermão Drama</h4>
+                    <p>Emocionalismo exagerado, com direito a fundo musical e encenação teatral. O Espírito Santo não precisa de trilha sonora para agir — a emoção deve ser fruto da Palavra, não de manipulação.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon red"><i data-lucide="whip" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Sermão "Chicote"</h4>
+                    <p>Só críticas, sem amor ou misericórdia. Siga o exemplo do Mestre: Jesus confrontava o pecado, mas sempre com amor, compaixão e esperança de restauração.</p>
+                </div>
+            </div>
+
+            <div class="info-box accent">
+                <div class="info-box-title"><i data-lucide="scale" style="width: 16px; height: 16px;"></i> O equilíbrio do pregador fiel</div>
+                <p>O pregador saudável combina <strong>verdade com amor</strong> (Ef 4.15). Não há pregação fiel sem fidelidade ao texto; não há pregação cristã sem o espírito de Cristo — que é de amor, mansidão e misericórdia.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 4 — CONSELHOS AO PREGADOR
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap4">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 4</div>
+                <h2 class="chapter-title">Conselhos aos Pregadores em Formação</h2>
+            </div>
+
+            <p class="lead">Estes conselhos foram destilados da experiência de pregadores fiéis ao longo de gerações. São princípios práticos que transformam o estudo em excelência ministerial.</p>
+
+            <ol class="steps-list">
+                <li>
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <h4>Estude o Texto Bíblico</h4>
+                        <p>O tempo esperado para a elaboração de um sermão é da ordem de <strong>12 horas</strong>. Se chegarmos ao menos a 1/3, já aprenderemos muita coisa. Sermão rápido é sinal de desrespeito ao ouvinte e ao texto.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <h4>Não Leia a Bíblia Apenas para Pregar</h4>
+                        <p>Quem tem familiaridade íntima com a Palavra tem <span class="highlight">tesouros diários</span> para pregar. O pregador que só abre a Bíblia para preparar sermões está construindo sobre areia.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <h4>Amplie o Sermão com Outras Fontes</h4>
+                        <p>Após estudar e entender bem o texto bíblico, a consulta de outras fontes — comentários, dicionários, léxicos, obras teológicas — pode enriquecer consideravelmente o seu sermão.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <h4>Considere a Ocasião</h4>
+                        <p>Formatura, culto festivo, final de ano: cada ocasião merece um sermão alusivo. O bom pregador lê o contexto e adapta a mensagem sem trair o texto.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <h4>Conquiste os Ouvintes</h4>
+                        <p>Busque inovar a cada sermão. Traga riquezas extraídas da Bíblia e da história da época. <strong>Não permita que todos já saibam como iniciará e terminará sua mensagem.</strong></p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">6</div>
+                    <div class="step-body">
+                        <h4>Comece e Termine Bem</h4>
+                        <p>Administre o tempo, transmita a mensagem, não canse seus ouvintes. Uma boa introdução abre portas; uma conclusão forte fecha com chave de ouro.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">7</div>
+                    <div class="step-body">
+                        <h4>Utilize Aplicações</h4>
+                        <p>Traga os ouvintes para dentro do texto; motive-os a levar consigo as aplicações. A mensagem que não aterrissa na vida cotidiana ficou apenas no ar.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">8</div>
+                    <div class="step-body">
+                        <h4>Sem Sensacionalismo</h4>
+                        <p>Não impulsione as pessoas a glorificarem a sua pregação. <strong>Pregue a Palavra</strong> — a glória pertence a Deus, não ao pregador.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">9</div>
+                    <div class="step-body">
+                        <h4>Seja Espiritual, Não Espirituoso</h4>
+                        <p>Evite contar o que fez, como se preparou, quantas horas estudou. Isso é intimidade sua com o Espírito Santo — não vire em espetáculo.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">10</div>
+                    <div class="step-body">
+                        <h4>Sempre Jesus</h4>
+                        <p>Se o seu sermão não apresentar <strong>Jesus Cristo</strong>, está incompleto — independente do texto, do tema ou da ocasião. Toda a Escritura aponta para Ele (Lc 24.27).</p>
+                    </div>
+                </li>
+            </ol>
+
+            <div class="verse-card teal-card">
+                <p>"Procura apresentar-te aprovado diante de Deus, como obreiro que não tem de que se envergonhar, que maneja bem a palavra da verdade."</p>
+                <span class="ref">— 2 Timóteo 2.15</span>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 5 — ILUSTRANDO O SERMÃO
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap5">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 5</div>
+                <h2 class="chapter-title">Ilustrando o Sermão</h2>
+            </div>
+
+            <p class="lead">Uma ilustração bem escolhida pode abrir corações que a argumentação mais sólida não conseguiu alcançar. Ela não enfeita o sermão — ela o ilumina.</p>
+
+            <div class="definition">
+                <div class="definition-word">Ilustração</div>
+                <div class="definition-origin">Do latim illustratio — lançar luz sobre algo</div>
+                <p>Significa <strong>lançar luz sobre o assunto</strong>. Serve para iluminar, esclarecer e tornar concreto aquilo que, de outro modo, poderia parecer abstrato ou distante do ouvinte.</p>
+            </div>
+
+            <h3 class="section-title">Fontes de Ilustrações</h3>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon gold"><i data-lucide="user" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Biografias</h4>
+                    <p>O uso de fatos biográficos de personagens históricos ou bíblicos é um poderoso recurso. Figuras como Abraão, Paulo, Agostinho, Lutero ou Hudson Taylor ilustram com vida e sangue as verdades eternas.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon blue"><i data-lucide="history" style="width: 20px; height: 20px;"></i></div>
+                    <h4>História e Fatos Atuais</h4>
+                    <p>Eventos históricos e situações da atualidade podem tornar a mensagem extremamente relevante. O pregador observador encontra ilustrações em todo lugar.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon green"><i data-lucide="book-open" style="width: 20px; height: 20px;"></i></div>
+                    <h4>A Própria Escritura</h4>
+                    <p>A melhor ilustração é frequentemente outra passagem bíblica. A Bíblia é rica em narrativas, metáforas e símiles que iluminam umas às outras de forma incomparável.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon teal"><i data-lucide="globe" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Cotidiano e Natureza</h4>
+                    <p>Jesus mesmo ilustrava usando a semeadura, os pássaros, as flores do campo. O pregador que observa a vida ao redor nunca ficará sem ilustrações.</p>
+                </div>
+            </div>
+
+            <div class="info-box warning">
+                <div class="info-box-title"><i data-lucide="alert-circle" style="width: 16px; height: 16px;"></i> Cuidado com as ilustrações</div>
+                <p>
+                    • A ilustração deve <strong>servir ao texto</strong>, não roubar o centro da pregação.<br>
+                    • Histórias pessoais usadas em excesso transformam o sermão em autobiografia.<br>
+                    • Verifique a veracidade de citações e histórias antes de usá-las.<br>
+                    • Uma boa ilustração clarifica; uma má ilustração confunde ou distrai.
+                </p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 6 — CLASSIFICAÇÃO DOS SERMÕES
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap6">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 6</div>
+                <h2 class="chapter-title">Classificação dos Sermões</h2>
+            </div>
+
+            <p class="lead">Conhecer os tipos de sermão liberta o pregador. Cada formato tem suas vantagens e seus contextos ideais de uso — o pregador maduro domina os três.</p>
+
+            <div class="sermon-type-grid">
+                <div class="sermon-type-card t-card" data-letter="T">
+                    <div class="sermon-type-label">Tipo 1</div>
+                    <h4>Temático</h4>
+                    <p>Aquele cujas divisões principais derivam do <strong>tema</strong>, independente do texto. O pregador determina o assunto que deseja e então busca os textos bíblicos para formar as divisões principais que vão apoiar o assunto escolhido.</p>
+                </div>
+                <div class="sermon-type-card x-card" data-letter="X">
+                    <div class="sermon-type-label">Tipo 2</div>
+                    <h4>Textual</h4>
+                    <p>Aquele cujo assunto é tirado de um <strong>texto bíblico pequeno</strong>, geralmente de um só versículo, de onde vêm a ideia central e as divisões principais. O texto governa o tema e a estrutura.</p>
+                </div>
+                <div class="sermon-type-card e-card" data-letter="E">
+                    <div class="sermon-type-label">Tipo 3</div>
+                    <h4>Expositivo</h4>
+                    <p>Uma porção mais ou menos extensa da Escritura é interpretada em relação a um tema. O pregador não traz nada externo ao texto — <strong>explora o conteúdo</strong> e permite que o poder do texto alcance o ouvinte.</p>
+                </div>
+            </div>
+
+            <div class="styled-table-wrap">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th class="neutral">Temático</th>
+                            <th class="wine">Textual</th>
+                            <th class="good">Expositivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Ponto de partida</strong></td>
+                            <td>Um assunto ou tema</td>
+                            <td>Um versículo ou trecho curto</td>
+                            <td>Uma passagem extensa</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Divisões principais</strong></td>
+                            <td>Derivam do tema</td>
+                            <td>Derivam do texto</td>
+                            <td>Derivam da passagem</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Foco</strong></td>
+                            <td>Doutrina ou assunto específico</td>
+                            <td>Verdade central do versículo</td>
+                            <td>Conteúdo do próprio texto</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ideal para</strong></td>
+                            <td>Campanhas, datas especiais</td>
+                            <td>Culto regular, evangelismo</td>
+                            <td>Estudo bíblico, EBD, discipulado</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box purple">
+                <div class="info-box-title"><i data-lucide="star" style="width: 16px; height: 16px;"></i> Qual o melhor tipo?</div>
+                <p>O sermão <strong>expositivo</strong> é geralmente considerado o mais poderoso para o crescimento da congregação, pois expõe sistematicamente o que a Bíblia diz, em vez de usar a Bíblia para ilustrar o que o pregador já quer dizer.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 7 — CONSTRUINDO O SERMÃO
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap7">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 7</div>
+                <h2 class="chapter-title">Construindo o Sermão</h2>
+            </div>
+
+            <p class="lead">Todo bom sermão tem uma arquitetura. Conhecer as partes e suas funções permite construir mensagens que são claras, coesas e transformadoras.</p>
+
+            <h3 class="section-title">Elementos Estruturais</h3>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon dark"><i data-lucide="clock" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Tempo</h4>
+                    <p>O tempo ideal de um sermão deverá compreender cerca de <strong>30 minutos</strong>. Administrar o tempo é respeitar o ouvinte e valorizar a atenção que ele deposita na mensagem.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon wine"><i data-lucide="tag" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Título</h4>
+                    <p>Sua função é <strong>chamar a atenção</strong> dos ouvintes. Geralmente é um dos últimos itens preparados. Deve ser breve — de 15 a 20 palavras — e despertar curiosidade ou necessidade.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon blue"><i data-lucide="door-open" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Introdução</h4>
+                    <p>Processo pelo qual o pregador prepara a mente dos ouvintes e prende-lhes o interesse. Recomenda-se que não ultrapasse <strong>3–5 minutos</strong>, ou 10 a 15% do tempo total da pregação.</p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon gold"><i data-lucide="layout-list" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Divisão do Sermão</h4>
+                    <p>São as seções principais de um sermão ordenado. Promovem clareza de ideias, unidade de pensamentos, e ajudam o pregador a lembrar-se dos pontos principais.</p>
+                </div>
+            </div>
+
+            <h3 class="section-title">A Conclusão</h3>
+
+            <p>A conclusão é o <span class="highlight">clímax do sermão</span>, na qual o objetivo constante do pregador atinge seu alvo em forma de uma impressão vigorosa. Ela deve ser preparada com tanto cuidado quanto a introdução.</p>
+
+            <div class="card-grid">
+                <div class="mini-card">
+                    <div class="mini-card-icon green"><i data-lucide="hand-heart" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Apelo ou Convite</h4>
+                    <p>Dar ao ouvinte a oportunidade de assumir um compromisso diante das verdades apresentadas. O apelo não é apelação — deve ser feito com clareza, elegância e sem pressão. <strong>Convencer é obra do Espírito Santo.</strong></p>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon purple"><i data-lucide="arrow-right-circle" style="width: 20px; height: 20px;"></i></div>
+                    <h4>Aplicação</h4>
+                    <p>Processo pelo qual a verdade é aplicada direta e pessoalmente ao indivíduo, persuadindo-o a reagir favoravelmente. Deve ser prática, realista e coerente com o texto.</p>
+                </div>
+            </div>
+
+            <h3 class="section-title">Características da Boa Aplicação</h3>
+
+            <ul class="styled-list">
+                <li><strong>Linguagem atual</strong> — no contexto dos ouvintes; não use termos que ninguém entende.</li>
+                <li><strong>Realismo e natureza prática</strong> — não desafie os ouvintes a propósitos irreais ou impossíveis.</li>
+                <li><strong>Coerência</strong> — cuidado com interpretação equivocada do texto; a aplicação deve brotar do texto, não ser imposta a ele.</li>
+                <li><strong>Objetividade</strong> — a aplicação deve ser clara o suficiente para o ouvinte saber exatamente o que fazer.</li>
+            </ul>
+
+            <div class="info-box accent">
+                <div class="info-box-title"><i data-lucide="lightbulb" style="width: 16px; height: 16px;"></i> Formas de aplicação</div>
+                <p>A aplicação pode ser feita através de: uma <strong>pergunta reflexiva</strong>; um <strong>compromisso assumido</strong>; um <strong>resumo dos tópicos</strong> do sermão; ou uma <strong>frase de efeito</strong> que leva os ouvintes a incomodar-se e refletir sobre o que ouviram.</p>
+            </div>
+
+            <div class="verse-card gold-card">
+                <p>"Prega a palavra, insiste, quer seja oportuno quer não, repreende, repreende com toda a longanimidade e doutrina."</p>
+                <span class="ref">— 2 Timóteo 4.2</span>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CAPÍTULO 8 — REFERÊNCIAS
+             ═══════════════════════════════════════ -->
+        <section class="chapter" id="cap8">
+            <div class="chapter-header">
+                <div class="chapter-num">Capítulo 8</div>
+                <h2 class="chapter-title">Conclusão e Referências</h2>
+            </div>
+
+            <div class="info-box wine" style="margin-bottom: 40px;">
+                <div class="info-box-title"><i data-lucide="quote" style="width: 16px; height: 16px;"></i> Palavra Final</div>
+                <p>O presente material busca trazer informações para você, jovem pregador, que sente de Deus a chamada para o ministério da pregação. O desejo é que você tenha sempre como fonte principal a Palavra de Deus, lembrando que <strong>toda a glória e honra é para Ele</strong>. Cuide de você e valorize sempre seu ouvinte <em>(1 Tm 4.11-16)</em>. Que Deus vos abençoe!</p>
+            </div>
+
+            <h3 class="section-title">Referências Bibliográficas</h3>
+
+            <ul class="ref-list">
+                <li>Bíblia Sagrada (várias versões).</li>
+                <li>CGADB. <em>Declaração de Fé.</em> Rio de Janeiro: CPAD, 2017.</li>
+                <li>CABRAL, Elienai. <em>Movimento Pentecostal: As doutrinas da nossa fé.</em> Rio de Janeiro: CPAD, 2011.</li>
+                <li>GILBERTO, Antônio. <em>As doutrinas Bíblicas Pentecostais.</em> Disponível em: <a href="https://www.youtube.com/watch?v=WotEvmg0aUM&t=4609s" target="_blank">youtube.com</a>. Acesso em: 03/08/18.</li>
+                <li>BRAGA, J. <em>Como preparar mensagens bíblicas.</em> São Paulo: Editora Vida, 2005.</li>
+                <li>GONÇALVES, J. <em>129 sermões esboçados.</em> São Paulo: Mensagem para todos, 2003.</li>
+                <li>GONÇALVES, J. <em>Aprenda a pregar.</em> São Paulo: o autor, 1996.</li>
+                <li>LLOYD-JONES, M. <em>Pregação &amp; pregadores.</em> São Paulo: Editora Fiel, 2008.</li>
+                <li>MARINHO, R. M. <em>A arte de pregar.</em> São Paulo: Vida Nova, 2008.</li>
+                <li>MORAES, J. <em>Homilética da pesquisa ao púlpito.</em> São Paulo: Editora Vida, 2008.</li>
+                <li>MORAES, J. <em>Homilética do ouvinte à prática.</em> São Paulo: Editora Vida, 2008.</li>
+                <li>MORAES, J. <em>Homilética do púlpito ao ouvinte.</em> São Paulo: Editora Vida, 2008.</li>
+                <li>SILVA, S. P. <em>Homilética: o pregador e o sermão.</em> Rio de Janeiro: CPAD, 2007.</li>
+            </ul>
+
+            <div class="info-box success" style="margin-top: 40px;">
+                <div class="info-box-title"><i data-lucide="check-circle" style="width: 16px; height: 16px;"></i> Resumo da Aula 4</div>
+                <p>
+                    <strong>Homilética:</strong> Ciência da pregação cristã — orientar e qualificar o pregador.<br>
+                    <strong>Qualidades do pregador:</strong> Chamada, oração, caráter, inspiração, determinação e humildade.<br>
+                    <strong>Postura no púlpito:</strong> Evitar excesso de gestos, corruptelas e foco em uma só pessoa.<br>
+                    <strong>Sermões negativos:</strong> Stand up, drama e chicote — todos a evitar.<br>
+                    <strong>Tipos de sermão:</strong> Temático, Textual e Expositivo.<br>
+                    <strong>Estrutura:</strong> Título → Introdução → Divisão → Conclusão → Aplicação → Apelo.<br>
+                    <strong>Meta final:</strong> Sempre apresentar Jesus em toda pregação.
+                </p>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<button class="back-top" id="backTop" aria-label="Voltar ao topo">
+    <i data-lucide="chevron-up" style="width: 22px; height: 22px;"></i>
+</button>
+
+<script>
+    lucide.createIcons();
+
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    sidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+    document.querySelectorAll('.sidebar-nav a').forEach(a => {
+        a.addEventListener('click', () => {
+            if (window.innerWidth <= 900) sidebar.classList.remove('open');
+        });
+    });
+
+    const chapters = document.querySelectorAll('.chapter');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+    function updateActiveLink() {
+        let current = '';
+        chapters.forEach(ch => {
+            const top = ch.offsetTop - 120;
+            if (window.scrollY >= top) current = ch.id;
+        });
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+        });
+    }
+
+    const progressBar = document.getElementById('progressBar');
+    function updateProgress() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressBar.style.width = progress + '%';
+    }
+
+    const backTop = document.getElementById('backTop');
+    function updateBackTop() {
+        backTop.classList.toggle('visible', window.scrollY > 600);
+    }
+
+    backTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', () => {
+        updateActiveLink();
+        updateProgress();
+        updateBackTop();
+    });
+
+    updateActiveLink();
+</script>
+</body>
+</html>

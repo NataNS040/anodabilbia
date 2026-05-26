@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lição 4 - A Confirmação de uma Promessa | EBD Adultos CPAD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #d4b84a;
+            --bg-light: #f8fafc;
+            --bg-dark: #e2e8f0;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --text-muted: #718096;
+            --white: #ffffff;
+            --success: #38a169;
+            --info: #3182ce;
+            --warning: #e67e22;
+            --danger: #c0392b;
+            --covenant: #b45309;
+            --covenant-light: #d97706;
+            --covenant-dark: #92400e;
+            --promise: #7c3aed;
+            --promise-light: #a78bfa;
+            --promise-dark: #5b21b6;
+            --identity: #059669;
+            --identity-light: #34d399;
+            --identity-dark: #047857;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%; height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+        }
+
+        .presentation { width: 100%; height: 100%; position: relative; }
+
+        .slide {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 45px 70px;
+            background: var(--bg-light);
+        }
+
+        .slide.active { display: flex; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulseGold { 0%,100% { box-shadow: 0 0 30px rgba(180,83,9,0.3); } 50% { box-shadow: 0 0 60px rgba(180,83,9,0.6); } }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes rotateBg { to { transform: rotate(360deg); } }
+        @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+
+        /* ══════ NAV ══════ */
+        .nav-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 18px;
+            background: rgba(255,255,255,0.95); padding: 12px 30px;
+            border-radius: 50px; box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+            z-index: 1000; backdrop-filter: blur(10px);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .nav-bar.visible { opacity: 1; pointer-events: auto; }
+        .nav-bar button {
+            width: 48px; height: 48px; border: none; border-radius: 50%;
+            background: var(--primary); color: white; cursor: pointer;
+            font-size: 1.2rem; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-bar button:hover { background: var(--primary-light); transform: scale(1.05); }
+        .nav-bar button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        .nav-bar .counter { padding: 0 22px; font-weight: 700; font-size: 1.05rem; color: var(--primary); display: flex; align-items: center; }
+
+        .fullscreen-btn {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--primary); color: white; border: none;
+            padding: 12px 20px; border-radius: 12px; cursor: pointer;
+            font-weight: 600; font-size: 0.95rem; z-index: 1000;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s;
+        }
+        .fullscreen-btn:hover { background: var(--primary-light); }
+
+        .shortcuts {
+            position: fixed; bottom: 25px; left: 25px;
+            background: rgba(0,0,0,0.75); color: white;
+            padding: 12px 20px; border-radius: 10px;
+            font-size: 0.8rem; z-index: 1000; opacity: 0.8;
+        }
+        .shortcuts kbd { background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 4px; margin: 0 2px; }
+
+        /* ══════ CAPA ══════ */
+        .slide-capa {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-capa::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(180,83,9,0.06), transparent, rgba(201,162,39,0.06), transparent);
+            animation: rotateBg 25s linear infinite;
+        }
+        .capa-content { position: relative; z-index: 1; max-width: 1000px; }
+        .capa-icon {
+            width: 110px; height: 110px;
+            background: rgba(180,83,9,0.15); border: 2px solid rgba(180,83,9,0.3);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: pulseGold 3s ease-in-out infinite;
+        }
+        .capa-icon svg { width: 55px; height: 55px; color: var(--accent-light); }
+        .capa-badge {
+            display: inline-block; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 30px; border-radius: 50px;
+            font-size: 0.9rem; margin-bottom: 20px;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .capa-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem; font-weight: 700;
+            margin-bottom: 20px; line-height: 1.15;
+        }
+        .capa-title span { color: var(--accent-light); }
+        .capa-subtitle {
+            font-size: 1.2rem; opacity: 0.85;
+            margin-bottom: 30px; font-weight: 300;
+            max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;
+        }
+        .capa-tags {
+            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+        }
+        .capa-tag {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 18px; border-radius: 50px; font-size: 0.85rem;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+        .capa-tag.covenant { border-color: rgba(180,83,9,0.4); color: var(--covenant-light); }
+        .capa-tag.promise { border-color: rgba(124,58,237,0.4); color: var(--promise-light); }
+        .capa-tag.identity { border-color: rgba(5,150,105,0.4); color: var(--identity-light); }
+        .capa-date { margin-top: 25px; font-size: 1rem; opacity: 0.7; }
+
+        /* ══════ CONTENT SLIDES ══════ */
+        .slide-content { background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-dark) 100%); }
+
+        .slide-header { text-align: center; margin-bottom: 35px; }
+
+        .slide-icon {
+            width: 70px; height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 18px; margin: 0 auto 18px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(30,58,95,0.25);
+        }
+        .slide-icon svg { width: 35px; height: 35px; color: var(--accent); }
+        .slide-icon.covenant { background: linear-gradient(135deg, var(--covenant), var(--covenant-light)); }
+        .slide-icon.covenant svg { color: white; }
+        .slide-icon.promise { background: linear-gradient(135deg, var(--promise), var(--promise-light)); }
+        .slide-icon.promise svg { color: white; }
+        .slide-icon.identity { background: linear-gradient(135deg, var(--identity), var(--identity-light)); }
+        .slide-icon.identity svg { color: white; }
+        .slide-icon.green { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .slide-icon.green svg { color: white; }
+        .slide-icon.blue { background: linear-gradient(135deg, var(--info), #3498db); }
+        .slide-icon.blue svg { color: white; }
+        .slide-icon.gold { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+        .slide-icon.gold svg { color: var(--primary-dark); }
+        .slide-icon.danger { background: linear-gradient(135deg, var(--danger), #e74c3c); }
+        .slide-icon.danger svg { color: white; }
+        .slide-icon.warning { background: linear-gradient(135deg, var(--warning), #f39c12); }
+        .slide-icon.warning svg { color: white; }
+
+        .slide-badge {
+            display: inline-block; padding: 7px 20px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 700; margin-bottom: 12px;
+            letter-spacing: 1px; text-transform: uppercase;
+            background: var(--accent); color: var(--primary-dark);
+        }
+        .slide-badge.covenant-badge { background: var(--covenant); color: white; }
+        .slide-badge.promise-badge { background: var(--promise); color: white; }
+        .slide-badge.identity-badge { background: var(--identity); color: white; }
+        .slide-badge.info-badge { background: var(--info); color: white; }
+        .slide-badge.danger-badge { background: var(--danger); color: white; }
+        .slide-badge.section-badge { background: var(--primary); color: white; }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem; color: var(--primary); line-height: 1.2;
+        }
+        .slide-subtitle { font-size: 1.05rem; color: var(--text-muted); margin-top: 8px; }
+
+        /* Verse highlight */
+        .verse-highlight {
+            background: linear-gradient(135deg, var(--promise), var(--promise-dark));
+            border-radius: 18px; padding: 35px 45px; color: white;
+            text-align: center; max-width: 900px; width: 100%;
+        }
+        .verse-highlight.covenant-hl { background: linear-gradient(135deg, var(--covenant), var(--covenant-dark)); }
+        .verse-highlight.identity-hl { background: linear-gradient(135deg, var(--identity), var(--identity-dark)); }
+        .verse-highlight.primary-hl { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
+        .verse-highlight.gold-hl { background: linear-gradient(135deg, var(--accent), var(--covenant)); }
+        .verse-highlight .verse-text {
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            line-height: 1.5; margin-bottom: 18px; font-style: italic;
+        }
+        .verse-highlight .verse-ref {
+            background: var(--accent); color: var(--primary-dark);
+            padding: 7px 22px; border-radius: 50px; font-weight: 700;
+            font-size: 0.95rem; display: inline-block;
+        }
+
+        /* Content box */
+        .content-box {
+            background: white; border-radius: 18px; padding: 35px;
+            box-shadow: 0 8px 35px rgba(0,0,0,0.07); max-width: 1100px; width: 100%;
+        }
+
+        /* Impact phrase */
+        .impact-box {
+            background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+            border-radius: 20px; padding: 50px; color: white;
+            text-align: center; max-width: 950px; width: 100%;
+            position: relative; overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+        }
+        .impact-box::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(180,83,9,0.15) 0%, transparent 60%);
+        }
+        .impact-box .impact-text {
+            font-family: 'Playfair Display', serif; font-size: 2.2rem;
+            line-height: 1.5; position: relative; font-weight: 600;
+        }
+        .impact-box .impact-text span { color: var(--accent-light); }
+
+        /* Cards */
+        .cards-grid {
+            display: grid; gap: 20px; width: 100%; max-width: 1200px;
+        }
+        .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); max-width: 950px; }
+        .cards-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+        .card {
+            background: white; border-radius: 14px; padding: 25px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.07); transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-4px); }
+        .card-icon {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 12px; margin-bottom: 15px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card-icon svg { width: 25px; height: 25px; color: var(--accent); }
+        .card-icon.covenant { background: linear-gradient(135deg, var(--covenant), var(--covenant-light)); }
+        .card-icon.covenant svg { color: white; }
+        .card-icon.promise { background: linear-gradient(135deg, var(--promise), var(--promise-light)); }
+        .card-icon.promise svg { color: white; }
+        .card-icon.identity { background: linear-gradient(135deg, var(--identity), var(--identity-light)); }
+        .card-icon.identity svg { color: white; }
+        .card-icon.gold { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+        .card-icon.gold svg { color: var(--primary-dark); }
+        .card h4 { font-size: 1.05rem; color: var(--primary); margin-bottom: 8px; }
+        .card p { font-size: 0.95rem; color: var(--text-light); line-height: 1.55; }
+
+        /* Question impact */
+        .question-impact {
+            background: linear-gradient(135deg, var(--covenant), var(--covenant-dark));
+            border-radius: 18px; padding: 45px; color: white;
+            text-align: center; max-width: 1000px; width: 100%;
+            box-shadow: 0 12px 45px rgba(180,83,9,0.3);
+        }
+        .question-impact.promise-q { background: linear-gradient(135deg, var(--promise), var(--promise-dark)); box-shadow: 0 12px 45px rgba(124,58,237,0.3); }
+        .question-impact.primary-q { background: linear-gradient(135deg, var(--primary), var(--primary-light)); box-shadow: 0 12px 45px rgba(30,58,95,0.3); }
+        .question-impact.identity-q { background: linear-gradient(135deg, var(--identity), var(--identity-dark)); box-shadow: 0 12px 45px rgba(5,150,105,0.3); }
+        .question-impact h3 {
+            font-size: 1rem; opacity: 0.9; margin-bottom: 18px;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .question-impact .question-text {
+            font-family: 'Playfair Display', serif; font-size: 2rem;
+            line-height: 1.4; font-weight: 600;
+        }
+
+        /* Name transform */
+        .name-transform {
+            display: flex; align-items: center; justify-content: center;
+            gap: 30px; max-width: 900px; width: 100%; flex-wrap: wrap;
+        }
+        .name-box {
+            background: white; border-radius: 20px; padding: 30px 45px;
+            text-align: center; box-shadow: 0 8px 35px rgba(0,0,0,0.1);
+            flex: 1; min-width: 200px;
+        }
+        .name-box.before { border-top: 5px solid var(--text-muted); }
+        .name-box.after { border-top: 5px solid var(--covenant); }
+        .name-box .name-label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+        .name-box .name-main { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+        .name-box .name-meaning { font-size: 1rem; color: var(--text-light); font-style: italic; }
+        .name-box.after .name-main { color: var(--covenant); }
+        .name-arrow { font-size: 3rem; color: var(--covenant); font-weight: bold; flex-shrink: 0; }
+
+        /* Principle box */
+        .principle-box {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 18px; padding: 40px 55px; color: white;
+            text-align: center; max-width: 900px; width: 100%;
+            border-left: 8px solid var(--accent);
+        }
+        .principle-box .principle-label {
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;
+            opacity: 0.8; margin-bottom: 15px;
+        }
+        .principle-box .principle-text {
+            font-family: 'Playfair Display', serif; font-size: 1.9rem;
+            line-height: 1.5; font-weight: 600;
+        }
+        .principle-box .principle-text span { color: var(--accent-light); }
+
+        /* Check list */
+        .check-list {
+            list-style: none; max-width: 800px; width: 100%;
+        }
+        .check-list li {
+            display: flex; align-items: center; gap: 15px;
+            padding: 15px 20px; margin-bottom: 12px;
+            background: white; border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            font-size: 1.1rem; color: var(--text-dark);
+        }
+        .check-list li .check-icon {
+            width: 38px; height: 38px; border-radius: 50%;
+            background: rgba(180,83,9,0.12);
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .check-list li .check-icon svg { width: 20px; height: 20px; color: var(--covenant); }
+        .check-list li.promise-item .check-icon { background: rgba(124,58,237,0.12); }
+        .check-list li.promise-item .check-icon svg { color: var(--promise); }
+        .check-list li.identity-item .check-icon { background: rgba(5,150,105,0.12); }
+        .check-list li.identity-item .check-icon svg { color: var(--identity); }
+
+        /* Two columns */
+        .two-columns { display: flex; gap: 30px; width: 100%; max-width: 1200px; align-items: stretch; }
+        .column { flex: 1; }
+
+        /* Summary row */
+        .summary-row {
+            display: flex; gap: 15px; width: 100%; max-width: 1100px; justify-content: center;
+        }
+        .summary-pill {
+            background: white; border-radius: 14px; padding: 18px 22px;
+            text-align: center; flex: 1; box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border-top: 4px solid;
+        }
+        .summary-pill h5 { font-size: 0.9rem; color: var(--primary); margin-bottom: 5px; font-weight: 700; }
+        .summary-pill p { font-size: 0.85rem; color: var(--text-light); }
+
+        /* Contrast box */
+        .contrast-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 20px; max-width: 900px; width: 100%;
+        }
+        .contrast-card {
+            background: white; border-radius: 16px; padding: 28px 30px;
+            text-align: center; box-shadow: 0 6px 25px rgba(0,0,0,0.07);
+            border-top: 5px solid;
+        }
+        .contrast-card h4 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 10px; }
+        .contrast-card p { font-size: 0.95rem; color: var(--text-light); line-height: 1.55; }
+        .contrast-card-icon { width: 55px; height: 55px; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; }
+        .contrast-card-icon svg { width: 28px; height: 28px; }
+
+        /* Section header */
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            border-radius: 18px; padding: 30px 50px; color: white;
+            text-align: center; max-width: 1000px; width: 100%;
+        }
+        .section-header .section-number {
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px;
+            opacity: 0.75; margin-bottom: 10px;
+        }
+        .section-header h2 {
+            font-family: 'Playfair Display', serif; font-size: 2.4rem; line-height: 1.25;
+        }
+        .section-header h2 span { color: var(--accent-light); }
+        .section-header p { margin-top: 12px; font-size: 1.05rem; opacity: 0.8; }
+
+        /* Conclusion slide */
+        .slide-conclusion {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-conclusion::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(180,83,9,0.1) 0%, transparent 60%);
+        }
+        .conclusion-content { position: relative; z-index: 1; max-width: 900px; }
+        .conclusion-icon {
+            width: 100px; height: 100px;
+            background: rgba(180,83,9,0.2); border: 2px solid rgba(180,83,9,0.4);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: breathe 3s ease-in-out infinite;
+        }
+        .conclusion-icon svg { width: 50px; height: 50px; color: var(--accent-light); }
+        .conclusion-text {
+            font-family: 'Playfair Display', serif; font-size: 2rem;
+            line-height: 1.5; margin-bottom: 30px;
+        }
+        .conclusion-highlight {
+            background: linear-gradient(135deg, var(--covenant), var(--covenant-dark));
+            padding: 25px 45px; border-radius: 16px;
+            font-family: 'Playfair Display', serif; font-size: 1.8rem;
+            font-weight: 600; display: inline-block;
+            box-shadow: 0 15px 50px rgba(180,83,9,0.4);
+        }
+
+        /* ══════ PRINT ══════ */
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+            html, body { width: 100%; height: auto; overflow: visible; background: white !important; margin: 0; padding: 0; }
+            .presentation { display: block; height: auto; }
+            .nav-bar, .fullscreen-btn, .shortcuts { display: none !important; }
+            .slide {
+                position: relative !important; display: flex !important;
+                width: 100% !important; height: 100vh !important;
+                min-height: 100vh !important; max-height: 100vh !important;
+                padding: 30px 50px !important;
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            .slide:last-child { page-break-after: avoid !important; break-after: avoid !important; }
+            .slide-capa, .slide-conclusion { background: #0f0f1a !important; }
+            .slide-header { margin-bottom: 20px !important; }
+            .slide-title { font-size: 2rem !important; }
+            .slide-icon { width: 55px !important; height: 55px !important; }
+            .capa-title { font-size: 2.8rem !important; }
+            .verse-highlight { padding: 20px 25px !important; }
+            .verse-highlight .verse-text { font-size: 1.2rem !important; }
+            .content-box { padding: 20px 25px !important; }
+            .impact-box { padding: 30px !important; }
+            .impact-box .impact-text { font-size: 1.6rem !important; }
+            .question-impact { padding: 25px !important; }
+            .question-impact .question-text { font-size: 1.5rem !important; }
+            .principle-box { padding: 25px 35px !important; }
+            .principle-box .principle-text { font-size: 1.5rem !important; }
+            @keyframes float { 0%,50%,100% { transform: none; } }
+            @keyframes pulseGold { 0%,50%,100% { box-shadow: none; } }
+            @keyframes rotateBg { 0%,100% { transform: none; } }
+            @keyframes breathe { 0%,50%,100% { transform: none; } }
+        }
+        @page { size: landscape; margin: 0; }
+        :fullscreen .nav-bar { bottom: 35px; }
+        :fullscreen .fullscreen-btn { display: none; }
+    </style>
+</head>
+<body>
+
+<button class="fullscreen-btn" onclick="toggleFullscreen()">
+    <i data-lucide="maximize"></i> Tela Cheia
+</button>
+<div class="shortcuts">
+    <kbd>←</kbd> <kbd>→</kbd> navegar | <kbd>F</kbd> tela cheia
+</div>
+
+<div class="presentation">
+
+    <!-- ═══════════ SLIDE 1 — CAPA ═══════════ -->
+    <div class="slide slide-capa active" id="s1">
+        <div class="capa-content">
+            <div class="capa-icon"><i data-lucide="scroll-text"></i></div>
+            <div class="capa-badge">EBD Adultos • Lições Bíblicas CPAD • 2º Trimestre 2026</div>
+            <h1 class="capa-title">A Confirmação de<br><span>uma Promessa</span></h1>
+            <p class="capa-subtitle">Lição 4 — Gênesis 17.1-9</p>
+            <div class="capa-tags">
+                <span class="capa-tag covenant">Fidelidade</span>
+                <span class="capa-tag promise">Promessa</span>
+                <span class="capa-tag identity">Identidade</span>
+                <span class="capa-tag">Abraão</span>
+            </div>
+            <p class="capa-date">👉 Deus é fiel para cumprir o que promete</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 2 — PERGUNTA INICIAL ═══════════ -->
+    <div class="slide slide-content" id="s2">
+        <div class="slide-header">
+            <div class="slide-icon covenant"><i data-lucide="help-circle"></i></div>
+            <div class="slide-badge covenant-badge">Pergunta Inicial</div>
+            <h2 class="slide-title">Para Abrir a Reflexão</h2>
+            <p class="slide-subtitle">Deixe a classe pensar e responder</p>
+        </div>
+        <div class="question-impact" style="max-width: 950px;">
+            <h3>Pergunta para a Classe</h3>
+            <p class="question-text">Quem tem promessa de Deus… pode morrer antes dela se cumprir?</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 3 — SEGUNDA PERGUNTA ═══════════ -->
+    <div class="slide slide-content" id="s3">
+        <div class="slide-header">
+            <div class="slide-icon promise"><i data-lucide="message-circle-question"></i></div>
+            <div class="slide-badge promise-badge">Segunda Pergunta</div>
+            <h2 class="slide-title">Uma Dúvida Real</h2>
+        </div>
+        <div class="question-impact promise-q" style="max-width: 950px;">
+            <h3>Pergunta de Reflexão</h3>
+            <p class="question-text">Por que às vezes parece que Deus esqueceu suas promessas?</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 4 — O QUE É PROMESSA ═══════════ -->
+    <div class="slide slide-content" id="s4">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="bookmark"></i></div>
+            <div class="slide-badge">Fundamento</div>
+            <h2 class="slide-title">O Que é Promessa?</h2>
+            <p class="slide-subtitle">Definição Teológica Essencial</p>
+        </div>
+        <div class="principle-box" style="margin-bottom: 30px;">
+            <p class="principle-label">Definição</p>
+            <p class="principle-text">Promessa = declaração <span>divina</span> do que Deus fará</p>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 800px;">
+            <div class="card" style="border-left: 5px solid var(--danger); text-align: center;">
+                <div class="card-icon danger" style="background: linear-gradient(135deg, var(--danger), #e74c3c); margin: 0 auto 15px;"><i data-lucide="x-circle"></i></div>
+                <h4 style="font-size: 1.2rem;">Não depende do homem</h4>
+                <p>A origem é divina, não humana.</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--identity); text-align: center;">
+                <div class="card-icon identity" style="margin: 0 auto 15px;"><i data-lucide="shield-check"></i></div>
+                <h4 style="font-size: 1.2rem;">Depende da fidelidade de Deus</h4>
+                <p>Deus é o garantidor e cumpridor.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 5 — DOUTRINA DAS PROMESSAS ═══════════ -->
+    <div class="slide slide-content" id="s5">
+        <div class="slide-header">
+            <div class="slide-icon promise"><i data-lucide="layers"></i></div>
+            <div class="slide-badge promise-badge">Doutrina</div>
+            <h2 class="slide-title">Doutrina das Promessas</h2>
+        </div>
+        <div class="impact-box">
+            <p class="impact-text">
+                Nem toda promessa é <span>igual</span><br><br>
+                Precisamos entender os <span>tipos</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 6 — PROMESSAS PARA ISRAEL ═══════════ -->
+    <div class="slide slide-content" id="s6">
+        <div class="slide-header">
+            <div class="slide-icon covenant"><i data-lucide="map-pin"></i></div>
+            <div class="slide-badge covenant-badge">Tipo 1</div>
+            <h2 class="slide-title">Promessas para Israel</h2>
+            <p class="slide-subtitle">Promessas específicas e literais</p>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1000px;">
+            <div class="card" style="border-top: 5px solid var(--covenant); text-align: center;">
+                <div class="card-icon covenant" style="margin: 0 auto 15px;"><i data-lucide="map"></i></div>
+                <h4 style="font-size: 1.3rem;">Terra</h4>
+                <p>A terra prometida a Abraão e seus descendentes.</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--covenant); text-align: center;">
+                <div class="card-icon covenant" style="margin: 0 auto 15px;"><i data-lucide="flag"></i></div>
+                <h4 style="font-size: 1.3rem;">Nação</h4>
+                <p>Um povo grande e distinto entre as nações.</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--covenant); text-align: center;">
+                <div class="card-icon covenant" style="margin: 0 auto 15px;"><i data-lucide="users"></i></div>
+                <h4 style="font-size: 1.3rem;">Descendência</h4>
+                <p>Multiplicação incontável como as estrelas.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 7 — PROMESSAS PARA A IGREJA ═══════════ -->
+    <div class="slide slide-content" id="s7">
+        <div class="slide-header">
+            <div class="slide-icon identity"><i data-lucide="church"></i></div>
+            <div class="slide-badge identity-badge">Tipo 2</div>
+            <h2 class="slide-title">Promessas para a Igreja</h2>
+            <p class="slide-subtitle">Promessas espirituais</p>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1000px;">
+            <div class="card" style="border-top: 5px solid var(--identity); text-align: center;">
+                <div class="card-icon identity" style="margin: 0 auto 15px;"><i data-lucide="heart-handshake"></i></div>
+                <h4 style="font-size: 1.3rem;">Salvação</h4>
+                <p>Redenção pelo sangue de Cristo para todos que creem.</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--identity); text-align: center;">
+                <div class="card-icon identity" style="margin: 0 auto 15px;"><i data-lucide="infinity"></i></div>
+                <h4 style="font-size: 1.3rem;">Vida Eterna</h4>
+                <p>A herança incorruptível guardada nos céus.</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--identity); text-align: center;">
+                <div class="card-icon identity" style="margin: 0 auto 15px;"><i data-lucide="sun"></i></div>
+                <h4 style="font-size: 1.3rem;">Presença de Deus</h4>
+                <p>"Nunca te deixarei, nem te abandonarei."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 8 — PROMESSAS ESPECÍFICAS ═══════════ -->
+    <div class="slide slide-content" id="s8">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="user-check"></i></div>
+            <div class="slide-badge">Tipo 3</div>
+            <h2 class="slide-title">Promessas Específicas</h2>
+            <p class="slide-subtitle">Direcionadas a pessoas — exigem discernimento</p>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1000px;">
+            <div class="card" style="border-left: 5px solid var(--accent); text-align: center;">
+                <div class="card-icon gold" style="margin: 0 auto 15px;"><i data-lucide="user"></i></div>
+                <h4>Abraão</h4>
+                <p>Promessa de terra, nação e bênção às nações.</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--accent); text-align: center;">
+                <div class="card-icon gold" style="margin: 0 auto 15px;"><i data-lucide="crown"></i></div>
+                <h4>Davi</h4>
+                <p>Promessa de um reino eterno e o trono do Messias.</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--accent); text-align: center;">
+                <div class="card-icon gold" style="margin: 0 auto 15px;"><i data-lucide="compass"></i></div>
+                <h4>Chamados Individuais</h4>
+                <p>Cada chamado de Deus carrega promessa específica.</p>
+            </div>
+        </div>
+        <div class="principle-box" style="margin-top: 25px; max-width: 850px;">
+            <p class="principle-label">Atenção</p>
+            <p class="principle-text">Promessas individuais exigem <span>discernimento</span></p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 9 — PROMESSAS CONDICIONAIS ═══════════ -->
+    <div class="slide slide-content" id="s9">
+        <div class="slide-header">
+            <div class="slide-icon warning"><i data-lucide="git-branch"></i></div>
+            <div class="slide-badge" style="background: var(--warning); color: white;">Tipo 4</div>
+            <h2 class="slide-title">Promessas Condicionais</h2>
+            <p class="slide-subtitle">Dependem da resposta humana</p>
+        </div>
+        <div class="two-columns" style="max-width: 1000px; gap: 25px;">
+            <div class="content-box" style="max-width: none;">
+                <h3 style="font-size: 1.2rem; margin-bottom: 15px;"><span class="icon" style="background: linear-gradient(135deg, var(--warning), #f39c12);"><i data-lucide="list"></i></span> Características</h3>
+                <ul class="check-list" style="max-width: none;">
+                    <li><span class="check-icon" style="background: rgba(230,126,34,0.12);"><i data-lucide="arrow-right" style="color: var(--warning);"></i></span><span><em>"Se… então…"</em></span></li>
+                    <li><span class="check-icon" style="background: rgba(230,126,34,0.12);"><i data-lucide="arrow-right" style="color: var(--warning);"></i></span><span>Exigem obediência</span></li>
+                    <li><span class="check-icon" style="background: rgba(230,126,34,0.12);"><i data-lucide="arrow-right" style="color: var(--warning);"></i></span><span>Envolvem fé e arrependimento</span></li>
+                </ul>
+            </div>
+            <div class="content-box" style="max-width: none;">
+                <h3 style="font-size: 1.2rem; margin-bottom: 15px;"><span class="icon" style="background: linear-gradient(135deg, var(--covenant), var(--covenant-light));"><i data-lucide="book-open"></i></span> Exemplos</h3>
+                <ul class="check-list" style="max-width: none;">
+                    <li class="promise-item"><span class="check-icon"><i data-lucide="check" style="color: var(--promise);"></i></span><span>Bênçãos pela obediência</span></li>
+                    <li class="identity-item"><span class="check-icon"><i data-lucide="check" style="color: var(--identity);"></i></span><span>Perdão mediante arrependimento</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 10 — PROMESSAS INCONDICIONAIS ═══════════ -->
+    <div class="slide slide-content" id="s10">
+        <div class="slide-header">
+            <div class="slide-icon promise"><i data-lucide="shield"></i></div>
+            <div class="slide-badge promise-badge">Tipo 5</div>
+            <h2 class="slide-title">Promessas Incondicionais</h2>
+            <p class="slide-subtitle">Deus cumpre independente da ação humana</p>
+        </div>
+        <div class="two-columns" style="max-width: 1000px; gap: 25px;">
+            <div class="content-box" style="max-width: none;">
+                <h3 style="font-size: 1.2rem; margin-bottom: 15px;"><span class="icon" style="background: linear-gradient(135deg, var(--promise), var(--promise-light));"><i data-lucide="list"></i></span> Características</h3>
+                <ul class="check-list" style="max-width: none;">
+                    <li class="promise-item"><span class="check-icon"><i data-lucide="arrow-right" style="color: var(--promise);"></i></span><span>Baseadas na fidelidade de Deus</span></li>
+                    <li class="promise-item"><span class="check-icon"><i data-lucide="arrow-right" style="color: var(--promise);"></i></span><span>Irrevogáveis</span></li>
+                </ul>
+            </div>
+            <div class="content-box" style="max-width: none;">
+                <h3 style="font-size: 1.2rem; margin-bottom: 15px;"><span class="icon" style="background: linear-gradient(135deg, var(--covenant), var(--covenant-light));"><i data-lucide="book-open"></i></span> Exemplos</h3>
+                <ul class="check-list" style="max-width: none;">
+                    <li class="identity-item"><span class="check-icon"><i data-lucide="check" style="color: var(--identity);"></i></span><span>Aliança com Abraão</span></li>
+                    <li class="identity-item"><span class="check-icon"><i data-lucide="check" style="color: var(--identity);"></i></span><span>Promessa do Messias</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 11 — ALERTA IMPORTANTE ═══════════ -->
+    <div class="slide slide-content" id="s11">
+        <div class="slide-header">
+            <div class="slide-icon danger"><i data-lucide="alert-triangle"></i></div>
+            <div class="slide-badge danger-badge">Alerta Importante</div>
+            <h2 class="slide-title">Erro Comum</h2>
+        </div>
+        <div class="impact-box" style="background: linear-gradient(135deg, #1a0a0a, #2a0f0f); max-width: 950px;">
+            <p class="impact-text" style="font-size: 1.9rem;">
+                Confundir <span>tipos de promessas</span>
+            </p>
+        </div>
+        <div class="contrast-grid" style="max-width: 800px; margin-top: 25px;">
+            <div class="contrast-card" style="border-color: var(--danger);">
+                <div class="contrast-card-icon" style="background: rgba(192,57,43,0.1);">
+                    <i data-lucide="x" style="width: 28px; height: 28px; color: var(--danger);"></i>
+                </div>
+                <h4 style="color: var(--danger);">Nem toda promessa depende de mim</h4>
+                <p>Algumas são incondicionais — Deus age soberanamente.</p>
+            </div>
+            <div class="contrast-card" style="border-color: var(--warning);">
+                <div class="contrast-card-icon" style="background: rgba(230,126,34,0.1);">
+                    <i data-lucide="x" style="width: 28px; height: 28px; color: var(--warning);"></i>
+                </div>
+                <h4 style="color: var(--warning);">Nem toda promessa é automática</h4>
+                <p>Algumas exigem resposta — fé, obediência, arrependimento.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 12 — PERGUNTA FINAL DA SEÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s12">
+        <div class="slide-header">
+            <div class="slide-icon promise"><i data-lucide="search"></i></div>
+            <div class="slide-badge promise-badge">Pergunta Final</div>
+            <h2 class="slide-title">Promessa ou Expectativa?</h2>
+        </div>
+        <div class="question-impact promise-q" style="max-width: 1000px;">
+            <h3>Para Reflexão Pessoal</h3>
+            <p class="question-text">Você sabe diferenciar promessa de Deus e expectativa sua?<br><br><span style="font-size: 1.4rem; opacity: 0.85;">Ou será que você está esperando algo que Deus nunca prometeu?</span></p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 13 — CONTEXTO ═══════════ -->
+    <div class="slide slide-content" id="s13">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="clock"></i></div>
+            <div class="slide-badge">Contexto Histórico</div>
+            <h2 class="slide-title">A Situação de Abraão</h2>
+            <p class="slide-subtitle">Gênesis 17 — O Cenário da Promessa</p>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1000px;">
+            <div class="card" style="border-left: 5px solid var(--covenant); text-align: center;">
+                <div class="card-icon covenant" style="margin: 0 auto 15px;"><i data-lucide="user"></i></div>
+                <h4 style="font-family: 'Playfair Display', serif; font-size: 1.5rem;">Abraão</h4>
+                <p style="font-size: 1.2rem; font-weight: 700; color: var(--covenant);">99 anos</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--promise); text-align: center;">
+                <div class="card-icon promise" style="margin: 0 auto 15px;"><i data-lucide="user"></i></div>
+                <h4 style="font-family: 'Playfair Display', serif; font-size: 1.5rem;">Sara</h4>
+                <p style="font-size: 1.2rem; font-weight: 700; color: var(--promise);">89 anos</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--danger); text-align: center;">
+                <div class="card-icon danger" style="background: linear-gradient(135deg, var(--danger), #e74c3c); margin: 0 auto 15px;"><i data-lucide="x-circle"></i></div>
+                <h4 style="font-family: 'Playfair Display', serif; font-size: 1.5rem;">Promessa</h4>
+                <p style="font-size: 1rem; color: var(--text-light);">Ainda não cumprida</p>
+            </div>
+        </div>
+        <div class="principle-box" style="margin-top: 30px;">
+            <p class="principle-label">A Perspectiva Humana</p>
+            <p class="principle-text">Humanamente <span>impossível</span></p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 5 — VERDADE CENTRAL ═══════════ -->
+    <div class="slide slide-content" id="s14">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="star"></i></div>
+            <div class="slide-badge">Verdade Central</div>
+            <h2 class="slide-title">A Natureza de Deus</h2>
+        </div>
+        <div class="impact-box" style="max-width: 900px;">
+            <p class="impact-text">
+                Deus não <span>esquece</span><br><br>
+                Deus não <span>falha</span><br><br>
+                Deus cumpre no <span>tempo certo</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 6 — SEÇÃO I ═══════════ -->
+    <div class="slide slide-content" id="s15">
+        <div class="section-header">
+            <div class="section-number">Parte I</div>
+            <h2>Deus Muda o Nome de <span>Abrão e Sarai</span></h2>
+            <p>A identidade transformada pela promessa divina</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 7 — ABRÃO → ABRAÃO ═══════════ -->
+    <div class="slide slide-content" id="s16">
+        <div class="slide-header">
+            <div class="slide-icon covenant"><i data-lucide="badge"></i></div>
+            <div class="slide-badge covenant-badge">Nova Identidade</div>
+            <h2 class="slide-title">Abrão → Abraão</h2>
+            <p class="slide-subtitle">Gênesis 17.5 — A Mudança de Nome</p>
+        </div>
+        <div class="name-transform">
+            <div class="name-box before">
+                <div class="name-label">Antes</div>
+                <div class="name-main">Abrão</div>
+                <div class="name-meaning">"pai exaltado"</div>
+            </div>
+            <div class="name-arrow">→</div>
+            <div class="name-box after">
+                <div class="name-label">Depois</div>
+                <div class="name-main">Abraão</div>
+                <div class="name-meaning">"pai de multidões"</div>
+            </div>
+        </div>
+        <div class="principle-box" style="margin-top: 30px; max-width: 800px;">
+            <p class="principle-label">Princípio</p>
+            <p class="principle-text">Deus <span>reafirma</span> a promessa</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 8 — SARAI → SARA ═══════════ -->
+    <div class="slide slide-content" id="s17">
+        <div class="slide-header">
+            <div class="slide-icon identity"><i data-lucide="badge"></i></div>
+            <div class="slide-badge identity-badge">Nova Identidade</div>
+            <h2 class="slide-title">Sarai → Sara</h2>
+            <p class="slide-subtitle">Gênesis 17.15 — A Mulher da Promessa</p>
+        </div>
+        <div class="name-transform">
+            <div class="name-box before">
+                <div class="name-label">Antes</div>
+                <div class="name-main">Sarai</div>
+                <div class="name-meaning">"minha princesa"</div>
+            </div>
+            <div class="name-arrow" style="color: var(--identity);">→</div>
+            <div class="name-box after" style="border-color: var(--identity);">
+                <div class="name-label">Depois</div>
+                <div class="name-main" style="color: var(--identity);">Sara</div>
+                <div class="name-meaning">"mãe de nações"</div>
+            </div>
+        </div>
+        <div class="principle-box" style="margin-top: 30px; max-width: 800px; background: linear-gradient(135deg, var(--identity), var(--identity-dark)); border-color: var(--accent);">
+            <p class="principle-label">Princípio</p>
+            <p class="principle-text">Sara <span>também faz parte</span> da promessa</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 9 — PRINCÍPIO DA IDENTIDADE ═══════════ -->
+    <div class="slide slide-content" id="s18">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="lightbulb"></i></div>
+            <div class="slide-badge">Princípio Bíblico</div>
+            <h2 class="slide-title">Identidade Antes da Promessa</h2>
+        </div>
+        <div class="impact-box">
+            <p class="impact-text">
+                Deus muda a <span>identidade</span><br>
+                antes de cumprir a <span>promessa</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 10 — A REAÇÃO DE ABRAÃO ═══════════ -->
+    <div class="slide slide-content" id="s19">
+        <div class="slide-header">
+            <div class="slide-icon warning"><i data-lucide="smile"></i></div>
+            <div class="slide-badge" style="background: var(--warning); color: white;">Reação Humana</div>
+            <h2 class="slide-title">A Reação de Abraão</h2>
+            <p class="slide-subtitle">Gênesis 17.17 — Uma Resposta Honesta</p>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 800px;">
+            <div class="card" style="border-left: 5px solid var(--warning); text-align: center;">
+                <div class="card-icon" style="background: linear-gradient(135deg, var(--warning), #f39c12); margin: 0 auto 15px;"><i data-lucide="laugh"></i></div>
+                <h4 style="font-size: 1.3rem;">Abraão riu</h4>
+                <p>Gn 17.17 — Uma reação sincera diante do humanamente impossível</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--text-muted); text-align: center;">
+                <div class="card-icon" style="background: linear-gradient(135deg, var(--text-muted), #a0aec0); margin: 0 auto 15px;"><i data-lucide="hourglass"></i></div>
+                <h4 style="font-size: 1.3rem;">A Espera Pesa</h4>
+                <p>O tempo desgasta.<br>A espera cansa.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 11 — APLICAÇÃO: RM 4.20 ═══════════ -->
+    <div class="slide slide-content" id="s20">
+        <div class="slide-header">
+            <div class="slide-icon covenant"><i data-lucide="book-open"></i></div>
+            <div class="slide-badge covenant-badge">Aplicação</div>
+            <h2 class="slide-title">Mesmo Assim… Abraão Não Abandonou</h2>
+            <p class="slide-subtitle">Romanos 4.20 — A Testemunha do Novo Testamento</p>
+        </div>
+        <div class="verse-highlight covenant-hl" style="max-width: 850px;">
+            <p class="verse-text">"Também não duvidou da promessa de Deus por incredulidade; antes se fortaleceu na fé, dando glória a Deus."</p>
+            <span class="verse-ref">Romanos 4.20</span>
+        </div>
+        <div class="principle-box" style="margin-top: 30px; max-width: 800px;">
+            <p class="principle-label">A Chave da Vitória</p>
+            <p class="principle-text">Ele <span>deu glória a Deus</span></p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 12 — ENSINO FORTE ═══════════ -->
+    <div class="slide slide-content" id="s21">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="zap"></i></div>
+            <div class="slide-badge">Ensino</div>
+            <h2 class="slide-title">A Espera Revela a Fé</h2>
+        </div>
+        <div class="contrast-grid" style="max-width: 850px;">
+            <div class="contrast-card" style="border-color: var(--danger);">
+                <div class="contrast-card-icon" style="background: rgba(192,57,43,0.1);">
+                    <i data-lucide="message-square-x" style="width: 28px; height: 28px; color: var(--danger);"></i>
+                </div>
+                <h4 style="color: var(--danger);">Alguns Murmuram</h4>
+                <p>A espera produz queixa, revolta e afastamento de Deus.</p>
+            </div>
+            <div class="contrast-card" style="border-color: var(--identity);">
+                <div class="contrast-card-icon" style="background: rgba(5,150,105,0.1);">
+                    <i data-lucide="hand-metal" style="width: 28px; height: 28px; color: var(--identity);"></i>
+                </div>
+                <h4 style="color: var(--identity);">Outros Glorificam</h4>
+                <p>A espera produz crescimento, firmeza e adoração a Deus.</p>
+            </div>
+        </div>
+        <div class="impact-box" style="margin-top: 25px; max-width: 900px;">
+            <p class="impact-text" style="font-size: 1.8rem;">A espera revela como está <span>a nossa fé</span></p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 13 — SEÇÃO II ═══════════ -->
+    <div class="slide slide-content" id="s22">
+        <div class="section-header">
+            <div class="section-number">Parte II</div>
+            <h2>A Confirmação do <span>Concerto</span></h2>
+            <p>A aliança que Deus manteve fiel por gerações</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 14 — O QUE É CONCERTO ═══════════ -->
+    <div class="slide slide-content" id="s23">
+        <div class="slide-header">
+            <div class="slide-icon promise"><i data-lucide="handshake"></i></div>
+            <div class="slide-badge promise-badge">Definição</div>
+            <h2 class="slide-title">O Que é Concerto?</h2>
+            <p class="slide-subtitle">Pacto — Uma Aliança Sagrada</p>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 800px;">
+            <div class="card" style="border-left: 5px solid var(--promise); text-align: center;">
+                <div class="card-icon promise" style="margin: 0 auto 15px;"><i data-lucide="gift"></i></div>
+                <h4 style="font-size: 1.3rem;">Promessas</h4>
+                <p>Deus se compromete a agir a favor do seu povo de forma incondicional.</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--covenant); text-align: center;">
+                <div class="card-icon covenant" style="margin: 0 auto 15px;"><i data-lucide="list-checks"></i></div>
+                <h4 style="font-size: 1.3rem;">Responsabilidades</h4>
+                <p>O povo responde com obediência, fé e compromisso a Deus.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 15 — CONFIRMAÇÃO DO CONCERTO ═══════════ -->
+    <div class="slide slide-content" id="s24">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="check-circle"></i></div>
+            <div class="slide-badge">Verdade Importante</div>
+            <h2 class="slide-title">Confirmação — Não Novidade</h2>
+        </div>
+        <div class="impact-box">
+            <p class="impact-text">
+                Deus não fez <span>nova promessa</span><br><br>
+                Deus confirmou o que <span>já tinha dito</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 16 — PROPÓSITO DO PACTO ═══════════ -->
+    <div class="slide slide-content" id="s25">
+        <div class="slide-header">
+            <div class="slide-icon identity"><i data-lucide="globe"></i></div>
+            <div class="slide-badge identity-badge">Propósito</div>
+            <h2 class="slide-title">Para Quem é a Bênção?</h2>
+            <p class="slide-subtitle">O Alcance da Aliança de Deus</p>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 800px;">
+            <div class="card" style="border-left: 5px solid var(--covenant); text-align: center;">
+                <div class="card-icon covenant" style="margin: 0 auto 15px;"><i data-lucide="star"></i></div>
+                <h4 style="font-size: 1.3rem;">Israel</h4>
+                <p>O povo escolhido para ser canal de bênção no mundo.</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--identity); text-align: center;">
+                <div class="card-icon identity" style="margin: 0 auto 15px;"><i data-lucide="globe"></i></div>
+                <h4 style="font-size: 1.3rem;">Todas as Nações</h4>
+                <p>O propósito universal de Deus alcança todo povo e língua.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 17 — CONEXÃO ═══════════ -->
+    <div class="slide slide-content" id="s26">
+        <div class="slide-header">
+            <div class="slide-icon blue"><i data-lucide="link"></i></div>
+            <div class="slide-badge info-badge">Conexão Bíblica</div>
+            <h2 class="slide-title">Deus Não Esquece Alianças</h2>
+        </div>
+        <div class="verse-highlight primary-hl" style="max-width: 850px;">
+            <p class="verse-text">Deus cumpriu suas promessas a Israel.<br>Isso prova: Ele não esquece alianças.</p>
+            <span class="verse-ref">Argumento da Fidelidade Histórica</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 18 — PRINCÍPIO ESPIRITUAL ═══════════ -->
+    <div class="slide slide-content" id="s27">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="infinity"></i></div>
+            <div class="slide-badge">Princípio Espiritual</div>
+            <h2 class="slide-title">A Base da Promessa</h2>
+        </div>
+        <div class="impact-box">
+            <p class="impact-text">
+                A promessa não depende do <span>tempo</span><br><br>
+                Depende da <span>fidelidade de Deus</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 19 — COMO PERMANECER ═══════════ -->
+    <div class="slide slide-content" id="s28">
+        <div class="slide-header">
+            <div class="slide-icon covenant"><i data-lucide="anchor"></i></div>
+            <div class="slide-badge covenant-badge">Aplicação</div>
+            <h2 class="slide-title">Como Permanecer na Promessa?</h2>
+        </div>
+        <ul class="check-list">
+            <li>
+                <span class="check-icon"><i data-lucide="shield"></i></span>
+                <span><strong>Confiando em Deus</strong> — mesmo quando a situação parece impossível</span>
+            </li>
+            <li class="promise-item">
+                <span class="check-icon"><i data-lucide="anchor"></i></span>
+                <span><strong>Permanecendo firme</strong> — sem se mover pela pressão do tempo</span>
+            </li>
+            <li class="identity-item">
+                <span class="check-icon"><i data-lucide="flag"></i></span>
+                <span><strong>Não desistindo</strong> — a promessa está no coração de Deus</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ═══════════ SLIDE 20 — PONTO CENTRAL ═══════════ -->
+    <div class="slide slide-content" id="s29">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="target"></i></div>
+            <div class="slide-badge">Ponto Central</div>
+            <h2 class="slide-title">Permanecemos na Promessa Quando...</h2>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1000px;">
+            <div class="card" style="border-top: 5px solid var(--covenant); text-align: center;">
+                <div class="card-icon covenant" style="margin: 0 auto 15px;"><i data-lucide="shield-check"></i></div>
+                <h4 style="font-size: 1.2rem;">✔ Confiamos</h4>
+                <p>Entregamos nossa situação nas mãos de Deus.</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--promise); text-align: center;">
+                <div class="card-icon promise" style="margin: 0 auto 15px;"><i data-lucide="anchor"></i></div>
+                <h4 style="font-size: 1.2rem;">✔ Permanecemos</h4>
+                <p>Nos mantemos firmes na aliança com Deus.</p>
+            </div>
+            <div class="card" style="border-top: 5px solid var(--identity); text-align: center;">
+                <div class="card-icon identity" style="margin: 0 auto 15px;"><i data-lucide="music"></i></div>
+                <h4 style="font-size: 1.2rem;">✔ Glorificamos</h4>
+                <p>Damos glória a Deus mesmo enquanto esperamos.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 21 — PERGUNTA DE REFLEXÃO ═══════════ -->
+    <div class="slide slide-content" id="s30">
+        <div class="slide-header">
+            <div class="slide-icon promise"><i data-lucide="help-circle"></i></div>
+            <div class="slide-badge promise-badge">Pergunta de Reflexão</div>
+            <h2 class="slide-title">Uma Escolha Diária</h2>
+        </div>
+        <div class="question-impact promise-q" style="max-width: 950px;">
+            <h3>Para Cada Um de Nós</h3>
+            <p class="question-text">Você está <em>glorificando</em> ou <em>reclamando</em> da espera?</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 22 — SEÇÃO III ═══════════ -->
+    <div class="slide slide-content" id="s31">
+        <div class="section-header">
+            <div class="section-number">Parte III</div>
+            <h2>O Pacto Perpétuo da <span>Circuncisão</span></h2>
+            <p>O sinal que selava o compromisso com Deus</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 23 — O SINAL ═══════════ -->
+    <div class="slide slide-content" id="s32">
+        <div class="slide-header">
+            <div class="slide-icon covenant"><i data-lucide="stamp"></i></div>
+            <div class="slide-badge covenant-badge">O Sinal da Aliança</div>
+            <h2 class="slide-title">A Circuncisão</h2>
+            <p class="slide-subtitle">Gênesis 17.10-11 — O Sinal do Pacto</p>
+        </div>
+        <div class="cards-grid cols-2" style="max-width: 800px;">
+            <div class="card" style="border-left: 5px solid var(--covenant); text-align: center;">
+                <div class="card-icon covenant" style="margin: 0 auto 15px;"><i data-lucide="fingerprint"></i></div>
+                <h4 style="font-size: 1.3rem;">Marca da Aliança</h4>
+                <p>Um sinal visível de que o povo pertencia a Deus e estava sob a aliança.</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--primary); text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 15px;"><i data-lucide="handshake"></i></div>
+                <h4 style="font-size: 1.3rem;">Compromisso com Deus</h4>
+                <p>Um ato de entrega total — o povo respondia à fidelidade divina.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 24 — ENSINO: RESPONSABILIDADE ═══════════ -->
+    <div class="slide slide-content" id="s33">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="zap"></i></div>
+            <div class="slide-badge">Ensino</div>
+            <h2 class="slide-title">Não é Só Promessa</h2>
+        </div>
+        <div class="impact-box">
+            <p class="impact-text">
+                Não é só <span>promessa</span><br><br>
+                Existe <span>responsabilidade</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 25 — CIRCUNCISÃO DO CORAÇÃO ═══════════ -->
+    <div class="slide slide-content" id="s34">
+        <div class="slide-header">
+            <div class="slide-icon identity"><i data-lucide="heart-handshake"></i></div>
+            <div class="slide-badge identity-badge">Aplicação Espiritual</div>
+            <h2 class="slide-title">A Circuncisão do Coração</h2>
+            <p class="slide-subtitle">Para Nós Hoje</p>
+        </div>
+        <ul class="check-list" style="max-width: 750px;">
+            <li class="identity-item">
+                <span class="check-icon"><i data-lucide="heart"></i></span>
+                <span><strong>Entrega</strong> — colocar tudo nas mãos de Deus</span>
+            </li>
+            <li class="promise-item">
+                <span class="check-icon"><i data-lucide="shield"></i></span>
+                <span><strong>Fidelidade</strong> — viver a aliança com constância</span>
+            </li>
+            <li>
+                <span class="check-icon"><i data-lucide="sun"></i></span>
+                <span><strong>Vida com Deus</strong> — caminhar em comunhão diária</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ═══════════ SLIDE 26 — PRINCÍPIO FINAL ═══════════ -->
+    <div class="slide slide-content" id="s35">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="lightbulb"></i></div>
+            <div class="slide-badge">Princípio</div>
+            <h2 class="slide-title">O Que Deus Realmente Quer</h2>
+        </div>
+        <div class="impact-box">
+            <p class="impact-text">
+                Deus não quer só <span>palavras</span><br><br>
+                Deus quer <span>compromisso</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 27 — CONCLUSÃO: RESUMO ═══════════ -->
+    <div class="slide slide-conclusion" id="s36">
+        <div class="conclusion-content">
+            <div class="conclusion-icon"><i data-lucide="scroll-text"></i></div>
+            <p class="conclusion-text">Três Verdades desta Lição</p>
+            <div style="display: flex; flex-direction: column; gap: 18px; max-width: 700px; width: 100%;">
+                <div style="background: rgba(255,255,255,0.08); border-left: 4px solid var(--accent); border-radius: 10px; padding: 18px 25px; display: flex; align-items: center; gap: 15px;">
+                    <span style="font-size: 1.5rem;">1.</span>
+                    <span style="font-family: 'Playfair Display', serif; font-size: 1.2rem;">Deus <strong style="color: var(--accent-light);">muda identidade</strong></span>
+                </div>
+                <div style="background: rgba(255,255,255,0.08); border-left: 4px solid var(--promise-light); border-radius: 10px; padding: 18px 25px; display: flex; align-items: center; gap: 15px;">
+                    <span style="font-size: 1.5rem;">2.</span>
+                    <span style="font-family: 'Playfair Display', serif; font-size: 1.2rem;">Deus <strong style="color: var(--promise-light);">confirma promessa</strong></span>
+                </div>
+                <div style="background: rgba(255,255,255,0.08); border-left: 4px solid var(--identity-light); border-radius: 10px; padding: 18px 25px; display: flex; align-items: center; gap: 15px;">
+                    <span style="font-size: 1.5rem;">3.</span>
+                    <span style="font-family: 'Playfair Display', serif; font-size: 1.2rem;">Deus <strong style="color: var(--identity-light);">exige compromisso</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 28 — RESPOSTA DA PERGUNTA INICIAL ═══════════ -->
+    <div class="slide slide-content" id="s37">
+        <div class="slide-header">
+            <div class="slide-icon covenant"><i data-lucide="check-circle-2"></i></div>
+            <div class="slide-badge covenant-badge">Respondendo à Pergunta</div>
+            <h2 class="slide-title">Quem tem Promessa Pode Morrer?</h2>
+        </div>
+        <div class="contrast-grid" style="max-width: 800px;">
+            <div class="contrast-card" style="border-color: var(--danger);">
+                <div class="contrast-card-icon" style="background: rgba(192,57,43,0.1);">
+                    <i data-lucide="user-x" style="width: 28px; height: 28px; color: var(--danger);"></i>
+                </div>
+                <h4 style="color: var(--danger);">No Natural, Sim</h4>
+                <p>Humanamente falando, a morte pode parecer o fim da promessa.</p>
+            </div>
+            <div class="contrast-card" style="border-color: var(--identity);">
+                <div class="contrast-card-icon" style="background: rgba(5,150,105,0.1);">
+                    <i data-lucide="infinity" style="width: 28px; height: 28px; color: var(--identity);"></i>
+                </div>
+                <h4 style="color: var(--identity);">No Plano de Deus, Não</h4>
+                <p>Porque Deus sempre cumpre o que promete — no tempo certo.</p>
+            </div>
+        </div>
+        <div class="verse-highlight primary-hl" style="margin-top: 25px; max-width: 750px;">
+            <p class="verse-text">Porque Deus <strong>sempre cumpre</strong> o que promete</p>
+            <span class="verse-ref">Gênesis 17.1 — "Eu sou o Deus Todo-Poderoso"</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 29 — FECHAMENTO FORTE ═══════════ -->
+    <div class="slide slide-conclusion" id="s38">
+        <div class="conclusion-content">
+            <div class="conclusion-icon"><i data-lucide="hand-heart"></i></div>
+            <p class="conclusion-text">
+                Promessa não é sobre <strong style="color: var(--accent-light);">rapidez</strong><br>
+                É sobre <strong style="color: var(--accent-light);">fidelidade</strong>
+            </p>
+            <div class="conclusion-highlight">
+                Quem aprende a confiar,<br>aprende a glorificar enquanto espera
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav-bar">
+    <button id="prev" onclick="prev()">◀</button>
+    <div class="counter"><span id="atual">1</span> / 38</div>
+    <button id="next" onclick="next()">▶</button>
+</nav>
+
+<script>
+    lucide.createIcons();
+
+    let slide = 1;
+    const total = 38;
+
+    function show(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        document.getElementById('atual').textContent = n;
+        document.getElementById('prev').disabled = (n === 1);
+        document.getElementById('next').disabled = (n === total);
+        slide = n;
+        lucide.createIcons();
+    }
+
+    function next() { if (slide < total) show(slide + 1); }
+    function prev() { if (slide > 1) show(slide - 1); }
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); showNavBar(); }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); showNavBar(); }
+        if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); }
+        if (e.key === 'Home') { show(1); showNavBar(); }
+        if (e.key === 'End') { show(total); showNavBar(); }
+    });
+
+    let navTimeout;
+    const navBar = document.querySelector('.nav-bar');
+
+    function showNavBar() {
+        navBar.classList.add('visible');
+        clearTimeout(navTimeout);
+        navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 3000);
+    }
+
+    document.addEventListener('mousemove', showNavBar);
+    document.addEventListener('touchstart', showNavBar);
+    navBar.addEventListener('mouseenter', () => { clearTimeout(navTimeout); });
+    navBar.addEventListener('mouseleave', () => {
+        navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 2000);
+    });
+
+    showNavBar();
+
+    setTimeout(() => {
+        const shortcuts = document.querySelector('.shortcuts');
+        if (shortcuts) { shortcuts.style.opacity = '0'; shortcuts.style.transition = 'opacity 1s'; }
+    }, 5000);
+</script>
+</body>
+</html>

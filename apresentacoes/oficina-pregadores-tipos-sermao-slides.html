@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficina de Pregadores — Tipos de Sermão</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #d4b84a;
+            --bg-light: #f8fafc;
+            --bg-dark: #e2e8f0;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --text-muted: #718096;
+            --white: #ffffff;
+            --success: #38a169;
+            --info: #3182ce;
+            --warning: #e67e22;
+            --danger: #c0392b;
+
+            /* Cores por tipo de sermão */
+            --textual: #b45309;
+            --textual-light: #d97706;
+            --textual-dark: #92400e;
+            --tematico: #0d9488;
+            --tematico-light: #14b8a6;
+            --tematico-dark: #0f766e;
+            --expos: #6d28d9;
+            --expos-light: #8b5cf6;
+            --expos-dark: #5b21b6;
+
+            --rule: #c0392b;
+            --rule-dark: #7f1d1d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%; height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+        }
+
+        .presentation { width: 100%; height: 100%; position: relative; }
+
+        .slide {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 40px 70px;
+            background: var(--bg-light);
+        }
+
+        .slide.active { display: flex; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulseGlow { 0%,100% { box-shadow: 0 0 30px rgba(109,40,217,0.3); } 50% { box-shadow: 0 0 60px rgba(109,40,217,0.6); } }
+        @keyframes rotateBg { to { transform: rotate(360deg); } }
+        @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+        @keyframes shake { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-3deg); } 75% { transform: rotate(3deg); } }
+
+        /* NAV */
+        .nav-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 18px;
+            background: rgba(255,255,255,0.95); padding: 12px 30px;
+            border-radius: 50px; box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+            z-index: 1000; backdrop-filter: blur(10px);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .nav-bar.visible { opacity: 1; pointer-events: auto; }
+        .nav-bar button {
+            width: 48px; height: 48px; border: none; border-radius: 50%;
+            background: var(--primary); color: white; cursor: pointer;
+            font-size: 1.2rem; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-bar button:hover { background: var(--primary-light); transform: scale(1.05); }
+        .nav-bar button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        .nav-bar .counter { padding: 0 22px; font-weight: 700; font-size: 1.05rem; color: var(--primary); display: flex; align-items: center; }
+
+        .fullscreen-btn {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--primary); color: white; border: none;
+            padding: 12px 20px; border-radius: 12px; cursor: pointer;
+            font-weight: 600; font-size: 0.95rem; z-index: 1000;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .fullscreen-btn:hover { background: var(--primary-light); }
+
+        .shortcuts {
+            position: fixed; bottom: 25px; left: 25px;
+            background: rgba(0,0,0,0.75); color: white;
+            padding: 12px 20px; border-radius: 10px;
+            font-size: 0.8rem; z-index: 1000; opacity: 0.8;
+        }
+        .shortcuts kbd { background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 4px; margin: 0 2px; }
+
+        /* CAPA */
+        .slide-capa {
+            background: linear-gradient(135deg, #1a0e2e 0%, #2e1065 50%, #4c1d95 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-capa::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(201,162,39,0.08), transparent, rgba(139,92,246,0.08), transparent);
+            animation: rotateBg 25s linear infinite;
+        }
+        .capa-content { position: relative; z-index: 1; max-width: 1000px; }
+        .capa-icon {
+            width: 110px; height: 110px;
+            background: rgba(201,162,39,0.15); border: 2px solid rgba(201,162,39,0.4);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+        .capa-icon svg { width: 55px; height: 55px; color: var(--accent-light); }
+        .capa-badge {
+            display: inline-block; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 30px; border-radius: 50px;
+            font-size: 0.9rem; margin-bottom: 20px;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .capa-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem; font-weight: 700;
+            margin-bottom: 18px; line-height: 1.15;
+        }
+        .capa-title span { color: var(--accent-light); }
+        .capa-subtitle {
+            font-size: 1.2rem; opacity: 0.85;
+            margin-bottom: 30px; font-weight: 300;
+            max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6;
+        }
+        .capa-tags { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .capa-tag {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 18px; border-radius: 50px; font-size: 0.85rem;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+        .capa-tag.textual  { border-color: rgba(217,119,6,0.5); color: #fbbf24; }
+        .capa-tag.tematico { border-color: rgba(20,184,166,0.5); color: #5eead4; }
+        .capa-tag.expos    { border-color: rgba(139,92,246,0.5); color: #c4b5fd; }
+
+        /* CONTENT */
+        .slide-content { background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-dark) 100%); }
+        .slide-header { text-align: center; margin-bottom: 30px; }
+
+        .slide-icon {
+            width: 70px; height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 18px; margin: 0 auto 18px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(30,58,95,0.25);
+        }
+        .slide-icon svg { width: 35px; height: 35px; color: var(--accent); }
+        .slide-icon.textual  { background: linear-gradient(135deg, var(--textual), var(--textual-light)); }
+        .slide-icon.textual svg { color: white; }
+        .slide-icon.tematico { background: linear-gradient(135deg, var(--tematico), var(--tematico-light)); }
+        .slide-icon.tematico svg { color: white; }
+        .slide-icon.expos    { background: linear-gradient(135deg, var(--expos), var(--expos-light)); }
+        .slide-icon.expos svg { color: white; }
+        .slide-icon.rule { background: linear-gradient(135deg, var(--rule), #dc2626); animation: shake 0.5s ease-in-out 2; }
+        .slide-icon.rule svg { color: white; }
+        .slide-icon.gold { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+        .slide-icon.gold svg { color: var(--primary-dark); }
+        .slide-icon.green { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .slide-icon.green svg { color: white; }
+
+        .slide-badge {
+            display: inline-block; padding: 7px 20px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 700; margin-bottom: 12px;
+            letter-spacing: 1px; text-transform: uppercase;
+            background: var(--accent); color: var(--primary-dark);
+        }
+        .slide-badge.textual-b  { background: var(--textual); color: white; }
+        .slide-badge.tematico-b { background: var(--tematico); color: white; }
+        .slide-badge.expos-b    { background: var(--expos); color: white; }
+        .slide-badge.rule-b     { background: var(--rule); color: white; }
+        .slide-badge.green-b    { background: var(--success); color: white; }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem; color: var(--primary); line-height: 1.2;
+        }
+        .slide-subtitle { font-size: 1.05rem; color: var(--text-muted); margin-top: 8px; }
+
+        /* CARDS */
+        .cards-grid { display: grid; gap: 18px; width: 100%; max-width: 1200px; }
+        .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); max-width: 950px; }
+        .cards-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .cards-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+        .card {
+            background: white; border-radius: 14px; padding: 22px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.07); transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-4px); }
+        .card.textual-card  { border-top: 5px solid var(--textual); }
+        .card.tematico-card { border-top: 5px solid var(--tematico); }
+        .card.expos-card    { border-top: 5px solid var(--expos); }
+
+        .card-icon {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 12px; margin-bottom: 14px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card-icon svg { width: 25px; height: 25px; color: white; }
+        .card-icon.textual  { background: linear-gradient(135deg, var(--textual), var(--textual-light)); }
+        .card-icon.tematico { background: linear-gradient(135deg, var(--tematico), var(--tematico-light)); }
+        .card-icon.expos    { background: linear-gradient(135deg, var(--expos), var(--expos-light)); }
+        .card-icon.gold     { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+        .card-icon.gold svg { color: var(--primary-dark); }
+        .card-icon.green    { background: linear-gradient(135deg, var(--success), #2ecc71); }
+
+        .card h4 { font-size: 1.05rem; color: var(--primary); margin-bottom: 8px; }
+        .card p { font-size: 0.95rem; color: var(--text-light); line-height: 1.55; }
+        .card ul { font-size: 0.92rem; color: var(--text-light); margin-left: 18px; line-height: 1.55; }
+        .card ul li { margin-bottom: 3px; }
+
+        /* VERSE */
+        .verse-highlight {
+            background: linear-gradient(135deg, var(--expos), var(--expos-dark));
+            border-radius: 18px; padding: 32px 45px; color: white;
+            text-align: center; max-width: 900px; width: 100%;
+        }
+        .verse-highlight.textual-hl  { background: linear-gradient(135deg, var(--textual), var(--textual-dark)); }
+        .verse-highlight.tematico-hl { background: linear-gradient(135deg, var(--tematico), var(--tematico-dark)); }
+        .verse-highlight.primary-hl  { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
+        .verse-highlight .verse-text {
+            font-family: 'Playfair Display', serif; font-size: 1.55rem;
+            line-height: 1.5; margin-bottom: 16px; font-style: italic;
+        }
+        .verse-highlight .verse-ref {
+            background: var(--accent); color: var(--primary-dark);
+            padding: 7px 22px; border-radius: 50px; font-weight: 700;
+            font-size: 0.95rem; display: inline-block;
+        }
+
+        /* PERGUNTA */
+        .question-impact {
+            background: linear-gradient(135deg, var(--expos), var(--expos-dark));
+            border-radius: 18px; padding: 45px; color: white;
+            text-align: center; max-width: 1000px; width: 100%;
+            box-shadow: 0 12px 45px rgba(109,40,217,0.3);
+        }
+        .question-impact h3 {
+            font-size: 1rem; opacity: 0.9; margin-bottom: 18px;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .question-impact .question-text {
+            font-family: 'Playfair Display', serif; font-size: 2rem;
+            line-height: 1.4; font-weight: 600;
+        }
+
+        /* PASSOS NUMERADOS */
+        .steps-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+            width: 100%; max-width: 1100px;
+        }
+        .steps-grid.two-row { grid-template-columns: repeat(3, 1fr); }
+        .step-card {
+            background: white; border-radius: 14px; padding: 20px 18px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+            border-left: 5px solid var(--expos);
+            position: relative;
+        }
+        .step-card.textual-step  { border-left-color: var(--textual); }
+        .step-card.tematico-step { border-left-color: var(--tematico); }
+        .step-card.expos-step    { border-left-color: var(--expos); }
+        .step-num {
+            position: absolute; top: -12px; right: 14px;
+            width: 34px; height: 34px; border-radius: 50%;
+            background: var(--expos); color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .step-card.textual-step .step-num  { background: var(--textual); }
+        .step-card.tematico-step .step-num { background: var(--tematico); }
+        .step-card h4 {
+            font-size: 1rem; color: var(--primary);
+            margin-bottom: 6px; text-transform: uppercase;
+            letter-spacing: 0.3px; font-weight: 700;
+        }
+        .step-card p { font-size: 0.88rem; color: var(--text-light); line-height: 1.5; }
+
+        /* EXEMPLO ESBOÇO */
+        .sermon-example {
+            background: white; border-radius: 18px; padding: 30px 36px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            max-width: 1050px; width: 100%;
+            border-top: 6px solid var(--textual);
+        }
+        .sermon-example.tematico { border-top-color: var(--tematico); }
+        .sermon-example.expos    { border-top-color: var(--expos); }
+        .sermon-example .ex-head {
+            display: flex; align-items: baseline; justify-content: space-between;
+            margin-bottom: 18px; padding-bottom: 14px;
+            border-bottom: 2px dashed rgba(0,0,0,0.08);
+        }
+        .sermon-example .ex-ref {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem; color: var(--primary); font-weight: 800;
+        }
+        .sermon-example .ex-theme {
+            font-size: 0.95rem; color: var(--text-muted);
+            font-style: italic;
+        }
+        .sermon-example .ex-step {
+            display: flex; gap: 14px; padding: 9px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .sermon-example .ex-step:last-child { border-bottom: none; }
+        .sermon-example .ex-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 60px; height: 26px; border-radius: 6px;
+            background: var(--textual); color: white;
+            font-size: 0.72rem; font-weight: 700; padding: 0 8px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+        .sermon-example.tematico .ex-badge { background: var(--tematico); }
+        .sermon-example.expos .ex-badge    { background: var(--expos); }
+        .sermon-example .ex-step p {
+            font-size: 0.98rem; color: var(--text-dark); line-height: 1.55;
+        }
+        .sermon-example .ex-step strong { color: var(--primary); }
+
+        /* ⚠️ REGRAS BOX — DESTAQUE FORTE ⚠️ */
+        .rules-box {
+            background: linear-gradient(135deg, #7f1d1d 0%, #c0392b 100%);
+            border-radius: 22px; padding: 36px 44px;
+            color: white; max-width: 1100px; width: 100%;
+            box-shadow: 0 20px 60px rgba(192,57,43,0.4);
+            position: relative; overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.15);
+        }
+        .rules-box::before {
+            content: '⚠'; position: absolute;
+            top: -40px; right: -20px; font-size: 12rem;
+            opacity: 0.08; color: white;
+        }
+        .rules-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem; margin-bottom: 22px;
+            display: flex; align-items: center; gap: 14px;
+            position: relative;
+        }
+        .rules-box h3 .icon-wrap {
+            width: 50px; height: 50px; border-radius: 12px;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .rules-box h3 .icon-wrap svg { width: 26px; height: 26px; color: var(--accent-light); }
+        .rules-list { list-style: none; position: relative; }
+        .rules-list li {
+            display: flex; align-items: flex-start; gap: 14px;
+            padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.15);
+            font-size: 1.05rem; line-height: 1.5;
+        }
+        .rules-list li:last-child { border-bottom: none; }
+        .rules-list li .rule-num {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px; border-radius: 50%;
+            background: var(--accent); color: var(--primary-dark);
+            font-weight: 800; font-size: 0.9rem; flex-shrink: 0;
+        }
+        .rules-list li strong { color: var(--accent-light); }
+
+        /* REGRA DE OURO */
+        .gold-rule {
+            background: linear-gradient(135deg, #78350f 0%, #d97706 100%);
+            border-radius: 22px; padding: 50px;
+            color: white; max-width: 1000px; width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(217,119,6,0.4);
+            position: relative; overflow: hidden;
+        }
+        .gold-rule::before {
+            content: '★'; position: absolute;
+            top: -60px; right: -20px; font-size: 14rem;
+            opacity: 0.1; color: white;
+        }
+        .gold-rule .gr-label {
+            display: inline-block; padding: 8px 22px; border-radius: 50px;
+            background: rgba(0,0,0,0.25); font-size: 0.85rem;
+            font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .gold-rule h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem; line-height: 1.35;
+            margin-bottom: 18px; font-weight: 700;
+        }
+        .gold-rule h3 span { color: #fde68a; }
+        .gold-rule p { font-size: 1.1rem; opacity: 0.92; line-height: 1.6; }
+
+        /* COMPARE TABLE */
+        .compare-table {
+            width: 100%; max-width: 1100px; border-collapse: separate;
+            border-spacing: 0; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 8px 35px rgba(0,0,0,0.07);
+        }
+        .compare-table th {
+            padding: 14px 16px; font-size: 0.92rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.8px;
+        }
+        .compare-table th:first-child { background: var(--primary); color: white; text-align: left; }
+        .compare-table th.t-textual  { background: var(--textual); color: white; }
+        .compare-table th.t-tematico { background: var(--tematico); color: white; }
+        .compare-table th.t-expos    { background: var(--expos); color: white; }
+        .compare-table td {
+            padding: 11px 16px; font-size: 0.92rem; color: var(--text-dark);
+            background: white; border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .compare-table td:first-child { font-weight: 700; color: var(--primary); background: rgba(30,58,95,0.04); }
+        .compare-table tr:nth-child(even) td { background: #f9fafb; }
+        .compare-table tr:nth-child(even) td:first-child { background: rgba(30,58,95,0.07); }
+
+        /* TYPE INTRO (slides separadores de seção) */
+        .type-intro {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            border-radius: 24px; padding: 50px;
+            color: white; max-width: 1000px; width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .type-intro.textual  { background: linear-gradient(135deg, var(--textual-dark) 0%, var(--textual) 100%); }
+        .type-intro.tematico { background: linear-gradient(135deg, var(--tematico-dark) 0%, var(--tematico) 100%); }
+        .type-intro.expos    { background: linear-gradient(135deg, var(--expos-dark) 0%, var(--expos) 100%); }
+        .type-intro .type-num {
+            display: inline-block; padding: 8px 22px; border-radius: 50px;
+            background: rgba(0,0,0,0.25); font-size: 0.85rem;
+            font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+            margin-bottom: 22px; border: 1px solid rgba(255,255,255,0.2);
+        }
+        .type-intro h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem; font-weight: 800; margin-bottom: 16px;
+        }
+        .type-intro .type-tagline {
+            font-style: italic; font-size: 1.3rem; opacity: 0.92;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* IMPACT BOX */
+        .impact-box {
+            background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+            border-radius: 20px; padding: 45px; color: white;
+            text-align: center; max-width: 950px; width: 100%;
+            position: relative; overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+        }
+        .impact-box::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(139,92,246,0.15) 0%, transparent 60%);
+        }
+        .impact-box .impact-text {
+            font-family: 'Playfair Display', serif; font-size: 2rem;
+            line-height: 1.5; position: relative; font-weight: 600;
+        }
+        .impact-box .impact-text span { color: var(--accent-light); }
+
+        /* CONCLUSION */
+        .slide-conclusion {
+            background: linear-gradient(135deg, #1a0e2e 0%, #2e1065 50%, #4c1d95 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-conclusion::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(201,162,39,0.12) 0%, transparent 60%);
+        }
+        .conclusion-content { position: relative; z-index: 1; max-width: 950px; }
+        .conclusion-icon {
+            width: 100px; height: 100px;
+            background: rgba(201,162,39,0.18); border: 2px solid rgba(201,162,39,0.4);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: breathe 3s ease-in-out infinite;
+        }
+        .conclusion-icon svg { width: 50px; height: 50px; color: var(--accent-light); }
+        .conclusion-text {
+            font-family: 'Playfair Display', serif; font-size: 1.9rem;
+            line-height: 1.5; margin-bottom: 28px;
+        }
+        .conclusion-highlight {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            padding: 22px 42px; border-radius: 16px;
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            font-weight: 700; display: inline-block; color: var(--primary-dark);
+            box-shadow: 0 15px 50px rgba(201,162,39,0.4);
+        }
+
+        /* QUANDO USAR */
+        .when-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 18px; width: 100%; max-width: 1150px;
+        }
+        .when-card {
+            background: white; border-radius: 16px; padding: 26px 22px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+            border-top: 6px solid var(--textual);
+        }
+        .when-card.tematico { border-top-color: var(--tematico); }
+        .when-card.expos    { border-top-color: var(--expos); }
+        .when-card .when-label {
+            font-size: 0.75rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 2px;
+            color: var(--textual); margin-bottom: 8px;
+        }
+        .when-card.tematico .when-label { color: var(--tematico); }
+        .when-card.expos .when-label    { color: var(--expos); }
+        .when-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; color: var(--primary); margin-bottom: 12px;
+        }
+        .when-card p { font-size: 0.95rem; color: var(--text-light); line-height: 1.6; }
+        .when-card p strong { color: var(--primary); }
+
+        /* PRINT */
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+            html, body { width: 100%; height: auto; overflow: visible; background: white !important; }
+            .presentation { display: block; height: auto; }
+            .nav-bar, .fullscreen-btn, .shortcuts { display: none !important; }
+            .slide {
+                position: relative !important; display: flex !important;
+                width: 100% !important; height: 100vh !important;
+                min-height: 100vh !important; max-height: 100vh !important;
+                padding: 30px 50px !important;
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            .slide:last-child { page-break-after: avoid !important; break-after: avoid !important; }
+            .slide-capa, .slide-conclusion { background: #1a0e2e !important; }
+            .capa-title { font-size: 2.6rem !important; }
+            .slide-title { font-size: 1.9rem !important; }
+            .step-card { padding: 14px !important; }
+            .card { padding: 14px !important; }
+            .rules-box { padding: 24px 28px !important; }
+            .gold-rule { padding: 30px !important; }
+            .gold-rule h3 { font-size: 1.8rem !important; }
+            .type-intro h2 { font-size: 2.4rem !important; }
+            @keyframes pulseGlow { 0%,50%,100% { box-shadow: none; } }
+            @keyframes rotateBg { 0%,100% { transform: none; } }
+            @keyframes breathe { 0%,50%,100% { transform: none; } }
+            @keyframes shake { 0%,50%,100% { transform: none; } }
+        }
+        @page { size: landscape; margin: 0; }
+        :fullscreen .nav-bar { bottom: 35px; }
+        :fullscreen .fullscreen-btn { display: none; }
+    </style>
+</head>
+<body>
+
+<button class="fullscreen-btn" onclick="toggleFullscreen()">
+    <i data-lucide="maximize"></i> Tela Cheia
+</button>
+<div class="shortcuts">
+    <kbd>←</kbd> <kbd>→</kbd> navegar | <kbd>F</kbd> tela cheia
+</div>
+
+<div class="presentation">
+
+<!-- ═══════ SLIDE 1 — CAPA ═══════ -->
+<div class="slide slide-capa active" id="s1">
+    <div class="capa-content">
+        <div class="capa-icon"><i data-lucide="book-marked"></i></div>
+        <div class="capa-badge">Curso de Pregadores • Aula Extra Prática</div>
+        <h1 class="capa-title">Oficina de Pregadores<br><span>Tipos de Sermão</span></h1>
+        <p class="capa-subtitle">Sermão Textual, Temático e Expositivo — estrutura, exemplos e as regras de ouro de cada um</p>
+        <div class="capa-tags">
+            <span class="capa-tag textual">Textual</span>
+            <span class="capa-tag tematico">Temático</span>
+            <span class="capa-tag expos">Expositivo</span>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 2 — ABERTURA / 2 Tm 4.2 ═══════ -->
+<div class="slide slide-content" id="s2">
+    <div class="slide-header">
+        <div class="slide-icon expos"><i data-lucide="mic"></i></div>
+        <div class="slide-badge expos-b">Texto-base da Oficina</div>
+        <h2 class="slide-title">Pregar com método</h2>
+    </div>
+    <div class="verse-highlight">
+        <p class="verse-text">"Que pregues a palavra, instes a tempo e fora de tempo, redarguas, repreendas, exortes, com toda a longanimidade e doutrina."</p>
+        <span class="verse-ref">2 Timóteo 4.2</span>
+    </div>
+    <p style="margin-top: 22px; font-size: 1.05rem; color: var(--text-light); max-width: 850px; text-align: center;">
+        Pregar bem exige <strong>método</strong>: saber escolher a forma certa para comunicar a mensagem certa, ao povo certo, no momento certo.
+    </p>
+</div>
+
+<!-- ═══════ SLIDE 3 — PERGUNTA DE IMPACTO ═══════ -->
+<div class="slide slide-content" id="s3">
+    <div class="slide-header">
+        <div class="slide-icon gold"><i data-lucide="help-circle"></i></div>
+        <div class="slide-badge">Reflexão Inicial</div>
+    </div>
+    <div class="question-impact" style="background: linear-gradient(135deg, var(--accent-dark, #92400e), var(--textual));">
+        <h3>Pergunta de Impacto</h3>
+        <p class="question-text">Quando você prepara um sermão…<br>quem governa a mensagem:<br>o <em>texto</em>, o <em>tema</em> — ou a sua <em>opinião</em>?</p>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 4 — PANORAMA DOS 3 TIPOS ═══════ -->
+<div class="slide slide-content" id="s4">
+    <div class="slide-header">
+        <div class="slide-icon"><i data-lucide="layout-grid"></i></div>
+        <div class="slide-badge">Panorama Geral</div>
+        <h2 class="slide-title">Os Três Tipos de Sermão</h2>
+        <p class="slide-subtitle">Não são concorrentes — são ferramentas complementares</p>
+    </div>
+    <div class="cards-grid cols-3">
+        <div class="card textual-card" style="text-align: center;">
+            <div class="card-icon textual" style="margin: 0 auto 14px;"><i data-lucide="file-text"></i></div>
+            <h4>Sermão Textual</h4>
+            <p>Os tópicos nascem de <strong>um único texto curto</strong>. O texto governa toda a mensagem.</p>
+        </div>
+        <div class="card tematico-card" style="text-align: center;">
+            <div class="card-icon tematico" style="margin: 0 auto 14px;"><i data-lucide="layers"></i></div>
+            <h4>Sermão Temático</h4>
+            <p>Um <strong>tema central</strong> desenvolvido com diversos textos bíblicos.</p>
+        </div>
+        <div class="card expos-card" style="text-align: center;">
+            <div class="card-icon expos" style="margin: 0 auto 14px;"><i data-lucide="book-open"></i></div>
+            <h4>Sermão Expositivo</h4>
+            <p>Explica detalhadamente <strong>uma passagem maior</strong>, em seu contexto.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 5 — SEPARADOR: TEXTUAL ═══════ -->
+<div class="slide slide-content" id="s5">
+    <div class="type-intro textual">
+        <div class="type-num">Parte 1 de 3</div>
+        <h2>Sermão Textual</h2>
+        <p class="type-tagline">"O texto governa o sermão"</p>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 6 — TEXTUAL: DEFINIÇÃO ═══════ -->
+<div class="slide slide-content" id="s6">
+    <div class="slide-header">
+        <div class="slide-icon textual"><i data-lucide="file-text"></i></div>
+        <div class="slide-badge textual-b">Sermão Textual • Definição</div>
+        <h2 class="slide-title">O que é o Sermão Textual</h2>
+    </div>
+    <div class="verse-highlight textual-hl">
+        <p class="verse-text">"Uma mensagem bíblica cujos pontos principais são extraídos diretamente do texto escolhido."</p>
+    </div>
+    <div class="cards-grid cols-4" style="margin-top: 22px; max-width: 1100px;">
+        <div class="card" style="text-align: center;"><h4 style="font-size: 0.95rem;">📖 Texto curto</h4><p style="font-size: 0.85rem;">1 versículo ou poucos</p></div>
+        <div class="card" style="text-align: center;"><h4 style="font-size: 0.95rem;">🎯 Texto governa</h4><p style="font-size: 0.85rem;">As divisões nascem dele</p></div>
+        <div class="card" style="text-align: center;"><h4 style="font-size: 0.95rem;">🚫 Sem invenções</h4><p style="font-size: 0.85rem;">Nada de ideias externas</p></div>
+        <div class="card" style="text-align: center;"><h4 style="font-size: 0.95rem;">🔗 Sempre no contexto</h4><p style="font-size: 0.85rem;">Ligado à passagem bíblica</p></div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 7 — TEXTUAL: ESTRUTURA ═══════ -->
+<div class="slide slide-content" id="s7">
+    <div class="slide-header">
+        <div class="slide-icon textual"><i data-lucide="list-ordered"></i></div>
+        <div class="slide-badge textual-b">Sermão Textual</div>
+        <h2 class="slide-title">Estrutura em 6 Passos</h2>
+    </div>
+    <div class="steps-grid">
+        <div class="step-card textual-step"><div class="step-num">1</div><h4>Tema</h4><p>O assunto principal da mensagem. Ex.: Sl 23.1 → "As bênçãos do cuidado do Senhor".</p></div>
+        <div class="step-card textual-step"><div class="step-num">2</div><h4>Introdução</h4><p>Curta, desperta interesse, conduz ao texto. Não revela tudo antes.</p></div>
+        <div class="step-card textual-step"><div class="step-num">3</div><h4>Leitura do Texto</h4><p>O texto-base é a fundação — tudo será desenvolvido a partir dele.</p></div>
+        <div class="step-card textual-step"><div class="step-num">4</div><h4>Desenvolvimento</h4><p>Tópicos extraídos do texto; palavras-chave viram divisões.</p></div>
+        <div class="step-card textual-step"><div class="step-num">5</div><h4>Aplicação</h4><p>Como a verdade se aplica hoje. O que Deus espera do ouvinte.</p></div>
+        <div class="step-card textual-step"><div class="step-num">6</div><h4>Conclusão</h4><p>Resume, reforça a verdade central e conduz a uma decisão.</p></div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 8 — TEXTUAL: TIPOS DE DIVISÕES ═══════ -->
+<div class="slide slide-content" id="s8">
+    <div class="slide-header">
+        <div class="slide-icon textual"><i data-lucide="git-branch"></i></div>
+        <div class="slide-badge textual-b">Sermão Textual</div>
+        <h2 class="slide-title">Três Formas de Dividir</h2>
+    </div>
+    <div class="cards-grid cols-3">
+        <div class="card textual-card">
+            <div class="card-icon textual"><i data-lucide="type"></i></div>
+            <h4>A) Por palavras do texto</h4>
+            <p style="margin-bottom: 6px;"><strong>João 3.16</strong></p>
+            <ul>
+                <li>O amor de Deus</li>
+                <li>A dádiva de Deus</li>
+                <li>A condição do homem</li>
+                <li>A promessa da vida eterna</li>
+            </ul>
+        </div>
+        <div class="card textual-card">
+            <div class="card-icon textual"><i data-lucide="lightbulb"></i></div>
+            <h4>B) Por ideias do texto</h4>
+            <p style="margin-bottom: 6px;"><strong>Provérbios 3.5-6</strong></p>
+            <ul>
+                <li>Confiar no Senhor</li>
+                <li>Não depender da própria sabedoria</li>
+                <li>Reconhecer Deus em tudo</li>
+                <li>Receber direção divina</li>
+            </ul>
+        </div>
+        <div class="card textual-card">
+            <div class="card-icon textual"><i data-lucide="git-compare"></i></div>
+            <h4>C) Por contrastes</h4>
+            <p style="margin-bottom: 6px;"><strong>Salmo 1</strong></p>
+            <ul>
+                <li>O caminho do justo</li>
+                <li>O caminho do ímpio</li>
+                <li>O destino de ambos</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 9 — TEXTUAL: EXEMPLO COMPLETO ═══════ -->
+<div class="slide slide-content" id="s9">
+    <div class="slide-header">
+        <div class="slide-icon textual"><i data-lucide="clipboard-check"></i></div>
+        <div class="slide-badge textual-b">Sermão Textual • Exemplo</div>
+        <h2 class="slide-title">Esboço Completo — Salmo 46.1</h2>
+    </div>
+    <div class="sermon-example">
+        <div class="ex-head">
+            <div class="ex-ref">Salmo 46.1</div>
+            <div class="ex-theme">Tema: "O que Deus é para o seu povo"</div>
+        </div>
+        <div class="ex-step"><div class="ex-badge">Intro</div><p>Vivemos dias de medo e aflição. Muitos buscam abrigo em recursos humanos, mas o <strong>verdadeiro socorro está em Deus</strong>.</p></div>
+        <div class="ex-step"><div class="ex-badge">P. 1</div><p><strong>Deus é nosso refúgio</strong> — lugar de proteção espiritual <em>(Sl 91.2)</em>.</p></div>
+        <div class="ex-step"><div class="ex-badge">P. 2</div><p><strong>Deus é nossa fortaleza</strong> — Ele fortalece o cansado <em>(Is 40.29)</em>.</p></div>
+        <div class="ex-step"><div class="ex-badge">P. 3</div><p><strong>Deus é socorro presente</strong> — Ele não chega atrasado <em>(Hb 13.5-6)</em>.</p></div>
+        <div class="ex-step"><div class="ex-badge">Concl</div><p>Quando tudo falha, Deus permanece abrigo, força e auxílio para os que confiam nele.</p></div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 10 — ⚠️ REGRAS DO TEXTUAL ═══════ -->
+<div class="slide slide-content" id="s10">
+    <div class="slide-header">
+        <div class="slide-icon rule"><i data-lucide="alert-triangle"></i></div>
+        <div class="slide-badge rule-b">Atenção — Regras de Ouro</div>
+        <h2 class="slide-title">As 3 Regras do Sermão Textual</h2>
+    </div>
+    <div class="rules-box">
+        <h3><span class="icon-wrap"><i data-lucide="shield-alert"></i></span> Cuidados inegociáveis</h3>
+        <ol class="rules-list">
+            <li><span class="rule-num">1</span><div><strong>Nunca tire o texto do contexto.</strong> Um versículo isolado pode ser mal interpretado. Observe quem escreveu, para quem, contexto histórico, versículos anteriores e posteriores.</div></li>
+            <li><span class="rule-num">2</span><div><strong>Não force divisões artificiais.</strong> Alguns pregadores inventam tópicos que o texto não ensina. As divisões devem nascer <em>naturalmente</em> do texto.</div></li>
+            <li><span class="rule-num">3</span><div><strong>Não confie apenas na criatividade.</strong> O sermão precisa de fundamento bíblico sólido — não de "frases bonitas" desconectadas das Escrituras.</div></li>
+        </ol>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 11 — SEPARADOR: TEMÁTICO ═══════ -->
+<div class="slide slide-content" id="s11">
+    <div class="type-intro tematico">
+        <div class="type-num">Parte 2 de 3</div>
+        <h2>Sermão Temático</h2>
+        <p class="type-tagline">"O tema governa o sermão"</p>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 12 — TEMÁTICO: DEFINIÇÃO ═══════ -->
+<div class="slide slide-content" id="s12">
+    <div class="slide-header">
+        <div class="slide-icon tematico"><i data-lucide="layers"></i></div>
+        <div class="slide-badge tematico-b">Sermão Temático • Definição</div>
+        <h2 class="slide-title">O que é o Sermão Temático</h2>
+    </div>
+    <div class="verse-highlight tematico-hl">
+        <p class="verse-text">"Uma mensagem organizada em torno de um assunto bíblico específico, desenvolvida por meio de diversos textos das Escrituras."</p>
+    </div>
+    <p style="margin-top: 22px; font-size: 1.05rem; color: var(--text-light); max-width: 900px; text-align: center;">
+        O <strong>tema governa</strong> a mensagem. Os textos bíblicos servem para <strong>sustentar, explicar, provar e ampliar</strong> a verdade ensinada. Exemplos de temas: <em>fé, oração, salvação, santidade, graça, família, perseverança…</em>
+    </p>
+</div>
+
+<!-- ═══════ SLIDE 13 — TEMÁTICO: 5 PASSOS ═══════ -->
+<div class="slide slide-content" id="s13">
+    <div class="slide-header">
+        <div class="slide-icon tematico"><i data-lucide="list-checks"></i></div>
+        <div class="slide-badge tematico-b">Sermão Temático</div>
+        <h2 class="slide-title">Como Construir — 5 Passos</h2>
+    </div>
+    <div class="steps-grid">
+        <div class="step-card tematico-step"><div class="step-num">1</div><h4>Escolher o tema</h4><p>Bíblico, claro, específico e relevante. Ex.: "A paz de Deus".</p></div>
+        <div class="step-card tematico-step"><div class="step-num">2</div><h4>Definir objetivo</h4><p>"O que quero ensinar?" Ex.: Mostrar que a verdadeira paz vem de Deus.</p></div>
+        <div class="step-card tematico-step"><div class="step-num">3</div><h4>Reunir textos</h4><p>Versículos sobre o tema. Ex.: Jo 14.27; Fp 4.6-7; Is 26.3.</p></div>
+        <div class="step-card tematico-step"><div class="step-num">4</div><h4>Organizar tópicos</h4><p>Devem ser claros, equilibrados e progressivos.</p></div>
+        <div class="step-card tematico-step"><div class="step-num">5</div><h4>Aplicar a verdade</h4><p>Como viver praticamente o que foi ensinado.</p></div>
+        <div class="step-card tematico-step" style="background: linear-gradient(135deg, var(--tematico), var(--tematico-dark)); color: white;">
+            <h4 style="color: var(--accent-light);">Resultado</h4>
+            <p style="color: rgba(255,255,255,0.92);">Uma mensagem coesa, bíblica e profundamente aplicável ao cotidiano da igreja.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 14 — TEMÁTICO: 4 SUBTIPOS ═══════ -->
+<div class="slide slide-content" id="s14">
+    <div class="slide-header">
+        <div class="slide-icon tematico"><i data-lucide="palette"></i></div>
+        <div class="slide-badge tematico-b">Sermão Temático</div>
+        <h2 class="slide-title">Quatro Subtipos</h2>
+    </div>
+    <div class="cards-grid cols-4">
+        <div class="card tematico-card">
+            <div class="card-icon tematico"><i data-lucide="book"></i></div>
+            <h4>A) Doutrinário</h4>
+            <p>Ensina doutrinas: salvação, graça, justificação, Espírito Santo.</p>
+        </div>
+        <div class="card tematico-card">
+            <div class="card-icon tematico"><i data-lucide="heart"></i></div>
+            <h4>B) Devocional</h4>
+            <p>Edificação espiritual: oração, fé, adoração, comunhão.</p>
+        </div>
+        <div class="card tematico-card">
+            <div class="card-icon tematico"><i data-lucide="scale"></i></div>
+            <h4>C) Moral / Ético</h4>
+            <p>Comportamento cristão: perdão, honestidade, santidade, humildade.</p>
+        </div>
+        <div class="card tematico-card">
+            <div class="card-icon tematico"><i data-lucide="flame"></i></div>
+            <h4>D) Evangelístico</h4>
+            <p>Voltado para a salvação: arrependimento, cruz, novo nascimento.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 15 — TEMÁTICO: EXEMPLO ═══════ -->
+<div class="slide slide-content" id="s15">
+    <div class="slide-header">
+        <div class="slide-icon tematico"><i data-lucide="clipboard-check"></i></div>
+        <div class="slide-badge tematico-b">Sermão Temático • Exemplo</div>
+        <h2 class="slide-title">Esboço Completo — "A importância da fé"</h2>
+    </div>
+    <div class="sermon-example tematico">
+        <div class="ex-head">
+            <div class="ex-ref">Tema: A Fé</div>
+            <div class="ex-theme">Sermão temático devocional</div>
+        </div>
+        <div class="ex-step"><div class="ex-badge">Intro</div><p>Vivemos cercados por medo, dúvidas e inseguranças. A Bíblia mostra que a fé é essencial para a vida cristã e para agradar a Deus.</p></div>
+        <div class="ex-step"><div class="ex-badge">P. 1</div><p><strong>A fé é necessária para agradar a Deus</strong> — <em>Hb 11.6</em>: sem fé é impossível agradar a Deus.</p></div>
+        <div class="ex-step"><div class="ex-badge">P. 2</div><p><strong>A fé nos sustenta nas dificuldades</strong> — <em>Mc 4.35-41</em>: Jesus acalma a tempestade.</p></div>
+        <div class="ex-step"><div class="ex-badge">P. 3</div><p><strong>A fé produz vitória espiritual</strong> — <em>1 Jo 5.4</em>: a fé vence o mundo.</p></div>
+        <div class="ex-step"><div class="ex-badge">Concl</div><p>A vida cristã <strong>começa, continua e termina pela fé</strong>. Deus procura homens e mulheres que confiem plenamente nEle.</p></div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 16 — ⚠️ REGRAS DO TEMÁTICO ═══════ -->
+<div class="slide slide-content" id="s16">
+    <div class="slide-header">
+        <div class="slide-icon rule"><i data-lucide="alert-triangle"></i></div>
+        <div class="slide-badge rule-b">Atenção — Regras de Ouro</div>
+        <h2 class="slide-title">As 4 Regras do Sermão Temático</h2>
+    </div>
+    <div class="rules-box">
+        <h3><span class="icon-wrap"><i data-lucide="shield-alert"></i></span> Cuidados inegociáveis</h3>
+        <ol class="rules-list">
+            <li><span class="rule-num">1</span><div><strong>Nunca tire textos do contexto.</strong> Este é o <em>maior perigo</em> do sermão temático — usar versículos isolados de forma incorreta para "provar" o que se quer dizer.</div></li>
+            <li><span class="rule-num">2</span><div><strong>Não pregue opiniões pessoais.</strong> O sermão deve ser fundamentado na Bíblia, não em ideias humanas vestidas de espiritualidade.</div></li>
+            <li><span class="rule-num">3</span><div><strong>Evite excesso de textos.</strong> Muitos versículos amontoados deixam a mensagem confusa. Qualidade vence quantidade.</div></li>
+            <li><span class="rule-num">4</span><div><strong>Mantenha unidade.</strong> Todos os tópicos devem estar conectados ao <em>mesmo tema</em> — sem desvios para outros assuntos.</div></li>
+        </ol>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 17 — SEPARADOR: EXPOSITIVO ═══════ -->
+<div class="slide slide-content" id="s17">
+    <div class="type-intro expos">
+        <div class="type-num">Parte 3 de 3</div>
+        <h2>Sermão Expositivo</h2>
+        <p class="type-tagline">"O texto e seu contexto governam tudo"</p>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 18 — EXPOSITIVO: DEFINIÇÃO ═══════ -->
+<div class="slide slide-content" id="s18">
+    <div class="slide-header">
+        <div class="slide-icon expos"><i data-lucide="book-open"></i></div>
+        <div class="slide-badge expos-b">Sermão Expositivo • Definição</div>
+        <h2 class="slide-title">O que é o Sermão Expositivo</h2>
+    </div>
+    <div class="verse-highlight">
+        <p class="verse-text">"Uma mensagem que explica o significado de um texto bíblico em seu contexto, aplicando sua verdade à vida das pessoas."</p>
+    </div>
+    <p style="margin-top: 22px; font-size: 1.05rem; color: var(--text-light); max-width: 900px; text-align: center;">
+        <strong>"Expositivo" vem de <em>expor</em></strong>: revelar, explicar, tornar claro. O pregador <em>não inventa</em> o assunto — o texto determina o tema, a estrutura nasce da passagem, e a explicação segue o fluxo do texto.
+    </p>
+</div>
+
+<!-- ═══════ SLIDE 19 — EXPOSITIVO: 3 PERGUNTAS ═══════ -->
+<div class="slide slide-content" id="s19">
+    <div class="slide-header">
+        <div class="slide-icon expos"><i data-lucide="search"></i></div>
+        <div class="slide-badge expos-b">Sermão Expositivo</div>
+        <h2 class="slide-title">As Três Perguntas Centrais</h2>
+    </div>
+    <div class="cards-grid cols-3">
+        <div class="card expos-card" style="text-align: center;">
+            <div class="card-icon expos" style="margin: 0 auto 14px;"><i data-lucide="eye"></i></div>
+            <h4>A) Observação</h4>
+            <p>O que o texto <strong>diz</strong>?<br>Fatos, palavras-chave, personagens, estrutura.</p>
+        </div>
+        <div class="card expos-card" style="text-align: center;">
+            <div class="card-icon expos" style="margin: 0 auto 14px;"><i data-lucide="lightbulb"></i></div>
+            <h4>B) Interpretação</h4>
+            <p>O que o texto <strong>significa</strong>?<br>Contexto histórico, cultural, literário, teológico.</p>
+        </div>
+        <div class="card expos-card" style="text-align: center;">
+            <div class="card-icon expos" style="margin: 0 auto 14px;"><i data-lucide="target"></i></div>
+            <h4>C) Aplicação</h4>
+            <p>O que o texto <strong>exige</strong>?<br>Como obedecer e viver essa verdade hoje.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 20 — EXPOSITIVO: 6 PASSOS ═══════ -->
+<div class="slide slide-content" id="s20">
+    <div class="slide-header">
+        <div class="slide-icon expos"><i data-lucide="list-ordered"></i></div>
+        <div class="slide-badge expos-b">Sermão Expositivo</div>
+        <h2 class="slide-title">Como Preparar — 6 Passos</h2>
+    </div>
+    <div class="steps-grid">
+        <div class="step-card expos-step"><div class="step-num">1</div><h4>Escolher o texto</h4><p>Passagem com unidade de pensamento. Ex.: Ef 2.1-10; Sl 23; Jo 15.1-11.</p></div>
+        <div class="step-card expos-step"><div class="step-num">2</div><h4>Ler repetidamente</h4><p>Observar detalhes, palavras-chave e a estrutura do texto.</p></div>
+        <div class="step-card expos-step"><div class="step-num">3</div><h4>Estudar o contexto</h4><p>Quem escreveu, para quem, situação histórica, propósito do livro.</p></div>
+        <div class="step-card expos-step"><div class="step-num">4</div><h4>Achar a ideia central</h4><p>Qual é a mensagem principal da passagem?</p></div>
+        <div class="step-card expos-step"><div class="step-num">5</div><h4>Organizar divisões</h4><p>Devem surgir naturalmente da passagem, sem forçar.</p></div>
+        <div class="step-card expos-step"><div class="step-num">6</div><h4>Aplicar à vida</h4><p>Conectar o texto à vida atual de forma concreta.</p></div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 21 — EXPOSITIVO: EXEMPLO Ef 2 ═══════ -->
+<div class="slide slide-content" id="s21">
+    <div class="slide-header">
+        <div class="slide-icon expos"><i data-lucide="clipboard-check"></i></div>
+        <div class="slide-badge expos-b">Sermão Expositivo • Exemplo</div>
+        <h2 class="slide-title">Esboço Completo — Efésios 2.1-10</h2>
+    </div>
+    <div class="sermon-example expos">
+        <div class="ex-head">
+            <div class="ex-ref">Efésios 2.1-10</div>
+            <div class="ex-theme">Tema: "A salvação é obra da graça de Deus"</div>
+        </div>
+        <div class="ex-step"><div class="ex-badge">Intro</div><p>Paulo mostra o contraste entre a antiga condição do homem perdido e a nova vida em Cristo.</p></div>
+        <div class="ex-step"><div class="ex-badge">P. 1</div><p><strong>A condição do homem sem Cristo</strong> <em>(v. 1-3)</em>: morto em delitos, escravo do mundo, debaixo da ira.</p></div>
+        <div class="ex-step"><div class="ex-badge">P. 2</div><p><strong>A intervenção da graça divina</strong> <em>(v. 4-7)</em>: "Mas Deus…" rico em misericórdia nos deu vida com Cristo.</p></div>
+        <div class="ex-step"><div class="ex-badge">P. 3</div><p><strong>A salvação não vem das obras</strong> <em>(v. 8-10)</em>: salvos pela graça, mediante a fé, criados para boas obras.</p></div>
+        <div class="ex-step"><div class="ex-badge">Concl</div><p>A salvação é <strong>totalmente fruto da graça de Deus</strong> — e essa graça transforma nossa maneira de viver.</p></div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 22 — ⚠️ REGRAS / ERROS DO EXPOSITIVO ═══════ -->
+<div class="slide slide-content" id="s22">
+    <div class="slide-header">
+        <div class="slide-icon rule"><i data-lucide="alert-triangle"></i></div>
+        <div class="slide-badge rule-b">Atenção — Regras de Ouro</div>
+        <h2 class="slide-title">As 4 Regras do Sermão Expositivo</h2>
+    </div>
+    <div class="rules-box">
+        <h3><span class="icon-wrap"><i data-lucide="shield-alert"></i></span> Erros que devem ser evitados</h3>
+        <ol class="rules-list">
+            <li><span class="rule-num">1</span><div><strong>Não transforme exposição em palestra fria.</strong> A mensagem deve tocar o coração — não apenas informar a cabeça.</div></li>
+            <li><span class="rule-num">2</span><div><strong>Nunca ignore a aplicação.</strong> Conhecimento sem prática produz <em>frieza espiritual</em>. Toda exposição precisa pedir uma resposta.</div></li>
+            <li><span class="rule-num">3</span><div><strong>Não force interpretações.</strong> Deixe o texto falar naturalmente. O pregador é servo, não senhor da Palavra.</div></li>
+            <li><span class="rule-num">4</span><div><strong>Não se prenda a detalhes irrelevantes.</strong> Nem toda informação histórica é essencial — escolha o que serve à mensagem central.</div></li>
+        </ol>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 23 — COMPARATIVO ═══════ -->
+<div class="slide slide-content" id="s23">
+    <div class="slide-header">
+        <div class="slide-icon"><i data-lucide="table-2"></i></div>
+        <div class="slide-badge">Visão de Conjunto</div>
+        <h2 class="slide-title">Quadro Comparativo dos Três Tipos</h2>
+    </div>
+    <table class="compare-table">
+        <thead>
+            <tr>
+                <th>Critério</th>
+                <th class="t-textual">Textual</th>
+                <th class="t-tematico">Temático</th>
+                <th class="t-expos">Expositivo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Base bíblica</td><td>1 versículo ou poucos</td><td>Muitos textos diferentes</td><td>Parágrafo ou seção</td></tr>
+            <tr><td>O que governa</td><td>O texto</td><td>O tema</td><td>Texto + contexto</td></tr>
+            <tr><td>Origem dos tópicos</td><td>Palavras/ideias do texto</td><td>Aspectos do assunto</td><td>Movimento natural do texto</td></tr>
+            <tr><td>Profundidade</td><td>Média</td><td>Ampla, transversal</td><td>Profunda, detalhada</td></tr>
+            <tr><td>Indicado para</td><td>Iniciantes; cultos curtos</td><td>Doutrina; necessidades atuais</td><td>Ensino sólido da igreja</td></tr>
+            <tr><td>Maior risco</td><td>Divisões artificiais</td><td>Versículo fora do contexto</td><td>Virar aula sem aplicação</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ═══════ SLIDE 24 — QUANDO USAR CADA UM ═══════ -->
+<div class="slide slide-content" id="s24">
+    <div class="slide-header">
+        <div class="slide-icon"><i data-lucide="compass"></i></div>
+        <div class="slide-badge">Discernimento Pastoral</div>
+        <h2 class="slide-title">Quando Usar Cada Tipo</h2>
+    </div>
+    <div class="when-grid">
+        <div class="when-card">
+            <div class="when-label">Tipo 1</div>
+            <h4>Use Textual quando…</h4>
+            <p>Um único versículo já <strong>carrega toda a mensagem</strong>; ou ao iniciar na pregação, quando você precisa de uma estrutura clara que mantenha você <strong>preso ao texto</strong>.</p>
+        </div>
+        <div class="when-card tematico">
+            <div class="when-label">Tipo 2</div>
+            <h4>Use Temático quando…</h4>
+            <p>A igreja precisa ouvir sobre um <strong>assunto específico</strong> — perdão, oração, família, dízimos — e a <strong>visão completa da Bíblia</strong> sobre o tema edificará o povo.</p>
+        </div>
+        <div class="when-card expos">
+            <div class="when-label">Tipo 3</div>
+            <h4>Use Expositivo quando…</h4>
+            <p>Você quer <strong>alimentar a igreja sistematicamente</strong> com a Palavra — pregando um livro bíblico ou uma seção, deixando o próprio texto pautar a mensagem.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 25 — ⭐ REGRA DE OURO COMUM ═══════ -->
+<div class="slide slide-content" id="s25">
+    <div class="slide-header">
+        <div class="slide-icon gold"><i data-lucide="star"></i></div>
+        <div class="slide-badge">A Regra Que Vale Para Todos</div>
+        <h2 class="slide-title">A Regra de Ouro</h2>
+    </div>
+    <div class="gold-rule">
+        <div class="gr-label">★ Regra inegociável ★</div>
+        <h3>Não importa qual tipo você escolha —<br><span>todos exigem fidelidade ao texto<br>e dependência do Espírito Santo.</span></h3>
+        <p>O método é <strong>servo da Palavra</strong>, nunca seu senhor.<br>O Espírito é o <strong>verdadeiro Mestre</strong>; o pregador é o aprendiz.</p>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 26 — OFICINA PRÁTICA ═══════ -->
+<div class="slide slide-content" id="s26">
+    <div class="slide-header">
+        <div class="slide-icon"><i data-lucide="pencil-line"></i></div>
+        <div class="slide-badge">Mão na Massa</div>
+        <h2 class="slide-title">Oficina Prática — Esboce Seu Sermão</h2>
+        <p class="slide-subtitle">Escolha um caminho, abra a Bíblia e construa o esboço</p>
+    </div>
+    <div class="cards-grid cols-3">
+        <div class="card textual-card">
+            <div class="card-icon textual"><i data-lucide="file-text"></i></div>
+            <h4>Atividade 1 — Textual</h4>
+            <p><strong>Filipenses 4.13</strong><br>"Posso todas as coisas naquele que me fortalece."</p>
+            <ul style="margin-top: 8px;">
+                <li>"Posso todas as coisas"</li>
+                <li>"Naquele"</li>
+                <li>"Que me fortalece"</li>
+            </ul>
+        </div>
+        <div class="card tematico-card">
+            <div class="card-icon tematico"><i data-lucide="layers"></i></div>
+            <h4>Atividade 2 — Temático</h4>
+            <p><strong>Tema: O poder da oração</strong></p>
+            <ul style="margin-top: 8px;">
+                <li>A necessidade (Tg 5.16)</li>
+                <li>O modo correto (Mt 6.5-13)</li>
+                <li>Os resultados (Lc 18.1-8)</li>
+            </ul>
+        </div>
+        <div class="card expos-card">
+            <div class="card-icon expos"><i data-lucide="book-open"></i></div>
+            <h4>Atividade 3 — Expositivo</h4>
+            <p><strong>Salmo 23</strong> — deixe o texto guiar.</p>
+            <ul style="margin-top: 8px;">
+                <li>O Pastor que provê (v. 1-3)</li>
+                <li>O Pastor no vale (v. 4)</li>
+                <li>O Pastor que conduz (v. 5-6)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 27 — DICA DO OFICINEIRO ═══════ -->
+<div class="slide slide-content" id="s27">
+    <div class="slide-header">
+        <div class="slide-icon gold"><i data-lucide="lightbulb"></i></div>
+        <div class="slide-badge">Dica Final do Oficineiro</div>
+        <h2 class="slide-title">Como saber se o esboço está bom</h2>
+    </div>
+    <div class="impact-box">
+        <p class="impact-text">
+            Depois de preencher o esboço,<br>
+            <span>pregue em voz alta</span> — mesmo que seja só para o espelho —<br>
+            em <span>10 minutos no máximo</span>.
+        </p>
+        <p style="margin-top: 25px; font-size: 1.1rem; opacity: 0.85; position: relative;">
+            Você vai descobrir rapidamente quais pontos<br>ainda precisam de <strong style="color: var(--accent-light);">mais Palavra</strong> e <strong style="color: var(--accent-light);">menos enchimento</strong>.
+        </p>
+    </div>
+</div>
+
+<!-- ═══════ SLIDE 28 — CONCLUSÃO ═══════ -->
+<div class="slide slide-conclusion" id="s28">
+    <div class="conclusion-content">
+        <div class="conclusion-icon"><i data-lucide="book-marked"></i></div>
+        <div class="conclusion-text">
+            <p style="margin-bottom: 15px; font-size: 1.2rem; opacity: 0.85;">O método muda; a missão, não.</p>
+            <p style="margin-bottom: 25px;">Quem prega não é o método —<br>é o homem <strong style="color: var(--accent-light);">cheio do Espírito</strong>, fiel ao <strong style="color: var(--accent-light);">Livro</strong>.</p>
+        </div>
+        <div class="conclusion-highlight">
+            Oficina de Pregadores — Tipos de Sermão
+        </div>
+        <p style="margin-top: 28px; opacity: 0.65; font-size: 0.95rem; font-style: italic;">
+            "Procura apresentar-te a Deus aprovado… que maneja bem a palavra da verdade." — 2 Tm 2.15
+        </p>
+    </div>
+</div>
+
+</div>
+
+<!-- NAV -->
+<nav class="nav-bar">
+    <button id="prev" onclick="prev()">◀</button>
+    <div class="counter"><span id="atual">1</span> / 28</div>
+    <button id="next" onclick="next()">▶</button>
+</nav>
+
+<script>
+    lucide.createIcons();
+
+    let slide = 1;
+    const total = 28;
+
+    function show(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        document.getElementById('atual').textContent = n;
+        document.getElementById('prev').disabled = (n === 1);
+        document.getElementById('next').disabled = (n === total);
+        slide = n;
+        lucide.createIcons();
+    }
+
+    function next() { if (slide < total) show(slide + 1); }
+    function prev() { if (slide > 1) show(slide - 1); }
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+        else document.exitFullscreen();
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); showNavBar(); }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); showNavBar(); }
+        if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); }
+        if (e.key === 'Home') { show(1); showNavBar(); }
+        if (e.key === 'End') { show(total); showNavBar(); }
+    });
+
+    let navTimeout;
+    const navBar = document.querySelector('.nav-bar');
+    function showNavBar() {
+        navBar.classList.add('visible');
+        clearTimeout(navTimeout);
+        navTimeout = setTimeout(() => navBar.classList.remove('visible'), 3000);
+    }
+    document.addEventListener('mousemove', showNavBar);
+    document.addEventListener('touchstart', showNavBar);
+    navBar.addEventListener('mouseenter', () => clearTimeout(navTimeout));
+    navBar.addEventListener('mouseleave', () => navTimeout = setTimeout(() => navBar.classList.remove('visible'), 2000));
+    showNavBar();
+
+    setTimeout(() => {
+        const shortcuts = document.querySelector('.shortcuts');
+        if (shortcuts) { shortcuts.style.opacity = '0'; shortcuts.style.transition = 'opacity 1s'; }
+    }, 5000);
+</script>
+</body>
+</html>

@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Como Preparar uma Aula da EBD | Formação de Professores</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --primary-light: #34495e;
+            --primary-dark: #1a252f;
+            --accent: #b8860b;
+            --accent-light: #d4a017;
+            --bg-light: #f5f5f5;
+            --bg-warm: #faf8f5;
+            --text-dark: #2c3e50;
+            --text-light: #5d6d7e;
+            --text-muted: #7f8c8d;
+            --white: #ffffff;
+            --success: #27ae60;
+            --info: #2980b9;
+            --warning: #e67e22;
+            --danger: #c0392b;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #1a1a1a;
+        }
+        
+        .presentation {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 45px 70px;
+            background: var(--bg-warm);
+        }
+        
+        .slide.active {
+            display: flex;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* NAVEGAÇÃO */
+        .nav-bar {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 18px;
+            background: rgba(255,255,255,0.95);
+            padding: 12px 30px;
+            border-radius: 50px;
+            box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .nav-bar.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .nav-bar button {
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-bar button:hover { background: var(--primary-light); transform: scale(1.05); }
+        .nav-bar button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        
+        .nav-bar .counter {
+            padding: 0 22px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .fullscreen-btn:hover { background: var(--primary-light); }
+        
+        .shortcuts {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: rgba(0,0,0,0.75);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            opacity: 0.8;
+        }
+        
+        .shortcuts kbd {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 7px;
+            border-radius: 4px;
+            margin: 0 2px;
+        }
+        
+        /* ==================== SLIDE CAPA ==================== */
+        .slide-capa {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide-capa::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -15%;
+            width: 60%;
+            height: 180%;
+            background: radial-gradient(circle, rgba(184,134,11,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .capa-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+        }
+        
+        .capa-icon {
+            width: 110px;
+            height: 110px;
+            background: rgba(184,134,11,0.15);
+            border: 3px solid rgba(184,134,11,0.3);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .capa-icon svg { width: 55px; height: 55px; color: var(--accent); }
+        
+        .capa-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .capa-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.1;
+        }
+        .capa-title span { color: var(--accent); }
+        
+        .capa-subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .capa-ref {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        
+        /* ==================== SLIDES CONTEÚDO ==================== */
+        .slide-content {
+            background: linear-gradient(180deg, var(--bg-warm) 0%, #efe9e0 100%);
+        }
+        
+        .slide-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        
+        .slide-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 18px;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(44,62,80,0.2);
+        }
+        .slide-icon svg { width: 35px; height: 35px; color: var(--accent); }
+        
+        .slide-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+        
+        .slide-subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+        
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .cards-grid.cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .cards-grid.cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 900px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.06);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .card:hover { transform: translateY(-3px); }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-icon svg { width: 25px; height: 25px; color: var(--accent); }
+        
+        .card h4 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+        
+        .card .verse {
+            display: inline-block;
+            background: rgba(184,134,11,0.12);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        /* Lista de itens */
+        .item-list {
+            list-style: none;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .item-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 18px 25px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+        
+        .item-list .icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .item-list .icon svg { width: 22px; height: 22px; color: white; }
+        
+        .item-list .text strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 3px;
+        }
+        
+        .item-list .text small {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        /* Content Box */
+        .content-box {
+            background: white;
+            border-radius: 20px;
+            padding: 35px 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+            max-width: 1100px;
+            width: 100%;
+        }
+        
+        .content-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .content-box h3 .icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .content-box h3 .icon svg { width: 22px; height: 22px; color: var(--accent); }
+        
+        .content-box p {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        
+        /* Versículo destaque */
+        .verse-highlight {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 16px;
+            padding: 30px 40px;
+            color: white;
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .verse-highlight .verse-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .verse-highlight .verse-ref {
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+        
+        /* Duas Colunas */
+        .two-columns {
+            display: flex;
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+            align-items: stretch;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        /* Tabela */
+        .table-container {
+            width: 100%;
+            max-width: 1200px;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        
+        .styled-table thead tr {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+        }
+        
+        .styled-table th {
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .styled-table tbody tr {
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+        
+        .styled-table tbody tr:hover {
+            background: #faf8f5;
+        }
+        
+        .styled-table tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+        
+        .styled-table td {
+            padding: 14px 20px;
+            color: var(--text-dark);
+        }
+        
+        .styled-table td:first-child {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        /* Mapa Mental Real com Ramos */
+        .mind-map-real {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            max-width: 1100px;
+        }
+        
+        .mind-center-node {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: var(--primary-dark);
+            padding: 25px 40px;
+            border-radius: 50%;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            box-shadow: 0 10px 40px rgba(184,134,11,0.4);
+            text-align: center;
+            z-index: 10;
+            width: 180px;
+            height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .mind-center-node svg {
+            margin-bottom: 8px;
+        }
+        
+        .branch-node {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 12px 18px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 5;
+            min-width: 140px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .branch-node h5 {
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        
+        .branch-node small {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: block;
+        }
+        
+        /* Posições dos ramos */
+        .branch-node.pos-1 { top: 5%; left: 50%; transform: translateX(-50%); }
+        .branch-node.pos-2 { top: 15%; right: 5%; }
+        .branch-node.pos-3 { top: 55%; right: 3%; }
+        .branch-node.pos-4 { bottom: 5%; left: 50%; transform: translateX(-50%); }
+        .branch-node.pos-5 { top: 55%; left: 3%; }
+        .branch-node.pos-6 { top: 15%; left: 5%; }
+        
+        /* Linhas de conexão */
+        .branch-line {
+            position: absolute;
+            background: var(--accent);
+            z-index: 1;
+            border-radius: 3px;
+        }
+        
+        .branch-line.line-1 {
+            width: 4px;
+            height: 80px;
+            top: 12%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .branch-line.line-2 {
+            width: 180px;
+            height: 4px;
+            top: 28%;
+            right: 12%;
+            transform: rotate(-25deg);
+        }
+        
+        .branch-line.line-3 {
+            width: 180px;
+            height: 4px;
+            top: 58%;
+            right: 12%;
+            transform: rotate(25deg);
+        }
+        
+        .branch-line.line-4 {
+            width: 4px;
+            height: 80px;
+            bottom: 12%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .branch-line.line-5 {
+            width: 180px;
+            height: 4px;
+            top: 58%;
+            left: 12%;
+            transform: rotate(-25deg);
+        }
+        
+        .branch-line.line-6 {
+            width: 180px;
+            height: 4px;
+            top: 28%;
+            left: 12%;
+            transform: rotate(25deg);
+        }
+        
+        /* Número de passo */
+        .step-number {
+            width: 35px;
+            height: 35px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        
+        /* Slide Final */
+        .slide-final {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide-final::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -15%;
+            width: 60%;
+            height: 180%;
+            background: radial-gradient(circle, rgba(184,134,11,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .final-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .final-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(184,134,11,0.15);
+            border: 3px solid rgba(184,134,11,0.3);
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .final-icon svg { width: 50px; height: 50px; color: var(--accent); }
+        
+        .final-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.3rem;
+            margin-bottom: 25px;
+        }
+        
+        .final-text {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            opacity: 0.95;
+            margin-bottom: 30px;
+        }
+        
+        .final-verse {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            opacity: 0.9;
+            padding: 20px 30px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            display: inline-block;
+        }
+        
+        .final-verse span { color: var(--accent); }
+        
+        /* Destaque pergunta */
+        .question-box {
+            background: linear-gradient(135deg, var(--warning), #f39c12);
+            border-radius: 16px;
+            padding: 25px 35px;
+            color: white;
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .question-box h4 {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .question-box p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+        }
+        
+        /* Seção divisória */
+        .slide-section {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: var(--primary-dark);
+            text-align: center;
+        }
+        
+        .section-content {
+            max-width: 800px;
+        }
+        
+        .section-badge {
+            display: inline-block;
+            background: rgba(0,0,0,0.1);
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.85;
+        }
+        
+        /* ==================== PRINT STYLES ==================== */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            
+            html, body {
+                width: 100%;
+                height: auto;
+                overflow: visible;
+                background: white !important;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .presentation {
+                display: block;
+                height: auto;
+            }
+            
+            .nav-bar, .fullscreen-btn, .shortcuts { display: none !important; }
+            
+            .slide {
+                position: relative !important;
+                display: flex !important;
+                width: 100% !important;
+                height: 100vh !important;
+                min-height: 100vh !important;
+                max-height: 100vh !important;
+                padding: 30px 50px !important;
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                break-after: page !important;
+                break-inside: avoid !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
+            }
+            
+            .slide:last-child { 
+                page-break-after: avoid !important; 
+                break-after: avoid !important;
+            }
+            
+            .slide-capa, .slide-final, .slide-section {
+                background: #2c3e50 !important;
+            }
+            
+            .slide-section {
+                background: #b8860b !important;
+            }
+            
+            .slide-header { margin-bottom: 25px !important; }
+            .slide-title { font-size: 2rem !important; }
+            .slide-icon { width: 55px !important; height: 55px !important; }
+            .content-box { padding: 25px 30px !important; }
+            .cards-grid { gap: 12px !important; }
+            .card { padding: 18px !important; }
+            .card h4 { font-size: 0.95rem !important; }
+            .card p { font-size: 0.85rem !important; }
+            .item-list li { padding: 12px 18px !important; font-size: 1rem !important; margin-bottom: 8px !important; }
+            .capa-title { font-size: 3rem !important; }
+            .styled-table { font-size: 0.85rem !important; }
+            .styled-table th, .styled-table td { padding: 10px 14px !important; }
+            .mind-branch { padding: 14px 18px !important; }
+        }
+        
+        @page {
+            size: landscape;
+            margin: 0;
+        }
+        
+        :fullscreen .nav-bar { bottom: 35px; }
+        :fullscreen .fullscreen-btn { display: none; }
+    </style>
+</head>
+<body>
+
+<button class="fullscreen-btn" onclick="toggleFullscreen()">
+    <i data-lucide="maximize"></i> Tela Cheia
+</button>
+
+<div class="shortcuts">
+    <kbd>←</kbd> <kbd>→</kbd> navegar | <kbd>F</kbd> tela cheia
+</div>
+
+<div class="presentation">
+
+    <!-- SLIDE 1 - CAPA -->
+    <div class="slide slide-capa active" id="s1">
+        <div class="capa-content">
+            <div class="capa-icon"><i data-lucide="book-open-check"></i></div>
+            <div class="capa-badge">Formação de Professores</div>
+            <h1 class="capa-title">Como Preparar uma <span>Aula da EBD</span></h1>
+            <p class="capa-subtitle">Princípios espirituais e pedagógicos para o ensino eficaz</p>
+            <div class="capa-ref">Escola Bíblica Dominical</div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2 - LEITURA ATENTA -->
+    <div class="slide slide-content" id="s2">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="book-open"></i></div>
+            <div class="slide-badge">Passo 1</div>
+            <h2 class="slide-title">Leitura Atenta da Lição</h2>
+            <p class="slide-subtitle">O primeiro contato com o conteúdo</p>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon"><i data-lucide="heading"></i></div>
+                <h4>Título da Lição</h4>
+                <p>Entenda o tema central e a proposta do estudo</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="sparkles"></i></div>
+                <h4>Texto Áureo</h4>
+                <p>O versículo-chave que resume a mensagem</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="target"></i></div>
+                <h4>Verdade Prática</h4>
+                <p>A aplicação direta para a vida cristã</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="scroll-text"></i></div>
+                <h4>Leitura Bíblica</h4>
+                <p>O contexto e os textos da semana</p>
+            </div>
+        </div>
+        <div class="question-box">
+            <h4>Pergunta reflexiva</h4>
+            <p>Qual a mensagem central que Deus quer comunicar nesta lição?</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 3 - IMERSÃO NO CONTEÚDO -->
+    <div class="slide slide-content" id="s3">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="brain"></i></div>
+            <div class="slide-badge">Passo 2</div>
+            <h2 class="slide-title">Imersão no Conteúdo</h2>
+            <p class="slide-subtitle">Aprofundando o conhecimento</p>
+        </div>
+        <ul class="item-list">
+            <li>
+                <span class="step-number">1</span>
+                <span class="text">
+                    <strong>Ler tópicos e subtópicos</strong>
+                    <small>Identifique a estrutura lógica da lição e os argumentos principais</small>
+                </span>
+            </li>
+            <li>
+                <span class="step-number">2</span>
+                <span class="text">
+                    <strong>Estudar o auxílio teológico</strong>
+                    <small>Aproveite os comentários e explicações da revista do professor</small>
+                </span>
+            </li>
+            <li>
+                <span class="step-number">3</span>
+                <span class="text">
+                    <strong>Anotar palavras desconhecidas</strong>
+                    <small>Pesquise termos teológicos, nomes e lugares mencionados</small>
+                </span>
+            </li>
+            <li>
+                <span class="step-number">4</span>
+                <span class="text">
+                    <strong>Pesquisar materiais de apoio</strong>
+                    <small>Consulte dicionários bíblicos, comentários e mapas</small>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- SLIDE 4 - PREPARAÇÃO ANTECIPADA -->
+    <div class="slide slide-content" id="s4">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="calendar-clock"></i></div>
+            <div class="slide-badge">Passo 3</div>
+            <h2 class="slide-title">Preparação Antecipada</h2>
+            <p class="slide-subtitle">Roteiro semanal de preparo</p>
+        </div>
+        <div class="cards-grid cols-3">
+            <div class="card" style="text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 15px; background: linear-gradient(135deg, var(--success), #2ecc71);"><i data-lucide="calendar"></i></div>
+                <h4>Comece uma semana antes</h4>
+                <p>Reserve tempo diário para o preparo, não deixe para o sábado</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 15px; background: linear-gradient(135deg, var(--info), #3498db);"><i data-lucide="repeat"></i></div>
+                <h4>Leia ao menos seis vezes</h4>
+                <p>A repetição fixa o conteúdo na mente e no coração</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 15px; background: linear-gradient(135deg, var(--warning), #f39c12);"><i data-lucide="heart-handshake"></i></div>
+                <h4>Estudo com oração</h4>
+                <p>Peça ao Espírito Santo direção e iluminação</p>
+            </div>
+        </div>
+        <div class="verse-highlight" style="margin-top: 30px; max-width: 700px;">
+            <p class="verse-text">"Procura apresentar-te a Deus aprovado, como obreiro que não tem de que se envergonhar, que maneja bem a palavra da verdade."</p>
+            <span class="verse-ref">2 Timóteo 2.15</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 5 - CONHECER O PÚBLICO -->
+    <div class="slide slide-content" id="s5">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="users"></i></div>
+            <div class="slide-badge">Passo 4</div>
+            <h2 class="slide-title">Conhecer o Público-Alvo</h2>
+            <p class="slide-subtitle">Adapte a linguagem e os exemplos</p>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon"><i data-lucide="cake"></i></div>
+                <h4>Faixa Etária</h4>
+                <p>Crianças, adolescentes, jovens ou adultos têm necessidades diferentes</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="graduation-cap"></i></div>
+                <h4>Escolaridade</h4>
+                <p>Adapte o vocabulário e a profundidade da explicação</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="message-circle"></i></div>
+                <h4>Nível de Interação</h4>
+                <p>Alguns grupos participam mais, outros precisam de estímulo</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i data-lucide="book-marked"></i></div>
+                <h4>Conhecimento Bíblico</h4>
+                <p>Novos convertidos e veteranos têm bases diferentes</p>
+            </div>
+        </div>
+        <div class="question-box">
+            <h4>Pergunta reflexiva</h4>
+            <p>Você conhece os nomes e as necessidades espirituais de cada aluno?</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 6 - ESTRUTURA PEDAGÓGICA -->
+    <div class="slide slide-content" id="s6">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="layout-list"></i></div>
+            <div class="slide-badge">Passo 5</div>
+            <h2 class="slide-title">Estrutura Pedagógica</h2>
+            <p class="slide-subtitle">Organizando o conteúdo</p>
+        </div>
+        <div class="cards-grid cols-3">
+            <div class="card" style="border-left-color: var(--success);">
+                <div class="card-icon" style="background: linear-gradient(135deg, var(--success), #2ecc71);"><i data-lucide="crosshair"></i></div>
+                <h4>Tema Central</h4>
+                <p>Identifique a ideia principal que conduz toda a lição. Tudo deve girar em torno desse eixo.</p>
+            </div>
+            <div class="card" style="border-left-color: var(--info);">
+                <div class="card-icon" style="background: linear-gradient(135deg, var(--info), #3498db);"><i data-lucide="list-checks"></i></div>
+                <h4>Três Objetivos</h4>
+                <p>Cognitivo (saber), afetivo (sentir) e comportamental (fazer). O que o aluno deve aprender, sentir e praticar?</p>
+            </div>
+            <div class="card" style="border-left-color: var(--warning);">
+                <div class="card-icon" style="background: linear-gradient(135deg, var(--warning), #f39c12);"><i data-lucide="route"></i></div>
+                <h4>Tópicos como Roteiro</h4>
+                <p>Use os tópicos da lição como guia, mas não como prisão. Adapte conforme a necessidade.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7 - PREPARAÇÃO DO RESUMO -->
+    <div class="slide slide-content" id="s7">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="file-pen"></i></div>
+            <div class="slide-badge">Passo 6</div>
+            <h2 class="slide-title">Preparação do Resumo</h2>
+            <p class="slide-subtitle">Internalize o conteúdo</p>
+        </div>
+        <div class="two-columns">
+            <div class="column">
+                <ul class="item-list" style="max-width: 100%;">
+                    <li>
+                        <span class="icon"><i data-lucide="pen-tool"></i></span>
+                        <span class="text">
+                            <strong>Escreva com suas próprias palavras</strong>
+                            <small>Isso força você a entender de verdade</small>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="book-x"></i></span>
+                        <span class="text">
+                            <strong>Evite ler a revista na aula</strong>
+                            <small>O professor deve ensinar, não recitar</small>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="icon"><i data-lucide="book-open"></i></span>
+                        <span class="text">
+                            <strong>Base bíblica abundante</strong>
+                            <small>A Bíblia é a autoridade, não a revista</small>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="column">
+                <div class="content-box" style="background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; height: 100%;">
+                    <h3 style="color: white;"><i data-lucide="lightbulb" style="margin-right: 8px;"></i> Dica Prática</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.7; color: white;">
+                        Faça um <strong>esboço de uma página</strong> com os pontos principais. Use esse esboço como guia durante a aula, olhando para os alunos e não para o papel.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8 - FERRAMENTAS DIDÁTICAS -->
+    <div class="slide slide-content" id="s8">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="wrench"></i></div>
+            <div class="slide-badge">Passo 7</div>
+            <h2 class="slide-title">Ferramentas Didáticas</h2>
+            <p class="slide-subtitle">Recursos para facilitar o aprendizado</p>
+        </div>
+        <div class="cards-grid cols-3">
+            <div class="card" style="text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 15px;"><i data-lucide="git-branch"></i></div>
+                <h4>Mapa Mental</h4>
+                <p>Organize as ideias visualmente, conectando conceitos e versículos ao tema central</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 15px;"><i data-lucide="map-pin"></i></div>
+                <h4>Contextualização</h4>
+                <p>Traga o texto bíblico para a realidade atual dos alunos com exemplos do cotidiano</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 15px;"><i data-lucide="hand-heart"></i></div>
+                <h4>Aplicação Prática</h4>
+                <p>Termine com ações concretas: o que fazer com o que aprendemos?</p>
+            </div>
+        </div>
+        <div class="question-box">
+            <h4>Pergunta reflexiva</h4>
+            <p>Se o aluno só lembrar de uma coisa da sua aula, o que será?</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 9 - DIVISÓRIA PARTE 2 -->
+    <div class="slide slide-section" id="s9">
+        <div class="section-content">
+            <div class="section-badge">Parte 2</div>
+            <h2 class="section-title">Exemplo Prático</h2>
+            <p class="section-subtitle">Aplicando os princípios na lição:<br><strong>"O Filho como o Verbo de Deus"</strong></p>
+        </div>
+    </div>
+
+    <!-- SLIDE 10 - TEMA EXEMPLO -->
+    <div class="slide slide-content" id="s10">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="scroll-text"></i></div>
+            <div class="slide-badge">Exemplo</div>
+            <h2 class="slide-title">O Filho como o Verbo de Deus</h2>
+            <p class="slide-subtitle">Por que este tema é importante?</p>
+        </div>
+        <div class="two-columns">
+            <div class="column">
+                <div class="content-box" style="height: 100%;">
+                    <h3><span class="icon"><i data-lucide="shield-alert"></i></span> Motivo do Tema</h3>
+                    <p style="font-size: 1.15rem;">Este estudo é fundamental para o <strong>combate às heresias</strong> que negam a divindade de Cristo.</p>
+                    <p style="margin-top: 15px;">Desde o primeiro século, grupos têm atacado a doutrina de que Jesus é Deus. O professor precisa estar preparado para responder biblicamente.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="verse-highlight" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                    <p class="verse-text">"No princípio era o Verbo, e o Verbo estava com Deus, e o Verbo era Deus."</p>
+                    <span class="verse-ref">João 1.1</span>
+                    <p style="margin-top: 20px; font-size: 1rem; opacity: 0.9;">Base textual fundamental para a divindade de Cristo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 11 - CONTEXTO DA DOUTRINA -->
+    <div class="slide slide-content" id="s11">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="history"></i></div>
+            <div class="slide-badge">Contexto</div>
+            <h2 class="slide-title">Contexto da Doutrina</h2>
+            <p class="slide-subtitle">O que a Bíblia e a Igreja afirmam</p>
+        </div>
+        <div class="cards-grid cols-3">
+            <div class="card" style="text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 15px;"><i data-lucide="infinity"></i></div>
+                <h4>Jesus é Eterno</h4>
+                <p>Ele existia antes da criação, "no princípio" (Jo 1.1)</p>
+                <span class="verse">Miquéias 5.2</span>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 15px;"><i data-lucide="crown"></i></div>
+                <h4>Jesus é Divino</h4>
+                <p>Da mesma natureza e essência do Pai</p>
+                <span class="verse">João 10.30</span>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 15px;"><i data-lucide="sparkles"></i></div>
+                <h4>Participante da Criação</h4>
+                <p>"Todas as coisas foram feitas por meio dele"</p>
+                <span class="verse">Colossenses 1.16</span>
+            </div>
+        </div>
+        <div class="content-box" style="margin-top: 25px; max-width: 900px; padding: 20px 30px;">
+            <h3 style="font-size: 1.2rem;"><span class="icon" style="width: 35px; height: 35px;"><i data-lucide="landmark" style="width: 18px; height: 18px;"></i></span> Concílios Históricos</h3>
+            <p style="font-size: 1rem;">A Igreja defendeu a divindade de Cristo nos Concílios de <strong>Niceia (325)</strong> e <strong>Constantinopla (381)</strong>, condenando as heresias e afirmando: "Deus verdadeiro de Deus verdadeiro".</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 12 - TABELA DOS OPOSITORES -->
+    <div class="slide slide-content" id="s12">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="shield-x"></i></div>
+            <div class="slide-badge">Heresias</div>
+            <h2 class="slide-title">Opositores Históricos</h2>
+            <p class="slide-subtitle">Grupos que negaram a divindade de Cristo</p>
+        </div>
+        <div class="table-container">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Grupo</th>
+                        <th>Período</th>
+                        <th>Argumento Central</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gnósticos</td>
+                        <td>Séc. I-III</td>
+                        <td>Cristo era um ser espiritual, não verdadeiramente encarnado</td>
+                    </tr>
+                    <tr>
+                        <td>Arianos</td>
+                        <td>Séc. IV</td>
+                        <td>"Houve um tempo em que o Filho não existia" — Jesus é criatura</td>
+                    </tr>
+                    <tr>
+                        <td>Ebionitas</td>
+                        <td>Séc. I-IV</td>
+                        <td>Jesus era apenas humano, adotado como filho no batismo</td>
+                    </tr>
+                    <tr>
+                        <td>Socinianos</td>
+                        <td>Séc. XVI</td>
+                        <td>Negam a Trindade; Jesus é um homem exaltado</td>
+                    </tr>
+                    <tr>
+                        <td>Racionalistas</td>
+                        <td>Séc. XVIII+</td>
+                        <td>Rejeitam o sobrenatural; Jesus é mestre moral</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- SLIDE 13 - IMPACTO E RESPOSTA -->
+    <div class="slide slide-content" id="s13">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="shield-check"></i></div>
+            <div class="slide-badge">Resposta</div>
+            <h2 class="slide-title">Impacto e Resposta da Igreja</h2>
+        </div>
+        <div class="cards-grid cols-3">
+            <div class="card" style="border-left-color: var(--danger);">
+                <div class="card-icon" style="background: linear-gradient(135deg, var(--danger), #e74c3c);"><i data-lucide="x-circle"></i></div>
+                <h4>Condenação do Arianismo</h4>
+                <p>O Concílio de Niceia declarou Ário herege e afirmou que Cristo é "homoousios" (da mesma substância) com o Pai</p>
+            </div>
+            <div class="card" style="border-left-color: var(--info);">
+                <div class="card-icon" style="background: linear-gradient(135deg, var(--info), #3498db);"><i data-lucide="users"></i></div>
+                <h4>Defesa dos Pais da Igreja</h4>
+                <p>Atanásio, Basílio, Gregório e outros defenderam a fé contra as heresias com argumentos bíblicos</p>
+            </div>
+            <div class="card" style="border-left-color: var(--success);">
+                <div class="card-icon" style="background: linear-gradient(135deg, var(--success), #2ecc71);"><i data-lucide="check-circle"></i></div>
+                <h4>Afirmação da Divindade</h4>
+                <p>O Credo Niceno-Constantinopolitano permanece como confissão ortodoxa até hoje</p>
+            </div>
+        </div>
+        <div class="verse-highlight" style="margin-top: 25px; max-width: 800px;">
+            <p class="verse-text">"Tomé respondeu e disse-lhe: Senhor meu, e Deus meu!"</p>
+            <span class="verse-ref">João 20.28</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 14 - APLICAÇÃO PARA ADULTOS -->
+    <div class="slide slide-content" id="s14">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="heart"></i></div>
+            <div class="slide-badge">Aplicação</div>
+            <h2 class="slide-title">Aplicação para a Classe de Adultos</h2>
+            <p class="slide-subtitle">O que isso significa para nós hoje?</p>
+        </div>
+        <div class="cards-grid cols-2">
+            <div class="card" style="padding: 35px;">
+                <div class="card-icon" style="width: 60px; height: 60px; margin-bottom: 20px;"><i data-lucide="anchor" style="width: 30px; height: 30px;"></i></div>
+                <h4 style="font-size: 1.3rem;">Segurança da Salvação</h4>
+                <p style="font-size: 1.05rem; line-height: 1.6;">Se Jesus é Deus, sua obra na cruz tem valor infinito. Somente um Salvador divino pode oferecer redenção eterna. Nossa salvação está segura porque está fundamentada em Deus, não em um ser criado.</p>
+                <span class="verse">Hebreus 7.25</span>
+            </div>
+            <div class="card" style="padding: 35px;">
+                <div class="card-icon" style="width: 60px; height: 60px; margin-bottom: 20px;"><i data-lucide="crown" style="width: 30px; height: 30px;"></i></div>
+                <h4 style="font-size: 1.3rem;">Cristo Digno de Adoração</h4>
+                <p style="font-size: 1.05rem; line-height: 1.6;">Se Jesus é Deus, adorá-lo não é idolatria — é resposta correta. Toda criatura no céu e na terra dobrará os joelhos e confessará que Jesus Cristo é Senhor.</p>
+                <span class="verse">Filipenses 2.10-11</span>
+            </div>
+        </div>
+        <div class="question-box">
+            <h4>Pergunta para a classe</h4>
+            <p>Como a divindade de Cristo afeta sua confiança na salvação?</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 15 - MAPA MENTAL -->
+    <div class="slide slide-content" id="s15">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="git-branch"></i></div>
+            <div class="slide-badge">Recurso Visual</div>
+            <h2 class="slide-title">Mapa Mental da Lição</h2>
+        </div>
+        <div class="mind-map-real">
+            <!-- Linhas de conexão -->
+            <div class="branch-line line-1"></div>
+            <div class="branch-line line-2"></div>
+            <div class="branch-line line-3"></div>
+            <div class="branch-line line-4"></div>
+            <div class="branch-line line-5"></div>
+            <div class="branch-line line-6"></div>
+            
+            <!-- Centro -->
+            <div class="mind-center-node">
+                <i data-lucide="crown" style="width: 35px; height: 35px; color: #1a252f;"></i>
+                JESUS,<br>O VERBO
+            </div>
+            
+            <!-- Ramos -->
+            <div class="branch-node pos-1">
+                <h5>🕐 Preexistência</h5>
+                <small>João 1.1 — "No princípio era"</small>
+            </div>
+            <div class="branch-node pos-2">
+                <h5>✨ Divindade</h5>
+                <small>João 1.1 — "O Verbo era Deus"</small>
+            </div>
+            <div class="branch-node pos-3">
+                <h5>👶 Encarnação</h5>
+                <small>João 1.14 — "Se fez carne"</small>
+            </div>
+            <div class="branch-node pos-4">
+                <h5>♾️ Eternidade</h5>
+                <small>Cl 1.17 — "Antes de tudo"</small>
+            </div>
+            <div class="branch-node pos-5">
+                <h5>❤️ Redenção</h5>
+                <small>Hb 9.12 — "Eterna redenção"</small>
+            </div>
+            <div class="branch-node pos-6">
+                <h5>👁️ Revelação</h5>
+                <small>Jo 14.9 — "Quem me vê, vê o Pai"</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 16 - CONCLUSÃO -->
+    <div class="slide slide-final" id="s16">
+        <div class="final-content">
+            <div class="final-icon"><i data-lucide="book-open-check"></i></div>
+            <h2 class="final-title">Conclusão ao Professor</h2>
+            <p class="final-text">
+                Ensine com <strong>unção</strong> e <strong>método</strong>.<br>
+                O Espírito Santo usa instrumentos preparados.<br>
+                Sua aula pode transformar vidas para a eternidade.
+            </p>
+            <div class="final-verse">
+                "E perseveravam na <span>doutrina dos apóstolos</span> e na comunhão,<br>
+                no partir do pão e nas orações."<br>
+                <span style="font-style: normal; font-weight: 700;">— Atos 2.42</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav-bar">
+    <button id="prev" onclick="prev()">◀</button>
+    <div class="counter"><span id="atual">1</span> / 16</div>
+    <button id="next" onclick="next()">▶</button>
+</nav>
+
+<script>
+    lucide.createIcons();
+    
+    let slide = 1;
+    const total = 16;
+    
+    function show(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        document.getElementById('atual').textContent = n;
+        document.getElementById('prev').disabled = (n === 1);
+        document.getElementById('next').disabled = (n === total);
+        slide = n;
+        lucide.createIcons();
+    }
+    
+    function next() { if (slide < total) show(slide + 1); }
+    function prev() { if (slide > 1) show(slide - 1); }
+    
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+    
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+            e.preventDefault();
+            next();
+            showNavBar();
+        }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+            e.preventDefault();
+            prev();
+            showNavBar();
+        }
+        if (e.key === 'f' || e.key === 'F') {
+            toggleFullscreen();
+        }
+        if (e.key === 'Home') {
+            show(1);
+            showNavBar();
+        }
+        if (e.key === 'End') {
+            show(total);
+            showNavBar();
+        }
+    });
+    
+    // Auto-hide navigation bar
+    let navTimeout;
+    const navBar = document.querySelector('.nav-bar');
+    
+    function showNavBar() {
+        navBar.classList.add('visible');
+        clearTimeout(navTimeout);
+        navTimeout = setTimeout(() => {
+            navBar.classList.remove('visible');
+        }, 3000);
+    }
+    
+    // Show nav bar on mouse move
+    document.addEventListener('mousemove', showNavBar);
+    
+    // Show nav bar on touch
+    document.addEventListener('touchstart', showNavBar);
+    
+    // Keep nav bar visible when hovering over it
+    navBar.addEventListener('mouseenter', () => {
+        clearTimeout(navTimeout);
+    });
+    
+    navBar.addEventListener('mouseleave', () => {
+        navTimeout = setTimeout(() => {
+            navBar.classList.remove('visible');
+        }, 2000);
+    });
+    
+    // Show nav bar initially for 4 seconds
+    showNavBar();
+    
+    // Fade out shortcuts
+    setTimeout(() => {
+        const shortcuts = document.querySelector('.shortcuts');
+        if (shortcuts) {
+            shortcuts.style.opacity = '0';
+            shortcuts.style.transition = 'opacity 1s';
+        }
+    }, 5000);
+</script>
+</body>
+</html>
