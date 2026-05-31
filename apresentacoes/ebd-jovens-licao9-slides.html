@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lição 9 - A Falácia do Ateísmo | EBD Jovens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --primary-dark: #0f2744;
+            --accent: #c9a227;
+            --accent-light: #d4b84a;
+            --bg-light: #f8fafc;
+            --bg-dark: #e2e8f0;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --text-muted: #718096;
+            --white: #ffffff;
+            --success: #38a169;
+            --info: #3182ce;
+            --warning: #e67e22;
+            --danger: #c0392b;
+            --truth: #c9a227;
+            --truth-light: #f0c040;
+            --truth-dark: #9a7519;
+            --faith: #1e3a5f;
+            --faith-light: #2d5a87;
+            --lie: #7f1d1d;
+            --lie-light: #b91c1c;
+            --lie-dark: #5a0f0f;
+            --creation: #065f46;
+            --creation-light: #059669;
+            --creation-dark: #064e3b;
+            --mission: #4c1d95;
+            --mission-light: #7c3aed;
+            --mission-dark: #3b0764;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%; height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+        }
+
+        .presentation { width: 100%; height: 100%; position: relative; }
+
+        .slide {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 45px 70px;
+            background: var(--bg-light);
+        }
+
+        .slide.active { display: flex; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulseTruth { 0%,100% { box-shadow: 0 0 30px rgba(201,162,39,0.3); } 50% { box-shadow: 0 0 60px rgba(201,162,39,0.6); } }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes rotateBg { to { transform: rotate(360deg); } }
+        @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+
+        /* ══════ NAV ══════ */
+        .nav-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 18px;
+            background: rgba(255,255,255,0.95); padding: 12px 30px;
+            border-radius: 50px; box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+            z-index: 1000; backdrop-filter: blur(10px);
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .nav-bar.visible { opacity: 1; pointer-events: auto; }
+        .nav-bar button {
+            width: 48px; height: 48px; border: none; border-radius: 50%;
+            background: var(--primary); color: white; cursor: pointer;
+            font-size: 1.2rem; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-bar button:hover { background: var(--primary-light); transform: scale(1.05); }
+        .nav-bar button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        .nav-bar .counter { padding: 0 22px; font-weight: 700; font-size: 1.05rem; color: var(--primary); display: flex; align-items: center; }
+
+        .fullscreen-btn {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--primary); color: white; border: none;
+            padding: 12px 20px; border-radius: 12px; cursor: pointer;
+            font-weight: 600; font-size: 0.95rem; z-index: 1000;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s;
+        }
+        .fullscreen-btn:hover { background: var(--primary-light); }
+
+        .shortcuts {
+            position: fixed; bottom: 25px; left: 25px;
+            background: rgba(0,0,0,0.75); color: white;
+            padding: 12px 20px; border-radius: 10px;
+            font-size: 0.8rem; z-index: 1000; opacity: 0.8;
+        }
+        .shortcuts kbd { background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 4px; margin: 0 2px; }
+
+        /* ══════ CAPA ══════ */
+        .slide-capa {
+            background: linear-gradient(135deg, #0a0a0f 0%, #0f0f1a 50%, #1a1a2e 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-capa::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(201,162,39,0.05), transparent, rgba(30,58,95,0.07), transparent);
+            animation: rotateBg 30s linear infinite;
+        }
+        .capa-content { position: relative; z-index: 1; max-width: 1000px; }
+        .capa-icon {
+            width: 110px; height: 110px;
+            background: rgba(201,162,39,0.15); border: 2px solid rgba(201,162,39,0.35);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: pulseTruth 3s ease-in-out infinite;
+        }
+        .capa-icon svg { width: 55px; height: 55px; color: var(--truth-light); }
+        .capa-badge {
+            display: inline-block; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 30px; border-radius: 50px;
+            font-size: 0.9rem; margin-bottom: 20px;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .capa-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.4rem; font-weight: 700;
+            margin-bottom: 20px; line-height: 1.15;
+        }
+        .capa-title span { color: var(--truth-light); }
+        .capa-subtitle {
+            font-size: 1.2rem; opacity: 0.85;
+            margin-bottom: 30px; font-weight: 300;
+            max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;
+        }
+        .capa-tags {
+            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+        }
+        .capa-tag {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 18px; border-radius: 50px; font-size: 0.85rem;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+        .capa-tag.gold { border-color: rgba(201,162,39,0.4); color: var(--truth-light); }
+        .capa-tag.blue { border-color: rgba(30,58,95,0.6); color: #93c5fd; }
+        .capa-tag.green { border-color: rgba(6,95,70,0.5); color: #6ee7b7; }
+        .capa-date { margin-top: 25px; font-size: 1rem; opacity: 0.7; }
+
+        /* ══════ CONTENT SLIDES ══════ */
+        .slide-content { background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-dark) 100%); }
+
+        .slide-header { text-align: center; margin-bottom: 35px; }
+
+        .slide-icon {
+            width: 70px; height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 18px; margin: 0 auto 18px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(30,58,95,0.25);
+        }
+        .slide-icon svg { width: 35px; height: 35px; color: var(--accent); }
+        .slide-icon.truth { background: linear-gradient(135deg, var(--truth-dark), var(--truth)); }
+        .slide-icon.truth svg { color: white; }
+        .slide-icon.faith { background: linear-gradient(135deg, var(--faith), var(--faith-light)); }
+        .slide-icon.faith svg { color: var(--truth-light); }
+        .slide-icon.lie { background: linear-gradient(135deg, var(--lie), var(--lie-light)); }
+        .slide-icon.lie svg { color: white; }
+        .slide-icon.creation { background: linear-gradient(135deg, var(--creation), var(--creation-light)); }
+        .slide-icon.creation svg { color: white; }
+        .slide-icon.mission { background: linear-gradient(135deg, var(--mission), var(--mission-light)); }
+        .slide-icon.mission svg { color: white; }
+        .slide-icon.gold { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+        .slide-icon.gold svg { color: var(--primary-dark); }
+        .slide-icon.green { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .slide-icon.green svg { color: white; }
+        .slide-icon.flame { background: linear-gradient(135deg, #e85d04, #f48c06); }
+        .slide-icon.flame svg { color: white; }
+
+        .slide-badge {
+            display: inline-block; padding: 7px 20px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 700; margin-bottom: 12px;
+            letter-spacing: 1px; text-transform: uppercase;
+            background: var(--accent); color: var(--primary-dark);
+        }
+        .slide-badge.truth-badge { background: var(--truth-dark); color: white; }
+        .slide-badge.lie-badge { background: var(--lie); color: white; }
+        .slide-badge.faith-badge { background: var(--faith); color: var(--truth-light); }
+        .slide-badge.creation-badge { background: var(--creation); color: white; }
+        .slide-badge.mission-badge { background: var(--mission); color: white; }
+        .slide-badge.green-badge { background: var(--success); color: white; }
+        .slide-badge.info-badge { background: var(--info); color: white; }
+        .slide-badge.question-badge { background: #e85d04; color: white; }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem; color: var(--primary); line-height: 1.2;
+        }
+        .slide-subtitle { font-size: 1.05rem; color: var(--text-muted); margin-top: 8px; }
+
+        /* Cards */
+        .cards-grid {
+            display: grid; gap: 20px; width: 100%; max-width: 1200px;
+        }
+        .cards-grid.cols-2 { grid-template-columns: repeat(2, 1fr); max-width: 950px; }
+        .cards-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .cards-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+        .cards-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+
+        .card {
+            background: white; border-radius: 14px; padding: 25px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.07); transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-4px); }
+
+        .card-icon {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 12px; margin-bottom: 15px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card-icon svg { width: 25px; height: 25px; color: var(--accent); }
+        .card-icon.truth { background: linear-gradient(135deg, var(--truth-dark), var(--truth)); }
+        .card-icon.truth svg { color: white; }
+        .card-icon.lie { background: linear-gradient(135deg, var(--lie), var(--lie-light)); }
+        .card-icon.lie svg { color: white; }
+        .card-icon.creation { background: linear-gradient(135deg, var(--creation), var(--creation-light)); }
+        .card-icon.creation svg { color: white; }
+        .card-icon.mission { background: linear-gradient(135deg, var(--mission), var(--mission-light)); }
+        .card-icon.mission svg { color: white; }
+        .card-icon.green { background: linear-gradient(135deg, var(--success), #2ecc71); }
+        .card-icon.green svg { color: white; }
+        .card-icon.blue { background: linear-gradient(135deg, var(--info), #3498db); }
+        .card-icon.blue svg { color: white; }
+        .card-icon.gold { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+        .card-icon.gold svg { color: var(--primary-dark); }
+        .card-icon.flame { background: linear-gradient(135deg, #e85d04, #f48c06); }
+        .card-icon.flame svg { color: white; }
+
+        .card h4 { font-size: 1.05rem; color: var(--primary); margin-bottom: 8px; }
+        .card p { font-size: 0.95rem; color: var(--text-light); line-height: 1.55; }
+
+        /* Item list */
+        .item-list { list-style: none; width: 100%; max-width: 900px; }
+        .item-list li {
+            display: flex; align-items: flex-start; gap: 15px;
+            padding: 13px 0; border-bottom: 1px solid rgba(0,0,0,0.06);
+            font-size: 1.05rem; color: var(--text-dark);
+        }
+        .item-list li:last-child { border-bottom: none; }
+        .item-list .icon {
+            width: 42px; height: 42px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            background: rgba(201,162,39,0.12);
+        }
+        .item-list .icon svg { width: 20px; height: 20px; color: var(--truth-dark); }
+        .item-list .text strong { color: var(--primary); display: block; margin-bottom: 3px; }
+        .item-list .text small { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Verse highlight */
+        .verse-highlight {
+            background: linear-gradient(135deg, var(--faith), var(--primary-dark));
+            border-radius: 18px; padding: 35px 45px; color: white;
+            text-align: center; max-width: 900px; width: 100%;
+        }
+        .verse-highlight.truth-hl { background: linear-gradient(135deg, var(--truth-dark), #7a5c10); }
+        .verse-highlight.creation-hl { background: linear-gradient(135deg, var(--creation), var(--creation-dark)); }
+        .verse-highlight.lie-hl { background: linear-gradient(135deg, var(--lie), var(--lie-dark)); }
+        .verse-highlight.mission-hl { background: linear-gradient(135deg, var(--mission), var(--mission-dark)); }
+        .verse-highlight .verse-text {
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            line-height: 1.5; margin-bottom: 18px; font-style: italic;
+        }
+        .verse-highlight .verse-ref {
+            background: var(--accent); color: var(--primary-dark);
+            padding: 7px 22px; border-radius: 50px; font-weight: 700;
+            font-size: 0.95rem; display: inline-block;
+        }
+
+        /* Content box */
+        .content-box {
+            background: white; border-radius: 18px; padding: 35px;
+            box-shadow: 0 8px 35px rgba(0,0,0,0.07); max-width: 1100px; width: 100%;
+        }
+        .content-box h3 {
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            color: var(--primary); margin-bottom: 20px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .content-box h3 .icon {
+            width: 45px; height: 45px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--faith), var(--faith-light));
+        }
+        .content-box h3 .icon svg { width: 22px; height: 22px; color: var(--truth-light); }
+        .content-box p { font-size: 1.05rem; color: var(--text-dark); line-height: 1.65; margin-bottom: 12px; }
+
+        /* Two columns */
+        .two-columns { display: flex; gap: 30px; width: 100%; max-width: 1200px; align-items: stretch; }
+        .column { flex: 1; }
+
+        /* Question impact */
+        .question-impact {
+            background: linear-gradient(135deg, var(--faith), var(--primary-dark));
+            border-radius: 18px; padding: 45px; color: white;
+            text-align: center; max-width: 1000px; width: 100%;
+            box-shadow: 0 12px 45px rgba(30,58,95,0.3);
+        }
+        .question-impact.truth-q { background: linear-gradient(135deg, var(--truth-dark), #7a5c10); box-shadow: 0 12px 45px rgba(201,162,39,0.3); }
+        .question-impact.lie-q { background: linear-gradient(135deg, var(--lie), var(--lie-dark)); box-shadow: 0 12px 45px rgba(127,29,29,0.4); }
+        .question-impact.creation-q { background: linear-gradient(135deg, var(--creation), var(--creation-dark)); box-shadow: 0 12px 45px rgba(6,95,70,0.3); }
+        .question-impact.flame-q { background: linear-gradient(135deg, #e85d04, #dc2f02); box-shadow: 0 12px 45px rgba(232,93,4,0.3); }
+        .question-impact h3 {
+            font-size: 1rem; opacity: 0.9; margin-bottom: 18px;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .question-impact .question-text {
+            font-family: 'Playfair Display', serif; font-size: 2rem;
+            line-height: 1.4; font-weight: 600;
+        }
+
+        /* Check list */
+        .check-list {
+            list-style: none; max-width: 800px; width: 100%;
+        }
+        .check-list li {
+            display: flex; align-items: center; gap: 15px;
+            padding: 15px 20px; margin-bottom: 12px;
+            background: white; border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            font-size: 1.1rem; color: var(--text-dark);
+        }
+        .check-list li .check-icon {
+            width: 38px; height: 38px; border-radius: 50%;
+            background: rgba(6,95,70,0.15);
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .check-list li .check-icon svg { width: 20px; height: 20px; color: var(--creation); }
+        .check-list li .check-icon.gold-icon { background: rgba(201,162,39,0.15); }
+        .check-list li .check-icon.gold-icon svg { color: var(--truth-dark); }
+
+        /* Contrast box */
+        .contrast-row {
+            display: flex; gap: 20px; width: 100%; max-width: 1000px;
+        }
+        .contrast-box {
+            flex: 1; border-radius: 16px; padding: 28px;
+            text-align: center;
+        }
+        .contrast-box.false-box {
+            background: linear-gradient(135deg, rgba(127,29,29,0.08), rgba(185,28,28,0.12));
+            border: 2px solid rgba(127,29,29,0.25);
+        }
+        .contrast-box.true-box {
+            background: linear-gradient(135deg, rgba(6,95,70,0.08), rgba(5,150,105,0.12));
+            border: 2px solid rgba(6,95,70,0.25);
+        }
+        .contrast-box h4 { font-size: 1.1rem; margin-bottom: 10px; }
+        .contrast-box.false-box h4 { color: var(--lie); }
+        .contrast-box.true-box h4 { color: var(--creation); }
+        .contrast-box p { font-size: 1rem; color: var(--text-dark); line-height: 1.5; }
+
+        /* Summary row */
+        .summary-row {
+            display: flex; gap: 15px; width: 100%; max-width: 1100px; justify-content: center;
+        }
+        .summary-pill {
+            background: white; border-radius: 14px; padding: 18px 22px;
+            text-align: center; flex: 1; box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border-top: 4px solid;
+        }
+        .summary-pill h5 { font-size: 0.9rem; color: var(--primary); margin-bottom: 5px; }
+        .summary-pill p { font-size: 0.85rem; color: var(--text-light); }
+
+        /* Reveal path */
+        .reveal-path {
+            display: flex; flex-direction: column; gap: 16px;
+            max-width: 800px; width: 100%;
+        }
+        .reveal-item {
+            background: white; border-radius: 14px; padding: 20px 28px;
+            display: flex; align-items: center; gap: 20px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+            border-left: 6px solid;
+        }
+        .reveal-item .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem; font-weight: 700; flex-shrink: 0; line-height: 1;
+        }
+        .reveal-item .rev-text h4 { font-size: 1.05rem; color: var(--primary); margin-bottom: 4px; }
+        .reveal-item .rev-text p { font-size: 0.92rem; color: var(--text-muted); }
+        .reveal-item.r1 { border-color: var(--creation); }
+        .reveal-item.r1 .num { color: var(--creation); }
+        .reveal-item.r2 { border-color: var(--faith); }
+        .reveal-item.r2 .num { color: var(--faith); }
+        .reveal-item.r3 { border-color: var(--truth-dark); }
+        .reveal-item.r3 .num { color: var(--truth-dark); }
+
+        /* Consequence box */
+        .consequence-row {
+            display: flex; gap: 20px; max-width: 1100px; width: 100%;
+        }
+        .consequence-card {
+            flex: 1; background: white; border-radius: 16px; padding: 28px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.07); text-align: center;
+            border-top: 5px solid;
+        }
+        .consequence-card.empty { border-color: var(--lie); }
+        .consequence-card.moral { border-color: var(--warning); }
+        .consequence-card .cq-icon {
+            width: 58px; height: 58px; border-radius: 50%; margin: 0 auto 15px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .consequence-card.empty .cq-icon { background: rgba(127,29,29,0.12); }
+        .consequence-card.empty .cq-icon svg { color: var(--lie); width: 28px; height: 28px; }
+        .consequence-card.moral .cq-icon { background: rgba(230,126,34,0.12); }
+        .consequence-card.moral .cq-icon svg { color: var(--warning); width: 28px; height: 28px; }
+        .consequence-card h4 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--primary); margin-bottom: 14px; }
+        .consequence-card p { font-size: 0.95rem; color: var(--text-light); line-height: 1.6; margin-bottom: 8px; }
+
+        /* Conclusion slide */
+        .slide-conclusion {
+            background: linear-gradient(135deg, #0a0a0f 0%, #0f0f1a 50%, #1a1a2e 100%);
+            color: white; text-align: center; position: relative; overflow: hidden;
+        }
+        .slide-conclusion::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(201,162,39,0.08) 0%, transparent 60%);
+        }
+        .conclusion-content { position: relative; z-index: 1; max-width: 900px; }
+        .conclusion-icon {
+            width: 100px; height: 100px;
+            background: rgba(201,162,39,0.18); border: 2px solid rgba(201,162,39,0.4);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            animation: breathe 3s ease-in-out infinite;
+        }
+        .conclusion-icon svg { width: 50px; height: 50px; color: var(--truth-light); }
+        .conclusion-text {
+            font-family: 'Playfair Display', serif; font-size: 1.9rem;
+            line-height: 1.55; margin-bottom: 30px;
+        }
+        .conclusion-highlight {
+            background: linear-gradient(135deg, var(--truth-dark), #7a5c10);
+            padding: 25px 45px; border-radius: 16px;
+            font-family: 'Playfair Display', serif; font-size: 1.7rem;
+            font-weight: 600; display: inline-block;
+            box-shadow: 0 15px 50px rgba(201,162,39,0.35);
+        }
+
+        /* ══════ PRINT ══════ */
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+            html, body { width: 100%; height: auto; overflow: visible; background: white !important; margin: 0; padding: 0; }
+            .presentation { display: block; height: auto; }
+            .nav-bar, .fullscreen-btn, .shortcuts { display: none !important; }
+            .slide {
+                position: relative !important; display: flex !important;
+                width: 100% !important; height: 100vh !important;
+                min-height: 100vh !important; max-height: 100vh !important;
+                padding: 30px 50px !important;
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            .slide:last-child { page-break-after: avoid !important; break-after: avoid !important; }
+            .slide-capa, .slide-conclusion { background: #0a0a0f !important; }
+            .slide-header { margin-bottom: 20px !important; }
+            .slide-title { font-size: 2rem !important; }
+            .slide-icon { width: 55px !important; height: 55px !important; }
+            .capa-title { font-size: 2.8rem !important; }
+            .cards-grid { gap: 12px !important; }
+            .card { padding: 16px !important; }
+            .card h4 { font-size: 0.95rem !important; }
+            .card p { font-size: 0.85rem !important; }
+            .verse-highlight { padding: 20px 25px !important; }
+            .verse-highlight .verse-text { font-size: 1.2rem !important; }
+            .question-impact { padding: 25px !important; }
+            .question-impact .question-text { font-size: 1.5rem !important; }
+            .content-box { padding: 20px 25px !important; }
+            @keyframes float { 0%,50%,100% { transform: none; } }
+            @keyframes pulseTruth { 0%,50%,100% { box-shadow: none; } }
+            @keyframes rotateBg { 0%,100% { transform: none; } }
+            @keyframes breathe { 0%,50%,100% { transform: none; } }
+        }
+        @page { size: landscape; margin: 0; }
+        :fullscreen .nav-bar { bottom: 35px; }
+        :fullscreen .fullscreen-btn { display: none; }
+    </style>
+</head>
+<body>
+
+<button class="fullscreen-btn" onclick="toggleFullscreen()">
+    <i data-lucide="maximize"></i> Tela Cheia
+</button>
+<div class="shortcuts">
+    <kbd>←</kbd> <kbd>→</kbd> navegar | <kbd>F</kbd> tela cheia
+</div>
+
+<div class="presentation">
+
+    <!-- ═══════════ SLIDE 1 — CAPA ═══════════ -->
+    <div class="slide slide-capa active" id="s1">
+        <div class="capa-content">
+            <div class="capa-icon"><i data-lucide="search"></i></div>
+            <div class="capa-badge">EBD Jovens • Lição 9</div>
+            <h1 class="capa-title">A Falácia<br><span>do Ateísmo</span></h1>
+            <p class="capa-subtitle">Texto Principal: Salmos 14.1 — Entre a verdade e o engano</p>
+            <div class="capa-tags">
+                <span class="capa-tag gold">Apologética</span>
+                <span class="capa-tag blue">Fé &amp; Razão</span>
+                <span class="capa-tag green">Criação</span>
+                <span class="capa-tag">Lição 9</span>
+            </div>
+            <p class="capa-date">📅 EBD Jovens</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 2 — TEXTO PRINCIPAL ═══════════ -->
+    <div class="slide slide-content" id="s2">
+        <div class="slide-header">
+            <div class="slide-icon faith"><i data-lucide="book-open"></i></div>
+            <div class="slide-badge faith-badge">Texto Principal</div>
+            <h2 class="slide-title">Salmos 14.1</h2>
+            <p class="slide-subtitle">A palavra de Deus sobre a incredulidade</p>
+        </div>
+        <div class="verse-highlight" style="max-width: 950px;">
+            <p class="verse-text">"Disseram os néscios no seu coração: Não há Deus."</p>
+            <span class="verse-ref">Salmos 14.1</span>
+        </div>
+        <div class="content-box" style="margin-top: 28px; max-width: 850px; text-align: center;">
+            <h3 style="justify-content: center;">
+                <span class="icon" style="background: linear-gradient(135deg, var(--truth-dark), var(--truth));"><i data-lucide="lightbulb"></i></span>
+                Verdade Central
+            </h3>
+            <p style="font-size: 1.15rem; font-weight: 500;">
+                A criação testemunha claramente sobre a existência de Deus,
+                tornando <strong>indesculpável</strong> a incredulidade.
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 3 — PERGUNTA INICIAL ═══════════ -->
+    <div class="slide slide-content" id="s3">
+        <div class="slide-header">
+            <div class="slide-icon flame"><i data-lucide="message-circle-question"></i></div>
+            <div class="slide-badge question-badge">Pergunta para a Classe</div>
+            <h2 class="slide-title">Para Começar...</h2>
+        </div>
+        <div class="question-impact flame-q" style="max-width: 950px;">
+            <h3>Reflita com a Classe</h3>
+            <p class="question-text">É possível provar cientificamente que Deus não existe?</p>
+        </div>
+        <div class="content-box" style="margin-top: 35px; max-width: 800px; text-align: center;">
+            <p style="font-size: 1.1rem; color: var(--text-dark);">
+                <strong>Objetivo:</strong> despertar o interesse e mostrar que a ciência possui
+                <strong>limites</strong> para explicar todas as questões da existência.
+            </p>
+            <p style="font-size: 1.0rem; color: var(--text-muted); margin-top: 12px;">
+                Nenhuma experiência de laboratório pode concluir sobre o que é sobrenatural.
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 4 — O QUE É ATEÍSMO? ═══════════ -->
+    <div class="slide slide-content" id="s4">
+        <div class="slide-header">
+            <div class="slide-icon lie"><i data-lucide="ban"></i></div>
+            <div class="slide-badge lie-badge">Definição</div>
+            <h2 class="slide-title">O que é Ateísmo?</h2>
+            <p class="slide-subtitle">Não é apenas uma questão intelectual</p>
+        </div>
+        <div class="two-columns" style="max-width: 1050px;">
+            <div class="column">
+                <div class="content-box" style="height: 100%;">
+                    <h3>
+                        <span class="icon" style="background: linear-gradient(135deg, var(--lie), var(--lie-light));"><i data-lucide="ban"></i></span>
+                        Definição
+                    </h3>
+                    <p style="font-size: 1.1rem; font-weight: 500; margin-bottom: 18px;">
+                        O ateísmo é a posição que <strong>nega a existência de Deus</strong>.
+                    </p>
+                    <p>Vai além de uma postura filosófica — frequentemente envolve
+                    questões pessoais e emocionais.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="content-box" style="height: 100%; background: linear-gradient(135deg, rgba(127,29,29,0.04), rgba(185,28,28,0.07));">
+                    <h3>
+                        <span class="icon" style="background: linear-gradient(135deg, var(--lie), var(--lie-light));"><i data-lucide="layers"></i></span>
+                        Muitas vezes envolve:
+                    </h3>
+                    <ul class="item-list" style="max-width: 100%;">
+                        <li>
+                            <span class="icon" style="background: rgba(127,29,29,0.1);"><i data-lucide="heart-crack" style="color: var(--lie-light);"></i></span>
+                            <span class="text"><strong>Questões emocionais</strong><small>Decepções, traumas ou mágoas</small></span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background: rgba(127,29,29,0.1);"><i data-lucide="user" style="color: var(--lie-light);"></i></span>
+                            <span class="text"><strong>Experiências pessoais</strong><small>Vivências que geraram dúvidas</small></span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background: rgba(127,29,29,0.1);"><i data-lucide="book" style="color: var(--lie-light);"></i></span>
+                            <span class="text"><strong>Filosofias de vida</strong><small>Sistemas de pensamento humanistas</small></span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background: rgba(127,29,29,0.1);"><i data-lucide="shield-off" style="color: var(--lie-light);"></i></span>
+                            <span class="text"><strong>Desejo de autonomia</strong><small>Independência moral de Deus</small></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 5 — MOTIVAÇÃO 1: CIENTIFICISMO ═══════════ -->
+    <div class="slide slide-content" id="s5">
+        <div class="slide-header">
+            <div class="slide-icon creation"><i data-lucide="microscope"></i></div>
+            <div class="slide-badge creation-badge">Motivação 1</div>
+            <h2 class="slide-title">A Confiança Exclusiva na Ciência</h2>
+            <p class="slide-subtitle">O erro do cientificismo</p>
+        </div>
+        <div class="two-columns" style="max-width: 1100px;">
+            <div class="column">
+                <div class="contrast-row" style="flex-direction: column; gap: 14px;">
+                    <div class="contrast-box false-box">
+                        <h4>❌ A ciência não pode provar que Deus não existe</h4>
+                        <p>A ciência estuda o mundo <strong>natural</strong>. Deus é sobrenatural — está além do alcance do método científico.</p>
+                    </div>
+                    <div class="contrast-box true-box">
+                        <h4>✅ A ciência revela a complexidade da criação</h4>
+                        <p>Quanto mais a ciência avança, mais a complexidade do universo <strong>aponta para um Criador</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="verse-highlight creation-hl" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                    <p class="verse-text" style="font-size: 1.4rem;">
+                        "Os céus manifestam a glória de Deus, e o firmamento anuncia a obra das suas mãos."
+                    </p>
+                    <span class="verse-ref">Salmo 19.1</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 6 — MOTIVAÇÃO 2: SOFRIMENTO E MAL ═══════════ -->
+    <div class="slide slide-content" id="s6">
+        <div class="slide-header">
+            <div class="slide-icon lie"><i data-lucide="cloud-lightning"></i></div>
+            <div class="slide-badge lie-badge">Motivação 2</div>
+            <h2 class="slide-title">O Sofrimento e o Mal</h2>
+            <p class="slide-subtitle">Uma das objeções mais comuns ao teísmo</p>
+        </div>
+        <div class="question-impact lie-q" style="max-width: 800px; margin-bottom: 30px; padding: 30px 40px;">
+            <h3>A Pergunta Comum</h3>
+            <p class="question-text" style="font-size: 1.7rem;">Se Deus existe, por que existe sofrimento?</p>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1100px;">
+            <div class="card" style="border-top: 4px solid var(--lie);">
+                <div class="card-icon lie"><i data-lucide="alert-triangle"></i></div>
+                <h4>O mal entrou pelo pecado</h4>
+                <p>A queda de Adão introduziu o sofrimento no mundo. Deus não criou o mal.</p>
+            </div>
+            <div class="card" style="border-top: 4px solid var(--truth-dark);">
+                <div class="card-icon truth"><i data-lucide="gift"></i></div>
+                <h4>Deus oferece redenção</h4>
+                <p>Através de Cristo, Deus age para resgatar o homem do sofrimento e da morte.</p>
+            </div>
+            <div class="card" style="border-top: 4px solid var(--creation);">
+                <div class="card-icon creation"><i data-lucide="cross"></i></div>
+                <h4>A Cruz responde</h4>
+                <p>Deus não ficou distante da dor humana — Ele veio ao mundo e <strong>sofreu por nós</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 7 — MOTIVAÇÃO 3: ORGULHO HUMANO ═══════════ -->
+    <div class="slide slide-content" id="s7">
+        <div class="slide-header">
+            <div class="slide-icon lie"><i data-lucide="crown"></i></div>
+            <div class="slide-badge lie-badge">Motivação 3</div>
+            <h2 class="slide-title">O Orgulho Humano</h2>
+            <p class="slide-subtitle">O desejo de autonomia total</p>
+        </div>
+        <div class="two-columns" style="max-width: 1050px;">
+            <div class="column">
+                <div class="content-box" style="height: 100%;">
+                    <h3>
+                        <span class="icon" style="background: linear-gradient(135deg, var(--lie), var(--lie-light));"><i data-lucide="user"></i></span>
+                        O ser humano deseja:
+                    </h3>
+                    <ul class="check-list" style="margin-top: 5px;">
+                        <li>
+                            <span class="check-icon" style="background: rgba(127,29,29,0.1);">
+                                <i data-lucide="user-cog" style="color: var(--lie-light); width: 20px; height: 20px;"></i>
+                            </span>
+                            Ser seu próprio senhor
+                        </li>
+                        <li>
+                            <span class="check-icon" style="background: rgba(127,29,29,0.1);">
+                                <i data-lucide="edit" style="color: var(--lie-light); width: 20px; height: 20px;"></i>
+                            </span>
+                            Definir sua própria verdade
+                        </li>
+                        <li>
+                            <span class="check-icon" style="background: rgba(127,29,29,0.1);">
+                                <i data-lucide="shield-off" style="color: var(--lie-light); width: 20px; height: 20px;"></i>
+                            </span>
+                            Viver sem prestar contas a Deus
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="column">
+                <div class="verse-highlight lie-hl" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                    <p class="verse-text">"Dizendo-se sábios, tornaram-se loucos."</p>
+                    <span class="verse-ref">Romanos 1.22</span>
+                    <p style="margin-top: 20px; font-size: 1rem; opacity: 0.85; line-height: 1.6;">
+                        A rejeição a Deus não é ausência de evidências —
+                        é <strong>resistência do coração</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 8 — A RESPOSTA BÍBLICA ═══════════ -->
+    <div class="slide slide-content" id="s8">
+        <div class="slide-header">
+            <div class="slide-icon faith"><i data-lucide="shield-check"></i></div>
+            <div class="slide-badge faith-badge">Resposta Bíblica</div>
+            <h2 class="slide-title">Deus se Revela de Três Maneiras</h2>
+            <p class="slide-subtitle">A revelação divina é clara, consistente e universal</p>
+        </div>
+        <div class="reveal-path">
+            <div class="reveal-item r1">
+                <div class="num">1</div>
+                <div class="rev-text">
+                    <h4>Pela Criação</h4>
+                    <p>O universo, com toda a sua complexidade, aponta para um Criador inteligente e poderoso.</p>
+                </div>
+                <i data-lucide="globe" style="color: var(--creation); width: 32px; height: 32px; flex-shrink: 0;"></i>
+            </div>
+            <div class="reveal-item r2">
+                <div class="num">2</div>
+                <div class="rev-text">
+                    <h4>Pela Consciência</h4>
+                    <p>O sentido moral inato ao ser humano revela que há uma lei superior gravada no coração.</p>
+                </div>
+                <i data-lucide="heart" style="color: var(--faith); width: 32px; height: 32px; flex-shrink: 0;"></i>
+            </div>
+            <div class="reveal-item r3">
+                <div class="num">3</div>
+                <div class="rev-text">
+                    <h4>Por Jesus Cristo</h4>
+                    <p>A encarnação do Filho de Deus é a revelação máxima e definitiva de quem é Deus.</p>
+                </div>
+                <i data-lucide="sun" style="color: var(--truth-dark); width: 32px; height: 32px; flex-shrink: 0;"></i>
+            </div>
+        </div>
+        <div class="verse-highlight" style="margin-top: 28px; max-width: 750px;">
+            <p class="verse-text" style="font-size: 1.3rem;">"Claramente se veem pelas coisas que estão criadas."</p>
+            <span class="verse-ref">Romanos 1.20</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 9 — JESUS: A REVELAÇÃO PERFEITA ═══════════ -->
+    <div class="slide slide-content" id="s9">
+        <div class="slide-header">
+            <div class="slide-icon gold"><i data-lucide="sun"></i></div>
+            <div class="slide-badge truth-badge">Revelação Perfeita</div>
+            <h2 class="slide-title">Jesus: A Revelação do Pai</h2>
+            <p class="slide-subtitle">Cristo revela com perfeição quem é Deus</p>
+        </div>
+        <div class="cards-grid cols-4" style="max-width: 1150px; margin-bottom: 28px;">
+            <div class="card" style="border-top: 4px solid var(--faith); text-align: center;">
+                <div class="card-icon faith" style="margin: 0 auto 15px;"><i data-lucide="book-open"></i></div>
+                <h4>Seus Ensinamentos</h4>
+                <p>Palavras de vida eterna que revelam o caráter do Pai.</p>
+            </div>
+            <div class="card" style="border-top: 4px solid var(--creation); text-align: center;">
+                <div class="card-icon creation" style="margin: 0 auto 15px;"><i data-lucide="zap"></i></div>
+                <h4>Seus Milagres</h4>
+                <p>Sinais do poder divino que confirmam sua identidade.</p>
+            </div>
+            <div class="card" style="border-top: 4px solid var(--lie); text-align: center;">
+                <div class="card-icon lie" style="margin: 0 auto 15px;"><i data-lucide="cross"></i></div>
+                <h4>Sua Morte</h4>
+                <p>O amor de Deus expresso no sacrifício pelo pecado do homem.</p>
+            </div>
+            <div class="card" style="border-top: 4px solid var(--truth-dark); text-align: center;">
+                <div class="card-icon truth" style="margin: 0 auto 15px;"><i data-lucide="sunrise"></i></div>
+                <h4>Sua Ressurreição</h4>
+                <p>A prova definitiva de que Jesus é o Filho de Deus vivo.</p>
+            </div>
+        </div>
+        <div class="verse-highlight truth-hl" style="max-width: 800px;">
+            <p class="verse-text">"Eu sou o caminho, e a verdade, e a vida."</p>
+            <span class="verse-ref">João 14.6</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 10 — PERGUNTA PARA REFLEXÃO ═══════════ -->
+    <div class="slide slide-content" id="s10">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="help-circle"></i></div>
+            <div class="slide-badge">Reflexão</div>
+            <h2 class="slide-title">Pergunta para a Classe</h2>
+        </div>
+        <div class="question-impact" style="max-width: 950px;">
+            <h3>Reflitam com Sinceridade</h3>
+            <p class="question-text">A descrença nasce apenas da falta de provas ou também da resistência do coração em se submeter a Deus?</p>
+        </div>
+        <div class="content-box" style="margin-top: 35px; max-width: 850px; text-align: center;">
+            <p style="font-size: 1.1rem; color: var(--text-dark);">
+                A Bíblia afirma que a criação já fornece evidência suficiente.
+                A questão real é <strong>querer ou não aceitar</strong> essa evidência.
+            </p>
+            <p style="margin-top: 12px; font-size: 1rem; color: var(--text-muted);">
+                "Porque o que de Deus se pode conhecer neles se manifesta." — Romanos 1.19
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 11 — CONSEQUÊNCIAS: VAZIO EXISTENCIAL ═══════════ -->
+    <div class="slide slide-content" id="s11">
+        <div class="slide-header">
+            <div class="slide-icon lie"><i data-lucide="heart-crack"></i></div>
+            <div class="slide-badge lie-badge">Consequência 1</div>
+            <h2 class="slide-title">Vazio Existencial</h2>
+            <p class="slide-subtitle">Sem Deus, faltam as respostas fundamentais da vida</p>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1050px; margin-bottom: 28px;">
+            <div class="card" style="border-top: 4px solid var(--lie); text-align: center;">
+                <div class="card-icon lie" style="margin: 0 auto 15px;"><i data-lucide="compass-off"></i></div>
+                <h4>Sem propósito eterno</h4>
+                <p>A vida se torna uma sequência sem significado além do biológico.</p>
+            </div>
+            <div class="card" style="border-top: 4px solid var(--warning); text-align: center;">
+                <div class="card-icon flame" style="margin: 0 auto 15px;"><i data-lucide="moon"></i></div>
+                <h4>Sem esperança definitiva</h4>
+                <p>Nenhuma perspectiva além da morte — nem ressurreição, nem eternidade.</p>
+            </div>
+            <div class="card" style="border-top: 4px solid var(--text-muted); text-align: center;">
+                <div class="card-icon" style="margin: 0 auto 15px; background: linear-gradient(135deg, #718096, #4a5568);"><i data-lucide="help-circle"></i></div>
+                <h4>Sem respostas profundas</h4>
+                <p>As questões mais íntimas da existência ficam sem resposta satisfatória.</p>
+            </div>
+        </div>
+        <div class="verse-highlight" style="max-width: 750px;">
+            <p class="verse-text">"A minha alma tem sede de Deus, do Deus vivo."</p>
+            <span class="verse-ref">Salmo 42.2</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 12 — CONSEQUÊNCIAS: CONFUSÃO MORAL ═══════════ -->
+    <div class="slide slide-content" id="s12">
+        <div class="slide-header">
+            <div class="slide-icon"><i data-lucide="scale"></i></div>
+            <div class="slide-badge">Consequência 2</div>
+            <h2 class="slide-title">Confusão Moral</h2>
+            <p class="slide-subtitle">Quando Deus é removido, a moral se torna relativa</p>
+        </div>
+        <div class="two-columns" style="max-width: 1050px;">
+            <div class="column">
+                <div class="content-box" style="height: 100%; background: linear-gradient(135deg, rgba(127,29,29,0.05), rgba(185,28,28,0.08));">
+                    <h3>
+                        <span class="icon" style="background: linear-gradient(135deg, var(--lie), var(--lie-light));"><i data-lucide="shuffle"></i></span>
+                        Sem Deus:
+                    </h3>
+                    <ul class="item-list" style="max-width: 100%;">
+                        <li>
+                            <span class="icon" style="background: rgba(127,29,29,0.1);"><i data-lucide="edit-3" style="color: var(--lie-light);"></i></span>
+                            <span class="text"><strong>Cada pessoa cria sua própria verdade</strong><small>Não há padrão objetivo</small></span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background: rgba(127,29,29,0.1);"><i data-lucide="git-branch" style="color: var(--lie-light);"></i></span>
+                            <span class="text"><strong>O certo e errado tornam-se relativos</strong><small>O que era errado pode passar a ser aceito</small></span>
+                        </li>
+                        <li>
+                            <span class="icon" style="background: rgba(127,29,29,0.1);"><i data-lucide="globe-2" style="color: var(--lie-light);"></i></span>
+                            <span class="text"><strong>A moral muda conforme a cultura</strong><small>Sem fundamento absoluto</small></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="column">
+                <div class="verse-highlight creation-hl" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                    <p class="verse-text" style="font-size: 1.3rem;">
+                        "Toda a Escritura é divinamente inspirada e útil para ensinar, para redarguir, para corrigir, para instruir em justiça."
+                    </p>
+                    <span class="verse-ref">2 Timóteo 3.16</span>
+                    <p style="margin-top: 20px; font-size: 1rem; opacity: 0.9; line-height: 1.6;">
+                        A Palavra de Deus continua sendo nosso <strong>padrão imutável</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 13 — A MISSÃO DA IGREJA ═══════════ -->
+    <div class="slide slide-content" id="s13">
+        <div class="slide-header">
+            <div class="slide-icon mission"><i data-lucide="users"></i></div>
+            <div class="slide-badge mission-badge">A Missão da Igreja</div>
+            <h2 class="slide-title">Como Responder ao Ateísmo?</h2>
+            <p class="slide-subtitle">A Igreja foi chamada para ser luz no mundo</p>
+        </div>
+        <ul class="check-list" style="max-width: 750px;">
+            <li>
+                <span class="check-icon gold-icon"><i data-lucide="heart"></i></span>
+                Com <strong>amor</strong> — sem arrogância ou hostilidade
+            </li>
+            <li>
+                <span class="check-icon gold-icon"><i data-lucide="book-open"></i></span>
+                Com <strong>conhecimento bíblico</strong> — estando preparados para responder
+            </li>
+            <li>
+                <span class="check-icon gold-icon"><i data-lucide="user-check"></i></span>
+                Com <strong>testemunho cristão</strong> — uma vida transformada é poderosa evidência
+            </li>
+            <li>
+                <span class="check-icon gold-icon"><i data-lucide="hand"></i></span>
+                Com <strong>oração</strong> — dependendo do Espírito Santo
+            </li>
+            <li>
+                <span class="check-icon gold-icon"><i data-lucide="megaphone"></i></span>
+                Com <strong>coragem</strong> para anunciar Cristo sem vergonha
+            </li>
+        </ul>
+    </div>
+
+    <!-- ═══════════ SLIDE 14 — APLICAÇÃO PRÁTICA ═══════════ -->
+    <div class="slide slide-content" id="s14">
+        <div class="slide-header">
+            <div class="slide-icon green"><i data-lucide="check-circle"></i></div>
+            <div class="slide-badge green-badge">Aplicação Prática</div>
+            <h2 class="slide-title">O que Aprendemos?</h2>
+            <p class="slide-subtitle">Verdades que devemos carregar desta lição</p>
+        </div>
+        <div class="cards-grid cols-3" style="max-width: 1100px; margin-bottom: 20px;">
+            <div class="card" style="border-left: 5px solid var(--creation);">
+                <div class="card-icon creation"><i data-lucide="microscope"></i></div>
+                <h4>Fé e ciência não são inimigas</h4>
+                <p>A ciência pode revelar a magnificência da criação sem negar o Criador.</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--lie);">
+                <div class="card-icon lie"><i data-lucide="cloud-lightning"></i></div>
+                <h4>Sofrimento não prova ausência de Deus</h4>
+                <p>O mal tem origem no pecado humano. Deus oferece redenção, não abandono.</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--truth-dark);">
+                <div class="card-icon truth"><i data-lucide="sun"></i></div>
+                <h4>Deus continua se revelando</h4>
+                <p>Pela criação, pela consciência e por Jesus Cristo — a revelação não cessou.</p>
+            </div>
+        </div>
+        <div class="two-columns" style="max-width: 950px;">
+            <div class="card" style="border-left: 5px solid var(--mission);">
+                <div class="card-icon mission"><i data-lucide="heart"></i></div>
+                <h4>Cristo: maior evidência do amor de Deus</h4>
+                <p>A encarnação, morte e ressurreição de Jesus são o argumento supremo.</p>
+            </div>
+            <div class="card" style="border-left: 5px solid var(--faith);">
+                <div class="card-icon faith"><i data-lucide="shield-check"></i></div>
+                <h4>A Igreja deve defender a fé</h4>
+                <p>Estejamos preparados para dar razão da esperança que há em nós.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 15 — CONCLUSÃO ═══════════ -->
+    <div class="slide slide-conclusion" id="s15">
+        <div class="conclusion-content">
+            <div class="conclusion-icon"><i data-lucide="sun"></i></div>
+            <div class="conclusion-text">
+                <p style="margin-bottom: 15px;">A criação <strong>aponta para Deus</strong>.</p>
+                <p style="margin-bottom: 15px;">A consciência <strong>aponta para Deus</strong>.</p>
+                <p style="margin-bottom: 15px;">Cristo <strong>revela Deus</strong>.</p>
+                <p>Quem crê encontra sentido, propósito e <strong>salvação</strong>.</p>
+            </div>
+            <div class="conclusion-highlight">
+                "Eu sou a luz do mundo; quem me segue não andará em trevas."
+            </div>
+            <p style="margin-top: 20px; font-weight: 600; opacity: 0.85; font-size: 1rem;">João 8.12</p>
+            <p style="margin-top: 15px; opacity: 0.55; font-size: 0.88rem;">Lição 9 • EBD Jovens • A Falácia do Ateísmo</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav-bar">
+    <button id="prev" onclick="prev()">◀</button>
+    <div class="counter"><span id="atual">1</span> / 15</div>
+    <button id="next" onclick="next()">▶</button>
+</nav>
+
+<script>
+    lucide.createIcons();
+
+    let slide = 1;
+    const total = 15;
+
+    function show(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        document.getElementById('atual').textContent = n;
+        document.getElementById('prev').disabled = (n === 1);
+        document.getElementById('next').disabled = (n === total);
+        slide = n;
+        lucide.createIcons();
+    }
+
+    function next() { if (slide < total) show(slide + 1); }
+    function prev() { if (slide > 1) show(slide - 1); }
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); showNavBar(); }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); showNavBar(); }
+        if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); }
+        if (e.key === 'Home') { show(1); showNavBar(); }
+        if (e.key === 'End') { show(total); showNavBar(); }
+    });
+
+    let navTimeout;
+    const navBar = document.querySelector('.nav-bar');
+
+    function showNavBar() {
+        navBar.classList.add('visible');
+        clearTimeout(navTimeout);
+        navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 3000);
+    }
+
+    document.addEventListener('mousemove', showNavBar);
+    document.addEventListener('touchstart', showNavBar);
+    navBar.addEventListener('mouseenter', () => { clearTimeout(navTimeout); });
+    navBar.addEventListener('mouseleave', () => { navTimeout = setTimeout(() => { navBar.classList.remove('visible'); }, 2000); });
+
+    showNavBar();
+
+    setTimeout(() => {
+        const shortcuts = document.querySelector('.shortcuts');
+        if (shortcuts) { shortcuts.style.opacity = '0'; shortcuts.style.transition = 'opacity 1s'; }
+    }, 5000);
+</script>
+</body>
+</html>
